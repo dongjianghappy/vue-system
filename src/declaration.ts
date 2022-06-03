@@ -1,0 +1,6 @@
+declare module '@kangc/v-md-editor'
+declare module '@kangc/v-md-editor/lib/theme/vuepress.js'
+declare module 'vue-chartist'
+declare module 'marked'
+declare module 'markdown'
+declare module 'vue-gemini-scrollbar'

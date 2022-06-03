@@ -1,0 +1,84 @@
+<template>
+<span @click="handleclick">
+  {{data.item.type === '1' ? "核心词" : data.item.type === '2' ? "目标词" : "长尾词"}}
+</span>
+<Dialog v-model:show="isShow" ref="form" title="新增标签" width="520px" height="200px" :confirm="true" :cancel="true" @submit="submit">
+  <template v-slot:content v-if="isShow">
+    <ul class="form-wrap-box">
+      <li class="li">
+        <span class="label">属性类型</span>
+        <v-radio label="核心词" name="type" value="1" v-model:checked="detail.type" />
+        <v-radio label="目标词" name="type" value="2" v-model:checked="detail.type" />
+        <v-radio label="长尾词" name="type" value="0" v-model:checked="detail.type" />
+      </li>
+    </ul>
+  </template>
+</Dialog>
+</template>
+
+<script lang="ts">
+import {
+  defineComponent,
+  ref,
+  watch,
+} from '@/utils'
+import {
+  Drawer
+} from '@/components/packages/index'
+import {
+  Dialog
+} from '@/components/packages/index'
+export default defineComponent({
+  name: 'v-Search',
+  components: {
+    Dialog
+  },
+  props: {
+    attrs: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
+    action: {
+      type: String,
+      default: "add"
+    },
+    data: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
+    render: {
+      type: Function,
+      default: () => {
+        return 'Default function'
+      }
+    }
+  },
+  setup(props, context) {
+    const isShow: any = ref(false)
+    const detail: any = ref({})
+    const drawer: any = ref(null)
+
+    // 监听
+    watch([isShow], async (newValues, prevValues) => {
+      if (isShow.value) {
+        detail.value = await drawer.value.init()
+      }
+    })
+
+    function handleclick(param: any) {
+      isShow.value = !isShow.value
+    }
+
+    return {
+      isShow,
+      handleclick,
+      detail,
+      drawer
+    }
+  }
+})
+</script>
