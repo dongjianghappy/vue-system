@@ -1,7 +1,6 @@
 <template>
 <div style="background: #001529; position: inherit;">
   <div class="logo" @click="handleRouter('', 'basic')">
-
     <img alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" width="25" class="mr10 left" style="margin-top: 20px;" />
     控制平台{{channelData.name ? `- ${channelData.name}` : ""}}
   </div>
@@ -30,7 +29,7 @@
         <li class="mr15" style="width: 50px;">
           <span>消息<span class="badge"><sup class="number">0</sup></span></span></li>
         <li style="width: 50px;">风格</li>
-        <li style="width: 50px;"><a href="http://dongblog.com" target="_blank">首页</a></li>
+        <li style="width: 50px;"><a href="http://www.yunxi10.com" target="_blank">首页</a></li>
         <li style="width: 50px;">旧版本</li>
       </ul>
     </div>

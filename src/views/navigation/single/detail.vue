@@ -1,55 +1,53 @@
 <template>
-<div class="mb10 col-md-9" style="overflow: auto;">
-  <div class="mb10" style="overflow: hidden;">
+<div class="mb10 col-md-9" style="overflow: auto; background: #fff">
+  <div class="mb10">
     <div class="module-wrap">
       <div class="module-head">
-        <v-optionsbar title="单页导航">
+        <v-optionsbar :title="action.indexOf('/add') > -1 ? '新增单页' : '编辑单页'">
           <template v-slot:extraleft>
             <span class="pointer" style="margin-top: 1px;" @click="handleClick">返回</span>
           </template>
         </v-optionsbar>
       </div>
-      
-      <div class="module-content" style="padding: 25px 50px !important;">
+      <div class="module-content" style="padding: 25px !important;">
         <ul class="form-wrap-box">
-          <li class="li">
-            <span class="label">标题</span>
+          <li class="vertical">
+            <div class="label">名称</div>
             <div style="display: flex">
               <div style="flex: 1">
-                <input id="title" v-model="detail.title" type="text" placeholder="请输入标题" class="input-sm input-full" :style="[detail.style]" />
+                <input id="title" v-model="detail.title" type="text" placeholder="请输入名称" class="input-sm input-full" :style="[detail.style]" />
               </div>
               <v-titleattribute :style="detail.style || {}" :setStyle="setStyle" />
             </div>
           </li>
-          <li class="li">
-            <span class="label">标签</span>
-            <v-tag v-model:tags="detail.tag" />
+          <li class="vertical">
+            <div class="label">页面标题</div>
+            <input id="title" v-model="detail.seotitle" type="text" placeholder="请输入页面标题" class="input-sm input-full" />
           </li>
-          <li class="li">
-            <span class="label">摘要</span>
-            <textarea placeholder="请输入单页摘要" v-model="detail.description" class="w-full"></textarea>
+          <li class="vertical">
+            <div class="label">页面标签</div>
+            <div>
+              <v-tag v-model:tags="detail.keyword" />
+            </div>
           </li>
-          <li class="li">
-            <span class="label">顺序</span>
-            <input type="text" v-model="detail.sort" placeholder="请输入顺序" class="input-sm input-150" />
+          <li class="vertical">
+            <div class="label">页面摘要</div>
+            <div>
+              <textarea placeholder="请输入单页摘要" v-model="detail.description" class="w-full"></textarea>
+            </div>
           </li>
-          <li class="li">
-            <span class="label">显示</span>
-            <v-radio label="是" name="status" value="1" v-model:checked="detail.status" />
-            <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
+          <li class="vertical">
+            <Editor v-model:contentsss="detail.markdown" />
+          </li>
+          <li class="vertical">
+            <div class="label">聚合标签</div>
+            <div>
+              <v-checkboxgroup :tagList="aaa" :checked="detail.flags" />
+            </div>
           </li>
         </ul>
-        <div class="edit-article">
-          <v-md-editor v-model="detail.content" height="400px"></v-md-editor>
-        </div>
-        <ul class="form-wrap-box mt15">
-          <li class="li">
-            <span class="label">聚会标签</span>
-            <v-checkboxgroup :tagList="aaa" />
-          </li>
-        </ul>
-        <div class="mt20">
-          <button class="btn btn-default" @click="save">保存</button>
+        <div>
+          <button class="btn btn-default btn-primary" @click="save">保存</button>
         </div>
       </div>
 
@@ -58,61 +56,58 @@
 </div>
 <div class="col-md-3" style="overflow: auto;">
   <div style="padding-left: 8px;">
-    <!-- <div class="module-wrap">
-      <div class="module-head clearfix">
-        <span class="left">
-          <v-radiobutton name="status" v-model:checked="detail.status" :enums="[{label: '显示', value: '1'}, {label: '关闭', value: '0'}]" />
-        </span>
-        <span class="right">
-          <button class="btn btn-default" @click="save">保存</button>
-        </span>
-      </div>
-            <div class="module-content plr15" style="height: 150px">
-        
-      </div>
-    </div> -->
-
-    <div class="module-wrap">
-      <div class="module-head" style="line-height: 32px;">
-        分类
-      </div>
-      <div class="module-content plr15" style="height: 150px">
-        <ul>
-          <li class="mb5" v-for="(item, index) in dataList" :key="index">
-            <label>
-              <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" className="mr5" />{{item.name}}
-            </label>
-            <ul class="pl15">
-              <li class="mb5" v-for="(data, i) in item.list" :key="i">
-                <label>
-                  <v-checkbox :checkedList="checkedList" :data="{ id: data.id}" className="mr5" /> {{data.name}}
-                </label>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
-
     <div class="module-wrap">
       <div class="module-head">
-        预览图
+        <label class="relative mr15 mt10 mb5" style="display: inline-block; line-height: 17px;">
+          <input type="checkbox" v-model="status" :checked="status" class="mr5" style="float: left;"><span>显示</span></label>
+        <span class="right"><button class="btn btn-default btn-primary" @click="save">保存</button></span>
+        <span class="right mr10"><button class="btn btn-default btn-primary" @click="handleUpdate(detail)">生成静态</button></span>
+        <span class="right mr10"><a class="btn btn-default btn-primary" :href="`http://www.${channelData.server}/${channelData.module}/${detail.id}.html`" target="_blank">预览</a></span>
       </div>
-      <div class="module-content plr15" style="height: 360px">
+      <div class="module-content plr15">
+        <ul class="form-wrap-box">
+          <li class="vertical">
+            <div class="label">模板</div>
+            <v-select :enums="templates" v-model:value="detail.single_templates" :defaultValue="detail.single_templates = detail.single_templates ? detail.single_templates : 'singlepage.htm'" />
+          </li>
+                    <li class="vertical">
+            <div class="label">目录</div>
+            <input id="title" v-model="detail.dir_file" type="text" placeholder="请输入目录" class="input-sm input-full" />
+          </li>          
+                    <li class="vertical">
+            <div class="label">文件名</div>
+            <input id="title" v-model="detail.html" type="text" placeholder="请输入文件名" class="input-sm input-full" />
+          </li>
+          <li class="li">
+            <span class="label">是否跳转</span>
+            <v-radio label="是" name="target" value="1" v-model:checked="detail.target" />
+            <v-radio label="否" name="target" value="0" v-model:checked="detail.target" />
+          </li>
+        </ul>
 
-        <div>
-          <a data-uploadtype="tech" data-temp="nineimg" class="cl-ccc" @click="uploadImg">点击上传图片</a>
-          <span style=" margin-left: 25px; color:#ccc">请上传本地图片，大小不超过2MB</span>
-        </div>
       </div>
     </div>
-
+    <div class="module-wrap">
+      <div class="module-head">
+        相册
+      </div>
+      <div class="module-content plr15" style="min-height: 290px">
+        <!-- <div>
+          <ul>
+            <li class="col-md-6 p5" style="height: 120px;" v-for="(item, index) in detail.img" :key="index"><img :src="item" style="width: 100%; height: 100%"></li>
+          </ul>
+        </div> -->
+        <v-uploads ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: 'P0002'}" :dataList="detail.img" :uploadtype="channelData.module" @imgList="image" :style="'width: 135px'" />
+      </div>
+    </div>
   </div>
-
 </div>
 </template>
 
 <script lang="ts">
+import {
+  marked
+} from 'marked';
 import {
   defineComponent,
   getCurrentInstance,
@@ -120,15 +115,23 @@ import {
   computed,
   ref,
   useRoute,
-  useRouter
+  useRouter,
+  channels
 } from '@/utils'
 import {
   useStore
 } from 'vuex'
-
+import {
+  TEMPLATES,
+} from '@/assets/enum'
+// import Source from '../../setting/source.vue'
+import Editor from '@/components/packages/editor/index.vue'
 export default defineComponent({
   name: 'HomeViewdd',
-  components: {},
+  components: {
+    // Source,
+    Editor
+  },
   props: {
     type: {
       type: String,
@@ -142,49 +145,59 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
+    let status: any = ref(false)
     const router: any = useRouter();
     const coding: any = proxy.$coding['navigation'].single;
     const detail: any = ref({})
     let checkedList: any = ref([])
     const dataList: any = ref([])
+    const channelData: any = channels();
     const aaa: any = ref([])
-
+    const columns: any = ref([])
+    const detailSSS: any = ref({})
+    const upload: any = ref(null);
+    const img = ref("")
+    const action: any = route.path
+    const templates: any = TEMPLATES
+    let menu: any = ref([{
+        name: "基本信息",
+        value: "appstore1"
+      },
+      {
+        name: "自定义参数",
+        value: "appstore2"
+      }
+    ])
     // 聚合标签
     function checkbox() {
       store.dispatch('common/Fetch', {
         api: "getTagCheckbox",
         data: {
-          channel_id: route.query.channel,
-          type: 'cat'
+          channel_id: channelData.id,
+          type: 'art'
         }
       }).then(res => {
         aaa.value = res.result
       })
     }
 
-    function cate() {
-      store.dispatch('common/Fetch', {
-        api: "navigation",
-        data: {
-          channel: 0
-        }
-      }).then(res => {
-        dataList.value = res.result.list
-      })
-    }
-
     function init() {
-      store.dispatch('common/Fetch', {
-        api: "detail",
-        data: {
-          coding: 'P0002',
-          id: route.query.id
-        }
-      }).then(res => {
-        detail.value = res.result
-        let aaa = res.result.fid.split("|")
-        checkedList.value = aaa.slice(1, aaa.length - 1)
-      })
+      if (action.indexOf('/edit') > -1) {
+        store.dispatch('common/Fetch', {
+          api: "detail",
+          data: {
+            coding: "P0002",
+            id: route.query.id
+          }
+        }).then(res => {
+          detail.value = res.result
+          status.value = detail.value.status === '1' ? true : false
+          let style = JSON.parse(detail.value.style || '{}')
+          detail.value.style = style instanceof Object ? style : {}
+          let aaa = res.result.fid.split("|")
+          checkedList.value = aaa.slice(1, aaa.length - 1)
+        })
+      }
     }
 
     // 设置属性
@@ -194,39 +207,57 @@ export default defineComponent({
 
     // 保存
     function save() {
+      debugger
+      for (let key in detailSSS.value) {
+        detailSSS.value[key] = detail.value[key]
+      }
 
       const {
         fid,
         pid,
         title,
-        status,
-        tag,
+        seotitle,
         sort,
+        single_templates,
+        dir_file,
+        html,
+        target,
         description,
-        content,
+        markdown,
+        keyword,
+        flags,
         style
       } = detail.value
 
       const param: any = {
-        fid: checkedList.value.length > 1 ? `|${checkedList.value.join("|")}|` : "",
+        fid,
         pid,
         title,
-        status,
-        keyword: tag && tag.length > 1 ? `|${tag.join("|")}|` : "",
+        seotitle,
+        img: img.value,
+        status: status.value ? 1 : 0,
         sort,
+        single_templates,
+        dir_file,
+        html,
+        target,
         description,
-        content,
+        content: markdown ? marked.parse(markdown) : "",
+        markdown,
+        keyword: keyword ? keyword.join(',') : "",
+        flags: flags ? `|${flags.join("|")}|` : "",
         style: JSON.stringify(style),
         coding: "P0002",
       }
       if (route.query.id) {
         param.id = detail.value.id
       }
-      // proxy.$hlj.loading()
+
       store.dispatch('common/Fetch', {
         api: route.query.id ? 'update' : "insert",
         data: {
-          ...param
+          ...param,
+          ...detailSSS.value
         }
       }).then(res => {
         proxy.$hlj.message({
@@ -235,18 +266,53 @@ export default defineComponent({
       })
     }
 
-    function handleClick(){
+    function handleClick() {
       router.push(`/admin/navigation/single?channel=${route.query.channel}`)
     }
 
     onMounted(() => {
       init()
       checkbox()
-      cate()
     })
+
+    function getSource(param: any) {
+      detail.value.source = param.source_name
+      detail.value.source_url = param.source_url
+    }
+
+    // 监听图片上传
+    function image(a: any) {
+      debugger
+      img.value = a
+    }
+
+    function handleUpdate(param: any) {
+      if(detail.value.status !== '1'){
+        proxy.$hlj.message({
+          msg: "单页状态未开启"
+        })
+        return
+      }
+      store.dispatch('common/Fetch', {
+        api: "updateStatic",
+        data: {
+          serve: channelData.server,
+          id: param.id,
+          action: 'single',
+        }
+      }).then(res => {
+        debugger
+        proxy.$hlj.message({
+          msg: "更新成功"
+        })
+      })
+    }
 
     return {
       coding,
+      channelData,
+      menu,
+      status,
       detail,
       checkedList,
       init,
@@ -254,7 +320,15 @@ export default defineComponent({
       save,
       dataList,
       aaa,
-      handleClick
+      handleClick,
+      columns,
+      detailSSS,
+      getSource,
+      upload,
+      image,
+      action,
+      handleUpdate,
+      templates
     }
   }
 })

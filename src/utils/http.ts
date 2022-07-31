@@ -6,11 +6,16 @@ import { getToken } from './auth'
 export default class http {
   private baseConfig: any
 
+   getCookieByName(name: any) {
+    const cookie: any = document.cookie;
+    return cookie.split(`; ${name}=`).pop().split(';').shift();
+  }
+
   // 构造函数
   constructor (options?: any) {
     if (!options) {
       this.baseConfig = {
-        baseURL: 'http://www.yunxi10.com/admincms/api/', // 设置跨域代理接口统一的前置地址  http://www.dongblog.com  http://127.0.0.1  http://www.yunxi10.com
+        baseURL: '/admincms/api/', // 设置跨域代理接口统一的前置地址  http://www.dongblog.com  http://127.0.0.1  http://www.yunxi10.com
         timeout: 300000,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
@@ -33,6 +38,8 @@ export default class http {
       if (config.data.upload === true) {
         config.data = config.data.data
       }
+      
+      config.headers.Authorization = this.getCookieByName('token')
       return config
     }, (error: any) => {
       return Promise.reject(error)

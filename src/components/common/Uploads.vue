@@ -18,7 +18,6 @@
       <li class="upfile" :style="style" @click="handleclick"><i class="iconfont icon-add"></i></li>
     </ul>
   </div> <input type="file" id="filElem" accept=".jpg, .jpeg, .bmp, .gif, .png, .heif, .heic" multiple="multiple" class="FileUpload_file_27ilM" style="display: none" @change="getFile">
-  <v-copy v-model:showFlag="isShowCopy" v-if="isShowCopy" />
 </div>
 </template>
 
@@ -184,12 +183,6 @@ export default defineComponent({
       context.emit('imgList', img(imgList.value))
     }
 
-    // 预览图片
-    function handelCopy(param: any) {
-      basic.currentImg = param
-      isShowCopy.value = true
-    }
-
     // 复制图片
     function handleCopy(param: any) {
       let transfer = document.createElement('input');
@@ -240,7 +233,6 @@ export default defineComponent({
       handleDragEnter,
       remove,
       basic,
-      handelCopy,
       isShowCopy,
       handleCopy,
       handleCover,

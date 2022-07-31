@@ -1,8 +1,8 @@
 <template>
-<span @click="handleclick" v-if="type === 'all'" class="pointer">
+<span v-if="type === 'all'" @click="handleclick" class="pointer">
   <i class="iconfont iconslide" :class="expand ? 'icon-jianhao' : 'icon-anonymous-iconfont'"></i>
   {{expand ? '展开' : '收缩'}}</span>
-<i v-else class="iconfont iconslide" :class="data.isShow ? 'icon-jianhao' : 'icon-anonymous-iconfont'" @click="handleclick({data, id: data.id})"></i>
+<i v-else @click="handleclick({data, id: data.id})" class="iconfont iconslide" :class="data.isShow ? 'icon-jianhao' : 'icon-anonymous-iconfont'"></i>
 </template>
 
 <script lang="ts">
@@ -13,9 +13,6 @@ import {
 
 export default defineComponent({
   name: 'v-Search',
-  components: {
-
-  },
   props: {
     type: {
       type: String,
@@ -31,10 +28,10 @@ export default defineComponent({
   emits: ['onClick'],
   setup(props, context) {
     const expand: any = ref(false)
+
     function handleclick() {
       // 全部展开收缩
       if (props.type === 'all') {
-        expand.value = !expand.value
         const loop = (data: any) => {
           return data.map((item: any) => {
             item.isShow = !item.isShow;
@@ -43,8 +40,8 @@ export default defineComponent({
             }
           });
         };
-
         loop(props.data);
+        expand.value = !expand.value
       } else {
         const {
           data

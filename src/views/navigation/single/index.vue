@@ -15,10 +15,8 @@
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-1">顺序</td>
-        <td class="col-md-2">名称</td>
-        <td class="col-md-2">路径</td>
-        <td class="col-md-2">文件</td>
-        <td class="col-md-1">标识</td>
+        <td class="col-md-3">名称</td>
+        <td class="col-md-3">文件</td>
         <td class="col-md-1">状态</td>
         <td class="col-md-2">操作</td>
       </tr>
@@ -32,17 +30,13 @@
         <td>
           <v-quick :value="item.title" :data="{ id: item.id, field: 'title', coding }" :auth="auth.checked('edit')" />
         </td>
-        <td>
-          <v-quick :value="item.url" :data="{ id: item.id, field: 'url', coding }" :auth="auth.checked('edit')" />
-        </td>
-        <td></td>
-        <td></td>
+        <td><v-quick :value="item.html" :data="{ id: item.id, field: 'html', coding }" :auth="auth.checked('edit')" /></td>
         <td>
           <v-switch :data="{ item, field: 'status', coding }" :auth="auth.checked('edit')" />
         </td>
         <td>
           <v-space>
-            <v-button @onClick="handleClick('add')" :disabled="auth.checked('edit')">
+            <v-button @onClick="handleClick(item)" :disabled="auth.checked('edit')">
               编辑
             </v-button>
             <v-confirm name="删除" :data="{id: item.id, coding}" type="text" api="delete" :render="init" operating="delete" :auth="auth.checked('del')"></v-confirm>
@@ -103,9 +97,11 @@ export default defineComponent({
     }
 
     function handleClick(params: any) {
-      let url = '/admin/navigation/single/detail?channel=0'
-      if (params !== 'add') {
-        url = url + `&id=${params.id}`
+      let url = ""
+      if (params === 'add') {
+        url = '/admin/navigation/single/add?channel=0'
+      }else{
+        url = `/admin/navigation/single/edit?channel=0&id=${params.id}`
       }
 
       router.push(url)

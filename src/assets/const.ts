@@ -336,6 +336,13 @@ export const MODUDLE = [
     type: 'plate',
     icon: 'vote',
   },
+  {
+    module: 'favorites',
+    value: 'favorites',
+    name: '收藏',
+    type: 'plate',
+    icon: 'industry',
+  },
 ]
 
 export const linkPage = [

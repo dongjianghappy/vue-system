@@ -183,6 +183,10 @@ const codings: any = {
     cate: "O0012",
     art: "O0013",
   },
+  favorites: {
+    cate: "O0019",
+    art: "O0020",
+  },  
 
   knowledge: {
     cate: "O0015",

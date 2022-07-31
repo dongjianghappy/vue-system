@@ -1,17 +1,16 @@
 <template>
-<v-button @click="handleclick" v-if="type !== 'text'">{{name}}</v-button>
-<span class="cursor" @click="handleclick" v-html="name" v-else></span>
+<v-button v-if="type !== 'text'" @click="handleclick">{{name}}</v-button>
+<span v-else @click="handleclick" v-html="name" class="cursor"></span>
 <Dialog v-model:show="isShow" ref="form" :title="title || name" width="650px" height="500px" :confirm="true" :cancel="true" @submit="submit">
-
   <template v-slot:content v-if="isShow">
     <slot name="content">
       <div class="ant-modal-body">
         <div style="padding: 10px;">当前：{{current.name || data.item.parent}}</div>
         <div class="cate-wrap" style="height: 300px; overflow: auto;">
           <div>
-            <div style="padding: 10px 0px;">
+            <div class="ptb10">
               <div style="position: relative;">
-                <span :class="{current: current.value ===  0}"  @click="choose({value: 0, name: '顶级分类'})">顶级分类</span>
+                <span :class="{current: current.value ===  0}" @click="choose({value: 0, name: '顶级分类'})">顶级分类</span>
                 <template v-if="isInt">
                   <div v-for="(item, index) in dataList" :key="index">
                     <div style="padding: 6px 0px;"><span :class="{current: current.value ===  item.id}" @click="choose({value: item.id, name: item.name})" style="padding: 6px 10px;">{{item.name}}</span></div>
@@ -29,12 +28,9 @@
                     <!-- 基本父类 -->
                     <template v-if="item.list">
                       <div style="display: flex" v-for="(list, i) in item.list" :key="i" class="pl20 clearfix" syle="display: flex; flex-wrap: wrap;">
-
                         <div :class="{current: current.value ===  `|${item.id}|${list.id}|`}" :key="i" style="width: 140px; padding: 6px 10px; display: flex" @click="choose({value: `|${item.id}|${list.id}|`, name:  `${item.name} > ${list.name}`})">
                           {{list.name}}
-
                         </div>
-
                         <div style="flex: 1" v-if="list.list">
                           <ul>
                             <li class="left mr15 mb15" v-for="(data, j) in list.list" :key="j" :class="{current: current.value ===  `|${item.id}|${list.id}|${data.id}|`}" @click="choose({value: `|${item.id}|${list.id}|${data.id}|`, name:  `${item.name} > ${list.name} > ${data.name}`})">{{data.name}}</li>
@@ -42,10 +38,6 @@
                         </div>
                       </div>
                     </template>
-                    <!-- 文档分类 -->
-                    <!-- <div style="display: flex; flex-wrap: wrap;">
-                      <div v-for="(list, i) in item.list" :class="{current: currentValue.value ===  `|${item.id}|${list.id}|`}" :key="i" style="padding: 6px 10px;" @click="choose({value: `|${item.id}|${list.id}|`, name:  `${item.name} > ${list.name}`})">{{list.name}}</div>
-                    </div> -->
                   </div>
                 </template>
               </div>
@@ -73,7 +65,7 @@ import {
 import confirm from '@/assets/modal_enum'
 
 export default defineComponent({
-  name: 'v-Search',
+  name: 'v-Category',
   components: {
     Dialog
   },
@@ -159,12 +151,11 @@ export default defineComponent({
     }
 
     function submit() {
-
       const {
         data
       }: any = props
 
-      if(data.item.id === current.value.value){
+      if (data.item.id === current.value.value) {
         proxy.$hlj.message({
           msg: "不能以自己为父类"
         })
@@ -184,9 +175,7 @@ export default defineComponent({
           }
         })
       }
-
     }
-
     return {
       isShow,
       current,

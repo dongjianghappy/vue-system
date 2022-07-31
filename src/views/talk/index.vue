@@ -1,45 +1,72 @@
 <template>
-<div class="mb10" style="overflow: auto;">
-  <div class="col-md-3" style="padding-right: 8px;">
-    <div class="col-md-4">
-      <v-statisticcard name="用户量" :value="user.total || 0" />
+<div class="mb10 col-md-10" style="overflow: auto;">
+  <div class="mb10" style="overflow: auto;">
+    <div class="col-md-3" style="padding-right: 8px;">
+      <div>
+        <v-statisticcard name="用户量" :value="user.total || 0" />
+      </div>
     </div>
-    <div class="col-md-4">
-      <v-statisticcard name="昨日新增" :value="user.today || 0" />
+    <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
+      <div class="col-md-6">
+        <v-statisticcard name="今日登录" :value="user.total || 0" />
+      </div>
+      <div class="col-md-6">
+        <v-statisticcard name="当前在线" :value="user.today || 0" />
+      </div>
     </div>
-    <div class="col-md-4">
-      <v-statisticcard name="今日新增" :value="user.yesterday || 0" />
+    <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
+      <v-statisticcard name="普通会员" value="2,836" />
+    </div>
+    <div class="col-md-3" style="padding-left: 8px;">
+      <v-statisticcard name="高级会员" value="2,836" />
     </div>
   </div>
-<div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
-    <div class="col-md-6">
-      <v-statisticcard name="今日登录" :value="user.total || 0" />
+  <div class="mb10" style="overflow: auto;">
+    <div class="col-md-9" style=" padding-right: 8px;">
+      <div class="module-wrap">
+        <div class="module-content plr15" style="height: 370px">
+          <ChartLine :chartData="hours.data" :chartOptions="hours.options" />
+        </div>
+      </div>
     </div>
-    <div class="col-md-6">
-      <v-statisticcard name="当前在线" :value="user.today || 0" />
+    <div class="col-md-3" style="padding-left: 8px;">
+      <div class="module-wrap">
+        <div class="module-content plr15" style="height: 370px">
+          <ChartLine :chartData="register.data" :chartOptions="register.options" />
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
-    <v-statisticcard name="普通会员" value="2,836" />
-  </div>
-  <div class="col-md-3" style="padding-left: 8px;">
-    <v-statisticcard name="高级会员" value="2,836" />
   </div>
 </div>
-<div class="mb10" style="overflow: auto;">
-  <div class="col-md-9" style=" padding-right: 8px;">
+<div class="col-md-2" style="overflow: auto;">
+
+  <div style="padding-left: 8px;">
     <div class="module-wrap">
-      <div class="module-content plr15" style="height: 370px">
-        <ChartLine :chartData="hours.data" :chartOptions="hours.options" />
+      <div class="module-head">
+        设置
+        <v-switch :data="{ item: {}, field: 'status', coding: 'O0000' }" className="right" :auth="auth" />
+      </div>
+      <div class="module-content plr15" style="height: 545px">
+        <ul class="form-wrap-box">
+          <li class="li mb10"><span class="label">模块展示</span>
+            <span class="right">
+              <Authority name="设置"  title="权限管理" type="manage" :data="{coding: 'U50002'}" :auth="true" />
+            </span>
+          </li>
+          <!-- <li class="li mb10"><span class="label">聚合标签</span>
+            <span class="right">
+              <Tag action="edit" :render="renderChannel" :data="{channel_id: channelData.id, coding: 'O0002'}" :auth="auth.checked('tag')" />
+            </span>
+          </li>
+          <li class="li mb10"><span class="label">内容来源</span>
+            <span class="right">
+              <Source action="edit" :render="renderChannel" :data="{channel_id: channelData.id, coding: 'O0017'}" :auth="auth.checked('tag')" />
+            </span>
+          </li> -->
+        </ul>
       </div>
     </div>
-  </div>
-  <div class="col-md-3" style="padding-left: 8px;">
-    <div class="module-wrap">
-      <div class="module-content plr15" style="height: 370px">
-        <ChartLine :chartData="register.data" :chartOptions="register.options" />
-      </div>
-    </div>
+
   </div>
 </div>
 </template>
@@ -56,10 +83,12 @@ import {
 import {
   ChartLine
 } from '@/components/packages/chart/index'
+import Authority from '@/components/packages/authority/index.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    ChartLine
+    ChartLine,
+    Authority
   },
   props: {
     style: {
@@ -94,7 +123,7 @@ export default defineComponent({
 
     });
 
- const register: any = computed(() => {
+    const register: any = computed(() => {
       let aaa = store.getters['basic/userDefault'].week || {}
       debugger
       return {
@@ -110,7 +139,7 @@ export default defineComponent({
           height: 300
         }
       }
-    });     
+    });
 
     // 初始化
     function init() {

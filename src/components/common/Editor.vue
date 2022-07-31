@@ -1,10 +1,12 @@
 <template>
-  <v-md-editor v-model="text"
-               height="400px"></v-md-editor>
+<v-md-editor v-model="text" height="400px"></v-md-editor>
 </template>
 
 <script lang="ts">
-import { defineComponent, getCurrentInstance } from 'vue'
+import {
+  defineComponent,
+  getCurrentInstance
+} from 'vue'
 
 export default defineComponent({
   name: 'v-Search',
@@ -12,10 +14,12 @@ export default defineComponent({
 
   },
   emits: ['onClick'],
-  setup(props,context) {
-    const {ctx}:any = getCurrentInstance();
+  setup(props, context) {
+    const {
+      ctx
+    }: any = getCurrentInstance();
 
-    function handleclick(){
+    function handleclick() {
       context.emit('onClick')
     }
     return {

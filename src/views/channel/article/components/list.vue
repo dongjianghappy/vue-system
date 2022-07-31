@@ -162,6 +162,7 @@ export default defineComponent({
     }
 
     function handleUpdate(param: any) {
+      // proxy.$loading.loading()
       store.dispatch('common/Fetch', {
         api: "updateStatic",
         data: {

@@ -605,6 +605,10 @@ export const TEMPLATES = [
     value: 'article_article.htm',
     name: '详情模板',
   },
+  {
+    value: 'singlepage.htm',
+    name: '单页模板',
+  },  
 ]
 
 const enums = {

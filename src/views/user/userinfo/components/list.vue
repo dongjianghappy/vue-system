@@ -49,7 +49,6 @@
             <span>
               <Detail action="edit" :data="{uid: item.account, coding: 'P0005' }" :render="render" />
             </span>
-            <span><a :href="`/admin/personal?uid=${item.account}`" target="_brank">查看</a></span>
             <Popover content="更多" arrow="tb" offset="right" :move="-650" :keys="`static_${index}`">
               <div class="font14" style="width: 650px">
                 <table width="100%" class="table-striped table-hover">
@@ -63,7 +62,7 @@
                   </tr>
                   <tr>
                     <td>{{item.grade}}</td>
-                    <td>{{bannedType[item.status]}}<SetBan :data="item" /></td>
+                    <td>{{bannedType[item.status]}}</td>
                     <td>{{item.year}}</td>
                     <td>{{item.address}}</td>
                     <td>{{item.email}}</td>
@@ -124,10 +123,10 @@ export default defineComponent({
     const checkedList: any = ref([])
     const bannedType: any = BANNED_TYPE
     const gradeEnum: any = {
-      0: "访客",
-      1: "普通用户",
-      2: "高级用户",
-      3: "VIP用户",
+      0: "普通用户",
+      1: "普通会员",
+      2: "高级会员",
+      3: "VIP会员",
       4: "超级VIP",
 
     }

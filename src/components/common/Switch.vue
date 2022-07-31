@@ -21,6 +21,15 @@ export default defineComponent({
         return {}
       }
     },
+    api: {
+      type: String,
+      default: ""
+    },
+    param: {
+      default: () => {
+        return {}
+      }
+    },
     className: {
       type: String,
       default: ""
@@ -29,6 +38,12 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    msg: {
+      type: Function,
+      default: () => {
+        return
+      }
+    }
   },
   emits: ['onClick'],
   setup(props, context) {
@@ -45,14 +60,20 @@ export default defineComponent({
 
     function handleclick(item: any) {
       store.dispatch('common/Fetch', {
-        api: "updateStatus",
+        api: props.api || "updateStatus",
         data: {
           coding,
           id: item.id,
-          status: field
+          status: field,
+          ...props.param
         }
       }).then(res => {
-        item[res.result.type] = res.result.value
+        
+        if(res.result.type){
+          item[res.result.type] = res.result.value
+        }else{
+          props.msg(res.returnMessage)
+        }
       })
     }
     return {

@@ -1,13 +1,16 @@
 <template>
-  <span class="pointer" @click="handleclick" v-if="buttonType === 'text'" :class="{'set-gray': !disabled}" ><slot>按钮</slot></span>
-  <button :class="{'set-gray': !disabled}" :disabled="!disabled" @click="handleclick"
-          class="btn btn-default" :style="style" v-else >
-    <slot>按钮</slot>
-  </button>
+<span v-if="buttonType === 'text'" @click="handleclick" class="pointer" :class="{'set-gray': !disabled}">
+  <slot>按钮</slot>
+</span>
+<button v-else @click="handleclick" :disabled="!disabled" class="btn btn-default" :class="{'set-gray': !disabled}" :style="style">
+  <slot>按钮</slot>
+</button>
 </template>
 
 <script lang="ts">
-import { defineComponent, getCurrentInstance } from 'vue'
+import {
+  defineComponent,
+} from 'vue'
 
 export default defineComponent({
   name: 'v-Search',
@@ -15,36 +18,27 @@ export default defineComponent({
 
   },
   props: {
-    // 是否展示
+    // 展示状态: 用于弹窗和抽提框
     show: {
       type: Boolean,
       default: false
     },
-    // 是否展示
+    // 可点击状态
     disabled: {
       type: Boolean,
       default: true
-    },    
-    // 按钮类型
+    },
+    // 按钮类型: text为文本类型，button为按钮类型
     buttonType: {
       type: String,
       default: "text"
-    }    
+    }
   },
   emits: ['update:show', 'onClick'],
-  setup(props,context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
+  setup(props, context) {
 
-    function handleclick(){
-      if(!props.disabled) {
-          proxy.$hlj.message({
-            msg: "亲，你无权限操作！"
-          })
-        return
-      }
-
+    // 按钮消息发送两种方式: 1、点击事件监听，2、点击响应式切换
+    function handleclick() {
       context.emit('onClick')
       context.emit('update:show', !props.show)
     }

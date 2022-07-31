@@ -43,7 +43,7 @@
 <div class="tabs" v-else>
   <div class="nav-tabs">
     <div class="tabs-list pointer" :class="[{current: currentIndex === index}]" v-for="(item, index) in tabs" :key="index" @click="handleClick(index)">{{item.name}}</div>
-    <div class="pr15" style="flex: 1; text-align: right;">
+    <div v-if="extra" class="pr15" style="flex: 1; text-align: right;">
       <slot name="extra"></slot>
     </div>
   </div>
@@ -117,7 +117,11 @@ export default defineComponent({
     isEmit: {
       type: Boolean,
       default: false
-    }
+    },
+    extra: {
+      type: Boolean,
+      default: true
+    },
   },
   emits: ['update:index'],
   setup(props, context) {
@@ -126,6 +130,7 @@ export default defineComponent({
 
     function handleClick(index: any) {
       if (props.isEmit === true) {
+        currentIndex.value = index
         context.emit('update:index', index)
       } else {
         if (props.method === 'click') {

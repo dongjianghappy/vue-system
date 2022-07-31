@@ -121,6 +121,7 @@ import CustomizeList from '../views/customize/list.vue'
 
 import Vote from '../views/vote/index.vue'
 import VoteList from '../views/vote/list/index.vue'
+import Favorites from '../views/favorites/index.vue'
 
 import Search from '../views/search/index.vue'
 import SearchView from '../views/search/index.vue'
@@ -237,6 +238,7 @@ const arrss: any = {
 //   SettingChannel,
   Vote,
   VoteList,
+  Favorites,
   Search,
   SearchView,
   SearchKeyword,

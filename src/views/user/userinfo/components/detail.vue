@@ -1,17 +1,27 @@
 <template>
 <span @click="handleclick">设置</span>
-<Drawer ref="drawer" v-model:show="isShow" :action="action" title="用户设置" :data="data" api="userDetail" :param="detail" :render="render" :submit="submit">
+<Drawer ref="drawer" v-model:show="isShow" :action="action" title="用户设置" :top="64" :data="data" api="userDetail" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
-
+    <div class="mb15">
+      <v-space>
+        <span>用户状态: {{bannedType[detail.status]}}<SetBan :data="detail" /></span>
+        <span><Authority name="用户权限"  title="权限管理" :data="{coding: 'U50002'}" :uid="data.uid" :auth="true" /></span>
+        <span><a :href="`/admin/personal?uid=${detail.account}`" target="_brank">查看</a></span>
+      </v-space>
+    </div>
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">用户类型</span>
-        <v-radiobutton name="ssss" v-model:checked="detail.grade" :enums="[{label: '访客', value: '0'},{label: '普通用户', value: '1'}, {label: '高级用户', value: '2'}, {label: 'VIP用户', value: '3'}, {label: '超级VIP', value: '4'}]" v-model:value="detail.area" />
+        <v-radiobutton name="ssss" v-model:checked="detail.grade" :enums="[{label: '普通用户', value: '0'},{label: '普通会员', value: '1'}, {label: '高级会员', value: '2'}, {label: 'VIP会员', value: '3'}, {label: '超级VIP', value: '4'}]" v-model:value="detail.area" />
       </li>
       <li class="li">
         <span class="label">角色管理</span>
         <v-select :enums="gradeList" v-model:value="detail.role" />
       </li>
+      <!-- <li class="li">
+        <span class="label">用户权限</span>
+       
+      </li> -->
     </ul>
   </template>
 </Drawer>
@@ -27,11 +37,17 @@ import {
 import {
   Drawer
 } from '@/components/packages/index'
-
+import SetBan from './setBan.vue'
+import Authority from '@/components/packages/authority/index.vue'
+import {
+  BANNED_TYPE,
+} from '@/assets/enum'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer
+    Drawer,
+    SetBan,
+    Authority
   },
   props: {
     action: {
@@ -55,9 +71,9 @@ export default defineComponent({
     const store = useStore()
     const isShow: any = ref(false)
     const detail: any = ref({})
+    const bannedType: any = BANNED_TYPE
     const drawer: any = ref(null)
     const gradeList: any = ref([])
-    
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
@@ -124,7 +140,8 @@ export default defineComponent({
       drawer,
       gradeList,
       submit,
-      
+      bannedType
+
     }
   }
 })

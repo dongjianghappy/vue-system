@@ -77,6 +77,10 @@ const api:any =  {
   cateList(params: any) {
     return http.request('common', 'systemCate', 'post', params)
   },
+  // 简单分类
+  simpleCategory (params: any) {
+    return http.request('common', 'simpleCategory', 'post', params)
+  },
   // 移动文档
   moveAticle(params: any) {
     return http.request('channel', 'moveAticle', 'post', params)
@@ -462,6 +466,46 @@ const api:any =  {
   setCover (params: any) {
     return http.request('channel', 'setCover', 'post', params)
   },
+  // 收藏夹
+  favorites(params: any) {
+    return http.request('vue', 'favorites', 'post', params)
+  },
+  // 收藏夹
+  favoriteList(params: any) {
+    return http.request('vue', 'favoriteList', 'post', params)
+  },  
+  // 收藏夹
+  favoriteDetali(params: any) {
+    return http.request('vue', 'favoriteDetali', 'post', params)
+  },    
+  // 收藏夹
+  talkSetting(params: any) {
+    return http.request('vue', 'talkSetting', 'post', params)
+  },     
+  // 刷新更新
+  refreshBuild(params: any) {
+    return http.request('vue', 'refreshBuild', 'post', params)
+  },      
+
+  // 设置
+  setDefault(params: any) {
+    return http.request('vue', 'setDefault', 'post', params)
+  },     
+  
+  // 用户权限
+  userAuthority(params: any) {
+    return http.request('vue', 'userAuthority', 'post', params)
+  },     
+
+  // 用户权限设置
+  setUserAuthority(params: any) {
+    return http.request('vue', 'setUserAuthority', 'post', params)
+  },     
+  
+  // 用户功能权限
+  setUserFunctionAuthority(params: any) {
+    return http.request('vue', 'setUserFunctionAuthority', 'post', params)
+  },     
 }
 
 export default api

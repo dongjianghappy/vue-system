@@ -6,7 +6,9 @@
       <div class="ant-statistic-content" style="color: rgb(63, 134, 0);">
         {{value}}</div>
     </div>
-    <div class="align_right"><span @click="handelClick(data.module)">{{click}}</span></div>
+    <div class="align_right">
+      <span @click="handelClick(data.module)">{{click}}</span>
+    </div>
   </div>
 </div>
 </template>
@@ -19,9 +21,6 @@ import {
 
 export default defineComponent({
   name: 'v-Search',
-  components: {
-
-  },
   props: {
     data: {
       type: Object,
@@ -41,7 +40,7 @@ export default defineComponent({
       type: String,
       default: ""
     },
-        click: {
+    click: {
       type: String,
       default: ""
     },

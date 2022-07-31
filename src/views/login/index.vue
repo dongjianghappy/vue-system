@@ -63,6 +63,8 @@ export default defineComponent({
       }).then((res) => {
         if (res.ifSuccess === 1) {
           sessionStorage.setItem("menuList", JSON.stringify(res.result.menuList))
+          localStorage.setItem("token", res.result.token)
+          document.cookie = `token=${res.result.token}`
           router.push(`/admin`)
         }
       });

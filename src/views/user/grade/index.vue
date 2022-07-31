@@ -2,16 +2,16 @@
 <div class="ptb5" style="background: #fff">
   <v-tabs :tabs="menu">
    <template v-slot:extra>
-   <Detail :coding="coding" :type='page.value'  />
+   <Detail :data="{coding: 'U0003'}" :type='page.value'  />
  </template> 
  <template v-slot:content1>
-   <List :coding="coding" :type='page.value' :dataList="dataList" />
+   <List :data="{coding: 'U0003'}" :type='page.value' :dataList="dataList" />
  </template>
   <template v-slot:content2>
-   <List :coding="coding" :type='page.value' :dataList="dataList" />
+   <List :data="{coding: 'U0003'}" :type='page.value' :dataList="dataList" />
  </template>  
    <template v-slot:content3>
-   <List :coding="coding" :type='page.value' :dataList="dataList" />
+   <List :data="{coding: 'U0003'}" :type='page.value' :dataList="dataList" />
  </template>   
   </v-tabs>
 </div>

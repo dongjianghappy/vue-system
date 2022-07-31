@@ -34,7 +34,7 @@
         <td>{{item.price}}</td>
         <td>{{item.visit}}</td>
         <td>
-          <v-switch :data="{ item, field: 'status', coding }" />
+          <v-switch :data="{ item, field: 'status', coding }" :auth="true" />
         </td>
         <td>
           <v-space>

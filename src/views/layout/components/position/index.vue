@@ -2,12 +2,16 @@
 <div class="position-wrap">
   <div class="position-dir pl15"><span>首页</span></div>
   <ul class="position-nav align_center">
+    <li class="ant-col ant-col-2 pointer"> 
+    <Music action='action' />
+    </li>
     <li class="ant-col ant-col-2 pointer"><i class="iconfont icon-shezhi font18" @click="handleRouter('appstore', 'setting')"></i></li>
+
     <li class="ant-col ant-col-2" v-if="channel.length>0">
       <v-drawer name='<i class="iconfont icon-app pointer"></i>' title="频道" icon="add" type="text" :top="64" :width="800" :data="1" initialValues="initialValues" :renderList="getData">
         <template v-slot:content>
-            <v-drag @onClick="handleRouterss" />
-      
+          <v-drag @onClick="handleRouterss" />
+
           <!-- <div class="channel-wrap">
             <div class="channel-lists" @click="handleRouter(item.module, item.module)" v-for="(item, index) in channel" :key="index"><i class="iconfont icon-list"></i>{{item.name}}</div>
           </div> -->
@@ -39,6 +43,7 @@ import {
   basicInfo,
   information
 } from '@/assets/const'
+import Music from './music.vue'
 import {
   // Breadcrumb
 } from '@/router/config'
@@ -47,7 +52,7 @@ import {
 } from '@/assets/const'
 export default defineComponent({
   name: 'v-Header',
-  components: {},
+  components: {Music},
   props: {
     setRoute: {
       type: Function,
@@ -169,7 +174,6 @@ export default defineComponent({
       })
     }
 
-    
     function handleRouterss(data: any) {
       debugger
       isShow.value = false
@@ -214,7 +218,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.channel-bg{
+.channel-bg {
   background: #eee;
 }
 </style>

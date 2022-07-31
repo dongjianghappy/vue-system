@@ -7,9 +7,6 @@ import { defineComponent, getCurrentInstance, useStore } from '@/utils'
 
 export default defineComponent({
   name: 'v-Search',
-  components: {
-
-  },
   props: {
     dataList: {
       type: Object,

@@ -36,7 +36,7 @@
             <v-radio label="是" name="status" value="1" v-model:checked="detail.status" />
             <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
           </li>
-                    <li class="li">
+          <li class="li">
             <span class="label">是否跳转</span>
             <v-radio label="是" name="target" value="1" v-model:checked="detail.target" />
             <v-radio label="否" name="target" value="0" v-model:checked="detail.target" />
@@ -157,10 +157,10 @@ export default defineComponent({
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
         detail.value = await drawer.value.init()
-        if(props.action === 'edit'){
+        if (props.action === 'edit') {
           let style = JSON.parse(detail.value.style)
           detail.value.style = style instanceof Object ? style : {}
-        }else{
+        } else {
           detail.value.style = {}
         }
       }
