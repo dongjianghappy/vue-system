@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="true">
   <i class="iconfont icon-write" />
 </v-button>
-<Dialog v-model:show="isShow" ref="form" title="设置用户状态" width="520px" height="350px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" title="设置用户状态" width="520px" height="350px" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -21,7 +21,7 @@
       </li>
     </ul>
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -34,16 +34,11 @@ import {
 import {
   BANNED_DAY,
 } from '@/assets/enum'
-import {
-  Drawer
-} from '@/components/packages/index'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog
+    
   },
   props: {
     attrs: {

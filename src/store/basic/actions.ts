@@ -55,10 +55,10 @@ const actions = {
     
     result.result.list.map((item: any) => {
       if(item.website){
-        let arr = item.website.split(',')
+        const arr = item.website.split(',')
         let bbb = ""
         for(let i = 0; i < arr.length; i++){
-          let arrs = SERVER_NAME.filter(data => data.value === arr[i])
+          const arrs = SERVER_NAME.filter(data => data.value === arr[i])
           if(arrs.length > 0){
             if(i === 0 ){
               bbb = arr.length > 1 ? arrs[0].name : ","+arrs[0].name
@@ -71,7 +71,7 @@ const actions = {
       }
     })
     debugger
-    let number = 1+parseInt(params.tabsIndex)
+    const number = 1+parseInt(params.tabsIndex)
     context.commit("setLink", {state: 'link'+number, data: result.result});
     return result
   },

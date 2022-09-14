@@ -10,7 +10,6 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-
     <table width="100%" class="table-striped table-hover col-left-34">
       <tr class="th">
         <td class="col-md-1">选择</td>
@@ -30,7 +29,9 @@
         <td>
           <v-quick :value="item.title" :data="{ id: item.id, field: 'title', coding }" :auth="auth.checked('edit')" />
         </td>
-        <td><v-quick :value="item.html" :data="{ id: item.id, field: 'html', coding }" :auth="auth.checked('edit')" /></td>
+        <td>
+          <v-quick :value="item.html" :data="{ id: item.id, field: 'html', coding }" :auth="auth.checked('edit')" />
+        </td>
         <td>
           <v-switch :data="{ item, field: 'status', coding }" :auth="auth.checked('edit')" />
         </td>
@@ -55,7 +56,6 @@ import {
   defineComponent,
   getCurrentInstance,
   onMounted,
-  computed,
   ref,
   useRouter,
   useRoute
@@ -75,7 +75,6 @@ export default defineComponent({
   },
   setup(props, context) {
     const {
-      ctx,
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
@@ -100,10 +99,9 @@ export default defineComponent({
       let url = ""
       if (params === 'add') {
         url = '/admin/navigation/single/add?channel=0'
-      }else{
+      } else {
         url = `/admin/navigation/single/edit?channel=0&id=${params.id}`
       }
-
       router.push(url)
     }
 

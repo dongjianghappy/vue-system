@@ -4,6 +4,7 @@ import Index from '../views/layout/index.vue'
 
 
 // // 静态组件
+import Test from '../views/layout/test.vue'
 // import Login from '../views/login/index'
 // import notfound404 from '../views/notfound/404'
 
@@ -28,6 +29,7 @@ import MusicScore from '../views/channel/music/score/index.vue'
 import MusicSinger from '../views/channel/music/singer/index.vue'
 import MusicLrc from '../views/channel/music/lrc/index.vue'
 // import VideoList from '../views/channel/video/list/index.vue'
+import HaoSiteArticle from '../views/channel/haosite/index.vue'
 
 
 
@@ -121,6 +123,16 @@ import CustomizeList from '../views/customize/list.vue'
 
 import Vote from '../views/vote/index.vue'
 import VoteList from '../views/vote/list/index.vue'
+
+import Robot from '../views/robot/robot/index.vue'
+import RobotVersion from '../views/robot/robot/version/index.vue'
+import RobotArticle from '../views/robot/robot/components/detail.vue'
+import Intention from '../views/robot/intention/index.vue'
+import Speech from '../views/robot/speech/index.vue'
+import Chat from '../views/robot/chat/index.vue'
+import ChatList from '../views/robot/chat/list/index.vue'
+
+
 import Favorites from '../views/favorites/index.vue'
 
 import Search from '../views/search/index.vue'
@@ -169,6 +181,7 @@ const arrss: any = {
   MusicScore,
   MusicSinger,
   MusicLrc,
+  HaoSiteArticle,
   // VideoList,
   
   Slideshow,
@@ -238,6 +251,13 @@ const arrss: any = {
 //   SettingChannel,
   Vote,
   VoteList,
+  Robot,
+  RobotVersion,
+  RobotArticle,
+  Intention,
+  Speech,
+  Chat,
+  ChatList,
   Favorites,
   Search,
   SearchView,
@@ -255,7 +275,7 @@ const arrss: any = {
 
 
 const routes: Array<RouteRecordRaw> = [
-  { path: '/Test', component: () => import('../views/layout/test.vue')},
+  { path: '/test', component: () => import('../views/layout/test.vue')},
   { path: '/login', component: () => import('../views/login/index.vue')},
   {
     path: '/space',
@@ -285,7 +305,7 @@ export const loop = (data: any) => {
       if(item.component == ""){
         alert(item.name)
       }
-      let aaa = {
+      const aaa = {
         id: item.id,
         module: item.module,
         name: item.module+item.id,
@@ -304,7 +324,7 @@ export const loop = (data: any) => {
       }
 
       if (item.node && item.sidebar === 'true' && item.disabled === 'true') {
-        let cc = item.path
+        const cc = item.path
         item.node = cc.replace('/admin', `/admin/${item.node}`)
       }
       // 面包屑
@@ -317,7 +337,7 @@ export const loop = (data: any) => {
       return aaa
     }
 
-    let bbb = {
+    const bbb = {
       id: item.id,
       module: item.module,
       name: item.module+item.id,
@@ -334,7 +354,7 @@ export const loop = (data: any) => {
       },
     }
     if (item.node && item.sidebar === 'true' && item.disabled === 'true') {
-      let cc = item.path
+      const cc = item.path
       item.node = cc.replace('admin', `admin/${item.node}`)
     }
     // 面包屑
@@ -360,7 +380,7 @@ name: item.name,
 path: item.path
       })
       // 面包屑
-      let aaa = {
+      const aaa = {
         name: item.name,
         path: item.path,
         node: item.node,
@@ -373,7 +393,7 @@ path: item.path
     }
 params = []
     // 面包屑
-    let bbb = {
+    const bbb = {
       name: item.name,
       path: item.path,
       node: item.node,

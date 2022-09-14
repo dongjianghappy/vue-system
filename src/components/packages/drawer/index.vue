@@ -1,7 +1,6 @@
 <template>
 <div class="drawer-wrap" :class="{'drawer-open': show}" :style="`top: ${top}px`">
   <v-mask v-show="show" v-model:isShow="isShow"></v-mask>
-
   <div class="drawer align_left" :style="{width: `${width}px`, right: show ? '0px' : `-${width}px`}">
     <div class="module-wrap relative" :style="`height:${height}`">
       <div class="module-head" v-if="title">{{title}}
@@ -117,7 +116,7 @@ export default defineComponent({
       context.emit('update:show', false)
     })
 
-    // 初始化数据
+    // 编辑状态下初始化数据
     async function init(param: any) {
       let data = {}
       if (props.action === 'edit') {
@@ -137,6 +136,7 @@ export default defineComponent({
     // 确认按钮
     function submit(params: any) {
 
+      // 提交页面设置在父组件中
       if (props.submit) {
         props.submit({
           cancel: cancel()

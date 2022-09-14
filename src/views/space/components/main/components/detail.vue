@@ -1,6 +1,6 @@
 <template>
 <span @click="handleclick">新建目录</span>
-<Dialog v-model:show="isShow" ref="form" title="新建目录" width="520px" height="200px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" title="新建目录" width="520px" height="200px" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -9,7 +9,7 @@
       </li>
     </ul>
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -19,16 +19,11 @@ import {
   watch,
   useStore,
 } from '@/utils'
-import {
-  Drawer
-} from '@/components/packages/index'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog
+    
   },
   props: {
     data: {

@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow">
   <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />自定义字段
 </v-button>
-<Dialog v-model:show="isShow" ref="form" title="自定义字段" width="520px" height="450px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" title="自定义字段" width="520px" height="450px" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -27,7 +27,7 @@
       </li>
     </ul>
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -36,16 +36,14 @@ import {
   ref,
   watch,
 } from '@/utils'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 import {
   TEXT_TYPE,
 } from '@/assets/enum'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog
+    
   },
   props: {
     action: {

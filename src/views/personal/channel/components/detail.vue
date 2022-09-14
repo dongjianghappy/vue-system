@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow">
   <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? '编辑': '新增友情'}}
 </v-button>
-<Drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑友情链接' : '新增友情链接' " :data="data" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑友情链接' : '新增友情链接' " :data="data" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -55,7 +55,7 @@
       </li>
     </ul>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -68,13 +68,10 @@ import {
 import {
   LINK_TYPE,
 } from '@/assets/enum'
-import {
-  Drawer
-} from '@/components/packages/index'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer
+    
   },
   props: {
     action: {
@@ -99,9 +96,9 @@ export default defineComponent({
       proxy
     }: any = getCurrentInstance();
     const isShow: any = ref(false)
-    const detail: any = ref({})
     const drawer: any = ref(null)
     const sourceType: any = LINK_TYPE
+    const detail: any = ref({})
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {

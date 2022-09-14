@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="auth || disabled">
   <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增分类"}}
 </v-button>
-<Drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑分类' : '新增分类' " :data="data" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑分类' : '新增分类' " :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <v-tabs :tabs="menu" method="click">
       <template v-slot:content1>
@@ -73,7 +73,7 @@
       </template>
     </v-tabs>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -90,13 +90,9 @@ import {
 import {
   TEMPLATES,
 } from '@/assets/enum'
-import {
-  Drawer
-} from '@/components/packages/index'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer
   },
   props: {
     attrs: {
@@ -205,7 +201,7 @@ export default defineComponent({
         data: {
           ...props.data,
           ...detail.value,
-          keyword: keyword.join(','),
+          keyword: keyword && keyword.join(',') || "",
           flags: flags ? `|${flags.join("|")}|` : "",
           style: JSON.stringify(style),
         }

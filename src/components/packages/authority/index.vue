@@ -2,12 +2,9 @@
 <v-button v-model:show="isShow" :disabled="auth">
   {{name}}
 </v-button>
-<Drawer v-model:show="isShow" :title="title" :top="64" width="500" :auth="auth">
+<v-drawer v-model:show="isShow" :title="title" :top="64" width="500" :auth="auth">
   <template v-slot:extra v-if="type==='manage'">
     <v-space>
-      <!-- <span @click="handelBuild">
-        <i class="iconfont icon-refresh"></i>更新配置
-      </span> -->
       <AddButton :data="data" :render="init" :channel="channelMenu" />
     </v-space>
   </template>
@@ -45,7 +42,7 @@
       </template>
     </v-tabs>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -61,15 +58,11 @@ import ApplicationList from './applicationList.vue'
 import FunctionList from './functionList.vue'
 import AddButton from './addlink.vue'
 import AddModule from './addModule.vue'
-import {
-  Drawer
-} from '@/components/packages/index'
 export default defineComponent({
   name: 'v-Search',
   components: {
     AddButton,
     AddModule,
-    Drawer,
     List,
     ApplicationList,
     FunctionList
@@ -160,16 +153,6 @@ export default defineComponent({
       param.extand = !param.extand
     }
 
-    // function handelBuild() {
-    //   store.dispatch('common/Fetch', {
-    //     api: 'refreshBuild'
-    //   }).then(res => {
-    //     proxy.$hlj.message({
-    //       msg: res.returnMessage
-    //     })
-    //   })
-    // }
-
     function handleDefault(param: any) {
       store.dispatch('common/Fetch', {
         api: 'setDefault',
@@ -195,7 +178,6 @@ export default defineComponent({
       module,
       init,
       handelExpand,
-      // handelBuild,
       handleDefault,
       indexsss
     }

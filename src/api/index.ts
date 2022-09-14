@@ -505,7 +505,66 @@ const api:any =  {
   // 用户功能权限
   setUserFunctionAuthority(params: any) {
     return http.request('vue', 'setUserFunctionAuthority', 'post', params)
+  },  
+
+// 新增机器人
+insertRobot (params: any) {
+  return http.request('robot', 'insertRobot', 'post', params)
+  } , 
+  
+// 更改机器人
+updateRobot (params: any) {
+  return http.request('robot', 'updateRobot', 'post', params)
+  } ,   
+  
+  // 机器人
+  robot(params: any) {
+    return http.request('vue', 'robot', 'post', params)
   },     
+
+  // 意图库管理
+  speechLib(params: any) {
+    return http.request('vue', 'speechLib', 'post', params)
+  },     
+
+  // 话术管理
+  speech(params: any) {
+    return http.request('vue', 'speech', 'post', params)
+  },     
+
+// 开始会话
+begin (params: any) {
+  return http.request('robot', 'begin', 'post', params)
+  } , 
+   
+// 开始中
+talking (params: any) {
+  return http.request('robot', 'talking', 'post', params)
+  } , 
+  
+// 会话结束
+close (params: any) {
+  return http.request('robot', 'close', 'post', params)
+  } ,   
+
+  // 对话记录
+  chat(params: any) {
+    return http.request('vue', 'chat', 'post', params)
+  },     
+
+  // 对话详情
+  chatDetail(params: any) {
+    return http.request('vue', 'chatDetail', 'post', params)
+  },  
+  // 日历查询
+  Calendar (params: any) {
+    return http.request('common', 'Calendar', 'post', params)
+  },  
+
+  // 语音播报
+  voiceBroadcast (params: any) {
+    return http.request('common', 'voiceBroadcast', 'post', params)
+  },  
 }
 
 export default api

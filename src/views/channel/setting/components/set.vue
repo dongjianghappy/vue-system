@@ -18,12 +18,9 @@ import {
   computed,
   useStore
 } from '@/utils'
-import Detail from './detail.vue'
 export default defineComponent({
   name: 'HomeViewdd',
-  components: {
-    Detail
-  },
+  components: {},
   props: {
     dataList: {
       type: Object,

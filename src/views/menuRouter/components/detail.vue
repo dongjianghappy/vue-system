@@ -1,6 +1,6 @@
 <template>
 <span @click="handleclick">{{action === 'edit'? "编辑": "新增页面"}}</span>
-<Drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑页面' : '新增页面' " :data="data" api="routerDetail" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑页面' : '新增页面' " :data="data" api="routerDetail" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li clearfix">
@@ -103,7 +103,7 @@
       </li>
     </ul>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -113,14 +113,10 @@ import {
   watch,
   useStore
 } from '@/utils'
-import {
-  Drawer
-} from '@/components/packages/index'
 import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer,
     Popover
   },
   props: {

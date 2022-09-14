@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-drawer title="展示设置" name='<i class="iconfont icon-shezhi pointer"></i>' :top="64" :width="245" :auth="auth">
+  <v-draweraaaa title="展示设置" name='<i class="iconfont icon-shezhi pointer"></i>' :top="64" :width="245" :auth="auth">
     <template v-slot:content>
       <div class="channel-box">
         <ul class="form-wrap-box">
@@ -19,7 +19,7 @@
         </ul>
       </div>
     </template>
-  </v-drawer>
+  </v-draweraaaa>
 
 </div>
 </template>

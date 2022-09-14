@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow">
   <i class="iconfont" :class="`icon-${action === 'add' ? 'add' : 'edit'}`" />{{action === 'edit'? '修改项目信息': '创建投票'}}
 </v-button>
-<Drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '修改项目信息' : '创建投票' " api="selectVoteList" :submit="submit" :submitApi="{insert: 'createVote', update: 'updateVote'}" :data="data" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '修改项目信息' : '创建投票' " api="selectVoteList" :submit="submit" :submitApi="{insert: 'createVote', update: 'updateVote'}" :data="data" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
     <div class="alert-description ptb10 plr15">
       投票设置后，必须插入图文消息中才可生效。投票将统计该投票在各个渠道的综合结果总和，包括群发消息，自动回复，自定义菜单等。
@@ -65,28 +65,19 @@
       </li>
     </ul>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   ref,
   watch,
   useStore
 } from '@/utils'
-import {
-  LINK_TYPE,
-} from '@/assets/enum'
-import {
-  Drawer
-} from '@/components/packages/index'
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    Drawer
-  },
+  name: 'v-Detail',
+  components: {},
   props: {
     action: {
       type: String,
@@ -107,14 +98,10 @@ export default defineComponent({
   },
   setup(props, context) {
     const store = useStore();
-    const {
-      proxy
-    }: any = getCurrentInstance();
     const isShow: any = ref(false)
-    const detail: any = ref({})
     const drawer: any = ref(null)
-    const sourceType: any = LINK_TYPE
     const List: any = ref([])
+    const detail: any = ref({})
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
@@ -182,11 +169,8 @@ export default defineComponent({
           ...param
         }
       }).then(res => {
-        proxy.$hlj.message({
-          msg: "编辑成功"
-        })
         props.render()
-        params.cancel()
+        params.message()
       })
     }
 
@@ -195,7 +179,6 @@ export default defineComponent({
       List,
       detail,
       drawer,
-      sourceType,
       clickAdd,
       clickRemove,
       submit

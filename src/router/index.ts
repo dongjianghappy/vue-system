@@ -13,7 +13,7 @@ const aaaaaa: any = sessionStorage.getItem('menuList')
 const bbbbbb = JSON.parse(aaaaaa) || []
 
 
-let bbb: any = loop(bbbbbb || [])
+const bbb: any = loop(bbbbbb || [])
 asyncRoutes[0].children = bbb
 router.matcher=bbb
 asyncRoutes.forEach((item: any) => {

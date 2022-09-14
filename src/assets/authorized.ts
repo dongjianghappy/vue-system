@@ -428,6 +428,33 @@ export const channel = {
 		}
 	},
 
+	// 教程
+	learn: {
+		status: 'b:learn:status',
+		display: 'b:learn:display',
+		info: 'b:learn:info',
+		tag: 'b:learn:tag',
+		cate: {
+			add: 'b:learn:cate:add',
+			del: 'b:learn:cate:edit',
+			edit: 'b:learn:cate:delete'
+		},
+		art: {
+			add: 'b:learn:list:add',
+			del: 'b:learn:list:delete',
+			edit: 'b:learn:list:edit',
+			top: 'b:learn:list:top'
+		},
+		comment: {
+			show: 'b:learn:comment:show',
+			del: 'b:learn:comment:delete'
+		},
+		recycle: {
+			reduction: 'b:learn:recycle:reduction',
+			del: 'b:learn:recycle:delete'
+		}
+	},		
+
 	// 问答
 	questions: {
 		status: 'b:questions:status',
@@ -455,6 +482,29 @@ export const channel = {
 		}
 	},
 
+	// 导航
+	haosite: {
+		status: 'b:haosite:status',
+		display: 'b:haosite:display',
+		info: 'b:haosite:info',
+		tag: 'b:haosite:tag',
+		cate: {
+			add: 'b:haosite:cate:add',
+			del: 'b:haosite:cate:edit',
+			edit: 'b:haosite:cate:delete'
+		},
+		art: {
+			add: 'b:haosite:list:add',
+			del: 'b:haosite:list:delete',
+			edit: 'b:haosite:list:edit',
+			top: 'b:haosite:list:top'
+		},
+		recycle: {
+			reduction: 'b:haosite:recycle:reduction',
+			del: 'b:haosite:recycle:delete'
+		}
+	},	
+
 	// 博客
 	blog: {
 		status: 'b:blog:status',
@@ -479,6 +529,32 @@ export const channel = {
 		recycle: {
 			reduction: 'b:blog:recycle:reduction',
 			del: 'b:blog:recycle:delete'
+		}
+	},
+	// 数字藏品
+	digital: {
+		status: 'b:digital:status',
+		display: 'b:digital:display',
+		info: 'b:digital:info',
+		tag: 'b:digital:tag',
+		cate: {
+			add: 'b:digital:cate:add',
+			del: 'b:digital:cate:edit',
+			edit: 'b:digital:cate:delete'
+		},
+		art: {
+			add: 'b:digital:list:add',
+			del: 'b:digital:list:delete',
+			edit: 'b:digital:list:edit',
+			top: 'b:digital:list:top'
+		},
+		comment: {
+			show: 'b:digital:comment:show',
+			del: 'b:digital:comment:delete'
+		},
+		recycle: {
+			reduction: 'b:digital:recycle:reduction',
+			del: 'b:digital:recycle:delete'
 		}
 	},
 }

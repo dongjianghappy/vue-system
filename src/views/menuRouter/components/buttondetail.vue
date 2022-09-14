@@ -1,6 +1,6 @@
 <template>
 <span @click="handleclick">按钮</span>
-<Drawer ref="drawer" v-if="!disabled" v-model:show="isShow" action="add" title="页面按钮管理" :width="800">
+<v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" action="add" title="页面按钮管理" :width="800">
   <template v-slot:content v-if="isShow">
     <div class="mb10">
       <span class="mr25 cl-red">{{name}}页面{{data}}</span>
@@ -32,7 +32,7 @@
     </table>
     <v-nodata :data="detail || []" />
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -42,14 +42,10 @@ import {
   useStore,
   watch,
 } from '@/utils'
-import {
-  Drawer
-} from '@/components/packages/index'
 import AddButton from './addButton.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer,
     AddButton
   },
   props: {

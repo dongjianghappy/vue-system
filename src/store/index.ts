@@ -6,6 +6,7 @@ import website from './website'
 import user from './user'
 import talk from './talk'
 import channel from './channel'
+import graph from './graph'
 import permission from './permission'
 
 
@@ -24,6 +25,7 @@ export default createStore({
     user,
     talk,
     channel,
+    graph,
     permission
   }
 })

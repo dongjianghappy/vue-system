@@ -1,7 +1,7 @@
 <template>
 <div style="display: flex; justify-content: space-between; height: 32px; line-height: 32px;">
   <div style="display: flex; height: 32px; line-height: 32px;">
-    <div class="mr15 " style="display: flex; padding-top: 7px;"><span class="pl10" style="border-left: 3px solid rgb(24, 144, 255); height: 20px; line-height: 20px;">{{title}}</span></div>
+    <div class="mr15 " style="display: flex; padding-top: 7px;"><span @click="handleClick" class="pl10" style="border-left: 3px solid rgb(24, 144, 255); height: 20px; line-height: 20px;">{{title}}</span></div>
  <slot name="extraleft"></slot>
   </div>
   <div style="display: flex; justify-content: space-between;">
@@ -40,7 +40,7 @@ export default defineComponent({
       }
     }
   },
-  emits: ['update:user'],
+  emits: ['onClick'],
   setup(props, context) {
     let isEdit = ref(true)
     const dataList: any = ref(props.data)
@@ -53,10 +53,15 @@ export default defineComponent({
 
     }
 
+    function handleClick(){
+      context.emit('onClick', 0)
+    }
+
     return {
       isEdit,
       dataList,
-      Edit
+      Edit,
+      handleClick
     }
   }
 

@@ -6,8 +6,11 @@ export interface State {
   website: any;
   funny: any;
   notes: any;
+  learn: any;
   questions: any;
+  haosite: any;
   blog: any;
+  digital: any;
   cateList: any;
   articleList: any;
   auditList: any;
@@ -59,8 +62,20 @@ const initState: State = {
     articleList: {},
     auditList: {},
     returnList: {},
+  }, 
+  learn: {
+    cateList: [],
+    articleList: {},
+    auditList: {},
+    returnList: {},
   },  
   questions: {
+    cateList: [],
+    articleList: {},
+    auditList: {},
+    returnList: {},
+  },
+  haosite: {
     cateList: [],
     articleList: {},
     auditList: {},
@@ -72,6 +87,12 @@ const initState: State = {
     auditList: {},
     returnList: {},
   },  
+  digital: {
+    cateList: [],
+    articleList: {},
+    auditList: {},
+    returnList: {},
+  },
   cateList: [],
   articleList: {},
   auditList: {},

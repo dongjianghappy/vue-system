@@ -5,18 +5,43 @@
       <v-statisticcard name="用户总量" :value="user.total" />
     </div>
     <div class="col-md-4">
-      <v-statisticcard name="昨日注册" :value="user.today" />
+      <v-statisticcard name="昨日注册" :value="user.yesterday" />
     </div>
     <div class="col-md-4">
-      <v-statisticcard name="今日注册" :value="user.yesterday" />
+      <v-statisticcard name="今日注册" :value="user.today" />
     </div>
   </div>
-  <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
+  <!-- <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
     <v-statisticcard name="业绩" value="2,836" />
   </div>
   <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
     <v-statisticcard name="消息" value="2,836" />
+  </div> -->
+
+<div class="col-md-3" style="padding-right: 8px;">
+    <div class="col-md-4">
+      <v-statisticcard name="累计览量" :value="statistics.total_visit || 0" />
+    </div>
+    <div class="col-md-4">
+      <v-statisticcard name="昨日览量" :value="statistics.yesterday && statistics.yesterday.pv || 0" />
+    </div>
+    <div class="col-md-4">
+      <v-statisticcard name="今日览量" :value="statistics.today && statistics.today.pv || 0" />
+    </div>
   </div>
+  <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
+    <div class="col-md-4">
+      <v-statisticcard name="累计IP" :value="statistics.total_ip || 0" />
+    </div>
+    <div class="col-md-4">
+      <v-statisticcard name="昨日IP" :value="statistics.yesterday && statistics.yesterday.ip || 0" />
+    </div>
+    <div class="col-md-4">
+      <v-statisticcard name="今日IP" :value="statistics.today && statistics.today.ip || 0" />
+    </div>
+  </div>
+
+  
   <div class="col-md-3" style="padding-left: 8px;">
     <div class="col-md-6">
       <v-statisticcard name="订单总量" value="2,836" />
@@ -115,6 +140,7 @@ export default defineComponent({
     const store = useStore();
 
     const user: any = computed(() => store.getters['basic/default'].user || {});
+    const statistics: any = computed(() => store.getters['basic/default'].statistics || {});
     const hours: any = computed(() => {
       let aaa = store.getters['basic/default'].hours || {}
       debugger
@@ -193,6 +219,7 @@ export default defineComponent({
     onMounted(init)
     return {
       user,
+      statistics,
       // order,
       hours,
       visit,

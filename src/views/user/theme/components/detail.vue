@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow">
   <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增主题"}}
   </v-button>
-<Dialog v-model:show="isShow" ref="form" :action="action" :title="action === 'edit' ? '编辑主题' : '新增主题' " width="520px" height="450px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" :action="action" :title="action === 'edit' ? '编辑主题' : '新增主题' " width="520px" height="450px" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
        <li class="li">
@@ -27,7 +27,7 @@
       </li>
     </ul>
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -36,16 +36,11 @@ import {
   ref,
   watch,
 } from '@/utils'
-import {
-  Drawer
-} from '@/components/packages/index'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog
+    
   },
   props: {
     attrs: {

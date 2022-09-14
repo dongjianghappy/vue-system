@@ -2,11 +2,11 @@
 <v-button v-model:show="isShow">
   <span v-html="title"></span>
 </v-button>
-<Drawer ref="drawer" v-model:show="isShow" action="edit" :title="detail.title" :data="data" :param="detail" :hasfooter="false">
+<v-drawer ref="drawer" v-model:show="isShow" action="edit" :title="detail.title" :data="data" :param="detail" :hasfooter="false">
   <template v-slot:content v-if="isShow">
     内容
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -19,14 +19,9 @@ import {
 import {
   LINK_TYPE,
 } from '@/assets/enum'
-import {
-  Drawer
-} from '@/components/packages/index'
 export default defineComponent({
   name: 'v-Search',
-  components: {
-    Drawer
-  },
+  components: {},
   props: {
     title: {
       type: String,
@@ -50,9 +45,9 @@ export default defineComponent({
       proxy
     }: any = getCurrentInstance();
     const isShow: any = ref(false)
-    const detail: any = ref({})
     const drawer: any = ref(null)
     const sourceType: any = LINK_TYPE
+    const detail: any = ref({})
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {

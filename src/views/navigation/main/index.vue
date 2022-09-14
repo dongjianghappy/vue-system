@@ -6,7 +6,6 @@
       <template v-slot:extraleft>
         <Popover :content="`主导航`" arrow="tb" offset="right" :move="-35" :keys="`static111}`">
           <ul>
-
             <li class="font14" style="line-height: 35px;" @click="handleClicksss(item, i)" v-for="(item, i) in navType" :key="i">{{item.name}}</li>
           </ul>
         </Popover>
@@ -21,7 +20,6 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-
     <table width="100%" class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
@@ -46,7 +44,6 @@
           <td>
             <v-switch :data="{ item, field: 'status', coding }" :auth="auth.checked('edit')" />
           </td>
-
           <td>
             <v-space>
               <span>
@@ -58,7 +55,6 @@
             </v-space>
           </td>
         </tr>
-
         <tr className="tr-slide" v-for="(data, i) in item.list" :key="i" v-show="item.isShow" :draggable="isMove" class="dragObj" :index="`1_${i}`" :findex="index">
           <td>
             <v-checkbox :checkedList="checkedList" :data="{ id: data.id}" />
@@ -72,10 +68,8 @@
           <td>
             <v-switch :data="{ item: data, field: 'status', coding }" />
           </td>
-
           <td>
             <v-space>
-
               <span>
                 <Detail action="edit" :data="{id: data.id, coding}" :param="param" :render="init" :checkboxList="aaa" :auth="auth.checked('edit')" />
               </span>
@@ -99,7 +93,6 @@ import {
   defineComponent,
   getCurrentInstance,
   onMounted,
-  computed,
   ref,
   useStore,
   useRoute,
@@ -144,11 +137,8 @@ export default defineComponent({
 
             const moveIndex = res.moveIndex.substring(2)
             const enterIndex = res.enterIndex.substring(2)
-
             const list = res.findex !== null ? dataList.value[res.findex].list : dataList.value
-
             const dragItem = list[moveIndex] // 拖拽列
-
             const item = list.splice(enterIndex, 1, dragItem)[0]; // 这一步是将要替换的删除，并将移动的插入，最后返回被删除的数组
             list[moveIndex] = item;
             let form: any = []
@@ -158,7 +148,6 @@ export default defineComponent({
                 form.push({
                   id: item.id,
                   sort: item.sort,
-                  // isshow: item.isshow,
                 })
                 if (item.list) {
                   loop(item.list)

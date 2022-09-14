@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow">
   <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增分类"}}
 </v-button>
-<Drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑分类' : '新增分类' " :data="data" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑分类' : '新增分类' " :data="data" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
     <v-tabs :tabs="menu" method="click">
       <template v-slot:content1>
@@ -19,7 +19,6 @@
             <span class="label">所属分类</span>
             {{detail.parent}}
             <v-category name="选择分类" :data="{detail, coding}" type="text" api="delete"></v-category>
-
           </li>
           <li class="li">
             <span class="label">顺序</span>
@@ -38,12 +37,10 @@
               </option>
             </select>
           </li>
-
           <li class="li">
             <span class="label">聚合标签</span>
             <v-checkboxgroup :tagList="checkboxList" />
           </li>
-
         </ul>
       </template>
       <template v-slot:content2>
@@ -64,7 +61,7 @@
       </template>
     </v-tabs>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -78,13 +75,10 @@ import {
 import {
   NAV_TYPE,
 } from '@/assets/enum'
-import {
-  Drawer
-} from '@/components/packages/index'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer
+
   },
   props: {
     attrs: {
@@ -116,10 +110,10 @@ export default defineComponent({
   },
   setup(props, context) {
     const isShow: any = ref(false)
-    const detail: any = ref({})
     const drawer: any = ref(null)
     const navType: any = NAV_TYPE
     const store = useStore();
+    const detail: any = ref({})
 
     let menu: any = ref([{
         name: "分类信息",

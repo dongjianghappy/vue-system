@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow">
   <i class="iconfont" :class="`icon-${action === 'add' ? 'add' : 'edit'}`" />{{action === 'add' ? '创建收藏夹' : ''}}
 </v-button>
-<Dialog ref="dialog" v-model:show="isShow" title="创建收藏夹" :action="action" :data="data" width="520px" height="200px" :confirm="true" :cancel="true" @submit="submit" >
+<v-dialog ref="dialog" v-model:show="isShow" title="创建收藏夹" :action="action" :data="data" width="520px" height="200px" :confirm="true" :cancel="true" @submit="submit" >
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -11,7 +11,7 @@
       </li>
     </ul>
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -21,16 +21,14 @@ import {
   watch,
   useStore
 } from '@/utils'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 import {
   TEXT_TYPE,
 } from '@/assets/enum'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog
+    
   },
   props: {
     action: {
@@ -98,7 +96,7 @@ export default defineComponent({
       textType,
       isShow,
       detail,
-      dialog,
+      
       submit
     }
   }

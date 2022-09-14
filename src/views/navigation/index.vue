@@ -1,12 +1,9 @@
 <template>
   <div class="module-wrap">
     <div class="module-head">
-      <v-optionsbar title="导航管理">
-        
-      </v-optionsbar>
+      <v-optionsbar title="导航管理" />
     </div>
     <div class="module-content plr15 font12">
-
       <table width="100%" class="table-channel table-striped col-left-23">
         <tr v-for="(item, index) in channel" :key="index">
           <td class="col-md-2 bd0">
@@ -53,17 +50,14 @@ import {
   onMounted,
   computed,
   ref,
+  useStore,
   useRouter
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 
 export default defineComponent({
   name: 'HomeViewdd',
   setup(props, context) {
     const {
-      ctx,
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
@@ -75,15 +69,6 @@ export default defineComponent({
       store.dispatch('common/Channel')
     }
 
-    function edit(param: any) {
-      store.dispatch('common/Fetch', {
-        api: "EditUserInfo",
-        data: {
-          ...param
-        }
-      })
-    }
-
     function handleclick(params: any) {
       router.push(params)
     }
@@ -93,7 +78,6 @@ export default defineComponent({
     return {
       coding,
       channel,
-      edit,
       handleclick
 
     }

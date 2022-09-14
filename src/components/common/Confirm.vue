@@ -3,13 +3,13 @@
   <i class="iconfont" :class="`icon-${icon} ${className}`" v-if="icon" />
   {{name}}
   </v-button>
-<Dialog v-model:show="isShow" ref="form" width="400px" height="150px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" width="400px" height="150px" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <slot name="content">
       <div class="p20">{{message[operating] && message[operating].title}}</div>
     </slot>
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -19,15 +19,13 @@ import {
   ref,
   useStore
 } from '@/utils'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 import confirm from '@/assets/modal_enum'
 
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog
+    
   },
   props: {
     name: {

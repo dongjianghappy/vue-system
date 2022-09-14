@@ -1,11 +1,13 @@
 <template>
 <span @click="handleclick">设置</span>
-<Drawer ref="drawer" v-model:show="isShow" :action="action" title="用户设置" :top="64" :data="data" api="userDetail" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" title="用户设置" :top="64" :data="data" api="userDetail" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <div class="mb15">
       <v-space>
-        <span>用户状态: {{bannedType[detail.status]}}<SetBan :data="detail" /></span>
-        <span><Authority name="用户权限"  title="权限管理" :data="{coding: 'U50002'}" :uid="data.uid" :auth="true" /></span>
+        <span>用户状态: {{bannedType[detail.status]}}
+          <SetBan :data="detail" /></span>
+        <span>
+          <Authority name="用户权限" title="权限管理" :data="{coding: 'U50002'}" :uid="data.uid" :auth="true" /></span>
         <span><a :href="`/admin/personal?uid=${detail.account}`" target="_brank">查看</a></span>
       </v-space>
     </div>
@@ -18,13 +20,9 @@
         <span class="label">角色管理</span>
         <v-select :enums="gradeList" v-model:value="detail.role" />
       </li>
-      <!-- <li class="li">
-        <span class="label">用户权限</span>
-       
-      </li> -->
     </ul>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -34,9 +32,6 @@ import {
   useStore,
   watch,
 } from '@/utils'
-import {
-  Drawer
-} from '@/components/packages/index'
 import SetBan from './setBan.vue'
 import Authority from '@/components/packages/authority/index.vue'
 import {
@@ -45,7 +40,6 @@ import {
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer,
     SetBan,
     Authority
   },
@@ -70,9 +64,9 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore()
     const isShow: any = ref(false)
-    const detail: any = ref({})
     const bannedType: any = BANNED_TYPE
     const drawer: any = ref(null)
+    const detail: any = ref({})
     const gradeList: any = ref([])
 
     // 监听
@@ -109,7 +103,7 @@ export default defineComponent({
       isShow.value = !isShow.value
     }
 
-    function submit(cancel: any) {
+    function submit(params: any) {
       const {
         account,
         role,
@@ -129,7 +123,6 @@ export default defineComponent({
         }
       }).then(res => {
         props.render()
-        cancel()
       })
     }
 
@@ -141,7 +134,6 @@ export default defineComponent({
       gradeList,
       submit,
       bannedType
-
     }
   }
 })

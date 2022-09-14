@@ -1,5 +1,5 @@
 <template>
-<Index />
+<v-calendar />
 </template>
 
 <script lang="ts">
@@ -27,7 +27,7 @@ export default defineComponent({
     const isLogin: any = ref(false)
 
     store.dispatch('user/Detect').then((res) => {
-       
+
       if (res) {
         sessionStorage.setItem("menuList", JSON.stringify(res.menuList))
         store.dispatch('permission/generateRoutes', [
@@ -38,7 +38,7 @@ export default defineComponent({
       }
     })
 
-    function setRoute(param: any){
+    function setRoute(param: any) {
       module.value = param
       sessionStorage.setItem('sidebar', param)
     }
@@ -58,19 +58,20 @@ export default defineComponent({
 .layout {
   display: flex;
   flex: auto;
-flex-direction: column;
-    min-height: 0;
-    background: #f0f2f5;
-    width: 100%;
-    height: 100vh;
+  flex-direction: column;
+  min-height: 0;
+  background: #f0f2f5;
+  width: 100%;
+  height: 100vh;
 }
-.sidebar{
+
+.sidebar {
   position: relative;
   box-shadow: rgb(0 21 41 / 8%) 0px 1px 4px;
-    bottom: 0 !important;
+  bottom: 0 !important;
   flex: 0 0 200px;
-    max-width: 200px;
-    min-width: 200px;
-    width: 200px;
+  max-width: 200px;
+  min-width: 200px;
+  width: 200px;
 }
 </style>

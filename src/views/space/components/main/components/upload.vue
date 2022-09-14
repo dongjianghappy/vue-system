@@ -1,10 +1,10 @@
 <template>
 <span @click="handleclick">上传图片</span>
-<Dialog v-model:show="isShow" ref="form" title="上传图片" width="600px" height="500px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" title="上传图片" width="600px" height="500px" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <v-upload ref="upload" uploadtype='space' :data="data" :img="data.img" @imgList="image" />
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -13,16 +13,11 @@ import {
   ref,
   watch,
 } from '@/utils'
-import {
-  Drawer
-} from '@/components/packages/index'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog
+    
   },
   props: {
     data: {

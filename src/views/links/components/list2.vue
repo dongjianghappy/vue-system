@@ -4,7 +4,6 @@
     <v-optionsbar title="出售友链">
       <template v-slot:extraright>
         <v-space>
-          {{serverName}}
           <v-condition name="网站" icon="select" field="website" :enums="serverName" :render="render" />
           <v-condition name="平台" icon="select" field="source" :enums="sourceType" :render="render" />
           <Detail action='add' :data="data" :render="render" :auth="auth.checked('add')" />

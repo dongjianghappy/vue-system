@@ -1,6 +1,6 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth" >权限</v-button>
-<Drawer ref="drawer" v-model:show="isShow" action="edit" title="权限设置" :data="data" api="userGrade" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" action="edit" title="权限设置" :data="data" api="userGrade" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
     <table width="100%" class="table-striped col-left-12">
       <tr class="th">
@@ -33,7 +33,7 @@
       </tr>
     </table>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -43,13 +43,9 @@ import {
   watch,
   codings
 } from '@/utils'
-import {
-  Drawer
-} from '@/components/packages/index'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer
   },
   props: {
     action: {

@@ -1,7 +1,7 @@
 <template>
 <v-button v-if="type !== 'text'" @click="handleclick">{{name}}</v-button>
 <span v-else @click="handleclick" v-html="name" class="cursor"></span>
-<Dialog v-model:show="isShow" ref="form" :title="title || name" width="650px" height="500px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" :title="title || name" width="650px" height="500px" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <slot name="content">
       <div class="ant-modal-body">
@@ -47,7 +47,7 @@
       </div>
     </slot>
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -59,15 +59,13 @@ import {
   useStore,
   watch
 } from '@/utils'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 import confirm from '@/assets/modal_enum'
 
 export default defineComponent({
   name: 'v-Category',
   components: {
-    Dialog
+    
   },
   props: {
     title: {
@@ -161,6 +159,7 @@ export default defineComponent({
         })
         return
       }
+      debugger
       data.item.fid = current.value.value
       data.item.parent = current.value.name
       isShow.value = !isShow.value

@@ -1,5 +1,5 @@
 <template>
-<div class="ant-card ant-card-bordered font12" :class="className">
+<div class="ant-card ant-card-bordered font12 align_center" :class="className">
   <div class="ant-card-body">
     <div class="ant-statistic">
       <div class="ant-statistic-title">

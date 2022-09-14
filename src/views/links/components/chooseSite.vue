@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow">
   选择站点
 </v-button>
-<Drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑友情链接' : '新增标签' " :width="350" :hasfooter="false" >
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑友情链接' : '新增标签' " :width="350" :hasfooter="false">
   <template v-slot:content v-if="isShow">
 
     <table width="100%" class="table-striped table-hover col-left-23">
@@ -20,7 +20,7 @@
       </tr>
     </table>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -31,16 +31,12 @@ import {
   watch
 } from '@/utils'
 import {
-  Drawer
-} from '@/components/packages/index'
-import {
   SERVER_NAME
 } from '@/assets/enum'
 import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer,
     Popover
   },
   props: {

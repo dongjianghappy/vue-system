@@ -1,6 +1,6 @@
 <template>
 <span @click="handleclick">{{action === 'edit' ? '编辑' : '新增权限'}}</span>
-<Dialog ref="dialog" v-model:show="isShow" :data="data" :action="action" :title="action === 'edit' ? '编辑权限' : '新增权限'" width="520px" height="500px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog ref="dialog" v-model:show="isShow" :data="data" :action="action" :title="action === 'edit' ? '编辑权限' : '新增权限'" width="520px" height="500px" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -27,7 +27,7 @@
       </li>
     </ul>
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -37,13 +37,11 @@ import {
   useStore,
   watch,
 } from '@/utils'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog
+    
   },
   props: {
     attrs: {
@@ -120,7 +118,7 @@ export default defineComponent({
       isShow,
       handleclick,
       detail,
-      dialog,
+      
       submit
     }
   }

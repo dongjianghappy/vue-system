@@ -25,11 +25,11 @@ import {
   useStore,
   codings,
 } from '@/utils'
-import Detail from './components/detail.vue'
+
 import List1 from './components/list1.vue'
 import List2 from './components/list2.vue'
 import List3 from './components/list3.vue'
-
+import Detail from './components/detail.vue'
 import {
   linkPage
 } from '@/assets/const'

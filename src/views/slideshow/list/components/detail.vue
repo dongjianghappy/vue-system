@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="auth">
   <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增轮播图"}}
 </v-button>
-<Drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑轮播图' : '新增轮播图' " :data="data" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑轮播图' : '新增轮播图' " :data="data" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -40,7 +40,7 @@
       </li>
     </ul>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -49,14 +49,9 @@ import {
   ref,
   watch,
 } from '@/utils'
-import {
-  Drawer
-} from '@/components/packages/index'
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    Drawer
-  },
+  name: 'v-Detail',
+  components: {},
   props: {
     attrs: {
       type: Object,
@@ -106,7 +101,6 @@ export default defineComponent({
       isShow,
       detail,
       drawer,
-
       uploadImg,
       upload,
     }

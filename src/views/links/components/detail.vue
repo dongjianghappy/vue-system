@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="auth">
   <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? '编辑': '新增友情'}}
 </v-button>
-<Drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑友情链接' : '新增友情链接' " :data="data" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑友情链接' : '新增友情链接' " :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -62,13 +62,12 @@
       </li>
     </ul>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   ref,
   useStore,
   watch
@@ -77,14 +76,10 @@ import {
   LINK_TYPE,
   SERVER_NAME
 } from '@/assets/enum'
-import {
-  Drawer
-} from '@/components/packages/index'
 import ChooseSite from './chooseSite.vue'
 export default defineComponent({
-  name: 'v-Search',
+  name: 'v-Detail',
   components: {
-    Drawer,
     ChooseSite
   },
   props: {
@@ -109,36 +104,24 @@ export default defineComponent({
       default: false
     },
   },
-  setup(props, context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
+  setup(props) {
     const store = useStore()
     const isShow: any = ref(false)
-    const detail: any = ref({})
     const drawer: any = ref(null)
     const sourceType: any = LINK_TYPE
     const serverName: any = SERVER_NAME
+    const detail: any = ref({})
     const checkedList: any = ref([])
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
         detail.value = await drawer.value.init()
-        debugger
         checkedList.value = detail.value.website ? detail.value.website.split(",") : []
-        debugger
       }
     })
 
-    function submit(cancel: any) {
-      const {
-        name,
-        sort,
-        authority
-      } = detail.value
-
-debugger
+    function submit(params: any) {
       store.dispatch('common/Fetch', {
         api: "update",
         data: {
@@ -148,7 +131,7 @@ debugger
         }
       }).then(() => {
         props.render()
-        isShow.value = false
+        params.message()
       })
     }
 

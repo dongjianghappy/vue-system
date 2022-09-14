@@ -61,26 +61,33 @@ export default defineComponent({
     watch(route, (newValues, prevValues) => {
       if (route.path === '/admin/statistics/visit') {
         tabsIndex.value = route.query.type
-        init()
+        init({
+          page: 1
+        })
       }
     })
 
-    function init() {
+    function init(param: any) {
       store.dispatch('setting/visitAction', {
         api: tabsIndex.value === '0' ? "visitStatistics" : tabsIndex.value === '1' ? 'interviewedTodayStatistics' : "",
         tabsIndex: tabsIndex.value,
         data: {
           coding: 'S0000',
-          page: 1,
-          pagesize: 10
+          pagesize: 25,
+          ...param
         }
       })
     }
-    onMounted(init)
+    onMounted(() => {
+      init({
+        page: 1
+      })
+    })
     return {
       dataList,
       menu,
-      tabsIndex
+      tabsIndex,
+      init
     }
   }
 })

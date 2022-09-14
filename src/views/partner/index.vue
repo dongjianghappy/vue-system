@@ -16,7 +16,6 @@
         <td class="col-md-1">状态</td>
         <td class="col-md-2">操作</td>
       </tr>
-      <v-drag1>
         <tr v-for="(item, index) in dataList.list" class="dragObj" :key="index" draggable="true" :index="index">
           <td>
             <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
@@ -41,7 +40,6 @@
             </v-space>
           </td>
         </tr>
-      </v-drag1>
     </table>
     <v-nodata :data="dataList.list || []" />
     <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, coding }" :pagination="{total: 10, page: 10, pagesize: 10}" :sorceData="dataList.list" :render="init" v-if="dataList.list && dataList.list.length > 0" :auth="auth" />

@@ -1,6 +1,6 @@
 <template>
 <span @click="handleclick(data)">更新</span>
-<Dialog v-model:show="isShow" ref="form" width="520px" height="150px" :hasfooter="false" :close="false" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" width="520px" height="150px" :hasfooter="false" :close="false" @submit="submit">
   <template v-slot:content v-if="isShow">
     <div class="mb15">{{data.title}}{{msg.status}}</div>
     <div>
@@ -8,7 +8,7 @@
       <v-progress :data="msg" />
     </div>
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -19,16 +19,14 @@ import {
   watch,
   useStore
 } from '@/utils'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 import {
   TEXT_TYPE,
 } from '@/assets/enum'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog
+    
   },
   props: {
     action: {

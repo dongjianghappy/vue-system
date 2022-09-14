@@ -2,7 +2,10 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// import ElementUI from 'element-plus'
+// import 'element-plus/dist/index.css'
 import views from './controller/component' // 公共组件
+import publics from './controller/public' // 前台公共组件
 import packages from './controller/packages' // 公共组件
 import hlj from './components/plugin/loading'
 import hljs from './plugin/effects'
@@ -33,7 +36,9 @@ VueMarkdownEditor.use(vuepressTheme, {
 
 
 const Vue = createApp(App)
+// Vue.use(ElementUI)
 views(Vue)
+publics(Vue)
 packages(Vue)
 hlj(Vue)
 hljs(Vue)

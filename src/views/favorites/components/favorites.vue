@@ -1,6 +1,6 @@
 <template>
 <span @click="handleclick">收藏夹</span>
-<Drawer ref="drawer" v-model:show="isShow" title="收藏夹" :top="64" :width="200">
+<v-drawer ref="drawer" v-model:show="isShow" title="收藏夹" :top="64" :width="200">
   <template v-slot:extra>
     <Created :data="data" :render="init" />
   </template>
@@ -18,7 +18,7 @@
     </ul>
     <v-nodata :data="detail || []" />
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -28,14 +28,10 @@ import {
   useStore,
   watch,
 } from '@/utils'
-import {
-  Drawer
-} from '@/components/packages/index'
 import Created from './created.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer,
     Created
   },
   props: {

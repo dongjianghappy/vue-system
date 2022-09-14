@@ -12,7 +12,7 @@ const actions = {
       ...data
     })
 
-    let number = 1+parseInt(params.tabsIndex)
+    const number = 1+parseInt(params.tabsIndex)
     context.commit("setAppstore", {state: 'appstore'+number, data: result.result});
     return result
   },  
@@ -24,7 +24,7 @@ const actions = {
       ...data
     })
 
-    let number = 1+parseInt(params.tabsIndex)
+    const number = 1+parseInt(params.tabsIndex)
     context.commit("setVisit", {state: 'visit'+number, data: result.result});
     return result
   },  
@@ -35,7 +35,7 @@ const actions = {
       ...data
     })
 
-    let number = 1+parseInt(params.tabsIndex)
+    const number = 1+parseInt(params.tabsIndex)
     context.commit("setDomain", {state: 'domain'+number, data: result.result});
     return result
   },  
@@ -46,7 +46,7 @@ const actions = {
       ...data
     })
 
-    let number = 1+parseInt(params.tabsIndex)
+    const number = 1+parseInt(params.tabsIndex)
     context.commit("setEngine", {state: 'engine'+number, data: result.result});
     return result
   },  
@@ -58,7 +58,7 @@ const actions = {
       ...data
     })
 
-    let number = 1+parseInt(params.tabsIndex)
+    const number = 1+parseInt(params.tabsIndex)
     context.commit("setIp", {state: 'ip'+number, data: result.result});
     return result
   }, 

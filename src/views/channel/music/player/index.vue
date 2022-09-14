@@ -2,11 +2,11 @@
 <v-button v-model:show="isShow">
   <i class="iconfont icon-listen listen"></i>
 </v-button>
-<Dialog v-model:show="isShow" ref="form" title="东江音乐" width="1000px" height="600px" :confirm="true" :hasfooter="false" :cancel="true" @submit="submit" className="playTheme">
+<v-dialog v-model:show="isShow" ref="form" title="东江音乐" width="1000px" height="600px" :confirm="true" :hasfooter="false" :cancel="true" @submit="submit" className="playTheme">
   <template v-slot:content v-if="isShow">
     <Index :data="data" />
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -16,9 +16,7 @@ import {
   watch,
   useStore
 } from '@/utils'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 import Index from './components/index.vue'
 import {
   TEXT_TYPE,
@@ -26,7 +24,7 @@ import {
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog,
+    
     Index
   },
   props: {

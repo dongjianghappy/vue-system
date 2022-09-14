@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="true">
   页面设置
 </v-button>
-<Drawer v-model:show="isShow" title="页面管理" :top="64" :width="200" :auth="auth">
+<v-drawer v-model:show="isShow" title="页面管理" :top="64" :width="200" :auth="auth">
   <template v-slot:extra>
     <AddButton :data="data" :render="init" />
   </template>
@@ -20,7 +20,7 @@
       </ul>
     </div>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -34,14 +34,10 @@ import {
   watch
 } from 'vue'
 import AddButton from './addButton.vue'
-import {
-  Drawer
-} from '@/components/packages/index'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    AddButton,
-    Drawer
+    AddButton
   },
   props: {
     data: {

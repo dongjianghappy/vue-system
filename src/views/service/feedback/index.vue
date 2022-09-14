@@ -20,8 +20,8 @@
         <td style="line-height: 35px;">
           <v-avatar :data="item" />{{item.nickname}}
         </td>
-        <td>{{item.title}}</td>
-        <td></td>
+        <td>{{item.content}}</td>
+        <td>{{item.times}}</td>
         <td></td>
         <td>
           <span>删除</span>

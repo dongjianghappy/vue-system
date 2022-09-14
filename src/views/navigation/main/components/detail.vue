@@ -2,9 +2,9 @@
 <v-button v-model:show="isShow" :disabled="auth">
   <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增导航"}}
 </v-button>
-<Drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑导航' : '新增导航' " :data="data" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑导航' : '新增导航' " :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
-    <div class="alert-description ptb10 plr15">fgfg</div>
+    <div class="alert-description ptb10 plr15">说明</div>
     <v-tabs :tabs="menu" method="click">
       <template v-slot:content1>
         <ul class="form-wrap-box">
@@ -71,15 +71,12 @@
       </template>
     </v-tabs>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
-  useRoute,
-  onMounted,
   ref,
   watch,
   useStore
@@ -87,21 +84,10 @@ import {
 import {
   NAV_TYPE,
 } from '@/assets/enum'
-import {
-  Drawer
-} from '@/components/packages/index'
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    Drawer
-  },
+  name: 'v-Detail',
+  components: {},
   props: {
-    attrs: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
     action: {
       type: String,
       default: "add"
@@ -133,17 +119,11 @@ export default defineComponent({
     },
   },
   setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
-    const route = useRoute();
     const isShow: any = ref(false)
-    const detail: any = ref({})
     const drawer: any = ref(null)
     const navType: any = NAV_TYPE
-
+    const detail: any = ref({})
     let menu: any = ref([{
         name: "导航信息",
         value: "appstore1"
@@ -153,6 +133,7 @@ export default defineComponent({
         value: "appstore2"
       }
     ])
+    
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
@@ -171,43 +152,31 @@ export default defineComponent({
       detail.value.style = param
     }
 
-    function handleclick(param: any) {
-      isShow.value = !isShow.value
-    }
-
     // 保存
-    function submit() {
-
+    function submit(params: any) {
       const {
         style,
         flags,
         keyword
       } = detail.value
 
-      const param: any = {
-
-      }
-
       store.dispatch('common/Fetch', {
         api: props.action === 'edit' ? 'update' : "insert",
         data: {
           ...props.data,
           ...detail.value,
-          keyword: keyword.join(','),
+          keyword: keyword ? keyword.join(',') : "",
           flags: flags ? `|${flags.join("|")}|` : "",
           style: JSON.stringify(style),
         }
       }).then(res => {
-        proxy.$hlj.message({
-          msg: res.returnMessage
-        })
         props.render()
+        params.message()
       })
     }
 
     return {
       isShow,
-      handleclick,
       detail,
       drawer,
       menu,

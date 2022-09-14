@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="auth">
 开始采集
 </v-button>
-<Dialog v-model:show="isShow" ref="form" title="开始采集" width="650px" height="800px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" title="开始采集" width="650px" height="800px" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <h3 class="mb25">节点名称: 张文钦</h3>
     <div data-show="true" class="ant-alert ant-alert-info ant-alert-with-description"><span role="img" aria-label="info-circle" class="anticon anticon-info-circle ant-alert-icon"><svg viewBox="64 64 896 896" focusable="false" class="" data-icon="info-circle" width="1em" height="1em" fill="currentColor" aria-hidden="true">
@@ -37,7 +37,7 @@
       </li>
     </ul>
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -46,13 +46,11 @@ import {
   ref,
   watch,
 } from '@/utils'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog
+    
   },
   props: {
     action: {

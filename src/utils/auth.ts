@@ -75,7 +75,7 @@ export const channels = () => {
   }
 
   const model: any = {}
-  let aaa: any = sessionStorage.getItem("channel");
+  const aaa: any = sessionStorage.getItem("channel");
 
   const channel = JSON.parse(aaa) || [];
   const item = channel.find((item: any) => {
@@ -96,7 +96,7 @@ export const channels = () => {
  // 将urlquery参数转换成对象形式
  export const channelssss = () => {
   const module = window.location.pathname.split("/")[3] || "";
-  let aaa: any = sessionStorage.getItem("channel");
+  const aaa: any = sessionStorage.getItem("channel");
 
   const channel = JSON.parse(aaa) || [];
   const item = channel.find((item: any) => {
@@ -116,6 +116,6 @@ export const getQuery = () => {
 export const jsonParse = (param: any) => {
   
   param = param.indexOf('{') === 0 ? param : '{}'
-  let style = JSON.parse(param || '{}')
+  const style = JSON.parse(param || '{}')
   return style instanceof Object ? style : ""
 }

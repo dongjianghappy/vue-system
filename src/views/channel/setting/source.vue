@@ -3,7 +3,7 @@
   <i class="iconfont icon-write"></i>
 </v-button>
 
-<Drawer ref="drawer" v-model:show="isShow" :action="action" title="内容来源" :width="650" api="select" :data="data" :param="detail" :render="render" :hasfooter="isChoose" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" title="内容来源" :width="650" api="select" :data="data" :param="detail" :render="render" :hasfooter="isChoose" :submit="submit">
   <template v-slot:content v-if="isShow">
     <div class="mb10" v-if="!isChoose">
       <AddButton :data="data" :render="init" />
@@ -57,13 +57,12 @@
       </table>
     </template>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
 import {
   defineComponent,
-  onMounted,
   ref,
   watch,
   useStore
@@ -72,15 +71,9 @@ import AddButton from './addButton.vue'
 import {
   NAV_TYPE,
 } from '@/assets/enum'
-import {
-  Drawer
-} from '@/components/packages/index'
-import List from "./components/list.vue"
-import Detail from "./components/detail.vue"
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer,
     AddButton
   },
   props: {

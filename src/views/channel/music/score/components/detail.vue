@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow">
   <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增歌谱"}}
 </v-button>
-<Drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑歌谱' : '新增歌谱' " :data="data" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑歌谱' : '新增歌谱' " :data="data" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -45,7 +45,7 @@
       </li>
     </ul>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -54,9 +54,6 @@ import {
   ref,
   watch,
 } from '@/utils'
-import {
-  Drawer
-} from '@/components/packages/index'
 import SpaceModal from '../../../../space/components/modalSpace.vue'
 import {
   LINK_TYPE,
@@ -64,7 +61,6 @@ import {
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer,
     SpaceModal
   },
   props: {

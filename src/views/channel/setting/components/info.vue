@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="auth">
   <i class="iconfont icon-write"></i>
 </v-button>
-<Drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑分类' : '新增分类' " :data="data" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑分类' : '新增分类' " :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li clearfix">
@@ -82,14 +82,13 @@
       </li>
     </ul>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
 import {
   defineComponent,
   getCurrentInstance,
-  onMounted,
   ref,
   watch,
   useStore
@@ -98,14 +97,10 @@ import {
   NAV_TYPE,
   SERVER_NAME
 } from '@/assets/enum'
-import {
-  Drawer
-} from '@/components/packages/index'
 import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer,
     Popover
   },
   props: {

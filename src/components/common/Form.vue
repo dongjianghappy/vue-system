@@ -1,10 +1,10 @@
 <template>
 <v-button @click="handleclick" v-if="type !== 'text'">{{name}}</v-button>
 <span class="cursor" @click="handleclick" v-html="name" v-else></span>
-<Dialog v-model:show="isShow" ref="form" :title="name" width="650px" height="500px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" :title="name" width="650px" height="500px" :confirm="true" :cancel="true" @submit="submit">
 
   <slot name="content">sdsd</slot>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -16,15 +16,13 @@ import {
   useStore,
   watch
 } from '@/utils'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 import confirm from '@/assets/modal_enum'
 
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog
+    
   },
   props: {
     name: {

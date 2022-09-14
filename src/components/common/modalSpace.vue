@@ -2,11 +2,11 @@
 <span @click="handleclick">
   <slot></slot>
 </span>
-<Dialog v-model:show="isShow" ref="form" title="图片空间" width="1200px" height="600px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" title="图片空间" width="1200px" height="600px" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <Main />
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -16,17 +16,12 @@ import {
   watch,
   useStore,
 } from '@/utils'
-import {
-  Drawer
-} from '@/components/packages/index'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 import Main from '@/views/space/components/main/index.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog,
+    
     Main
   },
   props: {

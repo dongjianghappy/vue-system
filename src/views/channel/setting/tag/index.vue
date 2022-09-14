@@ -3,7 +3,7 @@
   <i class="iconfont icon-write"></i>
 </v-button>
 
-<Drawer ref="drawer" v-model:show="isShow" :action="action" title="聚合标签" :width="1000" api="getFlag" :data="data" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" title="聚合标签" :width="1000" api="getFlag" :data="data" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
     <v-tabs :tabs="menu" v-model:index="index" :isEmit="true">
 
@@ -21,13 +21,12 @@
       </template>
     </v-tabs>
   </template>
-</Drawer>
+</v-drawer>
 </template>
 
 <script lang="ts">
 import {
   defineComponent,
-  onMounted,
   ref,
   watch,
   useStore
@@ -35,15 +34,11 @@ import {
 import {
   NAV_TYPE,
 } from '@/assets/enum'
-import {
-  Drawer
-} from '@/components/packages/index'
 import List from "./components/list.vue"
 import Detail from "./components/detail.vue"
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Drawer,
     List,
     Detail
   },
@@ -75,13 +70,13 @@ export default defineComponent({
   },
   setup(props, context) {
     const isShow: any = ref(false)
-    const detail: any = ref({})
     const drawer: any = ref(null)
     const navType: any = NAV_TYPE
     const store = useStore();
     const aaa: any = ref([])
     const dataList: any = ref([])
     const index: any = ref("0")
+    const detail: any = ref({})
 
     let menu: any = ref([{
         name: "公共标签",

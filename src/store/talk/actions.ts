@@ -12,7 +12,7 @@ const actions = {
       ...data
     })
 
-    let number = 1+parseInt(params.tabsIndex)
+    const number = 1+parseInt(params.tabsIndex)
     context.commit("setTalk", {state: 'talkList'+number, data: result.result});
     return result
   },  

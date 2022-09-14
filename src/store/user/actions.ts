@@ -28,7 +28,7 @@ const actions = {
       ...data
     })
     debugger
-    let number = params.tabsIndex === 0 ? "userList" : "manageList"
+    const number = params.tabsIndex === 0 ? "userList" : "manageList"
     context.commit("setUser", {state: number, data: result.result});
     return result
   },

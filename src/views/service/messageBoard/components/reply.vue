@@ -1,6 +1,6 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">{{name}}</v-button>
-<Dialog v-model:show="isShow" ref="form" :title="name" width="650px" height="500px" :hasfooter="false" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" :title="name" width="650px" height="500px" :hasfooter="false" :confirm="true" :cancel="true" @submit="submit">
 
   <template v-slot:content v-if="isShow">
     <slot name="content">
@@ -28,7 +28,7 @@
       </div>
     </slot>
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -39,14 +39,12 @@ import {
   useStore,
   watch
 } from '@/utils'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog
+    
   },
   props: {
     name: {

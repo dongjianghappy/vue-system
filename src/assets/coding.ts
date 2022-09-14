@@ -115,6 +115,15 @@ const codings: any = {
     praise: "A20004",
     collect: "A20005",
   },
+  haosite: {
+    name: "haosite",
+    art: "A50000",
+    info: "haosite_info",
+    cate: "A50002",
+    comment: "A50003",
+    praise: "A50004",
+    collect: "A50005",
+  },  
   blog: {
     name: "blog",
     art: "A90000",
@@ -124,6 +133,15 @@ const codings: any = {
     praise: "A90004",
     collect: "A90005",
   },    
+  digital: {
+    name: "digital",
+    art: "A120000",
+    info: "A120001",
+    cate: "A120002",
+    comment: "A120003",
+    praise: "A120004",
+    collect: "A120005",
+  },
   navigation: {
     main: "P0001",
     single: "P0002",

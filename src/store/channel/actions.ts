@@ -21,7 +21,7 @@ const actions = {
     const { result }:any = await api.articleList({
       ...data
     })
-    let list = parseInt(params.tabsIndex) === 0 ? "articleList" :  parseInt(params.tabsIndex) === 1 ? 'auditList' : 'returnList'
+    const list = parseInt(params.tabsIndex) === 0 ? "articleList" :  parseInt(params.tabsIndex) === 1 ? 'auditList' : 'returnList'
     context.commit("setArticleList" , {module: params.module,state: list, data: result.result});
     return result
   }, 

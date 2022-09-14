@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="true">
   <i class="iconfont" :class="`icon-${action === 'add' ? 'add' : 'edit'}`" />
 </v-button>
-<Dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增模块" width="520px" :height="index==='2' ? '380px' : '250px'" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增模块" width="520px" :height="index==='2' ? '380px' : '250px'" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -24,7 +24,7 @@
       </li>
     </ul>
   </template>
-</Dialog>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -34,13 +34,11 @@ import {
   useStore,
   watch,
 } from '@/utils'
-import {
-  Dialog
-} from '@/components/packages/index'
+
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Dialog
+    
   },
   props: {
     attrs: {
@@ -123,7 +121,7 @@ export default defineComponent({
     return {
       isShow,
       detail,
-      dialog,
+      
       submit
     }
   }
