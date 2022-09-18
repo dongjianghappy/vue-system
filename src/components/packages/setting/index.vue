@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="auth">
   站点设置
 </v-button>
-<v-drawer v-model:show="isShow" title="展示设置" :top="64" :width="data.channel_id === 0 ? 245 : 500" :auth="auth">
+<v-drawer v-model:show="isShow" title="展示设置" :style="{width: data.channel_id === 0 ? '245' : '500'}" :hasfooter="false" :auth="auth">
   <template v-slot:extra>
     <AddButton :data="data" :render="init" />
   </template>

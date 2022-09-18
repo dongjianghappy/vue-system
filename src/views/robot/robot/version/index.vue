@@ -10,7 +10,7 @@
     <div class="col-md-3 p10" v-for="(item, index) in dataList" :key="index">
       <Robot name="用户总量" :data="item" path="edit" />
     </div>
-
+    <v-nodata :data="dataList" />
   </div>
 </div>
 </template>
@@ -18,9 +18,7 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
   useStore,
   useRouter,
@@ -33,17 +31,7 @@ export default defineComponent({
   components: {
     Robot
   },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
   setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const router: any = useRouter();
     const dataList: any = ref([])
@@ -64,6 +52,7 @@ export default defineComponent({
 
     return {
       dataList,
+      init,
       handleClick
 
     }

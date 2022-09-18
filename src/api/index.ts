@@ -218,6 +218,10 @@ const api:any =  {
   navigation(params: any) {
     return http.request('vue', 'navigation', 'post', params)
   },
+  // 导航菜单详情信息
+  navigationDetail(params: any) {
+    return http.request('vue', 'navigationDetail', 'post', params)
+  },
   // 单页列表管理
   singleNav(params: any) {
     return http.request('vue', 'singleNav', 'post', params)
@@ -301,6 +305,10 @@ const api:any =  {
   // 用户退出
   signOut (params: any) {
     return http.request('user', 'signOut', 'post',params)
+  },
+  // 角色列表
+  roleList (params: any) {
+    return http.request('user', 'roleList', 'post',params)
   },
   // 评论
   comment(params: any) {

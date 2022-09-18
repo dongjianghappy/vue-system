@@ -1,6 +1,6 @@
 <template>
 <span @click="handleclick(data)">更新</span>
-<v-dialog v-model:show="isShow" ref="form" width="520px" height="150px" :hasfooter="false" :close="false" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" :style="{width: '520', height: '150'}" :hasfooter="false" :close="false" @submit="submit">
   <template v-slot:content v-if="isShow">
     <div class="mb15">{{data.title}}{{msg.status}}</div>
     <div>
@@ -16,46 +16,26 @@ import {
   defineComponent,
   getCurrentInstance,
   ref,
-  watch,
   useStore
 } from '@/utils'
-
-import {
-  TEXT_TYPE,
-} from '@/assets/enum'
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    
-  },
+  name: 'v-Progress',
   props: {
-    action: {
-      type: String,
-      default: "add"
-    },
     data: {
       type: Object,
       default: () => {
         return {}
       }
     },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    }
   },
   setup(props, context) {
     const {
-      ctx,
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
     const isShow: any = ref(false)
     const detail: any = ref({})
     const drawer: any = ref(null)
-    const textType = TEXT_TYPE
 
     const msg: any = ref({
       visible: false,
@@ -68,20 +48,12 @@ export default defineComponent({
     })
 
     function run(prams: any) {
-      debugger
-
       store.dispatch('common/Fetch', {
         api: "updateStatic",
         data: {
           ...prams.data,
         }
       }).then(res => {
-
-        msg.value.status = res.result.status
-        msg.value.bar = res.result.bar
-        msg.value.type = res.result.type
-        msg.value.name = res.result.name
-
         const {
           type,
           bar,
@@ -89,6 +61,11 @@ export default defineComponent({
           name,
           loop
         } = res.result
+
+        msg.value.status = status
+        msg.value.bar = bar
+        msg.value.type = type
+        msg.value.name = name
 
         if (res.result.again) {
           const {
@@ -128,14 +105,13 @@ export default defineComponent({
         } else {
           setTimeout(() => {
             isShow.value = false
-          }, 2000)
+          }, 1000)
         }
-
       })
     }
 
     function handleclick(param: any) {
-      if(param.data.serve === 'none'){
+      if (param.data.serve === 'none') {
         proxy.$hlj.message({
           msg: "请选选择服务器"
         })
@@ -150,7 +126,6 @@ export default defineComponent({
     }
 
     return {
-      textType,
       isShow,
       handleclick,
       detail,

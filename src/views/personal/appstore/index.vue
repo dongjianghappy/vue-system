@@ -1,7 +1,7 @@
 <template>
 <div class="module-wrap">
   <div class="module-head">
-    <v-optionsbar title="频道管理">
+    <v-optionsbar title="频道管理s">
       <template v-slot:extraright>
 
       </template>
@@ -9,7 +9,7 @@
   </div>
   <div class="module-content plr15">
     <div class="col-md-2" v-for="(item, index) in channel" :key="index" style="padding-right: 8px; padding-bottom: 8px;">
-      <v-cards :data={...item} :name="item.name" value="描述" click="查看" className="channel-bg" @onClick="handelRouter" />
+      <!-- <v-cards :data={...item} :name="item.name" value="描述" click="查看" className="channel-bg" @onClick="handelRouter" /> -->
     </div>
   </div>
 </div>

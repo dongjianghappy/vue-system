@@ -1,8 +1,8 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />自定义字段
+  <i class="iconfont icon-anonymous-iconfont" />自定义
 </v-button>
-<v-dialog v-model:show="isShow" ref="form" title="自定义字段" width="520px" height="450px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" title="自定义字段" :style="{width: '520', height: '450'}" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -33,8 +33,8 @@
 <script lang="ts">
 import {
   defineComponent,
+  getCurrentInstance,
   ref,
-  watch,
   useStore
 } from '@/utils'
 
@@ -42,15 +42,8 @@ import {
   TEXT_TYPE,
 } from '@/assets/enum'
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    
-  },
+  name: 'v-Detail',
   props: {
-    action: {
-      type: String,
-      default: "add"
-    },
     data: {
       type: Object,
       default: () => {
@@ -69,46 +62,37 @@ export default defineComponent({
     },
   },
   setup(props, context) {
+    const {proxy}:any = getCurrentInstance();
     const store = useStore();
     const isShow: any = ref(false)
-    const detail: any = ref({})
-    const drawer: any = ref(null)
     const textType = TEXT_TYPE
+    const detail: any = ref({})
 
-    // 监听
-    watch([isShow], async (newValues, prevValues) => {
-      if (isShow.value) {
-        detail.value = await drawer.value.init()
-      }
-    })
-
-    function submit(cancel: any) {
+    function submit(params: any) {
       const {
-        id,
         remark,
         name,
         value,
         text_type,
         explanation
       } = detail.value
-      const param = {
-        id,
-        remark,
-        name,
-        value,
-        text_type,
-        explanation
-      }
 
       store.dispatch('common/Fetch', {
-        api: props.action !== "add" ? 'update' : "insert",
+        api: "insert",
         data: {
           coding: 'P0000',
-          ...param
+          remark,
+          name,
+          value,
+          text_type,
+          explanation
         }
       }).then(res => {
         props.render()
-        cancel()
+        proxy.$hlj.message({
+          msg: "新增成功"
+        })
+        isShow.value = false
       })
     }
 
@@ -116,7 +100,6 @@ export default defineComponent({
       textType,
       isShow,
       detail,
-      drawer,
       submit
     }
   }

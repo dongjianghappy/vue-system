@@ -80,7 +80,7 @@ export default defineComponent({
     })
 
     // 监听路由
-    watch(props, (newValues, prevValues) => {
+    watch(() => props.dataList, (newValues, prevValues) => {
       props.dataList.map((item) => {
         imgList.value.push({
           src: item,

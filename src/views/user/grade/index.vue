@@ -1,18 +1,18 @@
 <template>
-<div class="ptb5" style="background: #fff">
+<div class="bg-white ptb5">
   <v-tabs :tabs="menu">
-   <template v-slot:extra>
-   <Detail :data="{coding: 'U0003'}" :type='page.value'  />
- </template> 
- <template v-slot:content1>
-   <List :data="{coding: 'U0003'}" :type='page.value' :dataList="dataList" />
- </template>
-  <template v-slot:content2>
-   <List :data="{coding: 'U0003'}" :type='page.value' :dataList="dataList" />
- </template>  
-   <template v-slot:content3>
-   <List :data="{coding: 'U0003'}" :type='page.value' :dataList="dataList" />
- </template>   
+    <template v-slot:extra>
+      <Detail :data="{coding: 'U0003'}" />
+    </template>
+    <template v-slot:content1>
+      <List :data="{coding: 'U0003'}" name='频道名称' :dataList="dataList" />
+    </template>
+    <template v-slot:content2>
+      <List :data="{coding: 'U0003'}" name='应用名称' :dataList="dataList" />
+    </template>
+    <template v-slot:content3>
+      <List :data="{coding: 'U0003'}" name='权限名称' :dataList="dataList" />
+    </template>
   </v-tabs>
 </div>
 </template>
@@ -22,36 +22,23 @@ import {
   defineComponent,
   getCurrentInstance,
   onMounted,
-  computed,
   ref,
   watch,
+  useStore,
   useRoute,
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import {
   visitPage
 } from '@/assets/const'
 import List from "./components/list.vue"
 import Detail from './components/detail.vue'
 export default defineComponent({
-  name: 'HomeViewdd',
+  name: 'GradeView',
   components: {
     List,
     Detail
   },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
   setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
     const dataList: any = ref([]);
@@ -80,22 +67,21 @@ export default defineComponent({
       }
     })
 
-   function init() {
+    function init() {
       store.dispatch('common/Fetch', {
         api: "userGrade",
         data: {
-          type: 1+parseInt(tabsIndex.value)
+          type: 1 + parseInt(tabsIndex.value)
         }
       }).then(res => {
         dataList.value = res.result
       })
     }
-onMounted(init)
+    onMounted(init)
     return {
       dataList,
       page,
-      menu,
-      type
+      menu
     }
   }
 })

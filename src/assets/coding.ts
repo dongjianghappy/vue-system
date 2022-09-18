@@ -220,6 +220,11 @@ const codings: any = {
     banuser: "",
     security: "U0009",
     theme: "M10001",
+    effects: "M10002",
+    mood: {
+      cate: "M10004",
+      art: "M10003"
+    }
   },
   statistics: "",
   space: "",

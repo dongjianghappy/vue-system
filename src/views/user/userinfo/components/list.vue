@@ -11,11 +11,9 @@
           <v-condition name="用户" field="grade" :enums="[{value: '0', name: '访客'},{value: '1', name: '普通用户'},{value: '2', name: '高级用户'},{value: '3', name: 'VIP用户'},{value: '4', name: '超级VIP'}]" :render="render" />
           <v-condition name="排序" field="sorter" icon="sort" :enums="[{value: 'recommend desc', name: '推送'}]" :render="render" />
         </v-space>
-
       </template>
     </v-optionsbar>
   </div>
-
   <div class="module-content p15" style="overflow: inherit;">
     <div v-if="view === 0">
       <table width="100%" class="table-striped table-hover col-left-2">
@@ -88,7 +86,6 @@
     </div>
     <v-calendar @changeMonth="changeMonth" v-else>
       <template v-slot:default="row">
-
         <template v-for="(item, index) in calendarData" :key="index">
           <div style="display: flex; flex-wrap:wrap; position: absolute; width: 100%; bottom: 0px; top: 25px; padding: 10px" v-if="item.date == `${row.item.fullYear}-${row.item.month}-${row.item.day}`">
             <div class="col-md-4" style="height: 32px;" v-for="(list, i) in item.list.slice(0, 5)" :key="i"><img :src="list.photos" style="border-radius: 50px; width: 32px; height: 32px;"></div>
@@ -97,7 +94,6 @@
             </div>
           </div>
         </template>
-
       </template>
     </v-calendar>
   </div>
@@ -147,8 +143,7 @@ export default defineComponent({
       1: "普通会员",
       2: "高级会员",
       3: "VIP会员",
-      4: "超级VIP",
-
+      4: "超级VIP"
     }
     const dataList = computed(() => {
       return store.getters['user/userList']
@@ -161,7 +156,6 @@ export default defineComponent({
         api: "Calendar",
         data: {
           ...param
-
         }
       }).then((res: any) => {
         calendarData.value = res.result

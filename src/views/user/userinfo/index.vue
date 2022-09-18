@@ -7,9 +7,6 @@
     <template v-slot:content2>
       <Manage :render="init" :data={coding} :dataList="dataList" />
     </template>
-    <template v-slot:content3>
-      <List :render="init" :data={coding} :dataList="dataList" />
-    </template>
   </v-tabs>
 </div>
 </template>
@@ -17,7 +14,6 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   onMounted,
   ref,
   watch,
@@ -73,7 +69,6 @@ export default defineComponent({
       }
 
       Object.assign(sssss, param)
-      debugger
       store.dispatch('user/userListAction', {
         tabsIndex: tabsIndex.value === '1' ? 1 : 0,
         data: {

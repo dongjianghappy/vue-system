@@ -20,7 +20,7 @@
                   <div style="flex: 1">
                     <input id="title" v-model="detail.title" type="text" placeholder="请输入标题" class="input-sm input-full" :style="[detail.style]" />
                   </div>
-                  <v-titleattribute :style="detail.style || {}" :setStyle="setStyle" />
+                  <v-titleattribute :style="detail.style || {}" :setStyle="(param) => detail.style = param" />
                 </div>
               </li>
               <li class="li">
@@ -196,11 +196,6 @@ export default defineComponent({
       })
     }
 
-    // 设置属性
-    function setStyle(param: any) {
-      detail.value.style = param
-    }
-
     // 保存
     function save() {
 
@@ -264,7 +259,6 @@ export default defineComponent({
       detail,
       checkedList,
       init,
-      setStyle,
       save,
       dataList,
       aaa,

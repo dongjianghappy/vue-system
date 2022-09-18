@@ -28,6 +28,7 @@
         </td>
       </tr>
     </table>
+    <v-nodata :data="dataList" />
   </div>
 </div>
 </template>

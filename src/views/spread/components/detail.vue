@@ -59,7 +59,6 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   ref,
   watch
 } from '@/utils'
@@ -94,11 +93,10 @@ export default defineComponent({
   },
   setup(props, context) {
     const isShow: any = ref(false)
-    const detail: any = ref({})
     const drawer: any = ref(null)
     const spreadType: any = SPREAD_TYPE
-    const spreadArea: any =   SPREAD_AREA
-
+    const spreadArea: any = SPREAD_AREA
+    const detail: any = ref({})
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {

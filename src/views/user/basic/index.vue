@@ -6,7 +6,7 @@
     </template>
     <template v-slot:content2>
       <Password :render="init" :data="{ coding }" />
-    </template>    
+    </template>
   </v-tabs>
 </div>
 </template>
@@ -18,15 +18,11 @@ import {
   onMounted,
   ref,
   watch,
+  useStore,
   useRoute,
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
-// import Detail from './components/detail.vue'
 import Info from './info/index.vue'
 import Password from './components/password.vue'
-
 import {
   linkPage
 } from '@/assets/const'
@@ -44,7 +40,6 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
     const coding: any = proxy.$coding['link'];
-    const query: any = ref(route.query)
     const dataList: any = ref([])
     let menu: any = ref([{
         name: "个人资料",
@@ -66,9 +61,6 @@ export default defineComponent({
 
     // 初始化
     function init() {
-      const {
-        type
-      }: any = route.query
       store.dispatch('common/Fetch', {
         api: 'userList',
         data: {

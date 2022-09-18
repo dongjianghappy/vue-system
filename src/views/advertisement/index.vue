@@ -29,9 +29,6 @@ import List from './components/list.vue'
 import List2 from './components/list2.vue'
 import List3 from './components/list3.vue'
 
-import {
-  linkPage
-} from '@/assets/const'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
@@ -77,7 +74,6 @@ export default defineComponent({
         page: 1,
         pagesize: 30
       }
-
       Object.assign(sssss, params)
 
       store.dispatch('basic/linkAction', {
@@ -99,8 +95,7 @@ export default defineComponent({
     return {
       coding,
       menu,
-      init,
-      tabsIndex
+      init
     }
   }
 })

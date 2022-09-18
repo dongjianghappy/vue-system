@@ -15,7 +15,10 @@
       </li>
       <li class="li">
         <span class="label">展示站点</span>
-        <v-select :enums="serverName" v-model:value="detail.website" :defaultValue="detail.website = detail.website ? detail.website : 'localhost'" />
+        <template v-for="(item, index) in serverName" :key="index">
+          <span v-if="checkedList.indexOf(item.value) > -1" class="mr15">{{item.name}}</span>
+        </template>
+        <ChooseSite :data="data" :render="init" v-model:checked="checkedList" />
       </li>
       <li class="li">
         <span class="label">显示</span>
@@ -80,13 +83,16 @@ import {
   ref,
   watch
 } from '@/utils'
+import ChooseSite from '../../links/components/chooseSite.vue'
 import {
   LINK_TYPE,
   SERVER_NAME
 } from '@/assets/enum'
 export default defineComponent({
   name: 'v-Search',
-  components: {},
+  components: {
+    ChooseSite
+  },
   props: {
     action: {
       type: String,
@@ -111,11 +117,13 @@ export default defineComponent({
     const drawer: any = ref(null)
     const sourceType: any = LINK_TYPE
     const serverName: any = SERVER_NAME
+    const checkedList: any = ref([])
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
         detail.value = await drawer.value.init()
+        checkedList.value = detail.value.website ? detail.value.website.split(",") : []
       }
     })
 
@@ -124,7 +132,8 @@ export default defineComponent({
       detail,
       drawer,
       sourceType,
-      serverName
+      serverName,
+      checkedList
     }
   }
 })

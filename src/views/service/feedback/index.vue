@@ -36,21 +36,15 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   onMounted,
   computed,
   useStore
 } from '@/utils'
 
 export default defineComponent({
-  name: 'HomeViewdd',
-  components: {},
+  name: 'FeedbackView',
   props: {},
   setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const dataList = computed(() => store.getters['basic/feedback']);
 
@@ -64,7 +58,7 @@ export default defineComponent({
         }
       })
     }
-
+    
     onMounted(init)
 
     return {

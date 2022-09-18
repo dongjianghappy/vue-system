@@ -12,7 +12,7 @@ import {
 } from 'vue'
 
 export default defineComponent({
-  name: 'v-Search',
+  name: 'v-ButtonExpand',
   props: {
     type: {
       type: String,
@@ -25,12 +25,10 @@ export default defineComponent({
       }
     }
   },
-  emits: ['onClick'],
   setup(props, context) {
     const expand: any = ref(false)
 
     function handleclick() {
-      // 全部展开收缩
       if (props.type === 'all') {
         const loop = (data: any) => {
           return data.map((item: any) => {

@@ -60,10 +60,8 @@ export default defineComponent({
     const content: any = ref("")
 
     function search() {
-     debugger
       const aaaa: any = {}
       aaaa[props.field] = content.value
-      debugger
       props.render({
         ...aaaa
       })

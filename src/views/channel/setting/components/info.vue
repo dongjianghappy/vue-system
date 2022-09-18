@@ -73,7 +73,7 @@
       </li>
       <li class="li">
         <span class="label">关键字</span>
-        <v-taglist v-model:tags="detail.keyword" />
+        <v-tag v-model:tags="detail.keyword" />
       </li>
       <li class="li clearfix">
         <span class="label">描述</span>

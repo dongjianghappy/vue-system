@@ -28,8 +28,15 @@
         </li>
         <li class="mr15" style="width: 50px;">
           <span>消息<span class="badge"><sup class="number">0</sup></span></span>
-          <video ref="video" class="hide">
-            <source src="@/assets/51miz-S272221-7FD4084A.mp3" type="audio/mp3"></video>
+          <video ref="video_visit" class="hide">
+            <source src="@/assets/video/visit.mp3" type="audio/mp3">
+          </video>
+          <video ref="video_down" class="hide">
+            <source src="@/assets/video/down.mp3" type="audio/mp3">
+          </video>
+          <video ref="video_register" class="hide">
+            <source src="@/assets/video/register.mp3" type="audio/mp3">
+          </video>
         </li>
         <li style="width: 50px;">风格</li>
         <li style="width: 50px;"><a href="http://www.yunxi10.com" target="_blank">首页</a></li>
@@ -86,11 +93,16 @@ export default defineComponent({
     const menu: any = basicInfo;
     const isInit: any = ref(true)
     const messge: any = information;
-    const video: any = ref(null)
+    const video_visit: any = ref(null)
+    const video_down: any = ref(null)
+    const video_register: any = ref(null)
+    const broadcast: any = ref(0)
     const message: any = ref({
       user: 0,
       download: 0,
-      visit: 0
+      visit: 0,
+      visit_yunxi: 0,
+      visit_blog: 0
     })
 
     // 监听路由
@@ -121,51 +133,78 @@ export default defineComponent({
 
     onMounted(() => {
       const speakMsg = new SpeechSynthesisUtterance()
-      // setInterval(() => {
-      //   let speech = ""
-      //   store.dispatch('common/Fetch', {
-      //     api: "voiceBroadcast"
-      //   }).then(res => {
-      //     const {
-      //       user,
-      //       download,
-      //       visit
-      //     } = res.result
-      //     if (isInit.value) {
-      //       message.value = res.result
-      //       isInit.value = false
-      //       return
-      //     }
+      return
+      setInterval(() => {
+        let speech = ""
+        store.dispatch('common/Fetch', {
+          api: "voiceBroadcast"
+        }).then(res => {
+          const {
+            user,
+            download,
+            visit,
+            visit_yunxi,
+            visit_blog
+          } = res.result
+          if (isInit.value) {
+            message.value = res.result
+            isInit.value = false
+            return
+          }
 
-      //     if (user > message.value.user) {
-      //       speech = `07素材网有${user-message.value.user}个新的用户注册`
-      //       message.value.user = res.result.user
-      //     } else if (download > message.value.download) {
-      //       speech = `07素材网有${download-message.value.download}个新的下载资源`
-      //       message.value.download = res.result.download
-      //     } else if (visit > message.value.visit) {
-      //       speech = `您有${visit-message.value.visit}个新的访问页面`
-      //       message.value.visit = res.result.visit
-      //     }
-      //     if (speech) {
-      //       video.value && video.value.play()
-      //       setTimeout(() => {
+          if (user > message.value.user) {
+            speech = `07素材网有${user-message.value.user}个新的用户注册`
+            message.value.user = res.result.user
+            broadcast.value = 1
+            
+          } else if (download > message.value.download) {
+            speech = `07素材网有${download-message.value.download}个新的下载资源`
+            message.value.download = res.result.download
+            broadcast.value = 2
+            
+          } else if (visit_yunxi > message.value.visit_yunxi) {
+            speech = `07素材网有${visit_yunxi-message.value.visit_yunxi}个新的访问页面`
+            message.value.visit_yunxi = res.result.visit_yunxi
+            broadcast.value = 0
+            
+          } else if (visit_blog > message.value.visit_blog) {
+            speech = `东江博客有${visit_blog-message.value.visit_blog}个新的访问页面`
+            message.value.visit_blog = res.result.visit_blog
+            broadcast.value = 0
+            
+          }
+          // 本地播报
+          else if (visit > message.value.visit && window.location.href.indexOf("localhost") > -1) {
+            speech = `您有${visit-message.value.visit}个新的访问页面`
+            message.value.visit = res.result.visit
+            broadcast.value = 0
+            
+          }
+          if (speech) {
+            
+            if(broadcast.value === 1){
+              video_register.value && video_register.value.play()
+            }else if(broadcast.value === 2){
+              video_down.value && video_down.value.play()
+            }else{
+              video_visit.value && video_visit.value.play()
+            }
+            setTimeout(() => {
+              speakMsg.text = speech; //文字内容
+              speakMsg.lang = "zh-CN"; //使用的语言:中文
+              speakMsg.volume = 1;
+              //声音音量:0-1
+              speakMsg.rate = 1.5;
+              //语速:0-10
+              speakMsg.pitch = 10;
+              //音高:0-1
+              window.speechSynthesis.speak(speakMsg)
 
-      //         speakMsg.text = speech; //文字内容
-      //         speakMsg.lang = "zh-CN"; //使用的语言:中文
-      //         speakMsg.volume = 1;
-      //         //声音音量:0-1
-      //         speakMsg.rate = 1.5;
-      //         //语速:0-10
-      //         speakMsg.pitch = 10;
-      //         //音高:0-1
-      //         window.speechSynthesis.speak(speakMsg)
+            }, 1000)
+          }
 
-      //       }, 1000)
-      //     }
-
-      //   })
-      // }, 20000)
+        })
+      }, 20000)
     })
 
     return {
@@ -177,7 +216,9 @@ export default defineComponent({
       handleRouter,
       handleclick,
       routing,
-      video
+      video_visit,
+      video_down,
+      video_register
     }
   }
 })

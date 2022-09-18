@@ -1,11 +1,12 @@
 <template>
-<div style="background: #f9f9f9; padding: 5px;">
-  <v-card :title="item.name" v-for="(item, index) in dataList" :key="index">
-    <template v-slot:extra>
+<div>
+  <div v-for="(item, index) in dataList" :key="index" class="mb5" style="border: 1px solid #eee; bacoground: #f8f8fa">
+  <v-collapse :title="item.name" :iscollapse="true" :disableClick="true">
+      <template v-slot:extra>
       <v-space>
         <v-switch :data="{ item, field: 'status', ...data }" :auth="auth.checked('edit')" /> 
         <Detail action='edit' :data="{ id: item.id, ...data }" :render="render" :auth="auth.checked('edit')" /> 
-        <Popover content="更多" arrow="tb" offset="right" :move="-90" :keys="`popover-${item.id}`" v-if="auth.checked('del') || auth.checked('grade')" >
+        <Popover content="更多" arrow="tb" offset="right" :move="-40" :keys="`popover-${item.id}`" v-if="auth.checked('del') || auth.checked('grade')" >
           <div class="p15 align_center" style="width: 80px; height: 100px">
             <ul class="font14" style="display: block">
               <li style="height: 32px">
@@ -19,22 +20,23 @@
         </Popover>
       </v-space>
     </template>
-    <div class="clearfix">
-      <div class="col-md-2">
-        <img :src="item.image" style="width: 90%; height: 60px;">
+    <div style="display: flex">
+      <div class="mr15" style="width: 200px; height: 80px">
+        <img :src="item.image" style="width: 100%; height: 80px;">
       </div>
-      <div class="col-md-10">
+      <div style="flex: 1">
         <div>
-          <div class="col-md-1">描述</div>
-          <div class="col-md-11">{{item.description}}</div>
+          <sapn class="mr5">描述:</sapn>
+          {{item.description}}
         </div>
         <div>
-          <div class="col-md-1">权限</div>
-          <div class="col-md-11">{{item.grade}}</div>
+          <sapn class="mr5">权限:</sapn>
+          {{item.grade}}
         </div>
       </div>
     </div>
-  </v-card>
+    </v-collapse>
+    </div>
   <v-nodata :data="dataList || []" />
 </div>
 </template>
@@ -110,3 +112,15 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="less">
+.collapse{
+  background: #ddd;
+  .collapse-head{
+    background: #f8f8fa;
+  }
+  .collapse-list{
+    background: #fff;
+  }
+}
+</style>

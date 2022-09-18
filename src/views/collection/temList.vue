@@ -3,7 +3,7 @@
   <div class="module-head">
     <v-optionsbar title="所有采集列表">
       <template v-slot:extraright>
-        扩展值
+        
       </template>
     </v-optionsbar>
   </div>
@@ -23,11 +23,11 @@
         <td>
           {{item.title}}
         </td>
-        <td>{{item.datetime}}</td>
+        <td>{{item.times}}</td>
         <td>
           <v-space>
             <span>入库</span>
-          <span>删除</span>
+            <span>删除</span>
           </v-space>
         </td>
       </tr>
@@ -49,24 +49,12 @@ import {
 } from '@/utils'
 
 export default defineComponent({
-  name: 'HomeViewdd',
-  components: {},
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
+  name: 'TemListView',
   setup(props, context) {
     const coding: any = codings['collection'].artTem;
     const store = useStore();
     const route = useRoute();
     const dataList: any = ref([])
-
-    // 监听路由
-    watch(route, (newValues, prevValues) => {
-      init()
-    })
 
     function init() {
       const param: any = {

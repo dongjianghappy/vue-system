@@ -2,19 +2,16 @@
 <div class="module-wrap">
   <div class="module-head">
     <v-optionsbar title="模型管理">
-      <template v-slot:extraright>
-        扩展值
-      </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table width="100%" class="table-striped table-hover col-left-1">
       <tr class="th">
-        <td class="col-md-3 pl25">频道名称</td>
+        <td class="col-md-2 pl25">频道名称</td>
         <td class="col-md-2">频道ID</td>
         <td class="col-md-1">识别id</td>
         <td class="col-md-3">附加表</td>
+        <td class="col-md-1">关联字段数</td>
         <td class="col-md-2">操作</td>
       </tr>
       <tr v-for="(item, index) in dataList" :key="index">
@@ -26,6 +23,7 @@
           {{item.module}}
         </td>
         <td>addon_{{item.module}}</td>
+        <td>{{item.num}}</td>
         <td>
           <span @click="handleclick(item)">字段管理</span>
         </td>
@@ -46,14 +44,7 @@ import {
 } from '@/utils'
 
 export default defineComponent({
-  name: 'HomeViewdd',
-  components: {},
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
+  name: 'IndexViewdd',
   setup(props, context) {
     const store = useStore();
     const router: any = useRouter();

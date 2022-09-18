@@ -2,7 +2,7 @@
 <span @click="handleclick">
   {{data.item.type === '1' ? "核心词" : data.item.type === '2' ? "目标词" : "长尾词"}}
 </span>
-<v-dialog v-model:show="isShow" ref="form" title="新增标签" width="520px" height="200px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" title="新增标签" :style="{width: '520', height: '200'}">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -24,21 +24,8 @@ import {
 } from '@/utils'
 
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    
-  },
+  name: 'v-DetailFlag',
   props: {
-    attrs: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    action: {
-      type: String,
-      default: "add"
-    },
     data: {
       type: Object,
       default: () => {
@@ -54,8 +41,8 @@ export default defineComponent({
   },
   setup(props, context) {
     const isShow: any = ref(false)
-    const detail: any = ref({})
     const drawer: any = ref(null)
+    const detail: any = ref({})
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {

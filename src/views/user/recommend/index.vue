@@ -37,6 +37,7 @@
         </td>
       </tr>
     </table>
+    <v-nodata :data="dataList" />
   </div>
 </div>
 </template>
@@ -52,10 +53,7 @@ import {
   useStore
 } from 'vuex'
 export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-
-  },
+  name: 'RecommendView',
   setup(props, context) {
     const {
       proxy

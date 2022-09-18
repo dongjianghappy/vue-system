@@ -67,7 +67,6 @@ import UserRecommend from '../views/user/recommend/index.vue'
 import UserSecurity from '../views/user/security/index.vue'
 import UserTheme from '../views/user/theme/index.vue'
 import Mood from '../views/user/mood/index.vue'
-import UserMoodList from '../views/user/mood/components/list.vue'
 import UserSetting from '../views/user/setting.vue'
 
 // 个人信息
@@ -210,7 +209,6 @@ const arrss: any = {
   UserSecurity,
   UserTheme,
   Mood,
-  UserMoodList,
   UserSetting,
   Personal,
   PersonalDefault,

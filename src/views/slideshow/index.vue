@@ -12,12 +12,15 @@
       <div class="p10" style="border: 1px solid #f0f0f0;">
         <div><img @click="handleClick(item)" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" style="width: 100%"></div>
         <div class="ptb15">
-          {{item.name}}
+          <span class="bold">{{item.channelname}}</span> - {{item.name}}
+          <v-space class="right">
           <Detail action="edit" :data="{id: item.id, coding }" :param="param" :render="init" :auth="auth.checked('edit')" />
+          <v-switch :data="{ item, field: 'status', coding }" :auth="auth" />
+          </v-space>
         </div>
       </div>
     </div>
-    <v-nodata :data="dataList || []" />
+    <v-nodata :data="dataList" />
   </div>
 </div>
 </template>
@@ -28,7 +31,6 @@ import {
   getCurrentInstance,
   onMounted,
   computed,
-  ref,
   useRouter,
   useStore,
   codings
@@ -57,7 +59,7 @@ export default defineComponent({
     }
 
     function handleClick(param: any) {
-      router.push(`/admin/slideshow/list?fid=${param.id}`)
+      router.push(`/admin/slideshow/list?name=${param.name}&fid=${param.id}`)
     }
 
     onMounted(init)

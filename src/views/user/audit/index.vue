@@ -2,7 +2,7 @@
 <div class="bg-white">
   <v-tabs :tabs="menu">
     <template v-slot:content1>
-      <List :coding="coding" />
+      <List :coding="coding" :dataList="dataList" />
     </template>
     <template v-slot:content2>
       <List2 :coding="coding" />

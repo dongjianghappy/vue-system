@@ -45,6 +45,7 @@
         </td>
       </tr>
     </table>
+    <v-nodata :data="dataList" />
   </div>
 </div>
 </template>
@@ -52,9 +53,7 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
   useStore,
   useRouter,
@@ -77,10 +76,6 @@ export default defineComponent({
   },
   setup(props, context) {
     const coding: any = codings['favorites'];
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const router: any = useRouter();
     const dataList: any = ref([])
@@ -97,9 +92,8 @@ export default defineComponent({
       })
     }
 
-     // 收藏夹
+    // 收藏夹
     function getFavorites() {
-
       store.dispatch('common/Fetch', {
         api: "favorites",
       }).then((res: any) => {
@@ -114,10 +108,6 @@ export default defineComponent({
       })
     }
 
-    function handleClick(param: any) {
-      router.push(`/admin/vote/item?id=${param.id}`)
-    }
-
     onMounted(() => {
       init({})
       getFavorites()
@@ -127,7 +117,6 @@ export default defineComponent({
       init,
       coding,
       dataList,
-      handleClick,
       favorites
     }
   }

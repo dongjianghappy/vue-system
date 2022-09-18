@@ -13,7 +13,7 @@
   <div class="module-content plr15">
     <v-basicinfo v-model:data="dataList.baisc" :edit="edit" title="基本信息" :auth="auth" />
     <v-basicinfo v-model:data="dataList.logo" :edit="edit" title="网站LOGO" :auth="auth" />
-    <v-basicinfo v-model:data="dataList.custom" :isDelete="true" :edit="edit" title="自定义管理" :coding="{coding: 'P0000'}" :auth="auth" />
+    <v-basicinfo v-model:data="dataList.custom" :isDelete="true" :edit="edit" title="自定义管理" :render="init" :coding="{coding: 'P0000'}" :auth="auth" />
   </div>
 </div>
 </template>
@@ -23,39 +23,33 @@ import {
   defineComponent,
   getCurrentInstance,
   onMounted,
-  computed
-} from 'vue'
-import {
+  computed,
   useStore
-} from 'vuex'
+} from '@/utils'
 import Detail from './components/detail.vue'
 import ShowSetting from '../../components/packages/setting/index.vue'
 export default defineComponent({
-  name: 'HomeViewdd',
+  name: 'BaiscView',
   components: {
     Detail,
     ShowSetting
   },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
   setup(props, context) {
     const {
-      ctx,
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
     const dataList = computed(() => {
       const list = store.getters['website/webinfo']
+      // 基本信息
       const baisc = list.filter(
         (item: any) => item.isdelete === '1' && item.name !== 'logo'
       )
+      // Logo信息
       const logo = list.filter(
         (item: any) => item.isdelete === '1' && item.name === 'logo'
       )
+      // 自定义字段
       const custom = list.filter((item: any) => item.isdelete === '0')
       return {
         baisc,
@@ -75,7 +69,7 @@ export default defineComponent({
       param.map((item: any) => {
         data[item.name] = item.value
       })
-      debugger
+  
       store.dispatch('common/Fetch', {
         api: "updateInfo",
         data: {
@@ -83,7 +77,6 @@ export default defineComponent({
           ...data
         }
       }).then(res => {
-        alert("fffdd")
         proxy.$hlj.message({
           msg: "编辑成功"
         })
@@ -94,9 +87,9 @@ export default defineComponent({
 
     return {
       dataList,
+      init,
       edit,
       auth: proxy.$auth.init('basic')
-
     }
   }
 })

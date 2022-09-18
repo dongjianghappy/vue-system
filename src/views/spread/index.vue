@@ -10,7 +10,6 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-
     <table width="100%" class="table-striped table-hover col-left-23">
       <tr>
         <td class="col-md-1">选择</td>
@@ -44,6 +43,7 @@
         </td>
       </tr>
     </table>
+    <v-nodata :data="dataList" />
   </div>
 </div>
 </template>
@@ -53,28 +53,18 @@ import {
   defineComponent,
   getCurrentInstance,
   onMounted,
-  computed,
   ref,
+  useStore,
   codings,
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Detail from './components/detail.vue'
 export default defineComponent({
-  name: 'HomeViewdd',
+  name: 'SpreadViewdd',
   components: {
     Detail
   },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
   setup(props, context) {
     const {
-      ctx,
       proxy
     }: any = getCurrentInstance();
     const coding: any = codings['spread'];
@@ -91,7 +81,6 @@ export default defineComponent({
         }
       }).then(res => {
         dataList.value = res.result.list
-
         setTimeout(() => {
           proxy.$drag.init((res: any) => {
 
@@ -137,7 +126,6 @@ export default defineComponent({
       dataList,
       coding,
       isMove
-
     }
   }
 })

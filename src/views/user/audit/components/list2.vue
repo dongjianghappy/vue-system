@@ -8,7 +8,7 @@
     <td class="col-md-2">电子邮箱</td>
     <td class="col-md-2">注册时间</td>
   </tr>
-  <tr>
+  <tr v-for="(item, index) in dataList.list" :key="index">
     <td></td>
     <td></td>
     <td></td>
@@ -17,6 +17,7 @@
     <td></td>
   </tr>
 </table>
+<v-nodata :data="dataList.list" />
 </template>
 
 <script lang="ts">
@@ -29,15 +30,12 @@ import {
 } from '@/utils'
 
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
+  name: 'v-List',
   props: {
-    style: {
-      type: Object,
+    dataList: {
+      type: Array,
       default: () => {
-        return {}
+        return []
       }
     }
   },

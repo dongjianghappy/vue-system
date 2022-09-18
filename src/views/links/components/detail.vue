@@ -1,6 +1,6 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? '编辑': '新增友情'}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? '编辑': '新增友情'}}
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑友情链接' : '新增友情链接' " :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
@@ -14,7 +14,7 @@
         <input v-model="detail.url" type="text" placeholder="请输入url地址" class="input-sm input-full" />
       </li>
       <li class="li">
-        <span class="label">服务器</span>
+        <span class="label">展示站点</span>
         <template v-for="(item, index) in serverName" :key="index">
           <span v-if="checkedList.indexOf(item.value) > -1" class="mr15">{{item.name}}</span>
         </template>
@@ -40,25 +40,36 @@
       </li>
       <li class="li">
         <span class="label">方式</span>
-        <v-radio label="交换" name="method" value="1" v-model:checked="detail.method" />
-        <v-radio label="出售" name="method" value="0" v-model:checked="detail.method" />
+        <v-radiobutton name="method" v-model:checked="detail.method" :enums="[{label: '交换', value: '0'}, {label: '出售', value: '1'}]" v-model:value="detail.area" />
       </li>
-      <li class="li">
+      <li style="padding-left: 100px">
+        <ul class="plr15" style="background: #f8f8fa;">
+          <li class="li" v-if="detail.method === '1'">
         <span class="label">出售状态</span>
         <v-radio label="正常" name="sell" value="1" v-model:checked="detail.sell" />
         <v-radio label="过期" name="sell" value="0" v-model:checked="detail.sell" />
       </li>
-      <li class="li">
+      <li class="li" v-if="detail.method === '1'">
         <span class="label">出售次数</span>
         <input v-model="detail.webmaster" type="text" placeholder="请输入出售次数" class="input-sm input-150" />
       </li>
-      <li class="li">
+      <li class="li" v-if="detail.method === '1'">
         <span class="label">价格</span>
         <input v-model="detail.price" type="text" placeholder="请输入价格" class="input-sm input-150" />
       </li>
+        </ul>
+      </li>
       <li class="li">
         <span class="label">站点介绍</span>
-        <textarea placeholder="请输入站点介绍" v-model="data.content" class="w-full"></textarea>
+        <textarea placeholder="请输入站点介绍" v-model="detail.content" class="w-full"></textarea>
+      </li>
+      <li class="li">
+        <span class="label">站长</span>
+        <input v-model="detail.webmaster" type="text" placeholder="请输入站长名称" class="input-sm input-full" />
+      </li>
+      <li class="li">
+        <span class="label">联系方式</span>
+        <input v-model="detail.contact" type="text" placeholder="请输入联系方式" class="input-sm input-full" />
       </li>
     </ul>
   </template>
@@ -123,7 +134,7 @@ export default defineComponent({
 
     function submit(params: any) {
       store.dispatch('common/Fetch', {
-        api: "update",
+        api: props.action !== 'add' ? 'update' : 'insert',
         data: {
           coding: props.data.coding,
           ...detail.value,
@@ -132,6 +143,7 @@ export default defineComponent({
       }).then(() => {
         props.render()
         params.message()
+        params.cancel()
       })
     }
 

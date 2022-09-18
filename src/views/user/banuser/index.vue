@@ -47,6 +47,7 @@
         </td>
       </tr>
     </table>
+    <v-nodata :data="dataList.list" />
   </div>
 </div>
 </template>
@@ -57,19 +58,14 @@ import {
   getCurrentInstance,
   onMounted,
   computed,
-  ref
-} from 'vue'
-import {
+  ref,
   useStore
-} from 'vuex'
+} from '@/utils'
 import {
   BANNED_TYPE,
 } from '@/assets/enum'
 export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-
-  },
+  name: 'BanuserView',
   setup(props, context) {
     const {
       proxy

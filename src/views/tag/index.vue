@@ -8,7 +8,6 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-
     <table width="100%" class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
@@ -27,12 +26,15 @@
         <td>
           {{item.name}}
         </td>
-        <td><DetailFlag action='add' :data="{item, coding }" :render="init" /></td>
         <td>
-            <span>删除</span>
+          <DetailFlag action='add' :data="{item, coding }" :render="init" />
+        </td>
+        <td>
+          <span>删除</span>
         </td>
       </tr>
     </table>
+    <v-nodata :data="dataList" />
   </div>
 </div>
 </template>
@@ -42,16 +44,12 @@ import {
   defineComponent,
   getCurrentInstance,
   onMounted,
-  computed,
   ref,
   watch,
+  useStore,
   useRoute,
   codings
 } from '@/utils'
-import {
-  useStore,
-  
-} from 'vuex'
 import Detail from './components/detail.vue'
 import DetailFlag from './components/detailFlag.vue'
 export default defineComponent({
@@ -60,29 +58,19 @@ export default defineComponent({
     Detail,
     DetailFlag
   },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
   setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const dataList: any = ref([])
-    const coding: any = codings['link'];
+    const coding: any = codings['tag'];
     const route = useRoute();
 
     // 监听路由
     watch(route, (newValues, prevValues) => {
       if (route.path === '/admin/tag/core') {
         init('1')
-      }else if (route.path === '/admin/tag/target') {
+      } else if (route.path === '/admin/tag/target') {
         init('2')
-      }else{
+      } else {
         init('0')
       }
     })
@@ -100,16 +88,10 @@ export default defineComponent({
       })
     }
 
-    function edit(param: any) {
-
-    }
-
-    onMounted(() =>  init('1'))
+    onMounted(() => init('1'))
 
     return {
       dataList,
-      edit
-
     }
   }
 })

@@ -162,7 +162,7 @@
   z-index: 100;
   position: fixed;
   right: 0;
-  height: 100%;
+  bottom: 0;
   transition: right .5s ease;
   &.drawer-open{
     width: 100%;
@@ -446,13 +446,13 @@
 
 .move-button {
   border-radius: 2px;
-  color: rgba(0,0,0,.65);
+  // color: rgba(0,0,0,.65);
   background: #fff;
   border: 1px solid #d9d9d9;
-  margin: 0 2px;
+  // margin: 0 2px;
   padding: 0!important;
-  width: 32px!important;
-  height: 32px!important;
+  // width: 32px!important;
+  // height: 32px!important;
 }
 
 .reply {
@@ -902,5 +902,16 @@
       border: 1px solid #dfe2e5;
       padding: 10px;
     }
+  }
+}
+
+.collapse{
+  background: #ddd;
+  .collapse-head{
+    padding: 15px;
+    background: #424568;
+  }
+  .aside-list{
+    background: #fff;
   }
 }

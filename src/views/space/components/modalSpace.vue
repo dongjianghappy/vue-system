@@ -2,7 +2,7 @@
 <span @click="handleclick">
   <slot></slot>
 </span>
-<v-dialog v-model:show="isShow" ref="form" title="图片空间" width="1200px" height="600px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog v-model:show="isShow" ref="form" title="图片空间" :style="{width: '1200', height: '600'}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <Main  type="modal" v-model:data="currentImg" />
   </template>

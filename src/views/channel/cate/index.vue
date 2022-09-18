@@ -102,7 +102,6 @@
 </template>
 
 <script lang="ts">
-import Space from '@/components/common/Space.vue';
 import {
   defineComponent,
   getCurrentInstance,
@@ -121,8 +120,7 @@ import Detail from './components/detail.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    Detail,
-    Space
+    Detail
   },
   setup(props, context) {
     const {

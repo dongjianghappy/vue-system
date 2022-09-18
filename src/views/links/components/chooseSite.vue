@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow">
   选择站点
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑友情链接' : '新增标签' " :width="350" :hasfooter="false">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑友情链接' : '新增标签' " :style="{width: 350}" :hasfooter="false">
   <template v-slot:content v-if="isShow">
 
     <table width="100%" class="table-striped table-hover col-left-23">

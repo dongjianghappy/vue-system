@@ -1,17 +1,16 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增合作伙伴"}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增合作伙伴"}}
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑合作伙伴' : '新增合作伙伴' " :data="data" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">伙伴名称</span>
-        <input v-model="detail.name" type="text" placeholder="请输入标题" class="input-sm input-full" />
-      </li>
-      <li class="li">
-        <span class="label">url地址</span>
-        <input v-model="detail.url" type="text" placeholder="请输入地址" class="input-sm input-full" />
+        <div style="display: flex;">
+          <div class="w150 mr10"><input v-model="detail.name" type="text" placeholder="请输入伙伴名称" class="input-sm input-full" sty /></div>
+          <div style="flex: 1"><input v-model="detail.url" type="text" placeholder="请输入网址" class="input-sm input-full" /></div>
+        </div>
       </li>
       <li class="li">
         <span class="label">顺序</span>
@@ -86,6 +85,7 @@ export default defineComponent({
     const drawer: any = ref(null)
     const upload: any = ref(null);
     const detail: any = ref({})
+
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {

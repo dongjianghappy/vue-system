@@ -1,6 +1,6 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' ? 'add' : 'edit'}`" />{{action === 'edit'? '编辑': '添加意图库'}}
+  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : ''}`" />{{action === 'edit'? '编辑': '添加意图库'}}
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑意图库' : '添加意图库' " :submit="submit" :submitApi="{insert: 'createVote', update: 'updateVote'}" :data="data" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">

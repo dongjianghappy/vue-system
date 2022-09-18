@@ -17,7 +17,7 @@
               <div style="flex: 1">
                 <input id="title" v-model="detail.title" type="text" placeholder="请输入名称" class="input-sm input-full" :style="[detail.style]" />
               </div>
-              <v-titleattribute :style="detail.style || {}" :setStyle="setStyle" />
+              <v-titleattribute :style="detail.style || {}" :setStyle="(param) => detail.style = param" />
             </div>
           </li>
           <li class="vertical">
@@ -70,11 +70,11 @@
             <div class="label">模板</div>
             <v-select :enums="templates" v-model:value="detail.single_templates" :defaultValue="detail.single_templates = detail.single_templates ? detail.single_templates : 'singlepage.htm'" />
           </li>
-                    <li class="vertical">
+          <li class="vertical">
             <div class="label">目录</div>
             <input id="title" v-model="detail.dir_file" type="text" placeholder="请输入目录" class="input-sm input-full" />
-          </li>          
-                    <li class="vertical">
+          </li>
+          <li class="vertical">
             <div class="label">文件名</div>
             <input id="title" v-model="detail.html" type="text" placeholder="请输入文件名" class="input-sm input-full" />
           </li>
@@ -92,11 +92,6 @@
         相册
       </div>
       <div class="module-content plr15" style="min-height: 290px">
-        <!-- <div>
-          <ul>
-            <li class="col-md-6 p5" style="height: 120px;" v-for="(item, index) in detail.img" :key="index"><img :src="item" style="width: 100%; height: 100%"></li>
-          </ul>
-        </div> -->
         <v-uploads ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: 'P0002'}" :dataList="detail.img" :uploadtype="channelData.module" @imgList="image" :style="'width: 135px'" />
       </div>
     </div>
@@ -200,11 +195,6 @@ export default defineComponent({
       }
     }
 
-    // 设置属性
-    function setStyle(param: any) {
-      detail.value.style = param
-    }
-
     // 保存
     function save() {
       debugger
@@ -287,7 +277,7 @@ export default defineComponent({
     }
 
     function handleUpdate(param: any) {
-      if(detail.value.status !== '1'){
+      if (detail.value.status !== '1') {
         proxy.$hlj.message({
           msg: "单页状态未开启"
         })
@@ -316,7 +306,6 @@ export default defineComponent({
       detail,
       checkedList,
       init,
-      setStyle,
       save,
       dataList,
       aaa,

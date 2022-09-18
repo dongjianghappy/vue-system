@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="auth">
   <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增导航"}}
 </v-button>
-<v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑导航' : '新增导航' " :data="data" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑导航' : '新增导航' " :data="data" api="navigationDetail" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <div class="alert-description ptb10 plr15">说明</div>
     <v-tabs :tabs="menu" method="click">
@@ -14,7 +14,7 @@
               <div style="flex: 1">
                 <input v-model="detail.name" type="text" class="input-sm input-full" :style="[detail.style]" />
               </div>
-              <v-titleattribute :style="detail.style || {}" :setStyle="setStyle" />
+              <v-titleattribute :style="detail.style || {}" :setStyle="(param) => detail.style = param" />
             </div>
           </li>
           <li class="li">
@@ -24,8 +24,7 @@
           <li class="li">
             <span class="label">所属导航</span>
             {{detail.parent}}
-            <v-category name="选择分类" :data="{detail, coding}" type="text" api="delete"></v-category>
-
+            <v-category name="选择分类" :data="{item: detail, coding: data.coding}" :isInt="true" type="text"></v-category>
           </li>
           <li class="li">
             <span class="label">顺序</span>
@@ -65,7 +64,7 @@
           </li>
           <li class="li">
             <span class="label">描述</span>
-            <textarea v-model="detail.description"></textarea>
+            <textarea v-model="detail.description" class="w-full" ></textarea>
           </li>
         </ul>
       </template>
@@ -123,17 +122,15 @@ export default defineComponent({
     const isShow: any = ref(false)
     const drawer: any = ref(null)
     const navType: any = NAV_TYPE
-    const detail: any = ref({})
-    let menu: any = ref([{
-        name: "导航信息",
-        value: "appstore1"
+    const menu: any = ref([{
+        name: "导航信息"
       },
       {
-        name: "页面信息",
-        value: "appstore2"
+        name: "页面信息"
       }
     ])
-    
+    const detail: any = ref({})
+
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
@@ -146,11 +143,6 @@ export default defineComponent({
         }
       }
     })
-
-    // 设置属性
-    function setStyle(param: any) {
-      detail.value.style = param
-    }
 
     // 保存
     function submit(params: any) {
@@ -171,17 +163,17 @@ export default defineComponent({
         }
       }).then(res => {
         props.render()
+        params.cancel()
         params.message()
       })
     }
 
     return {
       isShow,
-      detail,
       drawer,
       menu,
       navType,
-      setStyle,
+      detail,
       submit
     }
   }

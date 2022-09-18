@@ -1,22 +1,18 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? '编辑': '新增应用'}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? '编辑': '新增应用'}}
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑应用' : '新增应用' " :data="data" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
-        <span class="label">新增类型{{detail.type}}</span>
+        <span class="label">新增类型</span>
         <v-select :enums="appCenter" :value="detail.type" @onChange="getGrade" :defaultValue="detail.type = detail.type ? detail.type : '1'" />
-        <v-select :enums="gradeList" v-model:value="detail.source" @onChange="sssss" />
+        
       </li>
-      <!-- <li class="li">
-        <span class="label">应用权限</span>
-
-      </li> -->
       <li class="li">
         <span class="label">应用名称</span>
-        <input v-model="detail.name" type="text" placeholder="请输入应用名称" disabled class="input-sm input-full" />
+        <v-select :enums="gradeList" v-model:value="detail.module" @onChange="sssss" />
       </li>
       <li class="li">
         <span class="label">模块</span>
@@ -24,7 +20,7 @@
       </li>
       <li class="li">
         <span class="label">顺序</span>
-        <input v-model="detail.sort" type="text" placeholder="请输入顺序" class="input-sm input-full" />
+        <input v-model="detail.sort" type="text" placeholder="请输入顺序" class="input-sm input-150" />
       </li>
       <li class="li">
         <span class="label">状态</span>
@@ -50,7 +46,7 @@
       </li>
       <li class="li">
         <span class="label">描述</span>
-        <textarea placeholder="请输入描述" v-model="data.description" disabled class="w-full"></textarea>
+        <textarea placeholder="请输入描述" v-model="detail.description" disabled class="w-full"></textarea>
       </li>
     </ul>
   </template>
@@ -69,8 +65,7 @@ import {
 } from '@/assets/enum'
 export default defineComponent({
   name: 'v-Search',
-  components: {
-  },
+  components: {},
   props: {
     attrs: {
       type: Object,

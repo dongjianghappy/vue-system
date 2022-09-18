@@ -1,14 +1,14 @@
 <template>
-<div class="drawer-wrap" :class="{'drawer-open': show}" :style="`top: ${top}px`">
+<div class="drawer-wrap" :class="{'drawer-open': show}" :style="`top: ${style.top || 64}px`">
   <v-mask v-show="show" v-model:isShow="isShow"></v-mask>
-  <div class="drawer align_left" :style="{width: `${width}px`, right: show ? '0px' : `-${width}px`}">
-    <div class="module-wrap relative" :style="`height:${height}`">
+  <div class="drawer align_left" :style="{width: `${style.width || 700}px`, right: show ? '0px' : `-${style.width || 700}px`}">
+    <div class="module-wrap relative" :style="`height:${style.height || '100%'}`">
       <div class="module-head" v-if="title">{{title}}
         <span class="right">
           <slot name="extra"></slot>
         </span>
       </div>
-      <div class="module-content absolute plr25" :style="`width: 100%; top: ${title ? '65px;' : '0px'}  bottom: 55px; overflow-y: auto;`">
+      <div class="module-content absolute plr25" :style="`width: 100%; top: ${title ? '65px;' : '0px'}  bottom: ${hasfooter ? '55px;' : '0' } overflow-y: auto;`">
         <slot name="content"></slot>
       </div>
       <div class="module-foot absolute align_right" style="bottom: 0" v-if="hasfooter">
@@ -36,6 +36,17 @@ import {
 export default defineComponent({
   name: 'v-Drawer',
   props: {
+    // 样式
+    style: {
+      type: Object,
+      default: () => {
+        return {
+          top: "64",
+          width: "700",
+          height: "100%"
+        }
+      }
+    },
     // 操作类型值有: eidt、add
     action: {
       type: String,
@@ -56,20 +67,6 @@ export default defineComponent({
       type: Boolean,
       default: true
     },
-    // 定位
-    top: {
-      type: String,
-      default: "0"
-    },
-    // 宽度
-    width: {
-      type: String,
-      default: "700"
-    },
-    height: {
-      type: String,
-      default: "100%"
-    },
     param: {
       type: Object,
       default: () => {
@@ -83,11 +80,12 @@ export default defineComponent({
         return {}
       }
     },
-    // 接口
+    // 查询接口
     api: {
       type: String,
       default: ""
     },
+    // 提交接口
     submitApi: {
       type: Object,
       default: ""
@@ -103,7 +101,7 @@ export default defineComponent({
       }
     }
   },
-  emits: ['onClick', 'update:show'],
+  emits: ['update:show'],
   setup(props, context) {
     const {
       proxy
@@ -135,13 +133,13 @@ export default defineComponent({
 
     // 确认按钮
     function submit(params: any) {
-
-      // 提交页面设置在父组件中
+      // 自定义提交
       if (props.submit) {
+        debugger
         props.submit({
           cancel: cancel,
           message: proxy.$hlj.message({
-            msg: "编辑成功"
+            msg: props.action !== "add" ? "编辑成功" : "新增成功"
           })
         })
       } else {

@@ -3,12 +3,11 @@
   <div class="module-head">
     <v-optionsbar title="所有采集列表">
       <template v-slot:extraright>
-        扩展值
+        
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-
     <table width="100%" class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
@@ -25,14 +24,13 @@
         <td>
           {{item.title}}
         </td>
+        <td>{{item.parent}}</td>
+        <td>{{item.times}}</td>
         <td>
+          <v-switch :data="{ item, field: 'checked', coding }" :auth="true" />
         </td>
-        <td>{{item.datetime}}</td>
         <td>
-          <v-switch :data="{ item, field: 'checked', coding }" />
-        </td>
-        <td>
-          <v-confirm name="删除" :data="{id: item.id, coding, operating: 'remove' }" type="text" api="removeAndRestore" :render="render" operating="delete" :auth="auth.checked('del')" ></v-confirm>
+          <v-confirm name="删除" :data="{id: item.id, coding, operating: 'remove' }" type="text" api="removeAndRestore" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
         </td>
       </tr>
     </table>

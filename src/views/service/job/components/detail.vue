@@ -50,7 +50,6 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   ref,
   watch
 } from '@/utils'
@@ -58,10 +57,7 @@ import {
   LINK_TYPE,
 } from '@/assets/enum'
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
+  name: 'v-Detail',
   props: {
     action: {
       type: String,
@@ -81,9 +77,6 @@ export default defineComponent({
     }
   },
   setup(props, context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
     const isShow: any = ref(false)
     const drawer: any = ref(null)
     const sourceType: any = LINK_TYPE

@@ -8,7 +8,6 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-
     <table width="100%" class="table-striped table-hover col-left-1">
       <tr class="th">
         <td class="col-md-6">投票名称</td>
@@ -19,7 +18,9 @@
       <tr v-for="(item, index) in dataList" :key="index">
         <td>{{item.name}}</td>
         <td>{{item.vote}}</td>
-        <td><v-switch :data="{ item, field: 'status', coding }" /></td>
+        <td>
+          <v-switch :data="{ item, field: 'status', coding }" />
+        </td>
         <td>
           <v-space>
             <span @click="handleClick(item)">
@@ -32,6 +33,7 @@
         </td>
       </tr>
     </table>
+    <v-nodata :data="dataList" />
   </div>
 </div>
 </template>
@@ -39,9 +41,7 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
   useStore,
   useRouter,
@@ -50,22 +50,12 @@ import {
 import Detail from './components/detail.vue'
 
 export default defineComponent({
-  name: 'HomeViewdd',
+  name: 'VoteView',
   components: {
     Detail
   },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
   setup(props, context) {
     const coding: any = codings['vote'].cate;
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const router: any = useRouter();
     const dataList: any = ref([])
@@ -79,7 +69,7 @@ export default defineComponent({
     }
 
     function handleClick(param: any) {
-router.push(`/admin/vote/item?id=${param.id}`)
+      router.push(`/admin/vote/item?id=${param.id}`)
     }
 
     onMounted(init)
@@ -88,7 +78,6 @@ router.push(`/admin/vote/item?id=${param.id}`)
       coding,
       dataList,
       handleClick
-
     }
   }
 })

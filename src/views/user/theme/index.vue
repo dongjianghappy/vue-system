@@ -2,10 +2,10 @@
 <div class="module-wrap nobg">
   <v-tabs :tabs="menu" type="vertical">
     <template v-slot:content1>
-      <List :render="init" :coding="coding" :type='tabsIndex' :dataList="dataList" />
+      <List :render="init" :data="{coding: coding.theme}" :type='tabsIndex' :dataList="dataList" />
     </template>
     <template v-slot:content2>
-      <List :render="init" :coding="coding" :type='tabsIndex' :dataList="dataList" />
+      <List :render="init" :data="{coding: coding.effects}" :type='tabsIndex' :dataList="dataList" />
     </template>
   </v-tabs>
 </div>
@@ -25,16 +25,14 @@ import {
 } from 'vuex'
 import Detail from './components/detail.vue'
 import List from './components/list.vue'
-import List2 from './components/list2.vue'
 
 import {
   linkPage
 } from '@/assets/const'
 export default defineComponent({
-  name: 'HomeViewdd',
+  name: 'IndexView',
   components: {
     List,
-    List2,
     Detail
   },
   setup(props, context) {
@@ -43,7 +41,7 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
-    const coding: any = proxy.$coding['user'].theme;
+    const coding: any = proxy.$coding['user'];
     const dataList: any = ref([])
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
     let menu: any = ref([{
@@ -72,7 +70,7 @@ export default defineComponent({
       }: any = route.query
 
       store.dispatch('common/Fetch', {
-        api: tabsIndex.value === '0' ? 'theme' : 'effects'
+        api: tabsIndex.value === '1' ? 'effects' : 'theme'
       }).then(res => {
         dataList.value = res.result
       })

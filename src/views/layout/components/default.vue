@@ -2,13 +2,13 @@
 <div class="mb10" style="overflow: auto;">
   <div class="col-md-3" style="padding-right: 8px;">
     <div class="col-md-4">
-      <v-statisticcard name="用户总量" :value="user.total" />
+      <v-statisticcard name="用户总量" :value="user.total || 0" />
     </div>
     <div class="col-md-4">
-      <v-statisticcard name="昨日注册" :value="user.yesterday" />
+      <v-statisticcard name="昨日注册" :value="user.yesterday || 0" />
     </div>
     <div class="col-md-4">
-      <v-statisticcard name="今日注册" :value="user.today" />
+      <v-statisticcard name="今日注册" :value="user.today || 0" />
     </div>
   </div>
   <!-- <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">

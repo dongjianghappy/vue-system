@@ -1,8 +1,8 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? '编辑': '添加内容'}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? '编辑': '添加网站'}}
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑内容' : '添加内容' " api="favoriteDetali" :data="{id: data.id, coding: data.coding.art}" width="520px" height="350px" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑网站' : '添加网站' " api="favoriteDetali" :data="{id: data.id, coding: data.coding.art}" :style="{width: '520', height: '350'}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -21,7 +21,6 @@
       <li class="li">
         <span class="label">收藏夹</span>
         <v-select :enums="favorites" v-model:value="detail.fid" :defaultValue="detail.fid = detail.fid ? detail.fid : '5'" />
-
       </li>
     </ul>
   </template>
@@ -40,10 +39,7 @@ import {
   TEXT_TYPE,
 } from '@/assets/enum'
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    
-  },
+  name: 'v-Detail',
   props: {
     action: {
       type: String,
@@ -75,10 +71,9 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
     const isShow: any = ref(false)
-    const detail: any = ref({})
     const dialog: any = ref(null)
     const textType = TEXT_TYPE
-    
+    const detail: any = ref({})
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
@@ -87,9 +82,7 @@ export default defineComponent({
       }
     })
 
-
-
-    function submit(cancel: any) {
+    function submit(params: any) {
       const {
         id,
         fid,
@@ -115,8 +108,8 @@ export default defineComponent({
           ...param
         }
       }).then(res => {
-        isShow.value = false
         props.render()
+        params.cancel()
       })
     }
 
@@ -124,7 +117,6 @@ export default defineComponent({
       textType,
       isShow,
       detail,
-      
       submit,
     }
   }

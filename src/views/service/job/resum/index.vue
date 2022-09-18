@@ -8,7 +8,6 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-
     <table width="100%" class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
@@ -41,6 +40,7 @@
         </td>
       </tr>
     </table>
+    <v-nodata :data="dataList" />
   </div>
 </div>
 </template>
@@ -48,33 +48,18 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
+  useStore,
   codings
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 
 export default defineComponent({
-  name: 'HomeViewdd',
-  components: {},
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
+  name: 'ResumView',
   setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
-    const dataList: any = ref([])
     const coding: any = codings['service'].resume;
+    const dataList: any = ref([])
 
     function init() {
       store.dispatch('common/Fetch', {
@@ -93,7 +78,6 @@ export default defineComponent({
     return {
       dataList,
       coding
-
     }
   }
 })

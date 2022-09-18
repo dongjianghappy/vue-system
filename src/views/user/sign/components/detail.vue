@@ -1,23 +1,25 @@
 <template>
-<span @click="handleclick">{{action === 'edit' ? '编辑' : '新增选项'}}</span>
-<v-dialog v-model:show="isShow" ref="form" :title="action === 'edit' ? '编辑选项' : '新增选项'" width="520px" height="400px" :confirm="true" :cancel="true" @submit="submit">
+<v-button v-model:show="isShow">
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增选项"}}
+</v-button>
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑选项' : '新增选项'" :data="data" :style="{width: '520', height: '400'}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">策略名称</span>
-        <input  type="text" placeholder="请输入角色名称" class="input-sm input-full" />
+        <input v-model="detail.name" type="text" placeholder="请输入策略名称" class="input-sm input-full" />
       </li>
-       <li class="li">
+      <li class="li">
         <span class="label">周期</span>
-        <input  type="text" placeholder="请输入角色名称" class="input-sm input-full" />
+        <input v-model="detail.cycle" type="text" placeholder="请输入周期" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">积分</span>
-        <input  type="text" placeholder="请输入角色名称" class="input-sm input-full" />
+        <input v-model="detail.integration" type="text" placeholder="请输入积分" class="input-sm input-full" />
       </li>
-       <li class="li">
+      <li class="li">
         <span class="label">积分说明</span>
-        <textarea id="description" class="ant-input"></textarea>
+        <textarea v-model="detail.explanation" placeholder="请输入积分说明" class="w-full"></textarea>
       </li>
     </ul>
   </template>
@@ -28,14 +30,12 @@
 import {
   defineComponent,
   ref,
+  useStore,
   watch,
 } from '@/utils'
 
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    
-  },
+  name: 'v-Detail',
   props: {
     action: {
       type: String,
@@ -55,24 +55,55 @@ export default defineComponent({
     }
   },
   setup(props, context) {
+    const store: any = useStore()
     const isShow: any = ref(false)
+    const dialog: any = ref(null)
     const detail: any = ref({})
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
-        
+        detail.value = await dialog.value.init()
       }
     })
 
-    function handleclick(param: any) {
-      isShow.value = !isShow.value
+    function submit(params: any) {
+
+      const {
+        id,
+        name,
+        cycle,
+        integration,
+        explanation
+      } = detail.value
+
+      const param: any = {
+        name,
+        cycle,
+        integration,
+        explanation,
+        coding: props.data.coding
+      }
+      if (props.action === 'edit') {
+        param.id = id
+      }
+
+      store.dispatch('common/Fetch', {
+        api: props.action !== 'add' ? 'update' : 'insert',
+        data: {
+          ...param,
+        }
+      }).then(() => {
+        props.render()
+        isShow.value = false
+      })
     }
 
     return {
       isShow,
-      handleclick,
-      detail
+      dialog,
+      detail,
+      submit
     }
   }
 })

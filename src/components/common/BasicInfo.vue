@@ -20,20 +20,16 @@
         </template>
       </li>
     </ul>
+    <v-nodata :data="data" />
   </div>
-
 </div>
 </template>
 
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
-  onMounted,
-  reactive,
-  ref,
-  computed
-} from 'vue'
+  ref
+} from '@/utils'
 
 export default defineComponent({
   name: 'BasicInfoView',
@@ -64,6 +60,12 @@ export default defineComponent({
         return
       }
     },
+    render: {
+      type: Function,
+      default: () => {
+        return
+      }
+    },    
     auth: {
       type: Object,
       default: () => {
@@ -81,10 +83,9 @@ export default defineComponent({
     const dataList: any = ref(props.data)
 
     function Edit() {
-      if(!props.auth.checked('edit')) {
+      if (!props.auth.checked('edit')) {
         return
       }
-
       isEdit.value = !isEdit.value
       if (isEdit.value) {
         props.edit(props.data)
@@ -97,6 +98,5 @@ export default defineComponent({
       Edit
     }
   }
-
 })
 </script>

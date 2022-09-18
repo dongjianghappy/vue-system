@@ -1,11 +1,13 @@
 <template>
-<span @click="handleclick">{{action === 'edit' ? '编辑' : '新增角色'}}</span>
-<v-dialog v-model:show="isShow" ref="form" :title="action === 'edit' ? '编辑角色' : '新增角色'" width="520px" height="200px" :confirm="true" :cancel="true" @submit="submit">
+<v-button v-model:show="isShow" :disabled="auth">
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? '编辑': '新增角色'}}
+</v-button>
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑角色' : '新增角色'" :data="data" :style="{width: '520', height: '200'}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">角色名称</span>
-        <input  type="text" placeholder="请输入角色名称" class="input-sm input-full" />
+        <input v-model="detail.name" type="text" placeholder="请输入角色名称" class="input-sm input-full" />
       </li>
     </ul>
   </template>
@@ -16,21 +18,13 @@
 import {
   defineComponent,
   ref,
+  useStore,
   watch,
 } from '@/utils'
 
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    
-  },
+  name: 'v-Detail',
   props: {
-    attrs: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
     action: {
       type: String,
       default: "add"
@@ -49,26 +43,38 @@ export default defineComponent({
     }
   },
   setup(props, context) {
+    const store: any = useStore()
     const isShow: any = ref(false)
     const detail: any = ref({})
-    const drawer: any = ref(null)
+    const dialog: any = ref(null)
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
-        detail.value = await drawer.value.init()
+        detail.value = await dialog.value.init()
+        debugger
       }
     })
 
-    function handleclick(param: any) {
-      isShow.value = !isShow.value
-    }
+    function submit(params: any) {
+      store.dispatch('common/Fetch', {
+        api: props.action !== 'add' ? 'update' : 'insert',
+        data: {
+          coding: props.data.coding,
+          ...detail.value,
+        }
+      }).then(() => {
+        props.render()
+        params.message()
+        params.cancel()
+      })
+    }    
 
     return {
       isShow,
-      handleclick,
+      dialog,
       detail,
-      drawer
+      submit
     }
   }
 })

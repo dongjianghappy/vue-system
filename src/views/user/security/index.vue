@@ -2,34 +2,22 @@
 <div class="module-wrap">
   <div class="module-head">
     <v-optionsbar title="密保问题">
+     
       <template v-slot:extraright>
-        <!-- <Detail action='add' :data="{ coding }" :render="init" /> -->
+        <Detail action='add' :data="{ coding }" :render="init" />
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-4">
-      <tr class="th">
-        <td class="col-md-2">策略名称</td>
-        <td class="col-md-1">周期</td>
-        <td class="col-md-1">积分</td>
-        <td class="col-md-6">描述</td>
-        <td class="col-md-2">操作</td>
-      </tr>
-     
+    <table width="100%" class="table-striped table-hover col-left-2">
       <tr v-for="(item, index) in dataList.list" :key="index">
-        <td>
-          {{item.name}}
+        <td class="col-md-1">
+          问题{{index+1}}
         </td>
-        <td>
-          {{item.cycle}}
+        <td class="col-md-10">
+          {{item.quetion}}
         </td>
-        <td>
-          {{item.integration}}
-        </td>
-        <td>
-        </td>
-        <td>
+        <td class="col-md-1">
           <v-space>
             <span>
               <Detail action="edit" :data="{id: item.id, coding}" :param="param" :render="init" />
@@ -41,6 +29,7 @@
         </td>
       </tr>
     </table>
+    <v-nodata :data="dataList.list" />
   </div>
 </div>
 </template>
@@ -56,11 +45,11 @@ import {
 import {
   useStore
 } from 'vuex'
-// import Detail from './components/detail.vue'
+import Detail from './components/detail.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    // Detail
+    Detail
   },
   setup(props, context) {
     const {
@@ -68,14 +57,14 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore();
     const dataList = computed(() => store.getters['basic/partner']);
-    const coding: any = proxy.$coding['partner'];
+    const coding: any = proxy.$coding['user'].security;
     const checkedList: any = ref([])
 
     function init() {
-      store.dispatch('basic/Fetch', {
+     store.dispatch('basic/Fetch', {
         state: 'partner',
         data: {
-          coding: 'U0011',
+          coding,
           page: 1,
           pagesize: 10
         }

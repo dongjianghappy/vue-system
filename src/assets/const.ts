@@ -438,5 +438,3 @@ export const PRIOVINCE = [
 	{name: "香港特别行政区", value: "810000"},
 	{name: "澳门特别行政区", value: "820000"}
 ]
-
-debugger

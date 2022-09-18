@@ -61,7 +61,6 @@ import {
 export default defineComponent({
   name: 'v-Search',
   components: {
-    ,
     SpaceModal
   },
   props: {

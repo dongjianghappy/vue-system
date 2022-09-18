@@ -57,22 +57,12 @@ import {
   getCurrentInstance,
   onMounted,
   ref,
+  useStore,
   useRouter,
   useRoute
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
-
 export default defineComponent({
-  name: 'HomeViewdd',
-  components: {},
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
+  name: 'SingleView',
   setup(props, context) {
     const {
       proxy
@@ -96,12 +86,7 @@ export default defineComponent({
     }
 
     function handleClick(params: any) {
-      let url = ""
-      if (params === 'add') {
-        url = '/admin/navigation/single/add?channel=0'
-      } else {
-        url = `/admin/navigation/single/edit?channel=0&id=${params.id}`
-      }
+      let url = `/admin/navigation/single/add?channel=${route.query.channel}${params === 'add' ? '' : '&id='+params.id}`
       router.push(url)
     }
 

@@ -1,6 +1,6 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' ? 'add' : 'edit'}`" />{{action === 'edit'? '编辑': '新增机器人'}}
+  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'edit'? '编辑': '新增机器人'}}
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑机器人' : '新增机器人' " :submit="submit" :submitApi="{insert: 'createVote', update: 'updateVote'}" :data="data" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
@@ -46,11 +46,11 @@ import {
 import {
   LINK_TYPE,
 } from '@/assets/enum'
-// import Graph from '../../graph/index.vue'
+import Graph from '../../graph/index.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    // Graph
+    Graph
   },
   props: {
     action: {
@@ -72,9 +72,6 @@ export default defineComponent({
   },
   setup(props, context) {
     const store = useStore();
-    const {
-      proxy
-    }: any = getCurrentInstance();
     const isShow: any = ref(false)
     const showGraph = ref(false)
     const detail: any = ref({})

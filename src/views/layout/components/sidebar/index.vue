@@ -71,7 +71,6 @@ export default defineComponent({
     })
 
     function init() {
-      debugger
       siderRouter.value = router.matcher.filter(
         (route: any) => route.module === props.module
       )

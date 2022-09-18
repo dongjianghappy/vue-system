@@ -2,14 +2,17 @@
 <div class="module-wrap">
   <div class="module-head">
     <v-optionsbar title="字段关联">
+      <template v-slot:extraleft>
+        <span class="pointer" style="margin-top: 1px;" @click="handleClick('return')">返回</span>
+      </template>
       <template v-slot:extraright>
-        <Detail action='add' :data="{ coding }" :render="init" :auth="auth.checked('add')" />
+        <Detail action='add' :data="{channel_id,  coding }" :render="init" :auth="auth.checked('add')" />
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
 
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table width="100%" class="table-striped table-hover col-left-1">
       <tr class="th">
         <td class="col-md-2 pl25">注释</td>
         <td class="col-md-1">字段名</td>
@@ -33,7 +36,7 @@
         <td>
           <v-space>
             <Detail action='edit' :data="{id: item.id, coding }" :render="init" :auth="auth.checked('edit')" />
-            <v-confirm name="删除" :data="{id: item.id, coding }" type="text" api="delete" :render="render" operating="delete" :auth="auth.checked('del')" ></v-confirm>
+            <v-confirm name="删除" :data="{id: item.id, coding }" type="text" api="delete_columns" :render="init" operating="delete" :auth="auth.checked('del')"></v-confirm>
           </v-space>
         </td>
       </tr>
@@ -50,22 +53,17 @@ import {
   onMounted,
   ref,
   useRoute,
-  codings
+  codings,
+  useRouter
 } from '@/utils'
 import {
   useStore
 } from 'vuex'
 import Detail from './components/detail.vue'
 export default defineComponent({
-  name: 'HomeViewdd',
+  name: 'ListView',
   components: {
     Detail
-  },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
   },
   setup(props, context) {
     const {
@@ -73,8 +71,10 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
+    const router = useRouter()
     const coding: any = codings['customize'];
     const dataList: any = ref([])
+    const channel_id: any = route.query.id
 
     function init() {
       const {
@@ -90,11 +90,18 @@ export default defineComponent({
         dataList.value = res.result
       })
     }
+
+    function handleClick() {
+      router.push(`/admin/customize`)
+    }
     onMounted(init)
 
     return {
       coding,
+      channel_id,
       dataList,
+      init,
+      handleClick,
       auth: proxy.$auth.init('customize')
     }
   }

@@ -1,11 +1,13 @@
 <template>
-<span @click="handleclick"><i class='iconfont icon-edit'></i>{{action === 'edit' ? '编辑' : '新增心情种类'}}</span>
-<v-dialog v-model:show="isShow" ref="form" :title="action === 'edit' ? '编辑角色' : '心情种类'" width="520px" height="200px" :confirm="true" :cancel="true" @submit="submit">
+<v-button v-model:show="isShow" :disabled="auth">
+  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'edit'? '编辑': '新增心情种类'}}
+</v-button>
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑心情种类' : '新增心情种类'" :data="data" :style="{width: '520', height: '200'}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">名称</span>
-        <input  type="text" placeholder="请输入角色名称" class="input-sm input-full" />
+        <input v-model="detail.name" type="text" placeholder="请输入心情种类" class="input-sm input-full" />
       </li>
     </ul>
   </template>
@@ -16,24 +18,19 @@
 import {
   defineComponent,
   ref,
+  useStore,
   watch,
 } from '@/utils'
 
 export default defineComponent({
   name: 'v-Search',
   components: {
-    
+
   },
   props: {
     name: {
       type: String,
       default: ""
-    },
-    attrs: {
-      type: Object,
-      default: () => {
-        return {}
-      }
     },
     action: {
       type: String,
@@ -53,26 +50,48 @@ export default defineComponent({
     }
   },
   setup(props, context) {
+    const store: any = useStore()
     const isShow: any = ref(false)
     const detail: any = ref({})
-    const drawer: any = ref(null)
+    const dialog: any = ref(null)
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
-        detail.value = await drawer.value.init()
+        detail.value = await dialog.value.init()
       }
     })
 
-    function handleclick(param: any) {
-      isShow.value = !isShow.value
+    function submit(params: any) {
+      const {
+        id,
+        name
+      } = detail.value
+
+      const param: any = {
+        name,
+        coding: props.data.coding
+      }
+      if (props.action === 'edit') {
+        param.id = id
+      }
+
+      store.dispatch('common/Fetch', {
+        api: props.action !== 'add' ? 'update' : 'insert',
+        data: {
+          ...param,
+        }
+      }).then(() => {
+        props.render()
+        isShow.value = false
+      })
     }
 
     return {
       isShow,
-      handleclick,
+      dialog,
       detail,
-      drawer
+      submit
     }
   }
 })

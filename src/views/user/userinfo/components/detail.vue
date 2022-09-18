@@ -14,7 +14,7 @@
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">用户类型</span>
-        <v-radiobutton name="ssss" v-model:checked="detail.grade" :enums="[{label: '普通用户', value: '0'},{label: '普通会员', value: '1'}, {label: '高级会员', value: '2'}, {label: 'VIP会员', value: '3'}, {label: '超级VIP', value: '4'}]" v-model:value="detail.area" />
+        <v-radiobutton name="ssss" v-model:checked="detail.grade" :enums="[{label: '普通用户', value: '0'},{label: '普通会员', value: '1'}, {label: '高级会员', value: '2'}, {label: 'VIP会员', value: '3'}, {label: '超级VIP', value: '4'}]" />
       </li>
       <li class="li">
         <span class="label">角色管理</span>

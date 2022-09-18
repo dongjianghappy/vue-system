@@ -1,29 +1,31 @@
 <template>
-<span @click="handleclick">{{action === 'edit' ? '编辑' : '新增权限'}}</span>
-<v-dialog ref="dialog" v-model:show="isShow" :data="data" :action="action" :title="action === 'edit' ? '编辑权限' : '新增权限'" width="520px" height="500px" :confirm="true" :cancel="true" @submit="submit">
+<v-button v-model:show="isShow" :disabled="auth">
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? '编辑': '新增权限'}}
+</v-button>
+<v-dialog ref="dialog" v-model:show="isShow" :data="data" :action="action" :title="action === 'edit' ? '编辑权限' : '新增权限'" :style="{width: '520', height: '450'}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">名称</span>
-        <input v-model="detail.name" type="text" placeholder="请输入角色名称" class="input-sm input-full" />
+        <input v-model="detail.name" type="text" placeholder="请输入名称" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">顺序</span>
-        <input v-model="detail.sort" type="text" placeholder="请输入角色名称" class="input-sm input-full" />
+        <input v-model="detail.sort" type="text" placeholder="请输入顺序" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">字段</span>
-        <input v-model="detail.value" type="text" placeholder="请输入角色名称" class="input-sm input-full" />
+        <input v-model="detail.value" type="text" placeholder="请输入字段" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">类型</span>
         <v-radio label="频道" name="type" value="1" v-model:checked="detail.type" />
-        <v-radio label="应用" name="type" value="0" v-model:checked="detail.type" />
-        <v-radio label="功能" name="type" value="0" v-model:checked="detail.type" />
+        <v-radio label="应用" name="type" value="2" v-model:checked="detail.type" />
+        <v-radio label="功能" name="type" value="3" v-model:checked="detail.type" />
       </li>
       <li class="li">
         <span class="label">说明</span>
-        <textarea v-model="detail.description" class="ant-input"></textarea>
+        <textarea v-model="detail.description" placeholder="请输入说明" class="w-full"></textarea>
       </li>
     </ul>
   </template>
@@ -39,17 +41,8 @@ import {
 } from '@/utils'
 
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    
-  },
+  name: 'v-Detail',
   props: {
-    attrs: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
     action: {
       type: String,
       default: "add"
@@ -80,12 +73,7 @@ export default defineComponent({
       }
     })
 
-    function handleclick(param: any) {
-      isShow.value = !isShow.value
-    }
-
     function submit(cancel: any) {
-      debugger
       const {
         id,
         name,
@@ -116,9 +104,8 @@ export default defineComponent({
 
     return {
       isShow,
-      handleclick,
+      dialog,
       detail,
-      
       submit
     }
   }

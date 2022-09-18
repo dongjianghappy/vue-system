@@ -99,7 +99,6 @@ export default defineComponent({
       coding,
       menu,
       init,
-      tabsIndex,
       auth: proxy.$auth.init('link')
     }
   }

@@ -1,8 +1,8 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增字段"}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增字段"}}
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑字段' : '新增字段' " :data="data" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑字段' : '新增字段' " :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -13,7 +13,6 @@
         <span class="label">字段名</span>
         <input v-model="detail.fields" type="text" placeholder="请输入标题" class="input-sm input-full" />
       </li>
-
       <li class="li">
         <span class="label">数据类型</span>
         <v-radio label="文本保存HTML数据(TEXT)" name="dtype" value="TEXT" v-model:checked="detail.dtype" />
@@ -43,23 +42,15 @@
 import {
   defineComponent,
   ref,
+  useStore,
   watch,
 } from '@/utils'
 import {
   TEXT_TYPE,
 } from '@/assets/enum'
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    
-  },
+  name: 'Detail',
   props: {
-    attrs: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
     action: {
       type: String,
       default: "add"
@@ -82,6 +73,7 @@ export default defineComponent({
     }
   },
   setup(props, context) {
+    const store = useStore()
     const textType = TEXT_TYPE
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -94,11 +86,27 @@ export default defineComponent({
       }
     })
 
+   function submit(params: any) {
+      store.dispatch('common/Fetch', {
+        api: props.action !== 'add' ? 'update_anpassen' : 'add_anpassen',
+        data: {
+          coding: props.data.coding,
+          channel_id: props.data.channel_id,
+          ...detail.value,
+        }
+      }).then(() => {
+        props.render()
+        params.message()
+        params.cancel()
+      })
+    }    
+
     return {
       textType,
       isShow,
+      drawer,
       detail,
-      drawer
+      submit
     }
   }
 })

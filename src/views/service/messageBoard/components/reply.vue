@@ -1,7 +1,6 @@
 <template>
-<v-button v-model:show="isShow" :disabled="auth">{{name}}</v-button>
-<v-dialog v-model:show="isShow" ref="form" :title="name" width="650px" height="500px" :hasfooter="false" :confirm="true" :cancel="true" @submit="submit">
-
+<v-button v-model:show="isShow" :disabled="auth">回复</v-button>
+<v-dialog v-model:show="isShow" ref="form" title="留言回复" :style="{width: 650, height: 500}" height="500px" :hasfooter="false" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <slot name="content">
       <div className="reply">
@@ -40,12 +39,8 @@ import {
   watch
 } from '@/utils'
 
-
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    
-  },
+  name: 'v-Reply',
   props: {
     name: {
       type: String,
@@ -75,22 +70,15 @@ export default defineComponent({
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
-    const detail: any = ref([])
-    let current: any = ref({})
     const content: any = ref("")
-    
+    const detail: any = ref([])
+
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
-        current.value.name = "123123",
-          current.value.value = "4324234"
         init()
       }
     })
-
-    function handleclick(param: any) {
-      isShow.value = !isShow.value
-    }
 
     function init() {
       store.dispatch('common/Fetch', {
@@ -120,8 +108,6 @@ export default defineComponent({
 
     return {
       isShow,
-      current,
-      handleclick,
       submit,
       detail,
       content

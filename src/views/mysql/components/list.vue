@@ -12,7 +12,9 @@
     <td class="col-md-1 align-center">操作</td>
   </tr>
   <tr v-for="(item, index) in dataList" :key="index">
-    <td><v-checkbox :checkedList="checkedList" :data="{ id: item.id}" /></td>
+    <td>
+      <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
+    </td>
     <td>{{item.dbname}}</td>
     <td>{{item.dbtype}}</td>
     <td>{{item.dbrow}}</td>
@@ -25,6 +27,7 @@
     </td>
   </tr>
 </table>
+<v-nodata :data="dataList" />
 </template>
 
 <script lang="ts">
@@ -38,25 +41,10 @@ import {
 } from '@/utils'
 
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
-  props: {
-    style: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
-  },
+  name: 'v-List',
   emits: ['onClick'],
   setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
     const store = useStore();
-    const route = useRoute();
     const dataList: any = ref([])
 
     function init() {

@@ -2,9 +2,6 @@
 <div class="module-wrap">
   <div class="module-head">
     <v-optionsbar title="回收站">
-      <template v-slot:extraright>
-
-      </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
@@ -25,10 +22,10 @@
           {{item.title}}
         </td>
         <td>
-           {{item.parent}}
+          {{item.parent}}
         </td>
         <td>
-           {{item.times}}
+          {{item.times}}
         </td>
         <td> {{item.delete_datetime}}</td>
         <td>

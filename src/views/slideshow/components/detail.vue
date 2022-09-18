@@ -1,6 +1,6 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增幻灯片"}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增幻灯片"}}
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑幻灯片' : '新增幻灯片' " :data="data" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
@@ -10,8 +10,8 @@
         <input v-model="detail.name" type="text" placeholder="请输入标题" class="input-sm input-full" />
       </li>
       <li class="li">
-        <span class="label">显示频道</span>
-        <input v-model="detail.url" type="text" placeholder="请输入标题" class="input-sm input-full" />
+        <span class="label">展示频道</span>
+        <v-select :enums="channel" v-model:value="detail.channel_id" :defaultValue="detail.channel_id = detail.channel_id ? detail.channel_id : '5'" />
       </li>
       <li class="li">
         <span class="label">状态</span>
@@ -19,12 +19,9 @@
         <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
       </li>
       <li class="li">
-        <span class="label">宽度</span>
-        <input v-model="detail.width" type="text" placeholder="请输入标题" class="input-sm input-full" />
-      </li>
-      <li class="li">
-        <span class="label">高度</span>
-        <input v-model="detail.height" type="text" placeholder="请输入标题" class="input-sm input-full" />
+        <span class="label">宽高</span>
+        <input v-model="detail.width" type="text" placeholder="请输入宽度" class="input-sm input-150" /><span class="mr25"> (宽)</span>
+        <input v-model="detail.height" type="text" placeholder="请输入高度" class="input-sm input-150" /> (高)
       </li>
       <li class="li">
         <span class="label">滚动方向</span>
@@ -36,7 +33,7 @@
       </li>
       <li class="li">
         <span class="label">焦点位置</span>
-        <input v-model="detail.focus_right" type="text" placeholder="请输入焦点右侧距离" class="input-sm input-150 mr10" />(right)
+        <input v-model="detail.focus_right" type="text" placeholder="请输入焦点右侧距离" class="input-sm input-150" /><span class="mr25"> (right)</span>
         <input v-model="detail.focus_bottom" type="text" placeholder="请输入焦点底部距离" class="input-sm input-150" />(bottom)
       </li>
       <li class="li">
@@ -54,7 +51,7 @@
       </li>
       <li class="li">
         <span class="label">说明</span>
-        <textarea placeholder="请输入说明" v-model="data.description" class="w-full"></textarea>
+        <textarea placeholder="请输入说明" v-model="detail.description" class="w-full"></textarea>
       </li>
     </ul>
   </template>
@@ -66,6 +63,8 @@ import {
   defineComponent,
   ref,
   watch,
+  computed,
+  useStore
 } from '@/utils'
 export default defineComponent({
   name: 'v-Search',
@@ -93,8 +92,19 @@ export default defineComponent({
     }
   },
   setup(props, context) {
+    const store: any = useStore()
     const isShow: any = ref(false)
     const drawer: any = ref(null)
+    const channel: any = computed(() => {
+      let channelArr: any = []
+      store.getters['user/channel'].map((item: any) => {
+        channelArr.push({
+          name: item.name,
+          value: item.id
+        })
+      })
+      return channelArr
+    });
     const detail: any = ref({})
 
     // 监听
@@ -106,8 +116,9 @@ export default defineComponent({
 
     return {
       isShow,
-      detail,
-      drawer
+      channel,
+      drawer,
+      detail
     }
   }
 })

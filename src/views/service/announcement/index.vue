@@ -22,10 +22,12 @@
           <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
         </td>
         <td>
+          <span className="mr5 cl-red" v-if="item.type === '1'">公告</span>
+          <span className="mr5 cl-green" v-else>通知</span>
           {{item.title}}
         </td>
         <td>
-          {{item.datetime}}
+          {{item.times}}
         </td>
         <td>
           <v-switch :data="{ item, field: 'status', coding }" :auth="auth.checked('edit')" />
@@ -37,6 +39,9 @@
             </span>
             <span>
               <v-confirm name="删除" :data="{id: item.id, coding}" api="delete" :render="init" operating="delete" :auth="auth.checked('del')"></v-confirm>
+            </span>
+            <span>
+              <v-confirm icon="top" :className="item.istop === '1' ? 'cl-red' : ''" :data="{id: item.id, field: 'istop', value: item.istop === '1' ? '0' : '1', coding }" type="text" api="changeData" :render="init" operating="setTop" :auth="true"></v-confirm>
             </span>
           </v-space>
         </td>

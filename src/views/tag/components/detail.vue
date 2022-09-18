@@ -1,6 +1,6 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />新增标签</v-button>
+  <i class="iconfont icon-add" />新增标签</v-button>
 <v-dialog v-model:show="isShow" ref="form" title="新增标签" width="520px" height="200px" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
@@ -21,27 +21,8 @@ import {
 } from '@/utils'
 
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    
-  },
+  name: 'v-Detail',
   props: {
-    attrs: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    action: {
-      type: String,
-      default: "add"
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
     render: {
       type: Function,
       default: () => {
@@ -51,8 +32,8 @@ export default defineComponent({
   },
   setup(props, context) {
     const isShow: any = ref(false)
-    const detail: any = ref({})
     const drawer: any = ref(null)
+    const detail: any = ref({})
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {

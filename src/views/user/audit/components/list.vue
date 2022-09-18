@@ -1,4 +1,5 @@
 <template>
+<div>
 <table width="100%" class="table-striped table-hover col-left-2">
   <tr class="th">
     <td class="col-md-1">选择</td>
@@ -9,7 +10,18 @@
     <td class="col-md-2">注册原因</td>
     <td class="col-md-2">注册时间</td>
   </tr>
+  <tr v-for="(item, index) in dataList.list" :key="index">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
 </table>
+<v-nodata :data="dataList.list" />
+</div>
 </template>
 
 <script lang="ts">
@@ -17,22 +29,20 @@ import {
   defineComponent,
   getCurrentInstance,
   onMounted,
+  ref,
   useStore,
   useRoute
 } from '@/utils'
 
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
+  name: 'v-List',
   props: {
-    style: {
-      type: Object,
+    dataList: {
+      type: Array,
       default: () => {
-        return {}
+        return []
       }
-    }
+    },
   },
   emits: ['onClick'],
   setup(props, context) {

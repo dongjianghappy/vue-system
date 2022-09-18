@@ -3,13 +3,13 @@
                             ...data,
                             direction: 'down',
                           })" class="ant-btn deg180 move-button">
-  <i class="iconfont icon-arrow1 moving"></i>
+  <i class="iconfont icon-arrow1 moving font14"></i>
 </button>
 <button @click="handleclick({
                             ...data,
                             direction: 'down',
                           })" class="ant-btn move-button">
-  <i class="iconfont icon-arrow1"></i>
+  <i class="iconfont icon-arrow1 font12 pointer"></i>
 </button>
 </template>
 
@@ -19,7 +19,7 @@ import {
 } from 'vue'
 
 export default defineComponent({
-  name: 'v-Search',
+  name: 'v-ButtonMove',
   props: {
     data: {
       type: Object,
@@ -30,6 +30,7 @@ export default defineComponent({
   },
   setup(props, context) {
     function handleclick(params: any) {
+      debugger
       const {
         direction,
         index,
@@ -44,6 +45,7 @@ export default defineComponent({
         moveItem
       )[0]
       newData[index] = item
+      debugger
     }
     return {
       handleclick

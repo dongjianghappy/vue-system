@@ -1,37 +1,37 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增特效"}}
-  </v-button>
-<v-dialog v-model:show="isShow" ref="form" :action="action" :title="action === 'edit' ? '编辑特效' : '新增特效' " width="520px" height="670px" :confirm="true" :cancel="true" @submit="submit">
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增特效"}}
+</v-button>
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑特效' : '新增特效' " :data="data" :style="{width: '600', height: '670'}" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
-       <li class="li">
+      <li class="li">
         <span class="label">名称</span>
-        <input  type="text" placeholder="请输入标题" class="input-sm input-full" />
+        <input v-model="detail.name" type="text" placeholder="请输入标题" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">DOM元素</span>
-        <input  type="text" placeholder="请输入标题" class="input-sm input-full" />
+        <input v-model="detail.dom" type="text" placeholder="请输入标题" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">属性类型</span>
-        <input  type="text" placeholder="请输入标题" class="input-sm input-full" />
+        <input v-model="detail.attr" type="text" placeholder="请输入标题" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">属性名称</span>
-        <input  type="text" placeholder="请输入标题" class="input-sm input-full" />
+        <input v-model="detail.attrName" type="text" placeholder="请输入标题" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">JS文件</span>
-        <textarea id="description" class="ant-input"></textarea>
+        <textarea v-model="detail.js" class="w-full"></textarea>
       </li>
       <li class="li">
         <span class="label">CSS文件</span>
-        <textarea id="description" class="ant-input"></textarea>
+        <textarea v-model="detail.css" class="w-full"></textarea>
       </li>
       <li class="li">
         <span class="label">Style属性</span>
-        <textarea id="description" class="ant-input"></textarea>
+        <textarea v-model="detail.style" class="w-full"></textarea>
       </li>
     </ul>
   </template>
@@ -42,21 +42,13 @@
 import {
   defineComponent,
   ref,
+  useStore,
   watch,
 } from '@/utils'
 
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    
-  },
+  name: 'v-Detail1',
   props: {
-    attrs: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
     action: {
       type: String,
       default: "add"
@@ -75,26 +67,37 @@ export default defineComponent({
     }
   },
   setup(props, context) {
+    const store: any = useStore()
     const isShow: any = ref(false)
+    const dialog: any = ref(null)
     const detail: any = ref({})
-    const drawer: any = ref(null)
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
-        detail.value = await drawer.value.init()
+        detail.value = await dialog.value.init()
       }
     })
 
-    function handleclick(param: any) {
-      isShow.value = !isShow.value
+        function submit(params: any) {
+      store.dispatch('common/Fetch', {
+        api: props.action !== 'add' ? 'update' : 'insert',
+        data: {
+          coding: props.data.coding,
+          ...detail.value,
+        }
+      }).then(() => {
+        props.render()
+        params.message()
+        params.cancel()
+      })
     }
 
     return {
       isShow,
-      handleclick,
+      dialog,
       detail,
-      drawer
+      submit
     }
   }
 })

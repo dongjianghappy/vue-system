@@ -1,13 +1,10 @@
 <template>
 <span @click="handleclick">收藏夹</span>
-<v-drawer ref="drawer" v-model:show="isShow" title="收藏夹" :top="64" :width="200">
+<v-drawer ref="drawer" v-model:show="isShow" title="收藏夹" :style="{width: 200}" :hasfooter="false">
   <template v-slot:extra>
     <Created :data="data" :render="init" />
   </template>
   <template v-slot:content v-if="isShow">
-    <div class="mb10">
-
-    </div>
     <ul class="form-wrap-box">
       <li class="li mb15" v-for="(item, index) in detail" :key="index">
         <span class="label">
@@ -35,18 +32,9 @@ export default defineComponent({
     Created
   },
   props: {
-    name: {
-      type: String,
-      default: ""
-    },
     action: {
       type: String,
       default: "add"
-    },
-    // 是否展示
-    disabled: {
-      type: Boolean,
-      default: false
     },
     data: {
       type: Object,
@@ -54,12 +42,6 @@ export default defineComponent({
         return {}
       }
     },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    }
   },
   setup(props, context) {
     const store = useStore()
@@ -76,7 +58,6 @@ export default defineComponent({
 
     // 初始化
     function init() {
-
       store.dispatch('common/Fetch', {
         api: "favorites",
         data: {

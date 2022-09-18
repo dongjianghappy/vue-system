@@ -14,7 +14,6 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   computed,
   ref,
   watch,
@@ -26,22 +25,12 @@ import {
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
 export default defineComponent({
-  name: 'HomeViewdd',
+  name: 'MysqlView',
   components: {
     List,
     List2
   },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
   setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
     const dataList = computed(() => store.getters['website/webinfo']);
@@ -54,7 +43,7 @@ export default defineComponent({
         value: "appstore2"
       }
     ])
-    
+
     let type: any = ref(1)
 
     // 监听路由

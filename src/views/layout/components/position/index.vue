@@ -4,7 +4,7 @@
   <ul class="position-nav align_center">
     <li class="ant-col ant-col-2 pointer"><i class="iconfont icon-shezhi font18" @click="handleRouter('appstore', 'setting')"></i></li>
     <li class="ant-col ant-col-2" v-if="channel.length>0">
-      <v-drawershow name='<i class="iconfont icon-app pointer"></i>' title="频道" icon="add" type="text" :top="64" :width="800" :data="1" initialValues="initialValues" :renderList="getData">
+      <v-drawershow name='<i class="iconfont icon-app pointer"></i>' title="频道" icon="add" type="text" :style="{width: '800'}" :data="1" initialValues="initialValues" :renderList="getData">
         <template v-slot:content>
           <ul class="channel-boxs">
             <li style=" margin-bottom: 10px; width: 187px; float: left; padding-right: 8px;" v-for="(item, index) in channel" :key="index" draggable="true" @click="handleRouter(item.module)" @dragend="handleDragEnd($event, item)" @dragstart="handleDragStart($event, item)" @dragenter="handleDragEnter($event, item)" @dragover.prevent="handleDragOver($event, item)">
@@ -15,7 +15,7 @@
       </v-drawershow>
     </li>
     <li class="ant-col ant-col-2">
-      <v-drawershow name='<i class="iconfont icon-navicon pointer"></i>' :top="64" :width="200">
+      <v-drawershow name='<i class="iconfont icon-navicon pointer"></i>' :style="{width: '200'}">
         <template v-slot:content>
           <div class="channel-box">
             <ul class="navigation">

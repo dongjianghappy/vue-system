@@ -26,7 +26,7 @@
         <td>{{item.times}}</td>
         <td><v-switch :data="{ item, field: 'checked', coding }" :auth="auth.checked('status')" /></td>
         <td>
-          <Reply name="回复" :data="{item, coding}" api="delete" :auth="auth.checked('reply')" ></Reply>
+          <Reply :data="{item, coding}" api="delete" :auth="auth.checked('reply')" ></Reply>
         </td>
       </tr>
     </table>
@@ -41,7 +41,6 @@ import {
   getCurrentInstance,
   onMounted,
   computed,
-  ref,
   codings
 } from '@/utils'
 import {
@@ -50,16 +49,11 @@ import {
 import Reply from './components/reply.vue'
 export default defineComponent({
   name: 'HomeViewdd',
-  components: {Reply},
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
+  components: {
+    Reply
   },
   setup(props, context) {
     const {
-      ctx,
       proxy
     }: any = getCurrentInstance();
     const store = useStore();

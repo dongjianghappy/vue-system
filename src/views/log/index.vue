@@ -17,12 +17,12 @@
       </tr>
       <tr v-for="(item, index) in dataList.list" :key="index">
         <td>{{item.username}}</td>
-        <td>2</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{item.role}}</td>
+        <td>{{item.browser}}</td>
+        <td>{{item.lang}}</td>
+        <td>{{item.system}}</td>
+        <td>{{item.ip}}</td>
+        <td>{{item.area}}</td>
         <td>{{item.times}}</td>
       </tr>
     </table>
@@ -40,9 +40,7 @@ import {
 } from '@/utils'
 
 export default defineComponent({
-  name: 'HomeViewdd',
-  components: {},
-  props: {},
+  name: 'ManageView',
   setup(props, context) {
     const store = useStore();
     const dataList = computed(() => store.getters['basic/manageLog']);

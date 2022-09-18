@@ -13,7 +13,7 @@
               <div style="flex: 1">
                 <input v-model="detail.name" type="text" class="input-sm input-full" :style="[detail.style]" />
               </div>
-              <v-titleattribute :style="detail.style || {}" :setStyle="setStyle" />
+              <v-titleattribute :style="detail.style || {}" :setStyle="(param) => detail.style = param" />
             </div>
           </li>
           <li class="li">
@@ -178,11 +178,6 @@ export default defineComponent({
       })
     }
 
-    // 设置属性
-    function setStyle(param: any) {
-      detail.value.style = param
-    }
-
     // 保存
     function submit() {
 
@@ -226,7 +221,6 @@ export default defineComponent({
       menu,
       templates,
       aaa,
-      setStyle,
       submit,
       jsonParse
     }

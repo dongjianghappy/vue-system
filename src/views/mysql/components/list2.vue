@@ -16,6 +16,7 @@
     <td></td>
   </tr>
 </table>
+<v-nodata :data="dataList" />
 </template>
 
 <script lang="ts">
@@ -28,28 +29,12 @@ import {
 } from '@/utils'
 
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
-  props: {
-    style: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
-  },
+  name: 'v-List2',
   emits: ['onClick'],
   setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
     const store = useStore();
-    const route = useRoute();
 
     function init() {
-
       store.dispatch('common/Fetch', {
         data: {
           coding: "S0003",

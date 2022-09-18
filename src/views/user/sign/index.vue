@@ -13,7 +13,7 @@
         <td class="col-md-1">策略名称</td>
         <td class="col-md-1">周期</td>
         <td class="col-md-1">积分</td>
-        <td class="col-md-7">描述</td>
+        <td class="col-md-7">积分说明</td>
         <td class="col-md-1">操作</td>
       </tr>
       <tr v-for="(item, index) in dataList.list" :key="index">
@@ -27,6 +27,7 @@
           {{item.integration}}
         </td>
         <td>
+          {{item.explanation}}
         </td>
         <td>
           <v-space>
@@ -40,6 +41,7 @@
         </td>
       </tr>
     </table>
+    <v-nodata :data="dataList.list" />
   </div>
 </div>
 </template>

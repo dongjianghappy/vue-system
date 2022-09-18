@@ -45,7 +45,7 @@
         </td>
       </tr>
     </table>
-    <v-nodata :data="dataList.list || []" />
+    <v-nodata :data="dataList.list" />
   </div>
 </div>
 </template>
@@ -79,14 +79,13 @@ export default defineComponent({
       default: () => {
         return {}
       }
-    }    
+    }
   },
   setup(props, context) {
     const store = useStore();
     const dataList = computed(() => {
       return store.getters['basic/links']['link3']
     });
-
     const checkedList: any = ref([])
 
     return {

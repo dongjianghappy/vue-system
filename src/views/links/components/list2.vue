@@ -45,19 +45,24 @@
             <span>
               <v-confirm name="删除" :data="{id: item.id, ...data }" type="text" api="delete" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
             </span>
-            <Popover content="更多" arrow="tb" offset="right" :move="-550" :keys="`static_${index}`">
+            <Popover content="更多" arrow="tb" offset="right" :move="-500" :keys="`static_${index}`">
               <div class="font14" style="width: 550px;">
                 <table width="100%" class="table-striped table-hover col-left-1">
                   <tr>
-                    <td class="col-md-8">站点</td>
+                    <td class="col-md-1">ID</td>
+                    <td class="col-md-4">展示站点</td>
                     <td class="col-md-2">平台</td>
                     <td class="col-md-2">出售次数</td>
+                    <td class="col-md-1">站长</td>
+                    <td class="col-md-2">联系方式</td>
                   </tr>
                   <tr>
-                    <td>
-                      {{item.website}}</td>
+                    <td>{{item.id}}</td>
+                    <td>{{item.website}}</td>
                     <td>{{item.source}}</td>
                     <td>{{item.sell}}</td>
+                    <td>{{item.webmaster}}</td>
+                    <td>{{item.qq}}</td>
                   </tr>
                 </table>
               </div>
@@ -66,7 +71,7 @@
         </td>
       </tr>
     </table>
-    <v-nodata :data="dataList.list || []" />
+    <v-nodata :data="dataList.list" />
     <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, ...data }" :pagination="{total: dataList.pages, page: dataList.page ||  1, pagesize: 25}" :sorceData="dataList.list" :render="render" v-if="dataList.list && dataList.list.length > 0" :auth="auth" />
   </div>
 </div>

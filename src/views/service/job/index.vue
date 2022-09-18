@@ -48,6 +48,7 @@
         </td>
       </tr>
     </table>
+    <v-nodata :data="dataList" />
   </div>
 </div>
 </template>
@@ -55,35 +56,21 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
+  useStore,
   codings
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Detail from './components/detail.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
     Detail
   },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
   setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
-    const dataList: any = ref([])
     const coding: any = codings['service'].job;
+    const dataList: any = ref([])
 
     function init() {
       store.dispatch('common/Fetch', {
@@ -102,7 +89,6 @@ export default defineComponent({
     return {
       dataList,
       coding
-
     }
   }
 })

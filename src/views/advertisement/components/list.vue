@@ -45,7 +45,7 @@
               <v-confirm name="删除" :data="{id: item.id, ...data }" type="text" api="delete" :render="render" operating="delete"></v-confirm>
             </span>
             <!-- <span>生成订单</span> -->
-                        <Popover content="更多" arrow="tb" offset="right" :move="-350" :keys="`static_${index}`">
+            <Popover content="更多" arrow="tb" offset="right" :move="-350" :keys="`static_${index}`">
               <div class="font14" style="width: 350px;">
                 <table width="100%" class="table-striped table-hover">
                   <tr>

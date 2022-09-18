@@ -24,7 +24,7 @@ import {
 import {
   useStore
 } from 'vuex'
-import Detail from './components/detail.vue'
+import Detail from '../basic/components/detail.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {Detail},
@@ -40,6 +40,7 @@ export default defineComponent({
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
+    const coding = "Q0002"
     const dataList = computed(() => {
       const list = store.getters['website/webinfo']
       const baisc = list.filter(
@@ -58,7 +59,7 @@ export default defineComponent({
 
     function init() {
       store.dispatch('website/BasicInfo', {
-        coding: "Q0002"
+        coding
       })
     }
 
@@ -71,7 +72,7 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
         api: "updateInfo",
         data: {
-          coding: "Q0002",
+          coding,
           ...data
         }
       }).then(res => {
@@ -85,6 +86,7 @@ export default defineComponent({
     onMounted(init)
 
     return {
+      coding,
       dataList,
       edit
 

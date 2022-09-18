@@ -86,7 +86,7 @@
                 <div class="col-md-2 updateButton">
                   <Progress :data="{title: `正在更新标签页`, data: {serve, action: 'tag', model: 'source', id: `${item.limitStart}-${item.limitEnd}`,
                         method: item.sort,
-                        total: item.limitEnd - item.limitStart,}}" />
+                        total: item.limitEnd - item.limitStart}}" />
                 </div>
               </div>
             </div>
