@@ -1,14 +1,5 @@
 <template>
-<div class="module-wrap m0 p0 fixed" style="top: 0px; left: 0px; bottom: 0px; width: 100%; z-index: 100000">
-  <div class="module-head cl-white p20" style="background: #000">{{data.name}}
-    <span>{{detail.title}} - 流程图</span>
-    <span class="right" @click="handleClose">关闭</span>
-  </div>
-
-  <div class="module-content absolute p0" style="top: 50px; bottom : 0px; width: 100%;">
-    <Graph :data="detail" :save="save" />
-  </div>
-</div>
+<Graph :data="detail" :save="save" @close="handleClose" />
 </template>
 
 <script lang="ts">
@@ -63,8 +54,6 @@ export default defineComponent({
     })
 
     function handleClose() {
-      const doc: any = document
-      doc.body.parentNode.style.overflowY = "auto";
       context.emit('update:show', false)
     }
 
@@ -85,6 +74,7 @@ export default defineComponent({
         }
       }).then(res => {
         detail.value.graph = JSON.parse(res.result.graph || '{}')
+        debugger
         loading.value = true
         detail.value = res.result
         detail.value.style = {}

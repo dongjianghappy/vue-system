@@ -2,13 +2,13 @@
 <div class="module-wrap nobg">
   <v-tabs :tabs="menu" type="vertical">
     <template v-slot:content1>
-      <List1 :render="init" :data="{ coding }" :auth="auth" />
+      <List1 :render="init" :data="{ coding }" :loading="loading" :auth="auth" />
     </template>
     <template v-slot:content2>
-      <List2 :render="init" :data="{ coding }" :auth="auth" />
+      <List2 :render="init" :data="{ coding }" :loading="loading" :auth="auth" />
     </template>
     <template v-slot:content3>
-      <List3 :render="init" :data="{ coding }" :auth="auth" />
+      <List3 :render="init" :data="{ coding }" :loading="loading" :auth="auth" />
     </template>
   </v-tabs>
 </div>
@@ -49,6 +49,8 @@ export default defineComponent({
     const route = useRoute();
     const coding: any = codings['link'];
     const menu: any = ref(linkPage)
+    const loading: any = ref(false)
+    const pagesize: any = 10
 
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
 
@@ -57,8 +59,7 @@ export default defineComponent({
       if (route.path === '/admin/link') {
         tabsIndex.value = route.query.type
         init({
-          page: 1,
-          pagesize: 25
+          page: 1
         })
       }
     })
@@ -68,7 +69,7 @@ export default defineComponent({
 
       const sssss: any = {
         page: 1,
-        pagesize: 30
+        pagesize: pagesize
       }
 
       Object.assign(sssss, params)
@@ -80,18 +81,20 @@ export default defineComponent({
         ...sssss
       }
       if (tabsIndex.value === '2') delete param.method
+      loading.value = false
       store.dispatch('basic/linkAction', {
         tabsIndex: tabsIndex.value,
         data: {
           ...param
         }
+      }).then(res => {
+        loading.value = true
       })
     }
 
     onMounted(() => {
       init({
-        page: 1,
-        pagesize: 25
+        page: 1
       })
     })
 
@@ -99,6 +102,7 @@ export default defineComponent({
       coding,
       menu,
       init,
+      loading,
       auth: proxy.$auth.init('link')
     }
   }

@@ -82,7 +82,8 @@
         </tr>
       </table>
       <v-nodata :data="dataList.list" />
-      <v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding: data.coding.art }" :pagination="{total: dataList.pages, page: dataList.page ||  1, pagesize: 25}" :sorceData="dataList" :render="render" />
+
+      <v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding: data.coding.art }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="render" />
     </div>
     <v-calendar @changeMonth="changeMonth" v-else>
       <template v-slot:default="row">

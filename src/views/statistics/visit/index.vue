@@ -55,6 +55,7 @@ export default defineComponent({
     const route = useRoute();
     const dataList = computed(() => store.getters['website/webinfo']);
     let menu: any = ref(visitPage)
+    const pagesize: any = 10
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
 
     // 监听路由
@@ -73,7 +74,7 @@ export default defineComponent({
         tabsIndex: tabsIndex.value,
         data: {
           coding: 'S0000',
-          pagesize: 25,
+          pagesize: pagesize,
           ...param
         }
       })

@@ -51,7 +51,7 @@ export default defineComponent({
       }
     }
   },
-  emits: ['onClick'],
+  emits: ['toggle'],
   setup(props, context) {
     const store = useStore();
     const {
@@ -73,6 +73,7 @@ export default defineComponent({
       }).then(res => {
         if (res.result.type) {
           item[res.result.type] = res.result.value
+          context.emit('toggle', {field: props.data.item.name, value: res.result.value})
         } else {
           props.msg(res.returnMessage)
         }

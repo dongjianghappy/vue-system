@@ -1,5 +1,5 @@
 <template>
-<table width="100%" class="table-striped table-hover col-left-24">
+<table width="100%" class="table-striped table-hover col-left-2">
   <tr class="th">
     <td class="col-md-1">选择</td>
     <td class="col-md-5">名称</td>
@@ -21,7 +21,9 @@
     </td>
   </tr>
 </table>
-<v-nodata :data="dataList.list || []" />
+<v-loading :loading="loading" :dataList="dataList.list" />
+<v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding: data.coding.art }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="render" :auth="auth" />
+
 </template>
 
 <script lang="ts">
@@ -45,6 +47,10 @@ export default defineComponent({
       default: () => {
         return {}
       }
+    },
+    loading: {
+      type: Boolean,
+      default: false
     },
     auth: {
       type: Object,

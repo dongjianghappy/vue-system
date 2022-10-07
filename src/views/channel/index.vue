@@ -2,28 +2,49 @@
 <div class="mb10 col-md-10" style="overflow: auto;">
   <div class="mb10" style="overflow: hidden;">
     <div class="mb10" style="overflow: auto;">
-      <div class="col-md-3" style="padding-right: 8px;">
-        <v-statisticcard name="累计览量" :value="data.visit || 0" />
+      <div class="col-md-4" style="padding-right: 8px;">
+        <div class="col-md-4">
+          <v-statisticcard name="内容数量" :value="data.total || 0" />
+        </div>
+        <div class="col-md-4">
+          <v-statisticcard name="昨日新增" :value="data.yesterday || 0" />
+        </div>
+        <div class="col-md-4">
+          <v-statisticcard name="今日新增" :value="data.today || 0" />
+        </div>
       </div>
-      <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
-        <v-statisticcard name="昨日览量" :value="data.praise || 0" />
+      <div class="col-md-4" style="padding-left: 8px; padding-right: 8px;">
+        <div class="col-md-4">
+          <v-statisticcard name="累计览量" :value="data.total_visit || 0" />
+        </div>
+        <div class="col-md-4">
+          <v-statisticcard name="昨日览量" :value="data.yesterday && data.yesterday.pv || 0" />
+        </div>
+        <div class="col-md-4">
+          <v-statisticcard name="今日览量" :value="data.today && data.today.pv || 0" />
+        </div>
       </div>
-      <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
-        <v-statisticcard name="今日览量" :value="data.comment || 0" />
-      </div>
-      <div class="col-md-3" style="padding-left: 8px;">
-        <v-statisticcard name="累计评论" :value="data.download || 0" />
+      <div class="col-md-4" style="padding-left: 8px;">
+         <div class="col-md-4">
+          <v-statisticcard name="评论" :value="data.total_visit || 0" />
+        </div>
+        <div class="col-md-4">
+          <v-statisticcard name="点赞" :value="data.yesterday && data.yesterday.pv || 0" />
+        </div>
+        <div class="col-md-4">
+          <v-statisticcard name="收藏" :value="data.today && data.today.pv || 0" />
+        </div>
       </div>
     </div>
     <div class="mb10" style="overflow: auto;">
-      <div class="col-md-9" style=" padding-right: 8px;">
+      <div class="col-md-8" style=" padding-right: 8px;">
         <div class="module-wrap">
           <div class="module-content plr15" style="height: 475px">
             <ChartLine :chartData="hours.data" :chartOptions="hours.options" />
           </div>
         </div>
       </div>
-      <div class="col-md-3" style="padding-left: 8px;">
+      <div class="col-md-4" style="padding-left: 8px;">
         <div class="module-wrap">
           <div class="module-head">
             最近更新
@@ -50,14 +71,14 @@
       </div>
       <div class="module-content plr15" style="height: 545px">
         <ul class="form-wrap-box">
-          <li class="li mb10"><span class="label">展示设置</span>
-            <span class="right">
-              <ShowSetting :data="{channel_id: channelData.id ,coding: 'O0018'}" :auth="auth.checked('display')" />
-            </span>
-          </li>
           <li class="li mb10"><span class="label">频道信息</span>
             <span class="right">
               <Info action="edit" :data="{id: channelData.id, coding: 'O0000'}" :render="renderChannel" :auth="auth.checked('info')" />
+            </span>
+          </li>
+          <li class="li mb10"><span class="label">展示设置</span>
+            <span class="right">
+              <ShowSetting :data="{channel_id: channelData.id ,coding: 'O0018'}" :auth="auth.checked('display')" />
             </span>
           </li>
           <li class="li mb10"><span class="label">聚合标签</span>
@@ -65,7 +86,7 @@
               <Tag action="edit" :render="renderChannel" :data="{channel_id: channelData.id, coding: 'O0002'}" :auth="auth.checked('tag')" />
             </span>
           </li>
-                    <li class="li mb10"><span class="label">内容来源</span>
+          <li class="li mb10"><span class="label">内容来源</span>
             <span class="right">
               <Source action="edit" :render="renderChannel" :data="{channel_id: channelData.id, coding: 'O0017'}" :auth="auth.checked('tag')" />
             </span>
@@ -88,7 +109,8 @@ import {
   watch,
   useStore,
   useRoute,
-  channels
+  channels,
+  useRouter
 } from '@/utils'
 import {
   ChartLine
@@ -117,19 +139,27 @@ export default defineComponent({
   emits: ['onClick'],
   setup(props, context) {
     const {
-      ctx,
       proxy
     }: any = getCurrentInstance();
     const channelData: any = channels();
-    const coding: any = channels().coding.art;
+    const coding: any = ref(channels().coding.art);
     const store = useStore();
     const route = useRoute();
+    const router = useRouter()
     const channel: any = ref({})
     const data: any = computed(() => store.getters['basic/channelDefault'] || {});
+    const arrChannel = ['source', 'article', 'tech', 'picture', 'website', 'funny', 'notes', 'music']
 
     // 监听路由
-    watch(route, (newValues, prevValues) => {
-      init()
+    watch(router.currentRoute, (newValues, prevValues) => {
+      let arr = newValues.path.split("/")
+      if (newValues.path !== prevValues.path && arr.length === 3 && arrChannel.indexOf(arr[2]) > -1) {
+        setTimeout(() => {
+
+          coding.value = channels().coding.art;
+          init()
+        }, 1)
+      }
     })
 
     const hours: any = computed(() => {
@@ -169,7 +199,7 @@ export default defineComponent({
     function init() {
       store.dispatch('basic/ChannelDefault', {
         data: {
-          coding: coding
+          coding: coding.value
         }
       })
     }

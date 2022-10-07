@@ -6,9 +6,16 @@ import { getToken } from './auth'
 export default class http {
   private baseConfig: any
 
-   getCookieByName(name: any) {
-    const cookie: any = document.cookie;
-    return cookie.split(`; ${name}=`).pop().split(';').shift();
+  getCookieByName(name: any) {
+    const cookie: any = document.cookie.split(';')
+    let token: any = ""
+    for (let i = 0; i < cookie.length; i++) {
+      if (cookie[i].indexOf('token=') > -1) {
+        token = cookie[i].split('token=')[1]
+      }
+    }
+
+    return token
   }
 
   // 构造函数
@@ -72,16 +79,17 @@ export default class http {
     const request = this.axios()
     let url = ''
     const upload = params.uploadtype ? `&type=${params.uploadtype}&dir=${params.dir}` : ''
-
+    let dir = "inter_new.php"
+    let upload_dir = "inter_new.php"
     if (method === 'get' && params.m !== 'space') {
-      url = `inter_vue.php?m=${params.m}&n=${params.n}&${params.dir}`
+      url = `${dir}?m=${params.m}&n=${params.n}&${params.dir}`
     } else {
       url =
         params.m === 'space'
-          ? `inter_vue.php?m=${params.m}&n=${params.n}${
+          ? `${dir}?m=${params.m}&n=${params.n}${
               params.file && params.file !== '/' ? params.file : ''
             }`
-          : `inter_vue.php?origin=backstage${upload}`
+          : `${upload ? upload_dir : dir}?origin=backstage${upload}`
     }
 
     this.requestHeaders(request)

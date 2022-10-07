@@ -45,7 +45,7 @@
         </td>
       </tr>
     </table>
-    <v-nodata :data="dataList.list" />
+    <v-loading :loading="loading" :dataList="dataList.list" />
   </div>
 </div>
 </template>
@@ -67,6 +67,10 @@ export default defineComponent({
     data: {
       type: String,
       default: ""
+    },
+    loading: {
+      type: Boolean,
+      default: false
     },
     render: {
       type: Function,

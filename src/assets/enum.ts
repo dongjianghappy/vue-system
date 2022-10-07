@@ -72,8 +72,20 @@ export const TEXT_TYPE = [
     name: '多行文本',
   },
   {
+    value: 'select',
+    name: '下拉框',
+  },  
+  {
     value: 'radio',
     name: '单选框',
+  },
+  {
+    value: 'checkbox',
+    name: '复选框',
+  },
+  {
+    value: 'switch',
+    name: '开关',
   },
 ]
 

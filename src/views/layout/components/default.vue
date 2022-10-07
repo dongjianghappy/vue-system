@@ -17,7 +17,6 @@
   <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
     <v-statisticcard name="消息" value="2,836" />
   </div> -->
-
 <div class="col-md-3" style="padding-right: 8px;">
     <div class="col-md-4">
       <v-statisticcard name="累计览量" :value="statistics.total_visit || 0" />
@@ -44,10 +43,10 @@
   
   <div class="col-md-3" style="padding-left: 8px;">
     <div class="col-md-6">
-      <v-statisticcard name="订单总量" value="2,836" />
+      <v-statisticcard name="网站浏览" :value="website_sucai.visit || 0" />
     </div>
     <div class="col-md-6">
-      <v-statisticcard name="在线订单" value="2,836" />
+      <v-statisticcard name="博客浏览" :value="website_blog.visit || 0" />
     </div>
   </div>
 </div>
@@ -141,6 +140,8 @@ export default defineComponent({
 
     const user: any = computed(() => store.getters['basic/default'].user || {});
     const statistics: any = computed(() => store.getters['basic/default'].statistics || {});
+    const website_sucai: any = computed(() => store.getters['basic/default'].website_sucai || {});
+    const website_blog: any = computed(() => store.getters['basic/default'].website_blog || {});
     const hours: any = computed(() => {
       let aaa = store.getters['basic/default'].hours || {}
       debugger
@@ -220,6 +221,8 @@ export default defineComponent({
     return {
       user,
       statistics,
+      website_sucai,
+      website_blog,
       // order,
       hours,
       visit,

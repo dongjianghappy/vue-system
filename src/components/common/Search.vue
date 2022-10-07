@@ -3,9 +3,15 @@
   <!-- <span class="pointer" @click="handelClick">
     搜索
   </span> -->
-  <div class="search absolute" style="top: 10px; right: 10px">
+  <div class="search absolute" style="right: 10px">
     <div class="searchinput" style="line-height: 30px;">
-      <input type="text" :placeholder="placeholder" v-model="content" @keypress.enter="search">
+      <input type="text" :placeholder="placeholder" v-model="content" @keypress.enter="search" style="margin-right: 28px; width: 170px">
+      <span v-if="content" class="close absolute pointer" style="top: 0;
+    right: 40px;
+    bottom: 0;
+    padding-top: 0;" @click="handleClear">
+        <i class="iconfont icon-close font12" />
+      </span>
     </div>
     <div class="searchbtn" style="padding: 1px; line-height: 30px;">
       <a style="padding:0px" @click="search"><i class="iconfont icon-search"></i></a>
@@ -40,7 +46,7 @@ export default defineComponent({
     },
     placeholder: {
       type: String,
-      default: "关键词搜索"
+      default: "内容搜索"
     },
     render: {
       type: Function,
@@ -67,14 +73,14 @@ export default defineComponent({
       })
     }
 
-    function handelClick() {
-      isSearch.value = !isSearch.value
+    function handleClear() {
+      content.value = ""
     }
     return {
       search,
       isSearch,
       content,
-      handelClick
+      handleClear
     }
   }
 })

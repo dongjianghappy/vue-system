@@ -4,9 +4,14 @@ const mutations = {
     state.user.basic = params
   },
   setChannel: (state: any, params: any) => {
-    
     state.user.channel = params
   },
+  setSetting: (state: any, params: any) => {
+    state.user.setting = params
+  },  
+  setSettingValue: (state: any, params: any) => {
+    state.user.setting[params.field] = params.value
+  }, 
   // 用户列表
   setUser: (state: any, params: any) => {
     debugger

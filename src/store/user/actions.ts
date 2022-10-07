@@ -9,6 +9,8 @@ const actions = {
     result.result && sessionStorage.setItem("userInfo", JSON.stringify(result.result.userInfo))
     context.commit("setUserInfo" , result.result);
     context.commit("setChannel" , result.result.channel);
+    context.commit("setSetting" , result.result.setting);
+    
     
    
     return result.result

@@ -13,7 +13,7 @@
       <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
     </td>
     <td>
-      <span :style="jsonParse(item.style)">{{item.title}}</span>
+      <span>{{item.title}}</span>
       <span v-if="item.summary !== ''">
         <i class="infos demoimg iconfont icon-article"></i>
       </span>
@@ -93,8 +93,9 @@
     </td>
   </tr>
 </table>
-<v-nodata :data="dataList.list || []" />
-<v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding: data.coding.art }" :pagination="{total: dataList.pages, page: dataList.page ||  1, pagesize: 25}" :sorceData="dataList" :render="render" :auth="auth" />
+<v-loading :loading="loading" :dataList="dataList.list" />
+<v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding: data.coding.art }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="render" :auth="auth" />
+
 </template>
 
 <script lang="ts">
@@ -131,6 +132,10 @@ export default defineComponent({
       default: () => {
         return {}
       }
+    },
+    loading: {
+      type: Boolean,
+      default: false
     },
     render: {
       type: Function,

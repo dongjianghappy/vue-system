@@ -11,10 +11,7 @@ const getters = {
   userInfos: (state: any) => state.userInfo || {},
   channel: (state: any) => state.user.channel || [],
   blogInfo: (state: any) => state.blogInfo || {},
-  
-
-  
-
+  setting: (state: any) => state.user.setting || ['123','sd'],
 }
 
 export default getters;

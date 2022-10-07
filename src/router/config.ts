@@ -11,7 +11,7 @@ import Test from '../views/layout/test.vue'
 // // 动态组件
 // // 频道组件
 import ModuleDefault from '../views/channel/index.vue'
-import ChannelIndex from '../views/channel/default.vue'
+// import ChannelIndex from '../views/channel/default.vue'
 
 import Channel from '../views/channel/cate/index.vue'
 import ChannelSetting from '../views/channel/setting/index.vue'
@@ -137,7 +137,7 @@ import Favorites from '../views/favorites/index.vue'
 import Search from '../views/search/index.vue'
 import SearchView from '../views/search/index.vue'
 import SearchKeyword from '../views/search/keyword/index.vue'
-import SearchSetting from '../views/search/setting/index.vue'
+import searchList from '../views/search/searchList/index.vue'
 
 import Template from '../views/template/index.vue'
 
@@ -159,7 +159,7 @@ const arrss: any = {
     Static,
     MenuRouter,
   ModuleDefault,
-  ChannelIndex,
+  // ChannelIndex,
   Channel,
   ChannelSetting,
   ArticleList,
@@ -260,7 +260,7 @@ const arrss: any = {
   Search,
   SearchView,
   SearchKeyword,
-  SearchSetting,
+  searchList,
   Template,
   Talk,
   TalkList,

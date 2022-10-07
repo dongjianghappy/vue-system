@@ -88,3 +88,16 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="less">
+.collapse{
+  background: #383b61;
+  .collapse-head{
+    padding: 15px;
+    background: #424568;
+  }
+  .collapse-list{
+    background: #383b61;
+  }
+}
+</style>

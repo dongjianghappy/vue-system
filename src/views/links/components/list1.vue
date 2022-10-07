@@ -3,6 +3,7 @@
   <div class="module-head">
     <v-optionsbar title="交换友链">
       <template v-slot:extraright>
+        <v-search :render="render" field="name" />
         <v-condition name="网站" icon="select" field="website" :enums="serverName" :render="render" />
         <Detail action='add' :data="data" :render="init" :auth="auth.checked('add')" />
       </template>
@@ -60,8 +61,9 @@
         </td>
       </tr>
     </table>
-    <v-nodata :data="dataList.list" />
-    <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, ...data }" :pagination="{total: dataList.pages, page: dataList.page ||  1, pagesize: 25}" :sorceData="dataList.list" :render="render" v-if="dataList.list && dataList.list.length > 0" :auth="auth" />
+    <v-loading :loading="loading" :dataList="dataList.list"  />
+    <!-- <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="render" /> -->
+    <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, ...data }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList.list" :render="render" v-if="dataList.list && dataList.list.length > 0" :auth="auth" />
   </div>
 </div>
 </template>
@@ -88,6 +90,10 @@ export default defineComponent({
     data: {
       type: String,
       default: ""
+    },
+    loading: {
+      type: Boolean,
+      default: false
     },
     render: {
       type: Function,

@@ -95,8 +95,8 @@
         </template>
       </template>
     </table>
-    <v-nodata :data="dataList" />
-    <v-buttongroup :checkedList="checkedList" :disabled="isMove" :data="{id: checkedList, coding }" :sorceData="dataList" :render="init" />
+    <v-loading :loading="loading" :dataList="dataList" />
+    <v-buttongroup :checkedList="checkedList" :disabled="isMove" :data="{id: checkedList, coding }" :sorceData="dataList" :render="init" v-if="dataList.length > 0" />
   </div>
 </div>
 </template>
@@ -132,18 +132,21 @@ export default defineComponent({
     const checkedList: any = ref([])
     const aaa: any = ref([])
     const isMove: any = ref(false)
+    const loading: any = ref(false)
 
     const dataList = computed(() => {
       return store.getters[`channel/${channelData.module}`]['cateList']
     });
 
     function init() {
+      loading.value = false
       store.dispatch('channel/cateListAction', {
         module: channelData.module,
         data: {
           coding
         }
       }).then(res => {
+        loading.value = true
         setTimeout(() => {
           proxy.$drag.init((res: any) => {
 
@@ -201,6 +204,7 @@ export default defineComponent({
 
     return {
       store,
+      loading,
       coding,
       dataList,
       checkedList,

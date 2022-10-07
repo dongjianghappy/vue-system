@@ -44,6 +44,15 @@ const actions = {
     context.commit("setUserDefault" , result.result);
     return result
   },  
+  searchDefault: async (context: { commit: Commit; state: any}, params: any = {}) => {
+    const data = params.data || {}
+    const { result }:any = await api.defaultSearch({
+      ...data
+    })
+
+    context.commit("setSearchDefault" , result.result);
+    return result
+  },  
 
   // 友情链接
   linkAction: async (context: { commit: Commit; state: any}, params: any = {}) => {

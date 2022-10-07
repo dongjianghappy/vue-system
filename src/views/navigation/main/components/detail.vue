@@ -47,6 +47,7 @@
 
           <li class="li">
             <span class="label">聚合标签</span>
+            {{detail.flags}}
             <v-checkboxgroup :tagList="checkboxList" :checked="detail.flags" />
           </li>
 

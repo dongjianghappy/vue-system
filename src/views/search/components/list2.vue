@@ -1,31 +1,55 @@
 <template>
-<div class="mb10 col-md-9" style="overflow: auto;">
-  <div class="mb10" style="overflow: hidden;">
-    <AAA />
+<div class="mb10" style="overflow: auto;">
+  <div class="col-md-6" style="padding-right: 8px;">
+    <div class="col-md-4">
+      <v-statisticcard name="累计搜索" :value="user.total || 0" />
+    </div>
+    <div class="col-md-4">
+      <v-statisticcard name="昨日搜索" :value="user.today || 0" />
+    </div>
+    <div class="col-md-4">
+      <v-statisticcard name="今日搜索" :value="user.yesterday || 0" />
+    </div>
+  </div>
+  
+  <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
+    <div class="col-md-6">
+      <v-statisticcard name="累计搜索" value="2,836" />
+    </div>
+    <div class="col-md-6">
+      <v-statisticcard name="今日搜索" value="2,836" />
+    </div>
+  </div>
+  <div class="col-md-3" style="padding-left: 8px;">
+    <div class="col-md-6">
+      <v-statisticcard name="最高浏览" value="2,836" />
+    </div>
+    <div class="col-md-6">
+      <v-statisticcard name="最高IP" value="2,836" />
+    </div>
   </div>
 </div>
-<div class="col-md-3" style="overflow: auto;">
-
-  <div style="padding-left: 8px;">
+<div class="mb10" style="overflow: auto;">
+  <div class="col-md-9" style=" padding-right: 8px;">
     <div class="module-wrap">
       <div class="module-head">
-        搜索设置
+        搜索量
       </div>
       <div class="module-content plr15" style="height: 545px">
-        <ul class="form-wrap-box">
-          <li class="li mb10"><span class="label">搜索框</span>
-            <v-switch :data="{ item: {id: '1212'}, field: 'status', coding: '12321' }" className="right" />
-          </li>
-          <li class="li mb10"><span class="label">关键词</span>
-            <v-switch :data="{ item: {id: '1212'}, field: 'status', coding: '12321' }" className="right" />
-          </li>
-          <li class="li"><span class="label">热词排榜</span>
-            <v-switch :data="{ item: {id: '1212'}, field: 'status', coding: '12321' }" className="right" />
-          </li>
-        </ul>
+        <ChartLine :chartData="hours.data" :chartOptions="hours.options" />
       </div>
     </div>
-
+  </div>
+  <div class="col-md-3" style="padding-left: 8px;">
+    <div class="module-wrap">
+      <div class="module-head">
+        搜索排行榜
+      </div>
+      <div class="module-content plr15" style="height: 545px">
+        <ChartPie :chartData="engine.data" :chartOptions="engine.options" />
+      </div>
+    </div>
+    
   </div>
 </div>
 </template>
@@ -43,11 +67,11 @@ import {
   ChartLine,
   ChartPie
 } from '@/components/packages/chart/index'
-import AAA from '../keyword/index.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    AAA
+    ChartLine,
+    ChartPie
   },
   props: {
     style: {
@@ -125,7 +149,7 @@ export default defineComponent({
     });
 
     // 七天访问量
-    const weekVisit: any = computed(() => {
+        const weekVisit: any = computed(() => {
       let aaa = store.getters['basic/defaultStatistics'].week || {}
       return {
         data: {
@@ -150,7 +174,7 @@ export default defineComponent({
     });
 
     // 七天IP量
-    const weekIp: any = computed(() => {
+        const weekIp: any = computed(() => {
       let aaa = store.getters['basic/defaultStatistics'].month || {}
       debugger
       return {

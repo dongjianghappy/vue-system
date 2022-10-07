@@ -2,13 +2,10 @@
 <div class="ptb5" style="background: #fff">
   <v-tabs :tabs="menu">
     <template v-slot:content1>
-      <List :render="init" :coding="coding" :type='page.value' :dataList="dataList" />
+      <List :render="init" :coding="coding" :dataList="dataList" />
     </template>
     <template v-slot:content2>
-      <Lis2 :render="init" :coding="coding" :type='page.value' :dataList="dataList" />
-    </template>
-    <template v-slot:content3>
-      <List3 :render="init" :coding="coding" :type='page.value' :dataList="dataList" />
+      <List :render="init" :coding="coding" :dataList="dataList" />
     </template>
   </v-tabs>
   </div>
@@ -31,11 +28,9 @@ import {
   visitPage
 } from '@/assets/const'
 import List from "./components/list.vue"
-import List2 from "./components/list2.vue"
-import List3 from "./components/list3.vue"
 export default defineComponent({
   name: 'HomeViewdd',
-  components: {List, List2, List3},
+  components: {List},
   props: {
     type: {
       type: String,
@@ -49,35 +44,52 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
-    const dataList = computed(() => store.getters['website/webinfo']);
-     let menu: any = ref([{
-        name: "搜索概况量",
-        value: "advertisement1"
-      },
+    const dataList: any = ref([]);
+     let menu: any = ref([
       {
-        name: "今日搜索",
+        name: "今日搜索词",
         value: "advertisement2"
       },
       {
-        name: "搜索明细",
+        name: "搜索词库",
         value: "advertisement3"
       }
     ])
-    let page: any = ref(visitPage[0])
-    let type: any = ref(1)
+     const pagesize: any = 10
+    const tabsIndex: any = ref(route.query.type || 0) // tbs索引
 
     // 监听路由
     watch(route, (newValues, prevValues) => {
-      let qq: any = route.query
-      type.value = qq.type
+      if (route.path === '/admin/search/keyword') {
+        tabsIndex.value = route.query.type
+        init({
+          page: 1
+        })
+      }
     })
 
+    function init(param: any) {
+      store.dispatch('common/Fetch', {
+        api: "searchWordList",
+        data: {
+          time: tabsIndex.value === '1' ? 'all' : "today",
+          pagesize: pagesize,
+          ...param
+        }
+      }).then((res: any) => {
+        dataList.value = res.result
+      })
+    }
+    onMounted(() => {
+      init({
+        page: 1
+      })
+    })
 
     return {
       dataList,
-      page,
+      tabsIndex,
       menu,
-      type
     }
   }
 })

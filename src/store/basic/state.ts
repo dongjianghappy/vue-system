@@ -3,6 +3,7 @@ export interface State {
   defaultStatistics: any;
   channelDefault: any;
   userDefault: any;
+  searchDefault: any;
   links: any;
   partner: any;
   announcement: any
@@ -20,6 +21,7 @@ const initState: State = {
   defaultStatistics: {},
   channelDefault: {},
   userDefault: {},
+  searchDefault: {},
   links: {
     link1: {},
     link2: {},

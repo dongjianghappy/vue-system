@@ -3,6 +3,7 @@ const getters = {
   defaultStatistics: (state: any) => state.defaultStatistics || {},
   channelDefault:  (state: any) => state.channelDefault || {},
   userDefault: (state: any) => state.userDefault || {},
+  searchDefault: (state: any) => state.searchDefault || {},
   links: (state: any) => state.links || {},
   link1: (state: any) => state.links.link1 || {},
   link2: (state: any) => state.links.link2 || {},

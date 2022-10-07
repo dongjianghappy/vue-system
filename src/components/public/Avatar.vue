@@ -1,5 +1,5 @@
 <template>
-<img :src="data.photos" class="mr10">
+<img :src="data.photos || require('@/assets/image/head_normal_100.png')" class="mr10">
 </template>
 
 <script lang="ts">

@@ -1,7 +1,7 @@
 <template>
 <span style="color: #eee">
-  <i class="iconfont icon-list pointer" @click="handelClick('list')"></i>|
-  <i class="iconfont icon-app pointer" @click="handelClick('album')"></i>
+  <i class="iconfont icon-list pointer" @click="handelClick('list')" v-if="toggle === 'album'"></i>
+  <i class="iconfont icon-app pointer" @click="handelClick('album')" v-else></i>
 </span>
 </template>
 
@@ -12,6 +12,12 @@ import {
 
 export default defineComponent({
   name: 'v-ToggleDisplay',
+  props: {
+    toggle: {
+      type: String,
+      default: 'list'
+    }
+  },
   emits: ['update:toggle'],
   setup(props, context) {
 

@@ -9,7 +9,10 @@
     </div>
     <div class="mt10">状态: 上线</div>
     <div class="align_right" v-if="path === 'edit'">
-      <Detail action="edit" :data="{id: data.id, coding: 'Q0014' }" :render="init" :auth="true" />
+      <v-space>
+        <span @click="handleView(data)" class="pointer"><i class="iconfont icon-chart" />查看</span>
+        <Detail action="edit" :data="{id: data.id, coding: 'Q0014' }" :render="init" :auth="true" />
+      </v-space>
     </div>
   </div>
 </div>
@@ -36,7 +39,7 @@ export default defineComponent({
     data: {
       type: String,
       default: ""
-    },    
+    },
     className: {
       type: String,
       default: ""
@@ -45,7 +48,7 @@ export default defineComponent({
       type: String,
       default: ""
     },
-        click: {
+    click: {
       type: String,
       default: ""
     },
@@ -54,6 +57,7 @@ export default defineComponent({
       default: "version"
     }
   },
+  emits: ['update:graph'],
   setup(props, context) {
     const {
       ctx
@@ -62,15 +66,23 @@ export default defineComponent({
 
     function handleClick(item: any) {
       let search = ""
-      if(props.path === 'version'){
+      if (props.path === 'version') {
         search = `group=${item.id}`
-      }else{
-        search = `robotGroup=${item.id}&robotId=${item.id}`
+      } else {
+        return
       }
       router.push(`/admin/robot/${props.path}?${search}`)
     }
+
+    function handleView(param: any) {
+      context.emit('update:graph', {
+        view: true,
+        data: param
+      })
+    }
     return {
-      handleClick
+      handleClick,
+      handleView
     }
   }
 })

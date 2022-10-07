@@ -2,7 +2,10 @@
 <div class="position-wrap">
   <div class="position-dir pl15"><span>首页</span></div>
   <ul class="position-nav align_center">
-    <li class="ant-col ant-col-2 pointer"><i class="iconfont icon-shezhi font18" @click="handleRouter('appstore', 'setting')"></i></li>
+    <li class="ant-col ant-col-2 pointer"><i class="iconfont icon-more font18" @click="handleRouter('appstore', 'setting')"></i></li>
+    <li class="ant-col ant-col-2">
+      <SystemSetting :auth="true" />
+    </li>
     <li class="ant-col ant-col-2" v-if="channel.length>0">
       <v-drawershow name='<i class="iconfont icon-app pointer"></i>' title="频道" icon="add" type="text" :style="{width: '800'}" :data="1" initialValues="initialValues" :renderList="getData">
         <template v-slot:content>
@@ -37,12 +40,16 @@ import {
   computed,
   useStore,
 } from '@/utils'
+import SystemSetting from '@/components/packages/setting/systemSetting.vue'
+
 import {
   MODUDLE
 } from '@/assets/const'
 export default defineComponent({
   name: 'v-Position',
-  components: {},
+  components: {
+    SystemSetting
+  },
   props: {
     setRoute: {
       type: Function,
@@ -55,6 +62,7 @@ export default defineComponent({
     const store = useStore();
     const module: any = MODUDLE
     const channel = computed(() => store.getters['user/channel']);
+    const setting = computed(() => store.getters['user/setting']);
 
     function handleRouter(param: any, module: any) {
       props.setRoute({
@@ -73,6 +81,7 @@ export default defineComponent({
     return {
       module,
       channel,
+      setting,
       handleRouter,
       handleRouterss,
     }
@@ -80,8 +89,15 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-.channel-bg {
-  background: #eee;
+<style lang="less">
+.collapse{
+  background: #fff;
+  .collapse-head{
+    padding: 15px;
+    background: #f8f8fa;
+  }
+  .collapse-list{
+    background: #fff;
+  }
 }
 </style>

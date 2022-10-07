@@ -2,14 +2,16 @@
 <table width="100%" class="table-striped table-hover col-left-23">
   <tr class="th">
     <td class="col-md-2">浏览时间</td>
-    <td class="col-md-3">页面来源</td>
+    <td class="col-md-4">页面来源</td>
     <td class="col-md-3">受访页面</td>
     <td class="col-md-1">ip</td>
-    <td class="col-md-3">区域</td>
+    <td class="col-md-2">区域</td>
   </tr>
-  <tr v-for="(item, index) in data.list" :key="index">
+  <tr v-for="(item, index) in dataList.list" :key="index">
     <td>{{item.datetime}}</td>
-    <td>{{item.source_url}}</td>
+    <td>
+      <div style="word-break: break-all;">{{item.source_url}}</div>
+    </td>
     <td>{{item.url}}</td>
     <td>{{item.ip}}</td>
     <td>{{item.country}}-{{item.province}}-{{item.city}}</td>
@@ -18,17 +20,8 @@
 <div class="mt15">
 
 </div>
-<!-- <el-pagination
-  background
-  layout="prev, pager, next"
-  :page-size="25"
-  :total="data.total"
-  @size-change="changeSIze"
-  @current-change="currentChange"
-  >
-</el-pagination> -->
-<!-- <v-pagination :pagination="{total: dataList.pages, page: dataList.page ||  1, pagesize: 25}"  /> -->
-<v-nodata :data="data || []" />
+<v-nodata :data="dataList.list || []" />
+<v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="render" />
 </template>
 
 <script lang="ts">
@@ -40,12 +33,8 @@ import {
   useRoute
 
 } from '@/utils'
-// import { ElPagination } from 'element-plus'
 export default defineComponent({
   name: 'v-Search',
-  components: {
-// ElPagination
-  },
   props: {
     style: {
       type: Object,
@@ -68,7 +57,7 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
 
-    const data = computed(() => {
+    const dataList = computed(() => {
       return store.getters['setting/visit3'] || []
     });
 
@@ -87,7 +76,7 @@ export default defineComponent({
 
     return {
       handleclick,
-      data,
+      dataList,
       changeSIze,
       currentChange
     }

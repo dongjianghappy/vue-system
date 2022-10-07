@@ -32,7 +32,7 @@ export default defineComponent({
       }
     }
   },
-  emits: ['selectImage'],
+  emits: ['selectImage', 'update:image'],
   setup(props, context) {
     const store = useStore();
     const isShow: any = ref(false)
@@ -58,6 +58,8 @@ export default defineComponent({
         value: `![Description](${currentImg.value.img_url})`
       }
       context.emit('selectImage', data)
+      context.emit('update:image', currentImg.value.img_url)
+      
       // store.dispatch('common/Fetch', {
       //   api: "createfile",
       //   data: {
@@ -67,7 +69,7 @@ export default defineComponent({
       // }).then(res => {
 
       //   props.data.render("init", props.data.currentDir)
-      //   isShow.value = !isShow.value
+        isShow.value = !isShow.value
       // })
 
     }

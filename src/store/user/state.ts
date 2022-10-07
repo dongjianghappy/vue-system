@@ -6,7 +6,7 @@ export interface State {
   hobby: any;
   blogInfo: any
   channel: any
- 
+  setting: any;
 }
 
 
@@ -22,7 +22,8 @@ const initState: State = {
   userInfos: {},
   hobby: {},
   blogInfo: {},
-  channel: []
+  channel: [],
+  setting: []
 }
 
 export default initState;

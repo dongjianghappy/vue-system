@@ -1,6 +1,6 @@
 <template>
 <div class="clearfix">
-  <div class="col-md-6">
+  <div class="col-md-4">
     <v-space class="mt15">
       <v-button @click="handleclick('all')" buttonType="button" >全选</v-button>
       <v-confirm name="删除" buttonType="button" :data="data" api="delete" :render="render" operating="alldelete" :auth="auth.checked('del')"></v-confirm>
@@ -8,9 +8,10 @@
       <v-confirm name="关闭" buttonType="button" :data="{...data, operating: 'close' }" api="openAndClose" :render="render" operating="allclose" :auth="auth.checked('edit')"></v-confirm>
     </v-space>
   </div>
-  <div class="col-md-6 align_right">
+  <div class="col-md-8 align_right">
     <v-space class="mt15">
-      <v-pagination :pagination="pagination" :render="render" v-if="Object.keys(pagination).length" />
+      <!-- <v-pagination :pagination="pagination" :render="render" v-if="Object.keys(pagination).length" /> -->
+      <v-pagination :pagination="pagination" :render="render" />
     </v-space>
   </div>
 </div>

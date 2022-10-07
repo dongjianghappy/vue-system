@@ -3,25 +3,27 @@
   <v-tabs :tabs="menu">
     <template v-slot:extra>
       <v-space>
-        <v-search :render="init" />
+        <span class="pt10">
+          <v-search :render="init" />
+        </span>
+        <v-condition name="排序" icon="sort-desc" field="sorter" :enums="[{value: 'id desc', name: '递减'}, {value: 'id asc', name: '递增'}]" :render="init" />
         <v-toggledisplay v-model:toggle="toggleDisplay" />
-        <v-condition name="排序" icon="sort" field="sorter" :enums="[{value: 'id desc', name: '递减'}, {value: 'id asc', name: '递增'}]" :render="init" />
         <v-button @onClick="handleClick('add')" :disabled="auth.checked('add')" v-if="channelData.module !=='video'">
-          <i class="iconfont icon-add" />新增文档
+          <i class="iconfont icon-anonymous-iconfont" />新增文档
         </v-button>
         <uploadVideo v-else />
       </v-space>
     </template>
     <template v-slot:content1>
-      <List :type='page.value' :data="{...channelData, coding, aaa}" :render="init" v-if="toggleDisplay === 'list'" :auth="auth" />
-      <Album :data="{...channelData, coding, aaa}" :render="init" v-else-if="channelData.module !=='video'" :auth="auth" />
-      <Video :data="{...channelData, coding, aaa}" :render="init" v-else-if="channelData.module === 'video'" :auth="auth" />
+      <List :type='page.value' :data="{...channelData, coding, aaa}" :render="init" v-if="toggleDisplay === 'list'" :loading="loading" :auth="auth" />
+      <Album :data="{...channelData, coding, aaa}" :render="init" v-else-if="channelData.module !=='video'" :loading="loading" :auth="auth" />
+      <Video :data="{...channelData, coding, aaa}" :render="init" v-else-if="channelData.module === 'video'" :loading="loading" :auth="auth" />
     </template>
     <template v-slot:content2>
-      <List2 :type='page.value' :data="{...channelData}" :render="init" :auth="auth" />
+      <List2 :type='page.value' :data="{...channelData}" :render="init" :loading="loading" :auth="auth" />
     </template>
     <template v-slot:content3>
-      <List3 :type='page.value' :data="{...channelData}" :auth="auth" />
+      <List3 :type='page.value' :data="{...channelData}" :loading="loading" :auth="auth" />
     </template>
   </v-tabs>
 </div>
@@ -79,6 +81,8 @@ export default defineComponent({
     const coding: any = channels().coding;
     const aaa: any = ref([])
     const toggleDisplay: any = ref("list")
+    const loading: any = ref(false)
+    const pagesize: any = 10
 
     let menu: any = ref([{
         name: "文档管理",
@@ -112,40 +116,40 @@ export default defineComponent({
     let type: any = ref(1)
 
     // 监听路由
-    watch(route, (newValues, prevValues) => {
-      let qq: any = route.query
-      type.value = qq.type
-      init({
-        page: 1,
-        pagesize: 30
-      })
+    watch(router.currentRoute, (newValues, prevValues) => {
+      if (newValues.path === prevValues.path) {
+        let qq: any = route.query
+        type.value = qq.type
+        init({
+          page: 1
+        })
+      }
     })
 
     function init(param: any) {
 
       const sssss: any = {
         page: 1,
-        pagesize: 30
+        pagesize: pagesize
       }
 
       Object.assign(sssss, param)
-
-      // if (param) {
-      //   sssss.value = param
-      // }
-
       const {
         type
       }: any = route.query
+
+      loading.value = false
       store.dispatch('channel/articleListAction', {
         api: "articleList",
-        tabsIndex: route.query.type === undefined ? 0 : route.query.type ,
+        tabsIndex: route.query.type === undefined ? 0 : route.query.type,
         module: channelData.module,
         data: {
           coding: coding.art,
           management_checked: type === '2' ? -1 : type === '1' ? 0 : 1, // 是否审核,
           ...sssss
         }
+      }).then(res => {
+        loading.value = true
       })
     }
 
@@ -171,13 +175,13 @@ export default defineComponent({
       })
 
       init({
-        page: 1,
-        pagesize: 30
+        page: 1
       })
     })
 
     return {
       coding,
+      loading,
       init,
       channelData,
       page,

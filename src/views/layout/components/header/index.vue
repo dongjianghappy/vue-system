@@ -90,13 +90,16 @@ export default defineComponent({
     const route = useRoute();
     const loginuser = computed(() => store.getters['user/loginuser']);
     const userInfo = computed(() => store.getters['user/userInfo']);
+    const setting: any = computed(() => store.getters['user/setting']);
     const menu: any = basicInfo;
     const isInit: any = ref(true)
     const messge: any = information;
     const video_visit: any = ref(null)
     const video_down: any = ref(null)
     const video_register: any = ref(null)
+    const jsspeak = ref(false)
     const broadcast: any = ref(0)
+    const time: any = ref("")
     const message: any = ref({
       user: 0,
       download: 0,
@@ -109,6 +112,22 @@ export default defineComponent({
     watch(route, (newValues, prevValues) => {
       channelData.value = channels()
     })
+
+    // 监听语音播报设置
+    watch(setting, (newVal, oldVal) => {
+      clearTimeout(time.value)
+      jsspeak.value = false
+      for (let key in newVal) {
+        if (newVal[key] === "1") {
+          jsspeak.value = true
+          break
+        }
+      }
+      jsspeak.value && speaking()
+    }, {
+      immediate: true,
+      deep: true
+    });
 
     function handleRouter(param: any, module: any) {
       context.emit('setRoute', {
@@ -131,10 +150,10 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
+    function speaking() {
       const speakMsg = new SpeechSynthesisUtterance()
-      return
-      setInterval(() => {
+
+      time.value = setInterval(() => {
         let speech = ""
         store.dispatch('common/Fetch', {
           api: "voiceBroadcast"
@@ -156,37 +175,37 @@ export default defineComponent({
             speech = `07素材网有${user-message.value.user}个新的用户注册`
             message.value.user = res.result.user
             broadcast.value = 1
-            
+
           } else if (download > message.value.download) {
             speech = `07素材网有${download-message.value.download}个新的下载资源`
             message.value.download = res.result.download
             broadcast.value = 2
-            
+
           } else if (visit_yunxi > message.value.visit_yunxi) {
             speech = `07素材网有${visit_yunxi-message.value.visit_yunxi}个新的访问页面`
             message.value.visit_yunxi = res.result.visit_yunxi
             broadcast.value = 0
-            
+
           } else if (visit_blog > message.value.visit_blog) {
             speech = `东江博客有${visit_blog-message.value.visit_blog}个新的访问页面`
             message.value.visit_blog = res.result.visit_blog
             broadcast.value = 0
-            
+
           }
           // 本地播报
           else if (visit > message.value.visit && window.location.href.indexOf("localhost") > -1) {
             speech = `您有${visit-message.value.visit}个新的访问页面`
             message.value.visit = res.result.visit
             broadcast.value = 0
-            
+
           }
           if (speech) {
-            
-            if(broadcast.value === 1){
+
+            if (setting.value.register === '1' && broadcast.value === 1) {
               video_register.value && video_register.value.play()
-            }else if(broadcast.value === 2){
+            } else if (setting.value.download === '1' && broadcast.value === 2) {
               video_down.value && video_down.value.play()
-            }else{
+            } else if(setting.value.visit === '1' && broadcast.value === 0) {
               video_visit.value && video_visit.value.play()
             }
             setTimeout(() => {
@@ -205,7 +224,7 @@ export default defineComponent({
 
         })
       }, 20000)
-    })
+    }
 
     return {
       loginuser,

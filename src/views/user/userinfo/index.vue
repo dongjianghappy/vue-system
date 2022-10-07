@@ -39,6 +39,7 @@ export default defineComponent({
     const coding: any = codings['user'];
     const dataList: any = ref([])
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
+    const pagesize: any = 10
     let menu: any = ref([{
         name: "普通用户",
         value: "appstore1"
@@ -54,8 +55,7 @@ export default defineComponent({
       if (route.path === '/admin/user/list') {
         tabsIndex.value = route.query.type
         init({
-          page: 1,
-          pagesize: 25
+          page: 1
         })
       }
     })
@@ -65,7 +65,7 @@ export default defineComponent({
 
       const sssss: any = {
         page: 1,
-        pagesize: 25
+        pagesize: pagesize
       }
 
       Object.assign(sssss, param)
@@ -80,8 +80,7 @@ export default defineComponent({
 
     onMounted(() => {
       init({
-        page: 1,
-        pagesize: 25
+        page: 1
       })
     })
 

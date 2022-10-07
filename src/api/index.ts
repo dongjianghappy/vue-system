@@ -28,6 +28,12 @@ const api:any =  {
   defaultStatistics(params: any) {
     return http.request('vue', 'defaultStatistics', 'post', params)
   },
+
+  // 搜索默认数据
+  defaultSearch(params: any) {
+    return http.request('vue', 'defaultSearch', 'post', params)
+  },
+
   // 新增
   insert(params: any) {
     return http.request('common', 'insert', 'post', params)
@@ -572,6 +578,21 @@ close (params: any) {
   // 语音播报
   voiceBroadcast (params: any) {
     return http.request('common', 'voiceBroadcast', 'post', params)
+  },  
+
+  // 系统设置
+  systemSetting (params: any) {
+    return http.request('vue', 'systemSetting', 'post', params)
+  },  
+
+  // 站点搜索关键词库管理
+  searchWordList(params: any) {
+    return http.request('vue', 'searchWordList', 'post', params)
+  },  
+
+  // 搜索信息列表
+  searchList(params: any) {
+    return http.request('vue', 'searchList', 'post', params)
   },  
 }
 

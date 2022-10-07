@@ -2,45 +2,45 @@
 <table width="100%" class="table-striped table-hover col-left-1">
   <tr class="th">
     <td class="col-md-3">日期</td>
-    <td class="col-md-3">IP(个)</td>
-    <td class="col-md-3">新独立IP(个)</td>
-    <td class="col-md-3">浏览次数(PV)</td>
+    <td class="col-md-3">关键词(个)</td>
+    <td class="col-md-3">搜索次数(次)</td>
+    <td class="col-md-3">用户(个)</td>
   </tr>
   <tr>
     <td>今日</td>
-    <td>332</td>
-    <td>332</td>
-    <td>909</td>
+    <td>{{data.today && data.today.word}}</td>
+    <td>{{data.today && data.today.search}}</td>
+    <td>{{data.today && data.today.user}}</td>
   </tr>
   <tr>
     <td>昨日</td>
-    <td>355</td>
-    <td>354</td>
-    <td>1025</td>
+    <td>{{data.yesterday && data.yesterday.word}}</td>
+    <td>{{data.yesterday && data.yesterday.search}}</td>
+    <td>{{data.yesterday && data.yesterday.user}}</td>
   </tr>
   <tr>
     <td>本周</td>
-    <td>1352</td>
-    <td>1347</td>
-    <td>5968</td>
+    <td>{{data.week && data.week.word}}</td>
+    <td>{{data.week && data.week.search}}</td>
+    <td>{{data.week && data.week.user}}</td>
   </tr>
   <tr>
     <td>本月</td>
-    <td>4040</td>
-    <td>4018</td>
-    <td>21237</td>
+    <td>{{data.month && data.month.word}}</td>
+    <td>{{data.month && data.month.search}}</td>
+    <td>{{data.month && data.month.user}}</td>
   </tr>
   <tr>
     <td>历史最高</td>
-    <td>82481</td>
-    <td>81850</td>
-    <td>586769</td>
+    <td>{{data.max && data.max.word}}</td>
+    <td>{{data.max && data.max.search}}</td>
+    <td>{{data.max && data.max.user}}</td>
   </tr>
   <tr>
     <td>历史累计</td>
-    <td>82481</td>
-    <td>81850</td>
-    <td>586769</td>
+    <td>{{data.all && data.all.word}}</td>
+    <td>{{data.all && data.all.search}}</td>
+    <td>{{data.all && data.all.user}}</td>
   </tr>
 </table>
 </template>
@@ -60,7 +60,7 @@ export default defineComponent({
 
   },
   props: {
-    style: {
+    data: {
       type: Object,
       default: () => {
         return {}
