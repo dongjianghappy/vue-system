@@ -3,7 +3,8 @@
   <div class="module-head">
     <v-optionsbar title="广告管理">
       <template v-slot:extraright>
-        <v-condition name="网站" icon="select" field="website" :enums="serverName" :render="render" />
+        <v-condition name="类型" icon="select" field="website" :enums="serverName" :render="render" />
+        <v-condition name="站点" icon="select" field="website" :enums="serverName" :render="render" />
         <Detail action='add' :data="data" :render="init" />
       </template>
     </v-optionsbar>
@@ -12,7 +13,7 @@
     <table width="100%" class="table-striped table-hover col-left-2">
       <tr>
         <td class="col-md-1">选择</td>
-        <td class="col-md-2">广告名称</td>
+        <td class="col-md-2">广告名称<span class="cl-red">(点击)</span></td>
         <td class="col-md-2">尺寸类型</td>
         <td class="col-md-1">广告位置</td>
         <td class="col-md-1">每月/元</td>
@@ -25,7 +26,7 @@
           <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
         </td>
         <td>
-          {{item.name}}
+          {{item.name}}<span class="cl-red">({{item.visit}})</span>
         </td>
         <td>{{item.width}} X {{item.height}}</td>
         <td>

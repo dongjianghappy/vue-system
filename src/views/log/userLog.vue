@@ -4,7 +4,7 @@
     <v-optionsbar title="用户登录"></v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table width="100%" class="table-striped table-hover col-left-123">
       <tr class="th">
         <td class="col-md-2">用户</td>
         <td class="col-md-1">身份</td>
@@ -16,7 +16,14 @@
         <td class="col-md-2">登录时间</td>
       </tr>
       <tr v-for="(item, index) in dataList.list" :key="index">
-        <td>{{item.username}}</td>
+        <td style="display: flex;">
+          <div style=" width: 32px; height: 32px; border-radius: 50%; overflow: hidden; display: inline-block;">
+              <img :src="item.photos" class="mr10" style="width: 32px; height: 32px;">
+            </div>
+            <div class="pl5" style="flex: 1; height: 32px; line-height: 32px; display: inline-block;">
+              {{item.nickname}}
+            </div>
+        </td>
         <td>{{item.role}}</td>
         <td>{{item.browser}}</td>
         <td>{{item.lang}}</td>

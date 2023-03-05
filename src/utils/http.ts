@@ -76,6 +76,7 @@ export default class http {
     params = params || {}
     params.n = n
     params.m = params.m ? params.m : m
+    let progress: any = params.progress ? params.progress : ()=>{}
     const request = this.axios()
     let url = ''
     const upload = params.uploadtype ? `&type=${params.uploadtype}&dir=${params.dir}` : ''
@@ -100,6 +101,9 @@ export default class http {
           url: url,
           method,
           data: params,
+          onUploadProgress: (e: any) => {
+            progress(e)
+          }
         })
         .then(
           (response) => {

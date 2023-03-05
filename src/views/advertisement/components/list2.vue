@@ -1,7 +1,7 @@
 <template>
 <div class="module-wrap">
   <div class="module-head">
-    <v-optionsbar title="广告申请">
+    <v-optionsbar title="广告位置">
       <template v-slot:extraright>
         <Detail action='add' :data="data" :render="init" />
       </template>

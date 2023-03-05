@@ -1,5 +1,6 @@
 <template>
 <v-button v-model:show="isShow">
+  123
   <img src="http://127.0.0.1/uploadfile/picture/thumb/00408bc7b3859365d6fdead260414ee3.jpg" style="width: 100%; height: 150px;">
 </v-button>
 <Video v-model:show="isShow" :data="data" ref="form" title="自定义字段" width="520px" height="450px" :confirm="true" :cancel="true" @submit="submit" />

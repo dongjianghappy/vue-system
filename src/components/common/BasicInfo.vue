@@ -4,14 +4,16 @@
     <div class="info-module">
       <span class="name">{{title}}</span>
       <div class="line"></div>
-      <span data-coding="" class="update-info editbtn" @click="Edit" v-if="auth.checked('edit')">{{!isEdit ? "保存" : "编辑"}}</span>
+      <span data-coding="" class="update-info editbtn" @click="Edit">{{!isEdit ? "保存" : "编辑"}}</span>
+      <!--  v-if="auth.checked('edit')" -->
     </div>
     <ul class="info">
       <li v-for="(item, index) in data" :key="index" style="padding-left: 100px;">
         <label>{{item.remark}}</label>
         <div class="con" v-if="isEdit">{{item.value}}
           <span class="absolute" style="right: 0" v-if="isDelete">
-            <v-confirm name="删除" :data="{id: item.id, ...coding }" type="text" api="delete" :render="render" operating="delete" :auth="true" v-if="auth.checked('del')"></v-confirm>
+            <v-confirm name="删除" :data="{id: item.id, ...coding }" type="text" api="delete" :render="render" operating="delete" :auth="true" ></v-confirm>
+            <!-- v-if="auth.checked('del')" -->
           </span>
         </div>
         <template v-else>
@@ -83,9 +85,9 @@ export default defineComponent({
     const dataList: any = ref(props.data)
 
     function Edit() {
-      if (!props.auth.checked('edit')) {
-        return
-      }
+      // if (!props.auth.checked('edit')) {
+      //   return
+      // }
       isEdit.value = !isEdit.value
       if (isEdit.value) {
         props.edit(props.data)

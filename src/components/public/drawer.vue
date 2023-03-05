@@ -8,7 +8,7 @@
           <slot name="extra"></slot>
         </span>
       </div>
-      <div class="module-content absolute plr25" :style="`width: 100%; top: ${title ? '65px;' : '0px'}  bottom: ${hasfooter ? '55px;' : '0' } overflow-y: auto;`">
+      <div class="module-content absolute plr25 111111111" :style="`width: 100%; top: ${title ? '65px;' : '0px'}; bottom: ${hasfooter ? '55px;' : '0px' }; overflow-y: auto;`">
         <slot name="content"></slot>
       </div>
       <div class="module-foot absolute align_right" style="bottom: 0" v-if="hasfooter">
@@ -138,9 +138,10 @@ export default defineComponent({
         debugger
         props.submit({
           cancel: cancel,
-          message: proxy.$hlj.message({
-            msg: props.action !== "add" ? "编辑成功" : "新增成功"
-          })
+          message: () => {}
+          // message: proxy.$hlj.message({
+          //   msg: props.action !== "add" ? "编辑成功" : "新增成功"
+          // })
         })
       } else {
         store.dispatch('common/Fetch', {

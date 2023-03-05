@@ -4,7 +4,8 @@ import {useRouter, useRoute, onBeforeRouteUpdate } from 'vue-router'
 import { onMounted } from '@vue/runtime-core';
 import codings from "@/assets/coding"
 import authorized from "@/assets/authorized"
-import { getUid, chooseCate, checkButtonAuth, channels, channelssss, getQuery, jsonParse } from './auth'
+import selection from "./selection"
+import { getUid, chooseCate, checkButtonAuth, channels, channelssss, getQuery, jsonParse, durationTrans } from './auth'
 
 export {
   defineComponent,
@@ -20,11 +21,13 @@ export {
   reactive,
   codings,
   authorized,
+  selection,
   getUid,
   chooseCate,
   checkButtonAuth,
   channels,
   channelssss,
   getQuery,
-  jsonParse
+  jsonParse,
+  durationTrans
 };

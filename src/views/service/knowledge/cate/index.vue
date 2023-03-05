@@ -15,9 +15,8 @@
     <table width="100%" class="table-striped table-hover col-left-2">
       <tr class="th">
         <td class="col-md-1">选择</td>
-        <td class="col-md-7">分类名称</td>
+        <td class="col-md-8">分类名称</td>
         <td class="col-md-1">状态</td>
-        <td class="col-md-1">移动</td>
         <td class="col-md-2">操作</td>
       </tr>
       <template v-for="(item, index) in dataList" :key="index">
@@ -27,15 +26,11 @@
           </td>
           <td>
             <v-buttonexpand :data="item" />
-            <v-quick :value="item.name" :data="{ id: item.id, field: 'name', coding: 'P0003' }" :style="{width: '80%'}" />
+            <v-quick :value="item.name" :data="{ id: item.id, field: 'name', coding: 'P0003' }" :style="{width: '40%'}" />
             <i class="iconfont icon-add"></i>
           </td>
           <td>
             <v-switch :data="{ item, field: 'status', coding }" />
-          </td>
-          <td>
-
-            <v-buttonmove :data="{dataList, item, index}" />
           </td>
           <td>
             <v-space>

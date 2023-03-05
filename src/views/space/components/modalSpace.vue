@@ -4,7 +4,7 @@
 </span>
 <v-dialog v-model:show="isShow" ref="form" title="图片空间" :style="{width: '1200', height: '600'}" @submit="submit">
   <template v-slot:content v-if="isShow">
-    <Main  type="modal" v-model:data="currentImg" />
+    <Main type="modal" v-model:data="currentImg" />
   </template>
 </v-dialog>
 </template>
@@ -21,7 +21,7 @@ import Main from './main/index.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    
+
     Main
   },
   props: {
@@ -59,7 +59,7 @@ export default defineComponent({
       }
       context.emit('selectImage', data)
       context.emit('update:image', currentImg.value.img_url)
-      
+
       // store.dispatch('common/Fetch', {
       //   api: "createfile",
       //   data: {
@@ -69,7 +69,7 @@ export default defineComponent({
       // }).then(res => {
 
       //   props.data.render("init", props.data.currentDir)
-        isShow.value = !isShow.value
+      isShow.value = !isShow.value
       // })
 
     }

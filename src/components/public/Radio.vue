@@ -30,9 +30,10 @@ export default defineComponent({
       default: ""
     }
   },
-  emits: [`update:checked`],
+  emits: ['onClick', 'update:checked'],
   setup(props, context) {
     function handleclick(param: any) {
+      context.emit(`onClick`, param)
       context.emit(`update:checked`, param)
     }
     return {

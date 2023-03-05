@@ -1,6 +1,11 @@
 <template>
 <div class="ptb5" style="background: #fff">
   <v-tabs :tabs="menu">
+    <template v-slot:extra>
+      <v-space>
+        <v-condition v-model:value="search" name="排序" icon="sort-desc" field="source_url" :enums="[{value: 'google', name: '谷歌'}, {value: 'baidu.com', name: '百度'}, {value: 'sogou.com', name: '搜狗'}, {value: 'so.com', name: '360'}, {value: 'bing', name: '必应'}, {value: 'toutiao.com', name: '头条'}, {value: 'sm.cn', name: '神马'}]" :render="init" />
+      </v-space>
+    </template>
     <template v-slot:content1>
       <List :render="init" :coding="coding" />
     </template>
@@ -57,6 +62,7 @@ export default defineComponent({
     let menu: any = ref(visitPage)
     const pagesize: any = 10
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
+    const search: any = ref("")
 
     // 监听路由
     watch(route, (newValues, prevValues) => {
@@ -69,6 +75,9 @@ export default defineComponent({
     })
 
     function init(param: any) {
+      if(search.value != ""){
+        param.source_url = search.value
+      }
       store.dispatch('setting/visitAction', {
         api: tabsIndex.value === '0' ? "visitStatistics" : tabsIndex.value === '1' ? 'interviewedTodayStatistics' : "",
         tabsIndex: tabsIndex.value,
@@ -88,6 +97,7 @@ export default defineComponent({
       dataList,
       menu,
       tabsIndex,
+      search,
       init
     }
   }

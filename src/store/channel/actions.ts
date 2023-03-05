@@ -26,9 +26,22 @@ const actions = {
     return result
   }, 
 
+  // 问答答案列表
+  answerListAction: async (context: { commit: Commit; state: any}, params: any = {}) => {
+    const data = params.data || {}
+    debugger
+    const { result }:any = await api.answerList({
+      ...data
+    })
+
+    context.commit("setAnswerList" , result.result);
+    return result
+  }, 
+  
+
   musicListAction: async (context: { commit: Commit; state: any}, params: any = {}) => {
     const data = params.data || {}
-    const { result }:any = await api.select({
+    const { result }:any = await api.musicList({
       ...data
     })
 

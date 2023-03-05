@@ -119,3 +119,20 @@ export const jsonParse = (param: any) => {
   const style = JSON.parse(param || '{}')
   return style instanceof Object ? style : ""
 }
+
+// 时长转换
+export const  durationTrans = (duration: any) => {
+  
+  let b: any = ""
+  let h: any = Math.floor(duration/3600),
+      m: any = Math.floor(duration%3600/60),
+      s: any = Math.floor(duration%3600%60);
+  if(h>0){
+    h = h<10 ? '0'+h : h
+    b += h+":"
+  }
+  m = m < 10 ? '0'+m : m 
+  s = s < 10 ? '0'+s : s 
+  b+=m+":"+s
+  return b;
+}

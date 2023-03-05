@@ -1,13 +1,15 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth || disabled">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增分类"}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增分类"}}
 </v-button>
 <v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑分类' : '新增分类' " :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
+    {{detail}}
     <v-tabs :tabs="menu" method="click">
       <template v-slot:content1>
         <ul class="form-wrap-box">
           <li class="li">
+            
             <span class="label">分类名称</span>
             <div style="display: flex">
               <div style="flex: 1">
@@ -71,7 +73,7 @@
           </li>
           <li class="li">
             <span class="label">内页模板</span>
-            <v-select :enums="templates" v-model:value="detail.arcticle_templates" :defaultValue="detail.arcticle_templates = detail.source ? detail.arcticle_templates : 'article_article.htm'" />
+            <v-select :enums="templates" v-model:value="detail.arcticle_templates" :defaultValue="detail.arcticle_templates = detail.arcticle_templates ? detail.arcticle_templates : 'article_article.htm'" />
           </li>
           <li class="li">
             <span class="label">SEO标题</span>

@@ -4,8 +4,8 @@
     <v-optionsbar title="交换友链">
       <template v-slot:extraright>
         <v-search :render="render" field="name" />
-        <v-condition name="网站" icon="select" field="website" :enums="serverName" :render="render" />
-        <Detail action='add' :data="data" :render="init" :auth="auth.checked('add')" />
+        <v-condition name="网站" icon="select" field="website" :enums="siteEnum" :render="render" />
+        <Detail action='add' :data="data" :render="init" :siteList="siteList" :auth="auth.checked('add')" />
       </template>
     </v-optionsbar>
   </div>
@@ -34,7 +34,7 @@
         <td>
           <v-space class="relative">
             <span>
-              <Detail action="edit" :data="{id: item.id, ...data }" :render="render" :auth="auth.checked('edit')" />
+              <Detail action="edit" :data="{id: item.id, ...data }" :render="render" :siteList="siteList" :auth="auth.checked('edit')" />
             </span>
             <span>
               <v-confirm name="删除" :data="{id: item.id, ...data }" type="text" api="delete" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
@@ -101,6 +101,18 @@ export default defineComponent({
         return
       }
     },
+    siteList: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
+    siteEnum: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
     auth: {
       type: Object,
       default: () => {
@@ -110,7 +122,6 @@ export default defineComponent({
   },
   setup(props, context) {
     const store = useStore();
-    const serverName: any = SERVER_NAME
     const dataList = computed(() => {
       debugger
       return store.getters['basic/links']['link1'] || []
@@ -120,8 +131,7 @@ export default defineComponent({
 
     return {
       dataList,
-      checkedList,
-      serverName
+      checkedList
     }
   }
 })

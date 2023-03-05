@@ -7,6 +7,7 @@ export interface State {
   funny: any;
   notes: any;
   learn: any;
+  course: any;
   questions: any;
   haosite: any;
   blog: any;
@@ -16,7 +17,9 @@ export interface State {
   auditList: any;
   returnList: any;
   music: any;
-  videoList: any;
+  video: any;
+  design: any;
+  office: any;
 }
 
 
@@ -32,6 +35,7 @@ const initState: State = {
     articleList: {},
     auditList: {},
     returnList: {},
+    imageList: {}
   },
   tech: {
     cateList: [],
@@ -68,10 +72,17 @@ const initState: State = {
     articleList: {},
     auditList: {},
     returnList: {},
+  }, 
+  course: {
+    cateList: [],
+    articleList: {},
+    auditList: {},
+    returnList: {},
   },  
   questions: {
     cateList: [],
     articleList: {},
+    answerList: {},
     auditList: {},
     returnList: {},
   },
@@ -98,12 +109,33 @@ const initState: State = {
   auditList: {},
   returnList: {},
   music: {
+    cateList: [],
+    articleList: {},
+    auditList: {},
+    returnList: {},
     list: [],
     singer: [],
     score: [],
     lrc: []
   },
-  videoList: []
+  video: {
+    cateList: [],
+    articleList: {},
+    auditList: {},
+    returnList: {},
+  },
+  design: {
+    cateList: [],
+    articleList: {},
+    auditList: {},
+    returnList: {},
+  },
+  office: {
+    cateList: [],
+    articleList: {},
+    auditList: {},
+    returnList: {},
+  },
 }
 
 export default initState;

@@ -16,7 +16,7 @@
                     <div style="padding: 6px 0px;"><span :class="{current: current.value ===  item.id}" @click="choose({value: item.id, name: item.name})" style="padding: 6px 10px;">{{item.name}}</span></div>
                     <!-- 基本父类 -->
                     <ul class="pl20 clearfix" syle="display: flex; flex-wrap: wrap;" v-if="item.list">
-                      <li v-for="(list, i) in item.list" class="left" :class="{current: current.value ===  list.id}" :key="i" style="padding: 6px 10px; display: flex" @click="choose({value: list.id, name:  `${item.name} > ${list.name}`})">
+                      <li v-for="(list, i) in item.list" class="left" :class="{current: current.value ===  list.id}" :key="i" style="padding: 6px 10px; display: flex" @click="choose({value: list.id, name: isCurrent ? list.name : `${item.name} > ${list.name}`})">
                         {{list.name}}
                       </li>
                     </ul>
@@ -94,6 +94,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    isCurrent: {
+      type: Boolean,
+      default: false
+    },
     // 确认按钮是否是提交
     isUpdate: {
       type: Boolean,
@@ -124,6 +128,7 @@ export default defineComponent({
     }
 
     function choose(param: any) {
+      debugger
       current.value = param
     }
 
@@ -143,7 +148,7 @@ export default defineComponent({
         data
       }: any = props
 
-      if (data.item.id === current.value.value) {
+      if (!props.isCurrent && data.item.id === current.value.value) {
         proxy.$hlj.message({
           msg: "不能以自己为父类"
         })

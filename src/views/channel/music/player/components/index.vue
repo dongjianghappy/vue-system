@@ -82,9 +82,9 @@ export default defineComponent({
     function init() {
       store.dispatch('channel/musicListAction', {
         data: {
-          coding: 'E0000',
           page: 1,
-          pagesize: 10
+          pagesize: 10,
+          kind: 'music'
         }
       }).then((res: any) => {
         dataList.value = res.result.list

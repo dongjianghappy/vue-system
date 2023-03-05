@@ -7,6 +7,7 @@ const getters = {
   funny: (state: any) => state.funny || {},
   notes: (state: any) => state.notes || {},
   learn: (state: any) => state.learn || {},
+  course: (state: any) => state.course || {},
   questions: (state: any) => state.questions || {},
   haosite: (state: any) => state.haosite || {},
   blog: (state: any) => state.blog || {},
@@ -15,11 +16,14 @@ const getters = {
   articleList: (state: any) => state.articleList || {},
   auditList: (state: any) => state.auditList || {},
   returnList: (state: any) => state.returnList || {},
+  music: (state: any) => state.music || {},
   musicList: (state: any) => state.music.list || [],
   musicSinger: (state: any) => state.music.singer || [],
   musicScore: (state: any) => state.music.score || [],
   musicLrc: (state: any) => state.music.lrc || [],
-  videoList: (state: any) => state.videoList || []
+  video: (state: any) => state.video || {},
+  design: (state: any) => state.design || {},
+  office: (state: any) => state.office || {},
 }
 
 export default getters;

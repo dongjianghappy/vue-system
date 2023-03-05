@@ -1,5 +1,5 @@
 <template>
-<div class="module-wrap m0 p0 fixed" style="top: 0px; left: 0px; bottom: 0px; width: 100%; z-index: 100000">
+<div class="module-wrap m0 p0 fixed" style="top: 0px; left: 0px; bottom: 0px; width: 100%; z-index: 1000000">
   <div class="module-head cl-white p10" style="background: #000; line-height: 30px;">
     <span>{{graphTypeMenu[graphType].name}} - {{data.title || data.name}}</span>
     <span class="right pointer" @click="handleClose">关闭</span>

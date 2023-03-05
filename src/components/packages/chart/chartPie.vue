@@ -75,8 +75,8 @@ export default defineComponent({
         }
       }],
       ['screen and (min-width: 1024px)', {
-        labelOffset: 80,
-        chartPadding: 20
+        labelOffset: 60,
+        chartPadding: 20,
       }]
     ];
 

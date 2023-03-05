@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="true">
   <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'add' ? '新增系统设置' : ''}}
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增系统设置" :style="{width: '520', height: '250'}" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增系统设置" :style="{width: '520', height: '300'}" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -12,6 +12,10 @@
       <li class="li">
         <span class="label">字段</span>
         <input type="text" v-model="detail.name" placeholder="请输入页面名称" class="input-sm input-full" />
+      </li>
+            <li class="li">
+        <span class="label">文本类型</span>
+        <v-select :enums="textType" v-model:value="detail.text_type" :defaultValue="detail.text_type = detail.text_type ? detail.text_type : 'switch'" />
       </li>
     </ul>
   </template>
@@ -25,6 +29,9 @@ import {
   useStore,
   watch,
 } from '@/utils'
+import {
+  TEXT_TYPE,
+} from '@/assets/enum'
 
 export default defineComponent({
   name: 'v-Search',
@@ -54,6 +61,7 @@ export default defineComponent({
     const isShow: any = ref(false)
     const dialog: any = ref(null)
     const detail: any = ref({})
+    const textType = TEXT_TYPE
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
@@ -68,6 +76,7 @@ export default defineComponent({
         name,
         value,
         sort,
+        text_type,
         remark
       } = detail.value
 
@@ -75,6 +84,7 @@ export default defineComponent({
         name,
         value,
         sort,
+        text_type,
         remark
       }
 
@@ -97,7 +107,7 @@ export default defineComponent({
     return {
       isShow,
       detail,
-      
+      textType,
       submit
     }
   }

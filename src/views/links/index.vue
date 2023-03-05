@@ -2,10 +2,10 @@
 <div class="module-wrap nobg">
   <v-tabs :tabs="menu" type="vertical">
     <template v-slot:content1>
-      <List1 :render="init" :data="{ coding }" :loading="loading" :auth="auth" />
+      <List1 :render="init" :data="{ coding }" :loading="loading" :siteList="siteList" :siteEnum="siteEnum" :auth="auth" />
     </template>
     <template v-slot:content2>
-      <List2 :render="init" :data="{ coding }" :loading="loading" :auth="auth" />
+      <List2 :render="init" :data="{ coding }" :loading="loading" :siteList="siteList" :siteEnum="siteEnum" :auth="auth" />
     </template>
     <template v-slot:content3>
       <List3 :render="init" :data="{ coding }" :loading="loading" :auth="auth" />
@@ -51,7 +51,8 @@ export default defineComponent({
     const menu: any = ref(linkPage)
     const loading: any = ref(false)
     const pagesize: any = 10
-
+    const siteList: any = ref([])
+    const siteEnum: any = ref([])
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
 
     // 监听路由
@@ -92,10 +93,32 @@ export default defineComponent({
       })
     }
 
+    function getSite() {
+      // 获取站点信息
+      store.dispatch('basic/Fetch', {
+        state: 'announcement',
+        data: {
+          coding: "Q0018",
+          page: 1,
+          pagesize: 10,
+          status: '1'
+        }
+      }).then(res => {
+        siteList.value = res.result.list
+        res.result.list.map((item: any) => {
+          siteEnum.value.push({
+            value: item.id,
+            name: item.name
+          })
+        })
+      })
+    }
+
     onMounted(() => {
       init({
         page: 1
       })
+      getSite()
     })
 
     return {
@@ -103,6 +126,8 @@ export default defineComponent({
       menu,
       init,
       loading,
+      siteList,
+      siteEnum,
       auth: proxy.$auth.init('link')
     }
   }

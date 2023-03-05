@@ -2,11 +2,7 @@
 <div style="overflow: auto;">
   <div class="col-sm-6 col-md-2 p10" v-for="(item, index) in dataList.list" :key="index">
     <div class="thumbnail p10 relative" style="background: rgb(255, 255, 255); overflow: hidden;">
-      <div class="cover" style="position: absolute; top: 0px; left: 0px; bottom: 0px; width: 100%; z-index: 10; display: none;">
-        <i class="iconfont icon-checkbox"><input name="checkbox" type="checkbox" value="6" style="display: none;"></i></div>
-      <a class="infos trip_arrow content_trip bg-white hide" style="position: absolute; top: 15px; right: 15px;">
-        <i class="iconfont icon-down"></i></a>
-      <Video title="视频" :data="item" />
+      <v-thumbnail :data="item" :coding="data.coding.art" type="Video" :getNeighbor="getNeighbor" />
 
       <div class="caption relative" style="padding: 10px 0px; height: 40px;">
         <span class="inputline updata nowrap" style="border: 0px dashed rgb(204, 204, 204); width: 100%; background: none; display: block !important;">{{item.title}}</span>
@@ -18,6 +14,7 @@
     </div>
   </div>
 </div>
+<v-buttongroup disabled="false" :data="{id: checkedList, coding: data.coding.art }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="render" />
 </template>
 
 <script lang="ts">
@@ -38,7 +35,7 @@ export default defineComponent({
   components: {
     Video
   },
-    props: {
+  props: {
     data: {
       type: Object,
       default: () => {
@@ -60,14 +57,29 @@ export default defineComponent({
     const store = useStore();
     const coding: any = channels().coding.art;
     const checkedList: any = ref([])
-    const dataList = computed(() => {
-      return store.getters['channel/articleList']
+    const dataList: any = computed(() => {
+      return store.getters[`channel/${props.data.module}`]['articleList']
     });
+
+function getNeighbor() {
+      
+      store.dispatch('common/Fetch', {
+        api: "getNeighbor",
+        data: {
+          coding: coding,
+          id: props.data.id
+        }
+      }).then(res => {
+        debugger
+        // detail.value = res.result
+      })
+    }
 
     return {
       coding,
       checkedList,
-      dataList
+      dataList,
+      getNeighbor
     }
   }
 })

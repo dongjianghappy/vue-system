@@ -32,7 +32,7 @@
                 </div>
               </li>
               <li class="vertical">
-                <Editor v-model:contentsss="detail.markdown" />
+                <Editor v-model:contentsss="detail.markdown" :data="detail" />
               </li>
               <li class="vertical">
                 <div class="label">摘要</div>
@@ -107,6 +107,11 @@
       </div>
     </div>
     <div class="module-wrap">
+      <div class="module-content plr15">
+        <v-color :colorList="colorList || []" v-model:color="detail.color" />
+      </div>
+    </div>
+    <div class="module-wrap">
       <div class="module-head">
         相册
       </div>
@@ -116,7 +121,7 @@
             <li class="col-md-6 p5" style="height: 120px;" v-for="(item, index) in detail.img" :key="index"><img :src="item" style="width: 100%; height: 100%"></li>
           </ul>
         </div> -->
-        <v-uploads ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: channelData.coding.art}" :dataList="detail.img" :uploadtype="channelData.module" @imgList="image" :style="'width: 135px'" />
+        <v-uploads ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: channelData.coding.art}" :dataList="detail.img || []" :uploadtype="channelData.module" @imgList="image" :style="'width: 135px'" />
       </div>
     </div>
   </div>
@@ -142,6 +147,9 @@ import {
 } from 'vuex'
 import Source from '../../setting/source.vue'
 import Editor from '@/components/packages/editor/index.vue'
+import {
+  COLOR
+} from '@/assets/enum'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
@@ -182,6 +190,21 @@ export default defineComponent({
         value: "appstore2"
       }
     ])
+    const checkField = [{
+      name: 'title',
+      message: "标题不能为空"
+    }, {
+      name: 'tag',
+      message: "标签不能为空"
+    }, {
+      name: 'fid',
+      message: "请选择分类"
+    }, {
+      name: 'summary',
+      message: "请输入摘要内容"
+    }]
+
+    const colorList = COLOR
     // 聚合标签
     function checkbox() {
       store.dispatch('common/Fetch', {
@@ -233,7 +256,7 @@ export default defineComponent({
       for (let key in detailSSS.value) {
         detailSSS.value[key] = detail.value[key]
       }
-
+      debugger
       const {
         fid,
         pid,
@@ -245,40 +268,52 @@ export default defineComponent({
         summary,
         markdown,
         tag,
+        color,
         flags,
         style
       } = detail.value
 
-      const param: any = {
-        fid,
-        pid,
-        title,
-        img: img.value,
-        checked,
-        sort,
-        source,
-        source_url,
-        summary,
-        content: markdown ? marked.parse(markdown) : "",
-        markdown,
-        tag: tag ? tag.join(',') : "",
-        flags: flags ? `|${flags.join("|")}|` : "",
-        style: JSON.stringify(style),
-        coding: channelData.coding.art,
-      }
-      if (route.query.id) {
-        param.id = detail.value.id
-      }
-
-      store.dispatch('common/Fetch', {
-        api: route.query.id ? 'updateArticle' : "insertArticle",
-        data: {
-          ...param,
-          ...detailSSS.value
+      proxy.$form.validate(detail.value, checkField, (valid: any, message: any) => {
+        debugger
+        if (valid) {
+          proxy.$hlj.message({
+            msg: message
+          })
+          return false
         }
-      }).then(res => {
-        proxy.$hlj.message({
-          msg: res.returnMessage
+
+        const param: any = {
+          fid,
+          pid,
+          title,
+          img: img.value,
+          checked,
+          sort,
+          source,
+          source_url,
+          summary,
+          content: markdown ? marked.parse(markdown) : "",
+          markdown,
+          tag: tag ? tag.join(',') : "",
+          flags: flags ? `|${flags.join("|")}|` : "",
+          color: color ? `|${color.join("|")}|` : "",
+          style: JSON.stringify(style),
+          coding: channelData.coding.art,
+        }
+        if (route.query.id) {
+          param.id = detail.value.id
+        }
+
+        store.dispatch('common/Fetch', {
+          api: route.query.id ? 'updateArticle' : "insertArticle",
+          data: {
+            ...param,
+            ...detailSSS.value
+          }
+        }).then(res => {
+          proxy.$hlj.message({
+            msg: res.returnMessage
+          })
         })
       })
     }
@@ -326,6 +361,7 @@ export default defineComponent({
       detail,
       checkedList,
       init,
+      colorList,
       save,
       dataList,
       aaa,

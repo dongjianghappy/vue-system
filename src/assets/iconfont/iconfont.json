@@ -6,6 +6,69 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "2796042",
+      "name": "audio",
+      "font_class": "audio",
+      "unicode": "e76e",
+      "unicode_decimal": 59246
+    },
+    {
+      "icon_id": "219598",
+      "name": "personnel",
+      "font_class": "personnel",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "7712667",
+      "name": "knowledge",
+      "font_class": "knowledge",
+      "unicode": "e72d",
+      "unicode_decimal": 59181
+    },
+    {
+      "icon_id": "1393583",
+      "name": "answer",
+      "font_class": "answer",
+      "unicode": "e6d4",
+      "unicode_decimal": 59092
+    },
+    {
+      "icon_id": "6684789",
+      "name": "basic",
+      "font_class": "basic-info",
+      "unicode": "e72b",
+      "unicode_decimal": 59179
+    },
+    {
+      "icon_id": "2142892",
+      "name": "web",
+      "font_class": "web1",
+      "unicode": "e6c8",
+      "unicode_decimal": 59080
+    },
+    {
+      "icon_id": "15838548",
+      "name": "upload",
+      "font_class": "upload-file",
+      "unicode": "e684",
+      "unicode_decimal": 59012
+    },
+    {
+      "icon_id": "15838446",
+      "name": "calendar",
+      "font_class": "calendar",
+      "unicode": "e66e",
+      "unicode_decimal": 58990
+    },
+    {
+      "icon_id": "4767079",
+      "name": "font-colors",
+      "font_class": "font-colors",
+      "unicode": "e7f7",
+      "unicode_decimal": 59383
+    },
+    {
       "icon_id": "20817820",
       "name": "sort-desc",
       "font_class": "sort-desc",

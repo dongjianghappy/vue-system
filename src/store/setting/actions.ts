@@ -23,7 +23,19 @@ const actions = {
     const { result }:any = await api[params.api || 'select']({
       ...data
     })
-
+    debugger
+    result.result.list = result.result.list.map((item: any) => {
+      let domain = ""
+      if(item.source_url.indexOf("http://") > -1 || item.source_url.indexOf("https://") > -1){
+        domain = item.source_url.split("//")[1]
+        domain = domain.split("/")[0]
+      }
+      debugger
+      return {
+        domain,
+        ...item
+      }
+    })
     const number = 1+parseInt(params.tabsIndex)
     context.commit("setVisit", {state: 'visit'+number, data: result.result});
     return result

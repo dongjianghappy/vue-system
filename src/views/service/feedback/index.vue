@@ -29,6 +29,7 @@
       </tr>
     </table>
     <v-nodata :data="dataList.list || []" />
+    <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, coding }" :pagination="{total: 10, page: 10, pagesize: 10}" :sorceData="dataList.list" :render="init" v-if="dataList.list && dataList.list.length > 0" :auth="auth" />
   </div>
 </div>
 </template>

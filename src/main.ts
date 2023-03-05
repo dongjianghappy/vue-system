@@ -14,8 +14,10 @@ import move from './plugin/move'
 import drag from './plugin/drag'
 import cons from './plugin/const'
 import auth from './plugin/authorized'
+import form from './plugin/validate'
 import codings from './assets/coding'
 import chartist from 'vue-chartist'
+
 
 import VueMarkdownEditor from '@kangc/v-md-editor';
 import '@kangc/v-md-editor/lib/style/base-editor.css';
@@ -47,6 +49,7 @@ move(Vue)
 drag(Vue)
 auth(Vue)
 cons(Vue)
+form(Vue)
 Vue.use(PerfectScrollbar)
 Vue.use(chartist)
 Vue.config.globalProperties.$coding = codings

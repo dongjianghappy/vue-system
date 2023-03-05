@@ -618,9 +618,65 @@ export const TEMPLATES = [
     name: '详情模板',
   },
   {
+    value: 'design_list_article.htm',
+    name: '资源设计图栏目模板',
+  },    
+  {
+    value: 'design_article_article.htm',
+    name: '资源设计图详情模板',
+  },  
+  {
     value: 'singlepage.htm',
     name: '单页模板',
   },  
+]
+
+// 推广类型
+export const COLOR = [
+  {
+    value: 'red',
+    name: '红色',
+  },
+  {
+    value: 'orange',
+    name: '橙色',
+  },
+  {
+    value: 'yellow',
+    name: '黄色',
+  },
+  {
+    value: 'green',
+    name: '绿色',
+  },
+  {
+    value: 'purple',
+    name: '紫色',
+  },
+  {
+    value: 'pink',
+    name: '粉色',
+  },
+  {
+    value: 'cyan',
+    name: '青色',
+  },
+  {
+    value: 'blue',
+    name: '蓝色',
+  },
+  {
+    value: 'brown',
+    name: '棕色',
+  },
+  {
+    value: 'white',
+    name: '白色',
+  },
+  {
+    value: 'black',
+    name: '黑色',
+  }   
 ]
 
 const enums = {
@@ -651,7 +707,8 @@ const enums = {
   banned_day: BANNED_DAY,
   reason_type: REASON_TYPES,
   serverName: SERVER_NAME,
-  templates: TEMPLATES
+  templates: TEMPLATES,
+  color: COLOR
 }
 
 export default enums

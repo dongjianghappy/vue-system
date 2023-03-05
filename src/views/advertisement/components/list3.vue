@@ -1,7 +1,7 @@
 <template>
 <div class="module-wrap">
   <div class="module-head">
-    <v-optionsbar title="订单列表">
+    <v-optionsbar title="广告申请">
       <template v-slot:extraright>
         <Detail action='add' :data="data" :render="init" />
       </template>
@@ -12,10 +12,8 @@
       <tr class="th">
         <td class="col-md-1"> 选择</td>
         <td class="col-md-2">网站名称 </td>
-        <td class="col-md-3">链接地址</td>
-        <td class="col-md-1">站长</td>
-        <td class="col-md-2">联系方式</td>
-        <td class="col-md-1">申请时间</td>
+        <td class="col-md-6">链接地址</td>
+        <td class="col-md-1">状态</td>
         <td class="col-md-2">操作</td>
       </tr>
       <tr v-for="(item, index) in dataList.list" :key="index">
@@ -23,20 +21,18 @@
           <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
         </td>
         <td>
-          {{item.name}}
+          <v-quick :value="item.name" :data="{ id: item.id, field: 'name', ...data }" />
         </td>
         <td>
-          {{item.url}}
+          <v-quick :value="item.url" :data="{ id: item.id, field: 'url', ...data }" />
         </td>
-        <td>{{item.webmaster}}</td>
-        <td>{{item.qq}}</td>
         <td>
-          {{item.datetime}}
+          <v-switch :data="{ item, field: 'status', ...data }" />
         </td>
         <td>
           <v-space>
             <span>
-              <v-confirm name="审核" :data="{id: item.id, ...data }" type="text" api="applyCheck" :render="render" operating="check"></v-confirm>
+              <Detail action="edit" :data="{id: item.id, ...data }" :render="render" />
             </span>
             <span>
               <v-confirm name="删除" :data="{id: item.id, ...data }" type="text" api="delete" :render="render" operating="delete"></v-confirm>
@@ -46,6 +42,7 @@
       </tr>
     </table>
     <v-nodata :data="dataList.list || []" />
+    <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, ...data }" :sorceData="dataList.list" :render="render" v-if="dataList.list && dataList.list.length > 0" />
   </div>
 </div>
 </template>
@@ -78,7 +75,8 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
     const dataList = computed(() => {
-      return store.getters['basic/links']['link3']
+      debugger
+      return store.getters['basic/links']['link2'] || []
     });
 
     const checkedList: any = ref([])

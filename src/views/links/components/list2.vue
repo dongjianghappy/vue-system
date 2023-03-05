@@ -5,9 +5,9 @@
       <template v-slot:extraright>
         <v-space>
           <v-search :render="render" field="name" />
-          <v-condition name="网站" icon="select" field="website" :enums="serverName" :render="render" />
+          <v-condition name="网站" icon="select" field="website" :enums="siteEnum" :render="render" />
           <v-condition name="平台" icon="select" field="source" :enums="sourceType" :render="render" />
-          <Detail action='add' :data="data" :render="render" :auth="auth.checked('add')" />
+          <Detail action='add' :data="data" :render="render" :siteList="siteList" :auth="auth.checked('add')" />
         </v-space>
       </template>
     </v-optionsbar>
@@ -41,7 +41,7 @@
         <td>
           <v-space class="relative">
             <span>
-              <Detail action="edit" :data="{id: item.id, ...data }" :render="render" :auth="auth.checked('edit')" />
+              <Detail action="edit" :data="{id: item.id, ...data }" :render="render" :siteList="siteList" :auth="auth.checked('edit')" />
             </span>
             <span>
               <v-confirm name="删除" :data="{id: item.id, ...data }" type="text" api="delete" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
@@ -86,8 +86,7 @@ import {
   useStore
 } from '@/utils'
 import {
-  LINK_TYPE,
-  SERVER_NAME
+  LINK_TYPE
 } from '@/assets/enum'
 import Detail from './detail.vue'
 import Popover from '@/components/packages/popover/index.vue';
@@ -112,6 +111,18 @@ export default defineComponent({
         return
       }
     },
+    siteList: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
+    siteEnum: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
     auth: {
       type: Object,
       default: () => {
@@ -122,7 +133,6 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
     const sourceType: any = LINK_TYPE
-    const serverName: any = SERVER_NAME
     const dataList = computed(() => {
       return store.getters['basic/links']['link2'] || []
     });
@@ -132,8 +142,7 @@ export default defineComponent({
     return {
       sourceType,
       dataList,
-      checkedList,
-      serverName
+      checkedList
     }
   }
 })

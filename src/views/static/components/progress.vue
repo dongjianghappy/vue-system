@@ -48,6 +48,8 @@ export default defineComponent({
     })
 
     function run(prams: any) {
+      console.log(prams);
+      
       store.dispatch('common/Fetch', {
         api: "updateStatic",
         data: {
@@ -72,7 +74,8 @@ export default defineComponent({
             serve,
             action,
             model,
-            method
+            method,
+            fid
           } = prams.data
 
           // 分类
@@ -84,22 +87,29 @@ export default defineComponent({
                 serve,
                 model,
                 action,
+                fid,
                 id,
                 loop,
               },
             })
           } else {
-            run({
-              title: prams.title,
-              bar: res.result.bar,
-              data: {
+            console.log(res.result)
+            const param: any = {
                 serve,
                 action,
                 model,
                 id: res.result.outset,
                 method,
-                total: res.result.total,
-              },
+                total: res.result.total
+              }
+            if(res.result.type){
+              param.type = res.result.type
+            }
+
+            run({
+              title: prams.title,
+              bar: res.result.bar,
+              data: param,
             })
           }
         } else {

@@ -5,6 +5,10 @@ const mutations = {
   setArticleList: (state: any, params: any) => {
     state[params.module][params.state] = params.data
   },  
+  setAnswerList: (state: any, params: any) => {
+    debugger
+    state.questions.answerList = params
+  },  
   setMusicList: (state: any, params: any) => {
     state.music.list = params
   },

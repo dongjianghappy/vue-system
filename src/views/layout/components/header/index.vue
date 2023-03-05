@@ -27,7 +27,7 @@
           <v-avatar :data="userInfo" style="margin-top: 16px;" />
         </li>
         <li class="mr15" style="width: 50px;">
-          <span>消息<span class="badge"><sup class="number">0</sup></span></span>
+          <span @click="handleRouter('service/message/unread', 'service')">消息<span class="badge"><sup class="number">0</sup></span></span>
           <video ref="video_visit" class="hide">
             <source src="@/assets/video/visit.mp3" type="audio/mp3">
           </video>

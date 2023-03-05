@@ -42,7 +42,7 @@
 
     <div class="cal_m_days">
       <div v-for="(ds, index) in monthData" :key="index" class="cal_m_day_line">
-        <div v-for="d in ds" :key="d.day" class="cal_m_day_cell" :style="{color: getCellColor(d)}" @mouseenter="mouseenter(d, $event)" @mouseleave="mouseleave(d, $event)">
+        <div v-for="d in ds" :key="d.day" class="cal_m_day_cell" :style="{color: getCellColor(d)}" @mouseenter="mouseenter(d, $event)" @mouseleave="mouseleave(d, $event)" @click="handleClick(d, $event)">
           {{ d.day }}日
           <slot :item="d" :index="index" :another-attribute="anotherAttribute"></slot>
         </div>
@@ -82,7 +82,7 @@ export default defineComponent({
       default: "text"
     },
   },
-  emits: ['changeMonth'],
+  emits: ['changeMonth', 'changeDay'],
   setup(props, context) {
 
     let now: any = ref(new Date())
@@ -243,6 +243,10 @@ export default defineComponent({
       })
     }
 
+    function handleClick(param: any, event: any){
+      context.emit("changeDay", param)
+    }
+
     onMounted(() => {
       setYearMonth(now.value)
       generateMonth(now.value)
@@ -260,6 +264,7 @@ export default defineComponent({
       getCellColor,
       mouseenter,
       mouseleave,
+      handleClick
     }
   }
 })
@@ -330,7 +335,7 @@ export default defineComponent({
       border-bottom: 1px solid #ebeef5;
       border-right: 1px solid #ebeef5;
       width: 100%;
-      min-height: 120px;
+      min-height: 40px;
       line-height: 24px;
       cursor: pointer;
       position: relative;

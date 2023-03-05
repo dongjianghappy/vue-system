@@ -41,6 +41,10 @@ export default defineComponent({
       type: String,
       default: ""
     },
+    type: {
+      type: String,
+      default: "image"
+    },
     isShow: Boolean // 以前是`value：String`
   },
   emits: ['onClick', 'close'],

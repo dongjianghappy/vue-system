@@ -594,6 +594,69 @@ close (params: any) {
   searchList(params: any) {
     return http.request('vue', 'searchList', 'post', params)
   },  
+
+  // 相邻
+  getNeighbor(params: any) {
+    return http.request('vue', 'getNeighbor', 'post', params)
+  }, 
+
+  neighbor(params: any) {
+    return http.request('vue', 'neighbor', 'post', params)
+  }, 
+
+  // 广告列表
+  advertisement(params: any) {
+    return http.request('vue', 'advertisement', 'post', params)
+  }, 
+
+  // 广告位置列表
+  advertisementPosition(params: any) {
+    return http.request('vue', 'advertisementPosition', 'post', params)
+  }, 
+
+  // 广告位置列表
+  getAdPosition(params: any) {
+    return http.request('vue', 'getAdPosition', 'post', params)
+  }, 
+
+  // 更改广告位
+  updateAdPosition(params: any) {
+    return http.request('vue', 'updateAdPosition', 'post', params)
+  }, 
+
+  // 将广告生产json文件
+  createAdJson(params: any) {
+    return http.request('vue', 'createAdJson', 'post', params)
+  }, 
+
+  // 站点列表
+  siteList (params: any) {
+    return http.request('vue', 'siteList', 'post', params)
+  }, 
+  // 网站频道和页面
+  siteChannel (params: any) {
+    return http.request('vue', 'siteChannel', 'post', params)
+  }, 
+
+  // 答案列表
+  answerList(params: any) {
+    return http.request('channel', 'answerList', 'post', params)
+  }, 
+
+  // 歌曲列表
+  musicList(params: any) {
+    return http.request('channel', 'musicList', 'post', params)
+  }, 
+  
+  //
+  sourcePsdList (params: any) {
+    return http.request('channel', 'sourcePsdList', 'post', params)
+  }, 
+
+  // 频道标签查询
+  channelTag (params: any) {
+    return http.request('vue', 'channelTag', 'post', params)
+  }, 
 }
 
 export default api

@@ -1,5 +1,5 @@
 <template>
-<Popover :content="`<i class='iconfont icon-${icon}' />`" arrow="tb" offset="right" :move="-30" :keys="`static_${index}`">
+<Popover :content="`<i class='iconfont icon-${icon}' /> ${name}`" arrow="tb" offset="right" :move="-30" :keys="`static_${index}`">
   <ul class="font14 p15" style="display: block">
     <li v-for="(item, index) in [{name: '默认', value: ''}, ...enums ]" :key="index" style="height: 32px" @click="handleclick(item)">{{item.name}}
       <i class="iconfont icon-right1" v-if="item.value === currentSort.value" />
@@ -57,6 +57,7 @@ export default defineComponent({
 
     function handleclick(index: any) {
       currentSort.value = index
+      context.emit('update:value', currentSort.value.value)
       const params: any = {}
       params[props.field] = currentSort.value.value
       props.render(params)

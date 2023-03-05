@@ -28,7 +28,7 @@
           </td>
           <td>
             <v-buttonexpand :data="item" />
-            <v-quick :value="item.name" :data="{ id: item.id, field: 'name', coding: 'P0003' }" :style="{width: '40%', ...jsonParse(item.style)}" width="40%" :auth="auth.checked('edit')" />
+            <v-quick :value="item.name" :data="{ id: item.id, field: 'name', coding: 'P0003' }" :style="{width: '40%', ...jsonParse(item.style)}" :auth="auth.checked('edit')" />
             <i class="iconfont icon-add"></i>
           </td>
           <td>

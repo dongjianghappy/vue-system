@@ -9,7 +9,7 @@
   </div>
   <div class="module-content plr15">
     <v-basicinfo v-model:data="dataList.baisc" :edit="edit" title="基本信息" />
-    <v-basicinfo v-model:data="dataList.custom" :edit="edit" title="自定义管理" />
+    <v-basicinfo v-model:data="dataList.custom" :isDelete="true" :edit="edit" title="自定义管理" />
   </div>
 </div>
 </template>

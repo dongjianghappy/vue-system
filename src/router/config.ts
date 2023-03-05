@@ -28,14 +28,21 @@ import MusicList from '../views/channel/music/list/index.vue'
 import MusicScore from '../views/channel/music/score/index.vue'
 import MusicSinger from '../views/channel/music/singer/index.vue'
 import MusicLrc from '../views/channel/music/lrc/index.vue'
-// import VideoList from '../views/channel/video/list/index.vue'
+import MusicEffects from '../views/channel/music/list/effects.vue'
+import VideoList from '../views/channel/video/index.vue'
 import HaoSiteArticle from '../views/channel/haosite/index.vue'
+import EffectList from '../views/channel/video/effect.vue'
+import AnswerList from '../views/channel/question/index.vue'
+import SourcePsdList from '../views/channel/source/image.vue'
+import DesignList from '../views/channel/design/index.vue'
 
 
 
 // // 基本组件
 import Default from '../views/layout/components/default.vue'
 import Basic from '../views/basic/index.vue'
+import Site from '../views/basic/site/index.vue'
+import SiteChannel from '../views/basic/site/channel/index.vue'
 import Navigation from '../views/navigation/index.vue'
 import NavigationMain from '../views/navigation/main/index.vue'
 import Single from '../views/navigation/single/index.vue'
@@ -48,6 +55,8 @@ import SlideshowList from '../views/slideshow/list/index.vue'
 // // 运营组件
 import Partner from '../views/partner/index.vue'
 import Advertisement from '../views/advertisement/index.vue'
+import AdvertisementPosition from '../views/advertisement/position/index.vue'
+import AdvertisementOrder from '../views/advertisement/order/index.vue'
 import Links from '../views/links/index.vue'
 
 // // 用户组件
@@ -110,12 +119,17 @@ import Announcement from '../views/service/announcement/index.vue'
 import Job from '../views/service/job/index.vue'
 import Resume from '../views/service/job/resum/index.vue'
 import Message from '../views/service/message/index.vue'
-// import MessageArticle from '../views/service/message/article'
+import MessageDetail from '../views/service/message/components/detail.vue'
 import KnowledgeCate from '../views/service/knowledge/cate/index.vue'
 import KnowledgeList from '../views/service/knowledge/list/index.vue'
 import KnowledgeArticle from '../views/service/knowledge/list/article.vue'
 import Spread from '../views/spread/index.vue'
 import Space from '../views/space/index.vue'
+
+import codeDefault from '../views/code/index.vue'
+import codeCate from '../views/code/cate/index.vue'
+import codeList from '../views/code/list/index.vue'
+
 
 import Customize from '../views/customize/index.vue'
 import CustomizeList from '../views/customize/list.vue'
@@ -153,6 +167,8 @@ import TalkPraise from '../views/talk/praise/index.vue'
 const arrss: any = {
   Default,
   Basic,
+  Site,
+  SiteChannel,
     Navigation,
   NavigationMain,
   Single,
@@ -166,6 +182,8 @@ const arrss: any = {
   Article,
   Links,
   Advertisement,
+  AdvertisementPosition,
+  AdvertisementOrder,
   Spread,
   Partner,
 
@@ -180,8 +198,13 @@ const arrss: any = {
   MusicScore,
   MusicSinger,
   MusicLrc,
+  MusicEffects,
   HaoSiteArticle,
-  // VideoList,
+  EffectList,
+  AnswerList,
+  SourcePsdList,
+  DesignList,
+  VideoList,
   
   Slideshow,
   SlideshowList,
@@ -236,7 +259,7 @@ const arrss: any = {
   Job,
   Resume,
   Message,
-//   MessageArticle,
+  MessageDetail,
   KnowledgeCate,
   KnowledgeList,
   KnowledgeArticle,
@@ -246,6 +269,9 @@ const arrss: any = {
   UserLoginLog,
 //   Operating,
   Space,
+  codeDefault,
+  codeCate,
+  codeList,
 //   SettingChannel,
   Vote,
   VoteList,

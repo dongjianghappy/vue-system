@@ -6,18 +6,58 @@
         <span class="pt10">
           <v-search :render="init" />
         </span>
+        <span>
+          <Popover content="<i class='iconfont icon-calendar' />" arrow="tb" offset="right" :move="-150" keys="calendar">
+            <div style="width: 350px; height: 350px;">
+              <v-calendar @changeMonth="changeMonth" @changeDay="changeDay">
+                <template v-slot:default="row">
+                  <template v-for="(item, index) in calendarData" :key="index">
+                    <div style="display: flex; flex-wrap:wrap; position: absolute; width: 100%; bottom: 0px; top: 25px; padding: 10px" v-if="item.date == `${row.item.fullYear}-${row.item.month}-${row.item.day}`">
+                      <div class="col-md-4" style="height: 32px;" v-for="(list, i) in item.list.slice(0, 5)" :key="i"><img :src="list.photos" style="border-radius: 50px; width: 32px; height: 32px;"></div>
+                      <div class="col-md-4" style=" height: 32px; line-height: 32px; display: inline-block;">
+                        <div style="background: #ddd; border-radius: 50px; width: 32px; height: 32px;" v-if="item.list.length > 5">{{item.num}}</div>
+                      </div>
+                    </div>
+                  </template>
+                </template>
+              </v-calendar>
+            </div>
+          </Popover>
+        </span>
+        <span>
+          <Popover content="<i class='iconfont icon-list' />" arrow="tb" offset="right" :move="-650" keys="cateList">
+            <div class="p15" style="width: 750px; height: 300px;">
+              <perfect-scrollbar>
+                <div class="item_t" style="min-height: 120px">
+                  <div v-for="(item, index) in cateList" :key="index">
+                    <div @click="handleCate(item.id)">{{item.name}}</div>
+                    <div id="goods-type-list" v-for="(list, i) in item.list" :key="i">
+                      <div class="left"><a @click="handleCate(list.id)">{{list.name}}</a> </div>
+                      <div class="right">
+                        <a class="" v-for="(data, j) in list.list" :key="j" @click="handleCate(data.id)">{{data.name}}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </perfect-scrollbar>
+            </div>
+          </Popover>
+        </span>
         <v-condition name="排序" icon="sort-desc" field="sorter" :enums="[{value: 'id desc', name: '递减'}, {value: 'id asc', name: '递增'}]" :render="init" />
+        <v-condition name="颜色" icon="font-colors" field="color" :enums="colorList" :render="init" v-if="channelData.module ==='picture'" />
         <v-toggledisplay v-model:toggle="toggleDisplay" />
-        <v-button @onClick="handleClick('add')" :disabled="auth.checked('add')" v-if="channelData.module !=='video'">
+        <v-button @onClick="handleClick('add')" :disabled="auth.checked('add')" v-if="channelData.module !=='video' && channelData.module !=='source' && channelData.module !=='design' && channelData.module !=='office'">
           <i class="iconfont icon-anonymous-iconfont" />新增文档
         </v-button>
-        <uploadVideo v-else />
+        <SourceDetail :coding="coding" :render="init" v-else-if="channelData.module ==='source'" />
+        <DesignDetail :coding="coding" :render="init" v-else-if="channelData.module ==='design'" />
+        <OfficeDetail :coding="coding" :render="init" v-else-if="channelData.module ==='office'" />
+        <uploadVideo :coding="coding" v-else />
       </v-space>
     </template>
     <template v-slot:content1>
       <List :type='page.value' :data="{...channelData, coding, aaa}" :render="init" v-if="toggleDisplay === 'list'" :loading="loading" :auth="auth" />
-      <Album :data="{...channelData, coding, aaa}" :render="init" v-else-if="channelData.module !=='video'" :loading="loading" :auth="auth" />
-      <Video :data="{...channelData, coding, aaa}" :render="init" v-else-if="channelData.module === 'video'" :loading="loading" :auth="auth" />
+      <Album :data="{...channelData, coding, aaa}" :render="init" v-else :loading="loading" :auth="auth" :type="channelData.module === 'video' ? 'video' : 'image'" />
     </template>
     <template v-slot:content2>
       <List2 :type='page.value' :data="{...channelData}" :render="init" :loading="loading" :auth="auth" />
@@ -47,21 +87,32 @@ import {
 import {
   visitPage
 } from '@/assets/const'
+import {
+  COLOR
+} from '@/assets/enum'
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
 import List3 from "./components/list3.vue"
 import Album from "./components/album.vue"
 import Video from "../video/index.vue"
 import uploadVideo from '../video/components/detail.vue'
+import SourceDetail from '../source/components/detail.vue'
+import DesignDetail from '../design/components/detail.vue'
+import OfficeDetail from '../office/components/detail.vue'
+import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
+    Popover,
     List,
     List2,
     List3,
     Album,
     Video,
-    uploadVideo
+    uploadVideo,
+    SourceDetail,
+    DesignDetail,
+    OfficeDetail
   },
   props: {
     type: {
@@ -97,12 +148,15 @@ export default defineComponent({
         value: "appstore2"
       }
     ])
+    const colorList = COLOR
+    const cateList: any = ref([])
 
     if (channelData.module === 'picture') {
       menu.value[0].name = "图片管理"
       toggleDisplay.value = 'album'
     } else if (channelData.module === 'video') {
       menu.value[0].name = "视频管理"
+      toggleDisplay.value = 'album'
     } else if (channelData.module === 'website') {
       menu.value[0].name = "网站管理"
       toggleDisplay.value = 'album'
@@ -125,6 +179,17 @@ export default defineComponent({
         })
       }
     })
+
+    function getCate() {
+      store.dispatch('channel/cateListAction', {
+        module: channelData.module,
+        data: {
+          coding: coding.cate
+        }
+      }).then(res => {
+        cateList.value = res.result
+      })
+    }
 
     function init(param: any) {
 
@@ -162,6 +227,21 @@ export default defineComponent({
       router.push(url)
     }
 
+    function changeDay(data: any) {
+      debugger
+      init({
+        year: data.fullYear,
+        month: data.month,
+        day: data.day
+      })
+    }
+
+    function handleCate(param: any) {
+      init({
+        fid: `|${param}|`,
+      })
+    }
+
     onMounted(() => {
       // 聚合标签
       store.dispatch('common/Fetch', {
@@ -177,11 +257,13 @@ export default defineComponent({
       init({
         page: 1
       })
+      getCate()
     })
 
     return {
       coding,
       loading,
+      colorList,
       init,
       channelData,
       page,
@@ -190,8 +272,17 @@ export default defineComponent({
       handleClick,
       aaa,
       toggleDisplay,
+      changeDay,
+      cateList,
+      handleCate,
       auth: proxy.$auth.init(`channel/${channelData.module}/art`)
     }
   }
 })
 </script>
+
+<style scoped>
+.ps {
+  height: 250px;
+}
+</style>

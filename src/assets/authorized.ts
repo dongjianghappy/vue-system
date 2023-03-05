@@ -392,6 +392,12 @@ export const channel = {
 			edit: 'b:funny:list:edit',
 			top: 'b:funny:list:top'
 		},
+		effect: {
+			add: 'b:funny:list:add',
+			del: 'b:funny:list:delete',
+			edit: 'b:funny:list:edit',
+			top: 'b:funny:list:top'
+		},
 		comment: {
 			show: 'b:funny:comment:show',
 			del: 'b:funny:comment:delete'
@@ -454,6 +460,33 @@ export const channel = {
 			del: 'b:learn:recycle:delete'
 		}
 	},		
+
+	// 课程
+	course: {
+		status: 'b:course:status',
+		display: 'b:course:display',
+		info: 'b:course:info',
+		tag: 'b:course:tag',
+		cate: {
+			add: 'b:course:cate:add',
+			del: 'b:course:cate:edit',
+			edit: 'b:course:cate:delete'
+		},
+		art: {
+			add: 'b:course:list:add',
+			del: 'b:course:list:delete',
+			edit: 'b:course:list:edit',
+			top: 'b:course:list:top'
+		},
+		comment: {
+			show: 'b:course:comment:show',
+			del: 'b:course:comment:delete'
+		},
+		recycle: {
+			reduction: 'b:course:recycle:reduction',
+			del: 'b:course:recycle:delete'
+		}
+	},	
 
 	// 问答
 	questions: {
@@ -557,6 +590,58 @@ export const channel = {
 			del: 'b:digital:recycle:delete'
 		}
 	},
+	// 设计
+	design: {
+		status: 'b:design:status',
+		display: 'b:design:display',
+		info: 'b:design:info',
+		tag: 'b:design:tag',
+		cate: {
+			add: 'b:design:cate:add',
+			del: 'b:design:cate:edit',
+			edit: 'b:design:cate:delete'
+		},
+		art: {
+			add: 'b:design:list:add',
+			del: 'b:design:list:delete',
+			edit: 'b:design:list:edit',
+			top: 'b:design:list:top'
+		},
+		comment: {
+			show: 'b:design:comment:show',
+			del: 'b:design:comment:delete'
+		},
+		recycle: {
+			reduction: 'b:design:recycle:reduction',
+			del: 'b:design:recycle:delete'
+		}
+	},
+	// 办公
+	office: {
+		status: 'b:office:status',
+		display: 'b:office:display',
+		info: 'b:office:info',
+		tag: 'b:office:tag',
+		cate: {
+			add: 'b:office:cate:add',
+			del: 'b:office:cate:edit',
+			edit: 'b:office:cate:delete'
+		},
+		art: {
+			add: 'b:office:list:add',
+			del: 'b:office:list:delete',
+			edit: 'b:office:list:edit',
+			top: 'b:office:list:top'
+		},
+		comment: {
+			show: 'b:office:comment:show',
+			del: 'b:office:comment:delete'
+		},
+		recycle: {
+			reduction: 'b:office:recycle:reduction',
+			del: 'b:office:recycle:delete'
+		}
+	},	
 }
 
 

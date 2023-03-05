@@ -350,6 +350,13 @@ export const MODUDLE = [
     type: 'plate',
     icon: 'robot',
   },
+	{
+    module: 'code',
+    value: 'code',
+    name: '代码库',
+    type: 'plate',
+    icon: 'robot',
+  },
 ]
 
 export const linkPage = [
@@ -438,3 +445,9 @@ export const PRIOVINCE = [
 	{name: "香港特别行政区", value: "810000"},
 	{name: "澳门特别行政区", value: "820000"}
 ]
+
+export const message:any = {
+	feedback: "意见反馈",
+	messageBoard: "在线留言",
+	link: "友链申请",
+}

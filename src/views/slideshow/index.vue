@@ -3,6 +3,7 @@
   <div class="module-head">
     <v-optionsbar title="幻灯片管理">
       <template v-slot:extraright>
+        <span class="mr10" @click="handleCreateJson">生产JSON</span>
         <Detail :data="{ coding }" :render="init" :auth="auth.checked('add')" />
       </template>
     </v-optionsbar>
@@ -62,12 +63,25 @@ export default defineComponent({
       router.push(`/admin/slideshow/list?name=${param.name}&fid=${param.id}`)
     }
 
+    function handleCreateJson(){
+      store.dispatch('common/Fetch', {
+        api: "createAdJson",
+        data: {
+          type: 'slideshow'
+        }
+      }).then((res: any) => {
+        
+      })
+      
+    }
+
     onMounted(init)
 
     return {
       coding,
       dataList,
       handleClick,
+      handleCreateJson,
       auth: proxy.$auth.init('slideshow/cate')
     }
   }

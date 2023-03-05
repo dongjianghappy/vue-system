@@ -1,33 +1,48 @@
 <template>
 <div class="module-wrap">
   <div class="module-head">
-    <v-optionsbar title="系统消息">
-      <template v-slot:extraright>
-        扩展值
-      </template>
+    <v-optionsbar :title="pages[currentPage]">
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
 
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table width="100%" class="table-striped table-hover col-left-2">
+      <tr>
+        <td class="col-md-1"> 选择</td>
+        <td class="col-md-7">消息标题 </td>
+        <td class="col-md-2">时间</td>
+        <td class="col-md-2">类型</td>
+      </tr>
       <tr v-for="(item, index) in dataList" :key="index">
-        <td class="col-md-1"> <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" /></td>
-        <td class="col-md-10">{{item.title}} </td>
-
-        <td class="col-md-1">已读</td>
+        <td>
+          <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
+        </td>
+        <td><span @click="handleClick(item)">{{item.title}}</span></td>
+        <td>{{item.times}}</td>
+        <td>{{messageType[item.type]}}</td>
       </tr>
     </table>
+    <v-loading :loading="loading" :dataList="dataList" />
+    <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, ...data }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="render" v-if="dataList && dataList.length > 0" :auth="auth" />
   </div>
 </div>
 </template>
 
 <script lang="ts">
 import {
+  useRoute,
+  useRouter
+} from '@/utils';
+import {
+  message,
+} from '@/assets/const'
+import {
   defineComponent,
   getCurrentInstance,
   onMounted,
   computed,
-  ref
+  ref,
+  watch
 } from 'vue'
 import {
   useStore
@@ -48,17 +63,37 @@ export default defineComponent({
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
+    const route = useRoute()
+    const router = useRouter()
     const dataList: any = ref([])
+    const messageType: any = message
+    let arr = window.location.pathname.split("/")
+    let type = arr[arr.length - 1]
+    const pages = {
+      all: "全部消息",
+      unread: "未读消息",
+      read: "已读消息"
+    }
+
+    const currentPage: any = ref("all")
+
+// // 监听路由
+    watch(route, (newValues, prevValues) => {
+      let path = route.path
+      currentPage.value = path.split("/")[4]
+    })
 
     function init() {
       store.dispatch('common/Fetch', {
+
         data: {
           coding: "Q0006",
           page: 1,
-          pagesize: 10
+          pagesize: 10,
+          status: type !== 'all' ? type === 'unread' ? "1" : "0" : ""
         }
       }).then(res => {
-        dataList.value = res.result.list
+        dataList.value = res.result.list || []
       })
     }
 
@@ -66,12 +101,19 @@ export default defineComponent({
 
     }
 
+    function handleClick(param: any) {
+      router.push(`/admin/service/message/detail?type=${type}&id=${param.id}`)
+    }
+
     onMounted(init)
 
     return {
       dataList,
-      edit
-
+      edit,
+      handleClick,
+      messageType,
+      pages,
+      currentPage
     }
   }
 })

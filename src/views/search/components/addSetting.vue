@@ -14,7 +14,7 @@
         <input type="text" v-model="detail.name" placeholder="请输入字段" class="input-sm input-full" />
       </li>
       <li class="li">
-        <span class="label">字段</span>
+        <span class="label">文本类型</span>
         <v-select :enums="textType" v-model:value="detail.text_type" :defaultValue="detail.text_type = detail.text_type ? detail.text_type : 'switch'" />
       </li>
     </ul>

@@ -15,8 +15,8 @@
       </li>
       <li class="li">
         <span class="label">展示站点</span>
-        <template v-for="(item, index) in serverName" :key="index">
-          <span v-if="checkedList.indexOf(item.value) > -1" class="mr15">{{item.name}}</span>
+        <template v-for="(item, index) in siteList" :key="index">
+          <span v-if="checkedList.indexOf(item.id) > -1" class="mr15">{{item.name}}</span>
         </template>
         <ChooseSite :data="data" :render="init" v-model:checked="checkedList" />
       </li>
@@ -36,6 +36,7 @@
       </li>
       <li class="li">
         <span class="label">来源</span>
+        {{sourceType}}
         <v-select :enums="sourceType" v-model:value="detail.source" :defaultValue="detail.source = detail.source ? detail.source : '5'" />
       </li>
       <li class="li">
@@ -45,18 +46,18 @@
       <li style="padding-left: 100px">
         <ul class="plr15" style="background: #f8f8fa;">
           <li class="li" v-if="detail.method === '1'">
-        <span class="label">出售状态</span>
-        <v-radio label="正常" name="sell" value="1" v-model:checked="detail.sell" />
-        <v-radio label="过期" name="sell" value="0" v-model:checked="detail.sell" />
-      </li>
-      <li class="li" v-if="detail.method === '1'">
-        <span class="label">出售次数</span>
-        <input v-model="detail.webmaster" type="text" placeholder="请输入出售次数" class="input-sm input-150" />
-      </li>
-      <li class="li" v-if="detail.method === '1'">
-        <span class="label">价格</span>
-        <input v-model="detail.price" type="text" placeholder="请输入价格" class="input-sm input-150" />
-      </li>
+            <span class="label">出售状态</span>
+            <v-radio label="正常" name="sell" value="1" v-model:checked="detail.sell" />
+            <v-radio label="过期" name="sell" value="0" v-model:checked="detail.sell" />
+          </li>
+          <li class="li" v-if="detail.method === '1'">
+            <span class="label">出售次数</span>
+            <input v-model="detail.webmaster" type="text" placeholder="请输入出售次数" class="input-sm input-150" />
+          </li>
+          <li class="li" v-if="detail.method === '1'">
+            <span class="label">价格</span>
+            <input v-model="detail.price" type="text" placeholder="请输入价格" class="input-sm input-150" />
+          </li>
         </ul>
       </li>
       <li class="li">
@@ -110,6 +111,12 @@ export default defineComponent({
         return 'Default function'
       }
     },
+    siteList: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },    
     auth: {
       type: Boolean,
       default: false

@@ -87,7 +87,7 @@
     </div>
     <div class="markdown" style="width: 50%; " v-show="isview">
       <perfect-scrollbar>
-        <div class="p10" v-html="marked.parse(contentsss)"></div>
+        <div class="p10" v-html="marked.parse(contentsss)" @mouseup="handleMouseup"></div>
       </perfect-scrollbar>
     </div>
   </div>
@@ -99,8 +99,9 @@ import {
   defineComponent,
   getCurrentInstance,
   ref,
-  watch
-} from 'vue'
+  watch,
+  selection
+} from '@/utils'
 import Popover from '@/components/packages/popover/index.vue';
 import SpaceModal from '../../../views/space/components/modalSpace.vue'
 import {
@@ -142,6 +143,12 @@ export default defineComponent({
         contentsss: {
           type: String,
           default: ""
+        },
+         data: {
+          type: Object,
+          default: () => {
+            return {}
+          }
         }
       },
       emits: ['update:contentsss'],
@@ -316,6 +323,10 @@ ${'```'}`
       saveSelectionText(param)
     }
 
+    function handleMouseup(e: any) {
+      selection.mouseup(e, props.data.tag)
+    }
+
     return {
       isview,
       isScreen,
@@ -325,7 +336,8 @@ ${'```'}`
       preview,
       handelClick,
       handleInput,
-      selectImage
+      selectImage,
+      handleMouseup
     }
   }
 })

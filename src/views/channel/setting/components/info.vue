@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="auth">
   <i class="iconfont icon-write"></i>
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑分类' : '新增分类' " :data="data" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑分类' : '新增分类' " :style="style" :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li clearfix">
@@ -104,6 +104,12 @@ export default defineComponent({
     Popover
   },
   props: {
+    style: {
+      type: Object,
+      default: {
+        width: '800'
+      }
+    },
     attrs: {
       type: Object,
       default: () => {

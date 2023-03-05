@@ -3,12 +3,7 @@
   <div class="col-sm-6 col-md-2 p10" v-for="(item, index) in dataList.list" :key="index">
 
     <div class="thumbnail p10 relative" style="background: rgb(255, 255, 255); overflow: hidden;">
-      <div class="cover" style="position: absolute; top: 0px; left: 0px; bottom: 0px; width: 100%; z-index: 10; display: none;">
-        <i class="iconfont icon-checkbox"><input name="checkbox" type="checkbox" value="6" style="display: none;"></i></div>
-      <a class="infos trip_arrow content_trip bg-white hide" style="position: absolute; top: 15px; right: 15px;">
-        <i class="iconfont icon-down"></i></a>
-      <img :src="item.image[0]" style="width: 100%; height: 150px;" @click="showImg(item)" class="pointer" />
-
+      <v-thumbnail :data="item" :coding="data.coding.art" :type="type" :getNeighbor="getNeighbor" />
       <div class="caption relative" style="padding: 10px 0px; height: 40px;">
         <span class="inputline updata nowrap" style="border: 0px dashed rgb(204, 204, 204); width: 100%; background: none; display: block !important;">{{item.title}}{{item.parent ? `(${item.parent})` : ""}} <i class="iconfont icon-top cl-red" v-if="item.istop === '1'" /></span>
       </div>
@@ -18,7 +13,8 @@
           <Popover content="操作" arrow="tb" offset="right" :move="-30" :keys="`static_${index}`">
             <ul class="font14 p15" style="display: block">
               <li>
-                <v-button @onClick="handleClick(item)" :disabled="true">
+                <uploadVideo action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" v-if="type === 'video'" />
+                <v-button @onClick="handleClick(item)" :disabled="true" v-else>
                   编辑
                 </v-button>
               </li>
@@ -30,9 +26,6 @@
               </li>
             </ul>
           </Popover>
-          <!-- <v-button @onClick="handleClick(item)" :disabled="true">
-          编辑
-        </v-button> -->
         </span>
       </div>
     </div>
@@ -40,10 +33,10 @@
 
 </div>
 <v-nodata :data="dataList.list || []" />
-<v-loading :loading="loading" :dataList="dataList.list" />
+<v-loading :loading="loading" :dataList="dataList.list || []" />
 <v-buttongroup disabled="false" :data="{id: checkedList, coding: data.coding.art }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="render" />
 
-<v-layer v-model:isShow="showFlag" :data="currentData" :img="currentImg" v-if="showFlag" type="album" />
+<v-layer v-model:isShow="showFlag" :data="currentData" :index="index" :dataList="dataList.list" @prevOrNext="prevOrNext" :img="currentImg" v-if="showFlag" type="album" />
 </template>
 
 <script lang="ts">
@@ -61,11 +54,16 @@ import {
 } from 'vuex'
 import Popover from '@/components/packages/popover/index.vue';
 import Video from '@/components/packages/play/videos.vue'
+import uploadVideo from '../../video/components/detail.vue'
+import {
+  setDevtoolsHook
+} from '@vue/runtime-core';
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
     Popover,
-    Video
+    Video,
+    uploadVideo,
   },
   props: {
     data: {
@@ -73,6 +71,10 @@ export default defineComponent({
       default: () => {
         return {}
       }
+    },
+    type: {
+      type: String,
+      default: "image"
     },
     isPersonal: {
       type: Boolean,
@@ -91,18 +93,33 @@ export default defineComponent({
     const coding: any = channels().coding.art;
     const checkedList: any = ref([])
     const showFlag = ref(false)
-    const currentData = ref({})
-    const currentImg = ref()
+    const index: any = ref(0)
+    const currentData: any = ref({})
+    const currentImg: any = ref()
 
-    const dataList = computed(() => {
+    const dataList: any = computed(() => {
       return store.getters[`channel/${props.data.module}`]['articleList']
     });
 
-    function showImg(param: any) {
+    function showImg(param: any, i: any) {
+      index.value = i
       currentData.value = param
       debugger
       currentImg.value = param.image[0]
       showFlag.value = !showFlag.value
+    }
+
+    function prevOrNext(param: any) {
+
+      let i = dataList.value.list.findIndex((item: any) => item.id === currentData.value.id)
+      if (param === 'prev') {
+        index.value = i - 1
+        currentData.value = dataList.value.list[i - 1]
+      } else {
+        index.value = i + 1
+        currentData.value = dataList.value.list[i + 1]
+      }
+      currentImg.value = currentData.value.image[0]
     }
 
     function handleClick(params: any) {
@@ -114,15 +131,32 @@ export default defineComponent({
       router.push(url)
     }
 
+    function getNeighbor() {
+      
+      store.dispatch('common/Fetch', {
+        api: "getNeighbor",
+        data: {
+          coding: coding,
+          id: props.data.id
+        }
+      }).then(res => {
+        debugger
+        // detail.value = res.result
+      })
+    }
+
     return {
       coding,
       checkedList,
       dataList,
       showFlag,
+      index,
       currentImg,
       currentData,
       showImg,
-      handleClick
+      handleClick,
+      prevOrNext,
+      getNeighbor
     }
   }
 })

@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="ablumimg p15">
-    <ul>
+    <ul v-if="file === 'image'">
       <li v-for="(item, index) in imgList" :key="index" style="width: 100px; height: 100px;" draggable="true" @dragend="handleDragEnd($event, item)" @dragstart="handleDragStart($event, item)" @dragenter="handleDragEnter($event, item)" @dragover.prevent="handleDragOver($event, item)">
         <img draggable="true" :src="item.src" v-if="item.status ==='complete'" />
         <div class="load1" v-else>
@@ -11,7 +11,20 @@
       </li>
       <li class="upfile" style="width: 100px; height: 100px;" @click="handleclick"><i class="iconfont icon-add"></i></li>
     </ul>
-  </div> <input type="file" id="filElem" accept=".jpg, .jpeg, .bmp, .gif, .png, .heif, .heic" multiple="multiple" class="FileUpload_file_27ilM" style="display: none" @change="getFile">
+    <div style="display: inline-block" v-else-if="file === 'music'">
+      <div style="display: inline-block; border-radius: 60px;
+    background: #f8f8fa; width: 80px; height: 80px;  line-height: 85px;"><i class="iconfont icon-upload-file font32" /></div>
+      <div>拖拽音频到此处或点击上传</div>
+      <button class="btn btn-default w-full" @click="handleclick">上传音频</button>
+    </div>
+    <div style="display: inline-block" v-else>
+      <div style="display: inline-block; border-radius: 60px;
+    background: #f8f8fa; width: 80px; height: 80px;  line-height: 85px;"><i class="iconfont icon-upload-file font32" /></div>
+      <div>拖拽视频到此处或点击上传</div>
+      <button class="btn btn-default w-full" @click="handleclick">上传视频</button>
+    </div>
+
+  </div> <input type="file" id="filElem" :accept="format" multiple="multiple" class="FileUpload_file_27ilM" style="display: none" @change="getFile">
 </div>
 </template>
 
@@ -27,9 +40,17 @@ import {
 export default defineComponent({
   name: 'v-Upload',
   props: {
+    file: {
+      type: String,
+      default: 'image'
+    },
     uploadtype: {
       type: String,
       default: 'weibo'
+    },
+    format: {
+      type: String,
+      default: '.jpg, .jpeg, .bmp, .gif, .png, .heif, .heic, .mp4, .mp3'
     },
     data: {
       type: Object,
@@ -38,7 +59,7 @@ export default defineComponent({
       }
     },
   },
-  emits: ['imgList'],
+  emits: ['imgList', 'update:haschoose', 'update:file'],
 
   setup(props, context) {
     const store = useStore();
@@ -49,7 +70,7 @@ export default defineComponent({
 
     function getFile() {
       let _obj: any = document.getElementById(filElem.value);
-
+      context.emit('update:haschoose', _obj.files)
       for (let i = 0; i < _obj.files.length; i++) {
         imgList.value.push({
           src: _obj.files[i].name,
@@ -58,12 +79,36 @@ export default defineComponent({
 
         let fd = new FormData()
         fd.append('upload' + i, _obj.files[i])
-
+        debugger
         store.dispatch('common/uploadImg', {
           uploadtype: props.uploadtype,
           dir: props.data.dir,
           upload: true,
           data: fd,
+          progress: (e: any) => {
+            debugger
+            let url = URL.createObjectURL(_obj.files[i])
+            let element = new Audio(url)
+            // element.id="id_123123123"
+            let format = _obj.files[i].name.split('.')[1]
+            element.addEventListener('loadedmetadata', () => {
+              // time = Math.round(element.duration * 100) / 100
+              
+              context.emit('update:file', {
+              name: _obj.files[i].name,
+              fileUrl: url,
+              cover: "",
+              format: format, // 格式
+              duration: element.duration,
+              progresstotal: e.total,
+              bar: (e.loaded * 100) / e.total,
+              size: `${(e.total / 1024 / 1024).toFixed(3)}MB`,
+              loaded: `${(e.loaded / 1024 / 1024).toFixed(3)}MB`
+            })
+            })
+
+            
+          }
         }).then(res => {
           let aaa: any = imgList.value.filter((item: any) => item.status === "upload")
           aaa[0].status = "complete"

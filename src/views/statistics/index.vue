@@ -130,8 +130,8 @@ export default defineComponent({
           series: [
             [...(aaa.value && aaa.value.today_online) || []],
             [...(aaa.value && aaa.value.today_visit) || []],
-            [...(aaa.value && aaa.value.yestday_online) || []],
-            [...(aaa.value && aaa.value.yestday_visit) || []]
+            // [...(aaa.value && aaa.value.yestday_online) || []],
+            // [...(aaa.value && aaa.value.yestday_visit) || []]
           ]
           // "series": [
           //   [0, 23, 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0],
@@ -141,7 +141,8 @@ export default defineComponent({
           // ]
         },
         options: {
-          title: ["今日浏览量", "今日在线", "昨日浏览量", "昨日在线"],
+          // title: ["今日浏览量", "今日在线", "昨日浏览量", "昨日在线"],
+          title: ["今日浏览量", "昨日浏览量"],
           height: 400
         }
       }
@@ -150,15 +151,15 @@ export default defineComponent({
 
     // 搜索引擎
     const engine: any = computed(() => {
-      let aaa = store.getters['basic/defaultStatistics'].week || {}
+      let aaa = store.getters['basic/defaultStatistics'].engine || {}
       return {
         data: {
-          labels: ['Bananas', 'Apples', 'Grapes'],
-          series: [20, 15, 40]
+          labels: aaa.labels, //['谷歌', '百度', '搜狗', "360", "必应", "头条"],
+          series: aaa.series // [20, 15, 40, 12, 232, 32]
         },
         options: {
           background: "#5ab25e",
-          title: ["搜索占比"],
+          title: ["今日搜索"],
           height: 200
         }
       }

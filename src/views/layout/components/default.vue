@@ -56,15 +56,16 @@
       <div class="module-head">
         今日与昨日访问量
       </div>
-      <div class="module-content  plr15" style="height: 485px">
+      <div class="module-content  plr15" style="height: 545px">
         <ChartLine :chartData="hours.data" :chartOptions="hours.options" />
       </div>
     </div>
   </div>
   <div class="col-md-3" style="padding-left: 8px;">
     <div class="module-wrap">
-      <div class="module-content p0" style="height: 260px">
-        <ChartLine :chartData="visit.data" :chartOptions="visit.options" />
+      <div class="module-content plr15" style="height: 320px">
+        <ChartPie :chartData="engine.data" :chartOptions="engine.options" />
+        <!-- <ChartLine :chartData="visit.data" :chartOptions="visit.options" /> -->
       </div>
     </div>
     <div class="module-wrap">
@@ -116,12 +117,14 @@ import {
   useStore
 } from '@/utils'
 import {
-  ChartLine
+  ChartLine,
+  ChartPie
 } from '@/components/packages/chart/index'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    ChartLine
+    ChartLine,
+    ChartPie
   },
   props: {
     style: {
@@ -151,8 +154,8 @@ export default defineComponent({
           series: [
             [...(aaa.value && aaa.value.today_online) || []],
             [...(aaa.value && aaa.value.today_visit) || []],
-            [...(aaa.value && aaa.value.yestday_online) || []],
-            [...(aaa.value && aaa.value.yestday_visit) || []]
+            // [...(aaa.value && aaa.value.yestday_online) || []],
+            // [...(aaa.value && aaa.value.yestday_visit) || []]
           ]
           // "series": [
           //   [0, 23, 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0],
@@ -162,7 +165,8 @@ export default defineComponent({
           // ]
         },
         options: {
-          title: ["今日浏览量", "今日在线", "昨日浏览量", "昨日在线"],
+          // title: ["今日浏览量", "今日在线", "昨日浏览量", "昨日在线"],
+          title: ["今日浏览量", "昨日浏览量"],
           height: 400
         }
       }
@@ -186,6 +190,22 @@ export default defineComponent({
         }
       }
     });
+
+    // 搜索引擎
+    const engine: any = computed(() => {
+      let aaa = store.getters['basic/default'].engine || {}
+      return {
+        data: {
+          labels: aaa.labels, //['谷歌', '百度', '搜狗', "360", "必应", "头条"],
+          series: aaa.series // [20, 15, 40, 12, 232, 32]
+        },
+        options: {
+          background: "#5ab25e",
+          title: ["今日搜索"],
+          height: 200
+        }
+      }
+    });    
 
     const register: any = computed(() => {
       let aaa = store.getters['basic/default'].week || {}
@@ -226,6 +246,7 @@ export default defineComponent({
       // order,
       hours,
       visit,
+      engine,
       register,
       tech,
       article,

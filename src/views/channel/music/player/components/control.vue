@@ -3,7 +3,7 @@
        :style="{left: style}">
     <div class="music_box">
       <audio autoplay
-             :src="`http://localhost/source/public/music/${data.song_name}.${data.format}`"
+             :src="data.file"
              loop="loop"
              preload="preload"
              style="display:none;"></audio>

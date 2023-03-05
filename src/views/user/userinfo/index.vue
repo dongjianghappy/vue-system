@@ -72,7 +72,7 @@ export default defineComponent({
       store.dispatch('user/userListAction', {
         tabsIndex: tabsIndex.value === '1' ? 1 : 0,
         data: {
-          role: tabsIndex.value,
+          admin: tabsIndex.value,
           ...sssss
         }
       })

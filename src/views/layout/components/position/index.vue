@@ -10,8 +10,10 @@
       <v-drawershow name='<i class="iconfont icon-app pointer"></i>' title="频道" icon="add" type="text" :style="{width: '800'}" :data="1" initialValues="initialValues" :renderList="getData">
         <template v-slot:content>
           <ul class="channel-boxs">
-            <li style=" margin-bottom: 10px; width: 187px; float: left; padding-right: 8px;" v-for="(item, index) in channel" :key="index" draggable="true" @click="handleRouter(item.module)" @dragend="handleDragEnd($event, item)" @dragstart="handleDragStart($event, item)" @dragenter="handleDragEnter($event, item)" @dragover.prevent="handleDragOver($event, item)">
-              <v-statisticcard :data="item" className="channel-bg" />
+            <li class="col-md-3 p5" v-for="(item, index) in channel" :key="index" draggable="true" @mouseover="hover(item)" @mouseleave="leave(item)" @click="handleRouter(item.module)" @dragend="handleDragEnd($event, item)" @dragstart="handleDragStart($event, item)" @dragenter="handleDragEnter($event, item)" @dragover.prevent="handleDragOver($event, item)">
+              <div class="channel-list p25" :class="{isopen: item.status === '1'}"  style="box-shadow: 0 1px 3px rgb(27 95 160 / 10%) !important;">
+              <v-chanelcard :data="{item, name: item.name, coding: 'O0000'}" className="channel-bg" />
+              </div>
             </li>
           </ul>
         </template>
@@ -78,12 +80,22 @@ export default defineComponent({
       })
     }
 
+        function hover(item: any) {
+      item.hover = true
+    }
+
+    function leave(item: any) {
+      item.hover = false
+    }
+
     return {
       module,
       channel,
       setting,
       handleRouter,
       handleRouterss,
+      hover,
+      leave,
     }
   }
 })
@@ -100,4 +112,5 @@ export default defineComponent({
     background: #fff;
   }
 }
+
 </style>

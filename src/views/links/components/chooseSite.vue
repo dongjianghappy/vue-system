@@ -1,23 +1,27 @@
 <template>
-<v-button v-model:show="isShow">
-  选择站点
-</v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑友情链接' : '新增标签' " :style="{width: 350}" :hasfooter="false">
+<span @click="handleChoose" class="pointer">
+  {{title}}
+</span>
+<v-drawer ref="drawer" v-model:show="isShow" action="add" :title="title" :style="{width: 350}" :hasfooter="false">
   <template v-slot:content v-if="isShow">
-
     <table width="100%" class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1"> 选择</td>
         <td class="col-md-2">网站名称 </td>
       </tr>
-      <tr v-for="(item, index) in serverName" :key="index">
-        <td>
-          <v-checkbox :checkedList="checked" :data="{ id: item.value}" />
-        </td>
-        <td>
-          {{item.name}}
-        </td>
-      </tr>
+      <template v-if="dataList.length > 0">
+        <tr v-for="(item, index) in dataList" :key="index">
+          <td>
+            <label class="relative mr25" style="display: inline-block; line-height: 18px;" v-if="type === 'radio'">
+              <input type="radio" name="website" :value="item.id" :checked="checked.id === item.id" class="mr5" style="float: left" @change="handleclick(item.id)" />
+            </label>
+            <v-checkbox :checkedList="checked" :data="{ id: item.id}" v-else />
+          </td>
+          <td>
+            {{item.name}}
+          </td>
+        </tr>
+      </template>
     </table>
   </template>
 </v-drawer>
@@ -28,21 +32,29 @@ import {
   defineComponent,
   getCurrentInstance,
   ref,
-  watch
+  useStore,
+  onMounted
 } from '@/utils'
-import {
-  SERVER_NAME
-} from '@/assets/enum'
 import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
-  name: 'v-Search',
+  name: 'v-ChooseSite',
   components: {
     Popover
   },
   props: {
-    action: {
+    title: {
       type: String,
-      default: "add"
+      default: "请选择"
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    data: {
+      type: Object,
+      default: () => {
+        return {}
+      }
     },
     checked: {
       type: Object,
@@ -50,35 +62,73 @@ export default defineComponent({
         return {}
       }
     },
+    type: {
+      type: String,
+      default: "checkbox"
+    },
+    message: {
+      type: String,
+      default: ""
+    },
     render: {
       type: Function,
       default: () => {
         return 'Default function'
       }
     }
-
   },
+  emits: ['update:checked', 'onClick'],
   setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
+    const store = useStore()
     const isShow: any = ref(false)
-    const detail: any = ref({})
     const drawer: any = ref(null)
-    const serverName: any = SERVER_NAME
+    const dataList: any = ref([])
 
-    // 监听
-    watch([isShow], async (newValues, prevValues) => {
-      if (isShow.value) {
-        detail.value = await drawer.value.init()
+    //初始页面
+    function init() {
+      store.dispatch('common/Fetch', {
+        api: "siteList"
+      }).then(res => {
+        dataList.value = res.result
+        if(props.type === 'checkbox'){
+
+        }else{
+          let arr = dataList.value.filter((item: any) => item.id === props.data.id)
+          if (arr) {
+            context.emit(`update:checked`, arr[0] || {})
+          }
+        }
+      })
+    }
+
+    function handleChoose() {
+      if (props.disabled) {
+        proxy.$hlj.message({
+          msg: props.message
+        })
+        return false
       }
-    })
+      isShow.value = true
+    }
 
+    function handleclick(value: any) {
+      let arr = dataList.value.filter((item: any) => item.id === value)
+      if (arr) {
+        context.emit('onClick', true)
+        context.emit(`update:checked`, arr[0] || {})
+      }
+    }
+
+    onMounted(init)
     return {
       isShow,
-      detail,
       drawer,
-      serverName,
+      handleclick,
+      handleChoose,
+      dataList,
     }
   }
 })

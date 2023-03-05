@@ -13,17 +13,17 @@
       <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
     </td>
     <td>
-      <span>{{item.title}}</span>
+      <span @click="showImg(item)">{{item.title}}</span>
       <span v-if="item.summary !== ''">
         <i class="infos demoimg iconfont icon-article"></i>
       </span>
-      <span class="relative" v-if="item.image.length">
+      <!-- <span class="relative" v-if="item.image.length">
         <Popover content="<i class='iconfont icon-img'></i>" arrow="lr" offset="right" :move="-70" :keys="`popover-img$-${index}`" type="hover">
           <div class="p10 w250">
             <img :src="item.cover" style="width: 100%" />
           </div>
         </Popover>
-      </span>
+      </span> -->
       <span class="relative" v-if="item.flags.length > 0">
         <Popover content="<i class='iconfont icon-tags'></i>" arrow="tb" offset="right" :move="0" :keys="`popover-img$-${index}`" type="hover">
           <div class="w250">
@@ -43,14 +43,18 @@
     </td>
     <td>
       <v-space class="relative">
-        <v-button @onClick="handleClick(item)" :disabled="auth.checked('edit')">
+        <SourceDetail action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" :auth="auth.checked('edit')" v-if="data.module === 'source'" />
+        <DesignDetail action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'design'" />
+        <OfficeDetail action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'office'" />
+        <v-button @click="handleClick(item)" :disabled="auth.checked('edit')" v-else >
           编辑
         </v-button>
+        
         <span>
           <v-confirm name="删除" :data="{id: item.id, coding: data.coding.art, operating: 'remove' }" type="text" api="removeAndRestore" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
         </span>
-        <Popover content="更多" arrow="tb" offset="right" :move="-700" :keys="`static_${index}`">
-          <div class="font14" style="width: 700px;">
+        <Popover content="更多" arrow="tb" offset="right" :move="-650" :keys="`static_${index}`">
+          <div class="p15 font14" style="width: 700px;">
             <table width="100%" class="table-striped table-hover">
               <tr>
                 <td class="col-md-1">ID</td>
@@ -78,7 +82,14 @@
                 </td>
               </tr>
             </table>
+            
             <div class="p10" style="background: rgb(250, 250, 250);">
+              <p class="mb5"><span @click="handleView(item)" class="pointer"><i class="iconfont icon-chart" /></span></p>
+              <p class="mb5">颜色: 
+                <span v-for="(color, i) in item.color" :key="i" class="mr15">
+        <i class="block" :class="`bg-${color}`" style=" display: inline-block; border-radius: 2px; width: 12px; height: 12px;"></i>
+      </span>
+              </p>
               <p class="mb5">聚合标签:
                 <v-checkboxgroup :tagList="data.aaa" :checked="item.flags" />
               </p>
@@ -93,9 +104,10 @@
     </td>
   </tr>
 </table>
-<v-loading :loading="loading" :dataList="dataList.list" />
+<!-- <v-loading :loading="loading" :dataList="dataList.list || []" /> -->
 <v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding: data.coding.art }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="render" :auth="auth" />
-
+<v-articlepreview v-model:isShow="showFlag" :data="{...currentData, coding: data.coding.art}" :render="render" :img="currentImg" v-if="showFlag" type="album" />
+<Graph v-model:show="showGraph" :data="{coding: data.coding.art, detailApi: 'detail', updateApi: 'updateRobot', ...showGraph.data}" v-if="showGraph.view" />
 </template>
 
 <script lang="ts">
@@ -111,10 +123,19 @@ import {
   jsonParse
 } from '@/utils'
 import Popover from '@/components/packages/popover/index.vue';
+import Graph from '../../../robot/graph/index.vue'
+import SourceDetail from '../../source/components/detail.vue'
+import DesignDetail from '../../design/components/detail.vue'
+import OfficeDetail from '../../office/components/detail.vue'
+
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Popover
+    Popover,
+    Graph,
+    SourceDetail,
+    DesignDetail,
+    OfficeDetail
   },
   props: {
     data: {
@@ -144,7 +165,7 @@ export default defineComponent({
       }
     },
   },
-  emits: ['onClick'],
+  emits: ['update:graph'],
   setup(props, context) {
     const {
       ctx,
@@ -154,7 +175,12 @@ export default defineComponent({
     const route = useRoute();
     const router: any = useRouter();
     const checkedList: any = ref([])
-
+    const showFlag = ref(false)
+    const currentData = ref({})
+    const showGraph = ref({
+      view: false,
+      data: {}
+    })
     const dataList = computed(() => {
       return store.getters[`channel/${props.data.module}`]['articleList']
     });
@@ -183,12 +209,30 @@ export default defineComponent({
       })
     }
 
+    function showImg(param: any) {
+      currentData.value = param
+      showFlag.value = !showFlag.value
+    }
+
+    function handleView(param: any) {
+     
+      showGraph.value =  {
+        view: true,
+        data: param
+      }
+    }
+
     return {
       handleClick,
       checkedList,
       jsonParse,
       dataList,
-      handleUpdate
+      handleUpdate,
+      currentData,
+      showImg,
+      showFlag,
+      showGraph,
+      handleView
     }
   }
 })

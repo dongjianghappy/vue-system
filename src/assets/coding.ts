@@ -1,3 +1,5 @@
+import { channel } from "./authorized";
+
 const codings: any = {
   article: {
     name: "article",
@@ -50,6 +52,16 @@ const codings: any = {
     info: "A40001",
     cate: "A40002",
     comment: "A40003",
+  },
+  course: {
+    name: "course",
+    art: "K10000",
+    info: "K10001",
+    cate: "K10002",
+    comment: "K10003",
+    praise: "K10004",
+    collect: "K10005",
+    effect: "K10006",
   },
   funny: {
     name: "funny",
@@ -142,6 +154,24 @@ const codings: any = {
     praise: "A120004",
     collect: "A120005",
   },
+  design: {
+    name: "design",
+    art: "C10000",
+    info: "C10001",
+    cate: "C10002",
+    comment: "C10003",
+    praise: "C10004",
+    collect: "C10005",
+  },
+  office: {
+    name: "office",
+    art: "C20000",
+    info: "C20001",
+    cate: "C20002",
+    comment: "C20003",
+    praise: "C20004",
+    collect: "C20005",
+  },
   navigation: {
     main: "P0001",
     single: "P0002",
@@ -171,11 +201,17 @@ const codings: any = {
   appstore: "P0010",
   spread: "P0006",
   advertisement: "P0008",
+  advertisement_position: "P0009",
   label: "O0002",
   log: {
     manager: "U0006",
     user: "U0005",
     operating: "O0014",
+  },
+  siteManage: {
+    site: "Q0018",
+    channel: "Q0019",
+    page: "Q0020"
   },
   mysql: "",
   customize: "P0011",

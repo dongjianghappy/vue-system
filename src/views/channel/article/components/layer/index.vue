@@ -1,6 +1,6 @@
 <template>
-<div>
-  <div class="con-list relative">
+<div class="relative">
+  <div class="con-list">
     <div class="con-wrap">
       <div class="photos">
         <a href="/{$sm_talklist[l].uid}/home" target="_blank">
@@ -38,7 +38,7 @@
         <!--原文渲染-->
       </div>
     </div>
-    <TalkItembar :data="data" />    
+       
   </div>
 
 </div>
