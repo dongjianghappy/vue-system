@@ -5,7 +5,7 @@ import { onMounted } from '@vue/runtime-core';
 import codings from "@/assets/coding"
 import authorized from "@/assets/authorized"
 import selection from "./selection"
-import { getUid, chooseCate, checkButtonAuth, channels, channelssss, getQuery, jsonParse, durationTrans } from './auth'
+import { getUid, chooseCate, checkButtonAuth, channels, channelssss, getQuery, jsonParse, durationTrans, getParent, showParent } from './auth'
 
 export {
   defineComponent,
@@ -29,5 +29,7 @@ export {
   channelssss,
   getQuery,
   jsonParse,
-  durationTrans
+  durationTrans,
+  getParent,
+  showParent
 };

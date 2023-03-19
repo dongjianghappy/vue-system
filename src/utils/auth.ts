@@ -136,3 +136,12 @@ export const  durationTrans = (duration: any) => {
   b+=m+":"+s
   return b;
 }
+
+export const getParent = (current: any, value: any) => {
+  let index = current.findIndex((item: any) => item.value === value)
+  return index > -1 ? true : false
+}
+export const showParent = (current: any) => {
+ 
+  return current
+}

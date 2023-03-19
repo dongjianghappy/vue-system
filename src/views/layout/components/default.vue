@@ -76,7 +76,7 @@
   </div>
 </div>
 <div class="mb10" style="overflow: auto;">
-  <div class="col-md-6" style=" padding-right: 8px;">
+  <div class="col-md-5" style=" padding-right: 8px;">
     <div class="module-wrap">
       <div class="module-head">
         网页素材
@@ -90,7 +90,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6" style="padding-left: 8px;">
+  <div class="col-md-4" style="padding-left: 8px;">
     <div class="module-wrap">
       <div class="module-head">
         IT技术
@@ -104,6 +104,22 @@
       </div>
     </div>
   </div>
+  <div class="col-md-3" style="padding-left: 8px;">
+      <div class="module-wrap m0">
+        <div class="module-head">关键词</div>
+        <div class="module-content p0" style="height: 320px">
+          <ul>
+            <li class="item-thum-wrap mb10" v-for="(item, index) in wordList" :key="index">
+              <div class="item-title relative">
+                <i class="iconfont icon-dot m0" />
+                {{item.word}}
+              </div>
+            </li>
+          </ul>
+          <!-- <ChartLine :chartData="register.data" :chartOptions="register.options" /> -->
+        </div>
+      </div>
+    </div>
 </div>
 </template>
 
@@ -227,6 +243,7 @@ export default defineComponent({
 
     const tech: any = computed(() => store.getters['basic/default'].tech || []);
     const article: any = computed(() => store.getters['basic/default'].article || []);
+    const wordList: any = computed(() => store.getters['basic/default'].wordList || []);
     // const order: any = computed(() => store.getters['basic/default'].order);
     // 初始化
     function init() {
@@ -250,6 +267,7 @@ export default defineComponent({
       register,
       tech,
       article,
+      wordList,
       handleclick
     }
   }

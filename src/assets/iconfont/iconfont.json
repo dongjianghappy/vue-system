@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11938722",
+      "name": "打勾",
+      "font_class": "dagou",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "26815648",
+      "name": "PSD",
+      "font_class": "PSD",
+      "unicode": "e6e2",
+      "unicode_decimal": 59106
+    },
+    {
       "icon_id": "2796042",
       "name": "audio",
       "font_class": "audio",

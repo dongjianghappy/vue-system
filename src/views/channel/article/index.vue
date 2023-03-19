@@ -44,7 +44,22 @@
           </Popover>
         </span>
         <v-condition name="排序" icon="sort-desc" field="sorter" :enums="[{value: 'id desc', name: '递减'}, {value: 'id asc', name: '递增'}]" :render="init" />
-        <v-condition name="颜色" icon="font-colors" field="color" :enums="colorList" :render="init" v-if="channelData.module ==='picture'" />
+        <Popover content="<i class='iconfont icon-font-colors' />" arrow="tb" offset="right" :move="-250" keys="calendar">
+          <div class="color-list color-wrap" style="width: 300px; height: 150px;">
+            <a class="col-md-3 color p5" @click="handleColor()">
+              <div class="cl">
+                <i class="size-32-24 all" style="border: 1px solid #eee;"></i>所有
+              </div>
+            </a>
+            <a class="col-md-3 color p5" @click="handleColor(item.value)" v-for="(item, index) in colorList" :key="index">
+              <div class="cl">
+                
+                <i class="size-32-24" :class="item.value" style="border: 1px solid #eee;"></i>{{item.name}}
+              </div>
+            </a>
+          </div>
+        </Popover>
+        <!-- <v-condition name="颜色" icon="font-colors" field="color" :enums="colorList" :render="init" v-if="channelData.module ==='picture'" /> -->
         <v-toggledisplay v-model:toggle="toggleDisplay" />
         <v-button @onClick="handleClick('add')" :disabled="auth.checked('add')" v-if="channelData.module !=='video' && channelData.module !=='source' && channelData.module !=='design' && channelData.module !=='office'">
           <i class="iconfont icon-anonymous-iconfont" />新增文档
@@ -227,6 +242,12 @@ export default defineComponent({
       router.push(url)
     }
 
+    function handleColor(param: any) {
+      init({
+        color: param
+      })
+    }
+
     function changeDay(data: any) {
       debugger
       init({
@@ -275,6 +296,7 @@ export default defineComponent({
       changeDay,
       cateList,
       handleCate,
+      handleColor,
       auth: proxy.$auth.init(`channel/${channelData.module}/art`)
     }
   }

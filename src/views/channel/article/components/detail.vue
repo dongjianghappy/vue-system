@@ -89,7 +89,7 @@
             </div>
             <div>
               {{detail.parent}}
-              <v-category name="选择分类" :data="{item: detail, coding: channelData.coding}" type="text"></v-category>
+              <v-category name="选择分类" :data="{item: detail, coding: channelData.coding}" :isMore="true" type="text"></v-category>
             </div>
           </li>
 

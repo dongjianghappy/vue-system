@@ -19,8 +19,9 @@
       <ul style="display: flex; line-height: 64px;">
         <li style="flex: 1">
           <Popover :content="userInfo.nickname" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`">
-            <ul class="font14 cl-333" style="display: block">
-              <li style="height: 32px" @click="handleSelectServer(`/admin/collection/list?fid=${item.id}&name=${item.name}`)">个人中心</li>
+            <ul class="font14 cl-333 p15" style="display: block">
+              <li style="height: 32px">
+              <a :href="`http://www.dongblog.com/u/${userInfo.account}?token=${token}`" target="_brank" >个人中心</a></li>
               <li @click="routing('signOut')">退出</li>
             </ul>
           </Popover>
@@ -90,6 +91,7 @@ export default defineComponent({
     const route = useRoute();
     const loginuser = computed(() => store.getters['user/loginuser']);
     const userInfo = computed(() => store.getters['user/userInfo']);
+    const token = computed(() => store.getters['user/token']);
     const setting: any = computed(() => store.getters['user/setting']);
     const menu: any = basicInfo;
     const isInit: any = ref(true)
@@ -229,6 +231,7 @@ export default defineComponent({
     return {
       loginuser,
       userInfo,
+      token,
       channelData,
       menu,
       messge,

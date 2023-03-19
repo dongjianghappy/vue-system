@@ -624,7 +624,7 @@ close (params: any) {
     return http.request('vue', 'updateAdPosition', 'post', params)
   }, 
 
-  // 将广告生产json文件
+  // 将广告生成json文件
   createAdJson(params: any) {
     return http.request('vue', 'createAdJson', 'post', params)
   }, 
@@ -656,6 +656,11 @@ close (params: any) {
   // 频道标签查询
   channelTag (params: any) {
     return http.request('vue', 'channelTag', 'post', params)
+  }, 
+
+  // 选择主题
+  chooseStyle (params: any) {
+    return http.request('vue', 'chooseStyle', 'post', params)
   }, 
 }
 

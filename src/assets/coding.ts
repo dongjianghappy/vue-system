@@ -192,6 +192,12 @@ const codings: any = {
     job: "Q0012",
     resume: "Q0013",
   },
+  theme: "",
+  effects: "",
+  style: {
+    theme: "T0002",
+    effects: "T0003"
+  },
   link: "P0003",
   partner: "P0005",
   announcement: "Q0011",

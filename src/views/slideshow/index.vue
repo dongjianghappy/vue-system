@@ -3,7 +3,7 @@
   <div class="module-head">
     <v-optionsbar title="幻灯片管理">
       <template v-slot:extraright>
-        <span class="mr10" @click="handleCreateJson">生产JSON</span>
+        <span class="mr10" @click="handleCreateJson">生成JSON</span>
         <Detail :data="{ coding }" :render="init" :auth="auth.checked('add')" />
       </template>
     </v-optionsbar>

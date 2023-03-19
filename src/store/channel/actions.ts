@@ -41,7 +41,7 @@ const actions = {
 
   musicListAction: async (context: { commit: Commit; state: any}, params: any = {}) => {
     const data = params.data || {}
-    const { result }:any = await api.musicList({
+    const { result }:any = await api.articleList({
       ...data
     })
 

@@ -41,6 +41,7 @@ import DesignList from '../views/channel/design/index.vue'
 // // 基本组件
 import Default from '../views/layout/components/default.vue'
 import Basic from '../views/basic/index.vue'
+import Theme from '../views/theme/index.vue'
 import Site from '../views/basic/site/index.vue'
 import SiteChannel from '../views/basic/site/channel/index.vue'
 import Navigation from '../views/navigation/index.vue'
@@ -167,6 +168,7 @@ import TalkPraise from '../views/talk/praise/index.vue'
 const arrss: any = {
   Default,
   Basic,
+  Theme,
   Site,
   SiteChannel,
     Navigation,

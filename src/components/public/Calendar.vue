@@ -37,13 +37,12 @@
 
   <div class="cal_month">
     <div class="cal_m_weeks">
-      <span v-for="w in weeks" :key="w" class="cal_m_day_cell cal_m_day_week">{{w}}</span>
+      <span v-for="w in weeks" :key="w" class="cal_m_day_cell cal_m_day_week" style="height: 40px">{{w}}</span>
     </div>
-
     <div class="cal_m_days">
       <div v-for="(ds, index) in monthData" :key="index" class="cal_m_day_line">
-        <div v-for="d in ds" :key="d.day" class="cal_m_day_cell" :style="{color: getCellColor(d)}" @mouseenter="mouseenter(d, $event)" @mouseleave="mouseleave(d, $event)" @click="handleClick(d, $event)">
-          {{ d.day }}日
+        <div v-for="d in ds" :key="d.day" class="cal_m_day_cell" :style="{height: height, color: getCellColor(d)}" @mouseenter="mouseenter(d, $event)" @mouseleave="mouseleave(d, $event)" @click="handleClick(d, $event)">
+          {{ d.day }}
           <slot :item="d" :index="index" :another-attribute="anotherAttribute"></slot>
         </div>
       </div>
@@ -81,6 +80,10 @@ export default defineComponent({
       type: String,
       default: "text"
     },
+    height: {
+      type: String,
+      default: '40px'
+    }
   },
   emits: ['changeMonth', 'changeDay'],
   setup(props, context) {
@@ -94,11 +97,13 @@ export default defineComponent({
     let currentMonth: any = new Date().getMonth() + 1
     let currentDay: any = new Date().getDate()
 
+    // 设置年月
     function setYearMonth(now: any) {
       year.value = now.getFullYear()
       month.value = now.getMonth() + 1
     }
 
+    // 上一年
     function preYear() {
       let n = now.value
       let date = new Date(n.getFullYear() - 1, n.getMonth(), n.getDate(), n.getHours(), n.getMinutes(), n.getSeconds(), n.getMilliseconds());
@@ -106,6 +111,7 @@ export default defineComponent({
       setYearMonthInfos(date)
     }
 
+    // 上一月
     function preMonth() {
       let n = now.value
       let date = new Date(n.getFullYear(), n.getMonth() - 1, n.getDate(), n.getHours(), n.getMinutes(), n.getSeconds(), n.getMilliseconds());
@@ -113,6 +119,7 @@ export default defineComponent({
       setYearMonthInfos(date)
     }
 
+    // 下一年
     function nextYear() {
       let n = now.value
       let date = new Date(n.getFullYear() + 1, n.getMonth(), n.getDate(), n.getHours(), n.getMinutes(), n.getSeconds(), n.getMilliseconds());
@@ -120,6 +127,7 @@ export default defineComponent({
       setYearMonthInfos(date)
     }
 
+    // 下一月
     function nextMonth() {
       let n = now.value
       let date = new Date(n.getFullYear(), n.getMonth() + 1, n.getDate(), n.getHours(), n.getMinutes(), n.getSeconds(), n.getMilliseconds());
@@ -136,8 +144,12 @@ export default defineComponent({
 
     function generateMonth(date: any) {
       date.setDate(1)
+      debugger
       // 星期 0 - 6， 星期天 - 星期6
       let weekStart = date.getDay()
+
+      // 如果1号是星期天,则去前7天
+      weekStart = weekStart === 0 ? 7 : weekStart
 
       let endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0)
       let dayEnd = endDate.getDate()
@@ -150,6 +162,7 @@ export default defineComponent({
 
       let monthDatas = []
       let current: any;
+
       // 上个月的几天
       for (let i = 0; i < weekStart; i++) {
         current = new Date(milsStart - (weekStart - i) * dayMils)
@@ -161,6 +174,7 @@ export default defineComponent({
           day: current.getDate()
         })
       }
+
       // 当前月
       for (let i = 0; i < dayEnd; i++) {
         current = new Date(milsStart + i * dayMils)
@@ -172,6 +186,7 @@ export default defineComponent({
           day: current.getDate()
         })
       }
+      
       // 下个月的几天
       for (let i = 0; i < (6 - weeEnd); i++) {
         current = new Date(milsEnd + i * dayMils)
@@ -261,6 +276,7 @@ export default defineComponent({
       preMonth,
       monthData,
       nextMonth,
+      currentDay,
       getCellColor,
       mouseenter,
       mouseleave,
@@ -335,11 +351,16 @@ export default defineComponent({
       border-bottom: 1px solid #ebeef5;
       border-right: 1px solid #ebeef5;
       width: 100%;
-      min-height: 40px;
+      // min-height: 40px;
       line-height: 24px;
       cursor: pointer;
       position: relative;
-
+      &.current{
+          background: #409eff;
+          color: #fff;
+          // border: 2px solid #40a9ff;
+          // width: calc(100% - 6px);
+        }
       &.cal_m_day_week {
         min-height: 24px;
         border: 0
@@ -348,7 +369,7 @@ export default defineComponent({
 
     .cal_m_day_cell:hover {
       background: #f2f8fe;
-      color: #409eff;
+      // color: #409eff;
     }
 
     .cal_m_weeks {

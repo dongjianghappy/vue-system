@@ -85,11 +85,11 @@
 
       <v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding: data.coding.art }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="render" />
     </div>
-    <v-calendar @changeMonth="changeMonth" v-else>
+    <v-calendar @changeMonth="changeMonth" height="145px" v-else>
       <template v-slot:default="row">
         <template v-for="(item, index) in calendarData" :key="index">
           <div style="display: flex; flex-wrap:wrap; position: absolute; width: 100%; bottom: 0px; top: 25px; padding: 10px" v-if="item.date == `${row.item.fullYear}-${row.item.month}-${row.item.day}`">
-            <div class="col-md-4" style="height: 32px;" v-for="(list, i) in item.list.slice(0, 5)" :key="i"><img :src="list.photos" style="border-radius: 50px; width: 32px; height: 32px;"></div>
+            <div class="col-md-4" style="height: 32px;" v-for="(list, i) in item.list.slice(0, 5)" :key="i"><img :title="`${list.nickname}(${list.account})`" :src="list.photos" style="border-radius: 50px; width: 32px; height: 32px;"></div>
             <div class="col-md-4" style=" height: 32px; line-height: 32px; display: inline-block;">
               <div style="background: #ddd; border-radius: 50px; width: 32px; height: 32px;" v-if="item.list.length > 5">{{item.num}}</div>
             </div>
@@ -167,9 +167,10 @@ export default defineComponent({
     function handleShow(data: any) {
       view.value = data
       if (data === 1) {
+        let date: any = new Date()
         init({
-          year: '2022',
-          month: '9'
+          year: date.getFullYear(),
+          month: date.getMonth()+1
         })
       }
     }

@@ -1,5 +1,5 @@
 <template>
-<table width="100%" class="table-striped table-hover col-left-2">
+<table width="100%" class="table-striped table-hover col-left-23">
   <tr class="th">
     <td class="col-md-1">选择</td>
     <td class="col-md-4">名称</td>
@@ -34,7 +34,7 @@
     </td>
     <td>
       <div class="pointer">
-        <v-category title="选择分类" :name="item.parent ? item.parent : '选择分类'" :data="{item, coding: data.coding}" :isUpdate="true" type="text"></v-category>
+        <v-category title="选择分类" :name="item.parent ? item.parent : '选择分类'" :data="{item, coding: data.coding}" :isUpdate="true" :isMore="true" type="text"></v-category>
       </div>
     </td>
     <td>{{item.times}}</td>
@@ -58,6 +58,7 @@
             <table width="100%" class="table-striped table-hover">
               <tr>
                 <td class="col-md-1">ID</td>
+                <td class="col-md-3">编号</td>
                 <td class="col-md-1">浏览</td>
                 <td class="col-md-1">评论</td>
                 <td class="col-md-1">点赞</td>
@@ -68,6 +69,7 @@
               </tr>
               <tr>
                 <td>{{item.id}}</td>
+                <td>{{item.number}}</td>
                 <td>{{item.visit}}</td>
                 <td>{{item.comment}}</td>
                 <td>{{item.praise}}</td>

@@ -26,18 +26,18 @@
       </li>
       <li class="li">
         <span class="label">所属分类</span>
-        {{detail.parent}}
-        <v-category name="选择分类" :data="{item: detail, coding: 'K0002'}" type="text"></v-category>
+        <span class="mr10">{{detail.parent}}</span>
+        <v-category name="选择分类" :data="{item: detail, coding: 'K0002'}" :isMore="true" type="text"></v-category>
 
       </li>
       <li class="li">
         <span class="label">描述</span>
         <textarea placeholder="请输入单页摘要" v-model="detail.summary" class="w-full"></textarea>
       </li>
-      <li class="li" style="height: 100px">
+      <li class="li" style="height: 135px">
         <span class="label">颜色</span>
         <div>
-          <v-color :colorList="colorList || []" v-model:color="detail.color" />
+          <v-color :colorList="colorList || []" v-model:color="detail.color" col="col-md-2" />
         </div>
       </li>
       <li class="li">
@@ -121,6 +121,7 @@ export default defineComponent({
           detail.value.style = style instanceof Object ? style : {}
         } else {
           detail.value.style = {}
+          detail.value.cateList = []
           detail.value.color = []
         }
       }
