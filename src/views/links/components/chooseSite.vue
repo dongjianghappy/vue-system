@@ -35,12 +35,8 @@ import {
   useStore,
   onMounted
 } from '@/utils'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'v-ChooseSite',
-  components: {
-    Popover
-  },
   props: {
     title: {
       type: String,

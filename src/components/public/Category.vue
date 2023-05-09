@@ -161,7 +161,7 @@ export default defineComponent({
         item
       } = props.data
 
-      if(!item.fid){
+      if (!item.fid) {
         return
       }
       let arr: any = []

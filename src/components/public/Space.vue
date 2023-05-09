@@ -6,8 +6,7 @@
 
 <script lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance
+  defineComponent
 } from 'vue'
 
 export default defineComponent({

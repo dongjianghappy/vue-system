@@ -2,7 +2,7 @@
 <button v-if="isbutton" :disabled="!auth" type="button" role="switch" aria-checked="false" class="buttom-switch" :class="[{'switch-checked': data.item[data.field] === '1'}, className]" @click="handleclick(data.item)">
   <div class="switch-handle"></div><span class="switch-inner">OFF</span>
 </button>
-<span v-else  @click="handleclick(data.item)">
+<span v-else @click="handleclick(data.item)">
   <span class="cl-green" v-if="data.item[data.field] === '1'">开启</span>
   <span class="cl-red" v-else>关闭</span>
 </span>
@@ -73,7 +73,10 @@ export default defineComponent({
       }).then(res => {
         if (res.result.type) {
           item[res.result.type] = res.result.value
-          context.emit('toggle', {field: props.data.item.name, value: res.result.value})
+          context.emit('toggle', {
+            field: props.data.item.name,
+            value: res.result.value
+          })
         } else {
           props.msg(res.returnMessage)
         }

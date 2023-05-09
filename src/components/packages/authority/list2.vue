@@ -10,6 +10,7 @@
       </div>
     </div>
     <div v-if="type==='manage'" style="display: flex; justify-content: space-between;">
+      asdsdas
       <AddButton :data="{id: item.id, ...data}" :render="init" action="edit" :channel="channel" />
       <AddModule :data="{fid: item.id, ...data}" :render="init" action="add" :index="index" />
     </div>

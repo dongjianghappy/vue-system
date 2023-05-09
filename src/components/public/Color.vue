@@ -18,17 +18,15 @@ import {
   defineComponent,
   getCurrentInstance
 } from 'vue'
-
+import {
+  COLOR
+} from '@/assets/common_const'
 export default defineComponent({
   name: 'v-Color',
   components: {
 
   },
   props: {
-    colorList: {
-      type: Array,
-      default: []
-    },
     color: {
       type: Array,
       default: []
@@ -43,6 +41,7 @@ export default defineComponent({
     const {
       ctx
     }: any = getCurrentInstance();
+    const colorList = COLOR
 
     function handleclick(param: any) {
       debugger
@@ -55,6 +54,7 @@ export default defineComponent({
       context.emit('update:color', props.color)
     }
     return {
+      colorList,
       handleclick
     }
   }

@@ -66,15 +66,15 @@ export default defineComponent({
 
     function init(param: any) {
 
-      const sssss: any = {
+      const params: any = {
         page: 1,
         pagesize: pagesize
       }
 
-      Object.assign(sssss, param)
+      Object.assign(params, param)
       store.dispatch('channel/answerListAction', {
         data: {
-          ...sssss
+          ...params
         }
       })
     }

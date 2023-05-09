@@ -23,7 +23,7 @@
         <div class="relative" style="border-top: 1px dotted rgb(234, 234, 234); padding: 10px 0px; height: 40px; height: 53px; line-height: 34px;">
           <v-avatar :data="item" />{{item.nickname}}
           <span class="right">
-            <Popover content="操作" arrow="tb" offset="right" :move="-30" :keys="`static_${index}`">
+            <v-popover content="操作" arrow="tb" offset="right" :move="-30" :keys="`static_${index}`">
               <ul class="font14 p15" style="display: block">
                 <li>
                   <v-button @onClick="handleClick(item)" :disabled="true">
@@ -37,7 +37,7 @@
                   <v-confirm name="置顶" :data="{id: item.id, field: 'istop', value: item.istop === '1' ? '0' : '1', coding }" type="text" api="changeData" :render="render" operating="setTop" :auth="true"></v-confirm>
                 </li>
               </ul>
-            </Popover>
+            </v-popover>
           </span>
         </div>
       </div>
@@ -65,13 +65,11 @@ import {
 import {
   useStore
 } from 'vuex'
-import Popover from '@/components/packages/popover/index.vue';
 import Video from '@/components/packages/play/videos.vue'
 import EffectDetail from './components/effectDetail.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    Popover,
     Video,
     EffectDetail
   },

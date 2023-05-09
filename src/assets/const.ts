@@ -386,10 +386,6 @@ export const appstorePage = [
 	{
 		name: "功能特效",
 		value: "appstore3"
-	},
-	{
-		name: "未分类",
-		value: "appstore4"
 	}
 ]
 

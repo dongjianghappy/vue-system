@@ -3,12 +3,12 @@
   <div class="module-head">
     <v-optionsbar title="模板管理">
       <template v-slot:extraleft>
-        <Popover :content="`${module.name}模板`" arrow="tb" offset="right" :move="-10" :keys="`static111}`">
+        <v-popover :content="`${module.name}模板`" arrow="tb" offset="right" :move="-10" :keys="`static111}`">
           <ul>
 
             <li class="font14" style="line-height: 35px;" @click="handleClicksss(data, i)" v-for="(data, i) in sorter" :key="i">{{data}}</li>
           </ul>
-        </Popover>
+        </v-popover>
       </template>
       <template v-slot:extraright>
         <span class="mr15" v-if="!isEdit">共有{{dataList.length}}个文件</span>
@@ -56,13 +56,11 @@ import {
 import {
   useStore
 } from 'vuex'
-import Popover from '@/components/packages/popover/index.vue';
 import EditFile from './components/editFile.vue';
 import Button from '@/components/common/Button.vue';
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    Popover,
     EditFile,
     Button
   },

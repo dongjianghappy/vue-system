@@ -32,7 +32,7 @@
       <li class="li">
         <span class="label">图标</span>
         <input v-model="detail.icon" type="text" placeholder="请输入图标" class="input-sm input-150 mr15" />
-        <Popover content="选择图标" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`">
+        <v-popover content="选择图标" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`">
           <div style="display: flex; flex-wrap: wrap; padding: 16px;">
             <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-home" style="color: rgb(153, 153, 153);"></i></span>
             <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-shezhi" style="color: rgb(153, 153, 153);"></i></span>
@@ -54,7 +54,7 @@
             <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-order" style="color: rgb(153, 153, 153);"></i></span>
             <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-user" style="color: rgb(153, 153, 153);"></i></span>
             </div>
-        </Popover>
+        </v-popover>
       </li>
     </ul>
   </template>
@@ -71,12 +71,8 @@ import {
 import {
   LABEL_TYPE,
 } from '@/assets/enum'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'v-Search',
-  components: {
-    Popover
-  },
   props: {
     action: {
       type: String,

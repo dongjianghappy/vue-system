@@ -1,6 +1,6 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth" >权限</v-button>
-<v-drawer ref="drawer" v-model:show="isShow" action="edit" title="权限设置" :data="data" api="userGrade" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" action="edit" title="权限设置" :data="data" api="userGrade" :hasfooter="false" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
     <table width="100%" class="table-striped col-left-12">
       <tr class="th">
@@ -16,19 +16,19 @@
         <td>{{item.name}}</td>
         <td>{{item.description}}</td>
         <td>
-          <v-switch :data="{ item, field: 'visitors', coding }" />
+          <v-switch :data="{ item, field: 'visitors', coding }" :auth="true" />
         </td>
         <td>
-          <v-switch :data="{ item, field: 'ordinary_member', coding }" />
+          <v-switch :data="{ item, field: 'ordinary_member', coding }" :auth="true" />
         </td>
         <td>
-          <v-switch :data="{ item, field: 'senior_member', coding }" />
+          <v-switch :data="{ item, field: 'senior_member', coding }" :auth="true" />
         </td>
         <td>
-          <v-switch :data="{ item, field: 'vip_member', coding }" />
+          <v-switch :data="{ item, field: 'vip_member', coding }" :auth="true" />
         </td>
         <td>
-          <v-switch :data="{ item, field: 'super_vip_member', coding }" />
+          <v-switch :data="{ item, field: 'super_vip_member', coding }" :auth="true" />
         </td>
       </tr>
     </table>

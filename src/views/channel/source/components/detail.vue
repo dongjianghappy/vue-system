@@ -37,7 +37,7 @@
       <li class="li" style="height: 135px">
         <span class="label">颜色</span>
         <div>
-          <v-color :colorList="colorList || []" v-model:color="detail.color" col="col-md-2" />
+          <v-color v-model:color="detail.color" col="col-md-2" />
         </div>
       </li>
       <li class="li">
@@ -51,7 +51,7 @@
       </li>
     </ul>
     <div class="mb15" style="overflow: hidden;" v-if="coding.art === 'K0007'">
-      <v-uploads ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: 'K0007'}" :dataList="detail.img || []" uploadtype="design" @imgList="image" :style="'width: 135px'" />
+      <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: 'K0007'}" :dataList="detail.img || []" uploadtype="design" @imgList="image" :style="'width: 135px'" />
     </div>
   </template>
 </v-drawer>
@@ -67,7 +67,7 @@ import {
 } from '@/utils'
 import {
   COLOR
-} from '@/assets/enum'
+} from '@/assets/common_const'
 export default defineComponent({
   name: 'v-Search',
   components: {},

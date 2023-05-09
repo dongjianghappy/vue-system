@@ -50,7 +50,7 @@
               <v-confirm name="删除" :data="{id: item.id, coding }" type="text" api="delete" :render="init" operating="delete"></v-confirm>
             </span>
             <!-- <span>生成订单</span> -->
-            <Popover content="更多" arrow="tb" offset="right" :move="-350" :keys="`static_${index}`">
+            <v-popover content="更多" arrow="tb" offset="right" :move="-350" :keys="`static_${index}`">
               <div class="font14" style="width: 400px;">
                 <table width="100%" class="table-striped table-hover">
                   <tr>
@@ -66,7 +66,7 @@
                   </tr>
                 </table>
               </div>
-            </Popover>
+            </v-popover>
           </v-space>
         </td>
       </tr>
@@ -95,7 +95,6 @@ import List from './components/list.vue'
 import List2 from './components/list2.vue'
 import List3 from './components/list3.vue'
 import List4 from './components/list4.vue'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
@@ -104,7 +103,6 @@ export default defineComponent({
     List3,
     List4,
     Detail,
-    Popover
   },
   setup(props, context) {
     const store = useStore();
@@ -133,18 +131,18 @@ export default defineComponent({
     const dataList: any = ref({})
 
     // 初始化
-    function init(params: any) {
+    function init(param: any) {
 
-      const sssss: any = {
+      const params: any = {
         page: 1,
         pagesize: 30
       }
-      Object.assign(sssss, params)
+      Object.assign(params, param)
 
       store.dispatch('basic/Fetch', {
         api: "advertisement",
         data: {
-          ...sssss
+          ...params
         }
       }).then((res: any) => {
         dataList.value = res.result

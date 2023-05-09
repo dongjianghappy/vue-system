@@ -94,6 +94,26 @@
           </li>
 
           <li class="vertical">
+            <div class="label">所属专辑
+
+            </div>
+            <div>
+              {{detail.parent}}
+              <v-category name="选择专辑" :data="{item: detail, coding: '123'}" :isMore="true" type="text"></v-category>
+            </div>
+          </li>
+
+          <li class="vertical">
+            <div class="label">背景音乐
+
+            </div>
+            <div>
+              {{detail.music_name}}
+              <v-choose title="选择音乐" :data="{ item: detail, field: 'singer' }" coding="E0000" @choose="choose" type="radio" api="articleList" :render="init" />
+            </div>
+          </li>
+
+          <li class="vertical">
             <div class="label">文章来源
               <Source action="edit" :render="renderChannel" :data="{channel_id: channelData.id, coding: 'O0017'}" @getSource="getSource" :auth="true" :isChoose="'true'" />
             </div>
@@ -108,7 +128,7 @@
     </div>
     <div class="module-wrap">
       <div class="module-content plr15">
-        <v-color :colorList="colorList || []" v-model:color="detail.color" />
+        <v-color v-model:color="detail.color" />
       </div>
     </div>
     <div class="module-wrap">
@@ -121,7 +141,7 @@
             <li class="col-md-6 p5" style="height: 120px;" v-for="(item, index) in detail.img" :key="index"><img :src="item" style="width: 100%; height: 100%"></li>
           </ul>
         </div> -->
-        <v-uploads ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: channelData.coding.art}" :dataList="detail.img || []" :uploadtype="channelData.module" @imgList="image" :style="'width: 135px'" />
+        <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: channelData.coding.art}" :dataList="detail.img || []" :uploadtype="channelData.module" @imgList="image" :style="'width: 135px'" />
       </div>
     </div>
   </div>
@@ -147,9 +167,7 @@ import {
 } from 'vuex'
 import Source from '../../setting/source.vue'
 import Editor from '@/components/packages/editor/index.vue'
-import {
-  COLOR
-} from '@/assets/enum'
+
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
@@ -204,7 +222,6 @@ export default defineComponent({
       message: "请输入摘要内容"
     }]
 
-    const colorList = COLOR
     // 聚合标签
     function checkbox() {
       store.dispatch('common/Fetch', {
@@ -265,6 +282,7 @@ export default defineComponent({
         sort,
         source,
         source_url,
+        background_music,
         summary,
         markdown,
         tag,
@@ -291,6 +309,7 @@ export default defineComponent({
           sort,
           source,
           source_url,
+          background_music,
           summary,
           content: markdown ? marked.parse(markdown) : "",
           markdown,
@@ -354,6 +373,16 @@ export default defineComponent({
       })
     }
 
+    function choose(param: any) {
+      debugger
+      const {
+        field,
+        data
+      } = param
+      detail.value.background_music = data.id
+      detail.value.music_name = data.title
+    }
+
     return {
       coding,
       channelData,
@@ -361,7 +390,6 @@ export default defineComponent({
       detail,
       checkedList,
       init,
-      colorList,
       save,
       dataList,
       aaa,
@@ -372,7 +400,8 @@ export default defineComponent({
       upload,
       image,
       action,
-      handleUpdate
+      handleUpdate,
+      choose
     }
   }
 })

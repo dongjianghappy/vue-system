@@ -2,7 +2,7 @@
 <div class="ptb5" style="background: #fff">
   <v-tabs :tabs="menu">
     <template v-slot:extra>
-      <Detail action='add' :data="{ coding }" :render="init" />
+      <v-search field="uid" placeholder="用户账号查找" :render="init" />
     </template>
     <template v-slot:content1>
       <List :render="init" :data="{ coding }" :dataList="dataList" :tabsIndex='tabsIndex' />
@@ -23,6 +23,7 @@ import {
   watch,
   useStore,
   useRoute,
+  useRouter,
   codings,
 } from '@/utils'
 import List from './components/list.vue'
@@ -39,7 +40,8 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
     const route = useRoute();
-    const coding: any = codings['appstore'];
+    const router: any = useRouter();
+    const coding: any = 'M0000';
     let menu: any = ref([{
         name: "微博管理",
         value: "advertisement1"
@@ -52,21 +54,32 @@ export default defineComponent({
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
     const dataList: any = ref([])
 
-    // 监听路由
-    watch(route, (newValues, prevValues) => {
-      if (route.path === '/admin/appstore') {
-        tabsIndex.value = route.query.type
-        init()
+// 监听路由
+    watch(router.currentRoute, (newValues, prevValues) => {
+      if (newValues.path === prevValues.path) {
+        init({
+          page: 1
+        })
       }
     })
 
     // 初始化
-    function init() {
+    function init(param: any = {}) {
+
+      const params: any = {
+        page: 1,
+        pagesize: 10
+      }
+
+      Object.assign(params, param)
+      const {
+        type
+      }: any = route.query
       store.dispatch('talk/talkAction', {
         tabsIndex: tabsIndex.value,
         data: {
-          page: 1,
-          pagesize: 10
+          management_checked: type === '1' ? 0 : 1, // 是否审核,
+          ...params
         }
       }).then(res => {
         dataList.value = res.result

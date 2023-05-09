@@ -3,11 +3,11 @@
   <div class="module-head">
     <v-optionsbar title="静态生成">
       <template v-slot:extraright v-if="auth.checked('server')">
-        <Popover :content="`服务器:${server[serve]}`" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`">
+        <v-popover :content="`服务器:${server[serve]}`" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`">
           <ul class="font14" style="display: block">
             <li v-for="(item, index) in server" :key="index" style="height: 32px" @click="handleSelectServer(index)">{{item}}</li>
           </ul>
-        </Popover>
+        </v-popover>
       </template>
     </v-optionsbar>
   </div>
@@ -79,16 +79,16 @@
               <div class="col-md-12" style="padding-bottom: 10px;"><span class="name">标签</span></div>
               <div>
                 <div class="col-md-5 limit relative">
-                  <Popover :content="`<div>排序: <span>${sort[item.sort]}</span></div>`" arrow="tb" offset="right" :move="-10" :keys="`static_${index}`">
+                  <v-popover :content="`<div>排序: <span>${sort[item.sort]}</span></div>`" arrow="tb" offset="right" :move="-10" :keys="`static_${index}`">
                     <ul>
                       <li @click="item.sort = i" v-for="(data, i) in sort" :key="i">{{data}}</li>
                     </ul>
-                  </Popover>
+                  </v-popover>
                 </div>
                 <div class="col-md-5 limit relative">
-                  <Popover :content="`<span>范围: ${item.limitStart} - ${item.limitEnd}</span>`" arrow="tb" offset="right" :move="-100" :keys="`static_${index}`">
+                  <v-popover :content="`<span>范围: ${item.limitStart} - ${item.limitEnd}</span>`" arrow="tb" offset="right" :move="-100" :keys="`static_${index}`">
                     <div class="p10" style="display: flex"><input maxlength="5" type="text" class="ant-input" v-model="item.limitStart" style="width: 100px; flex: 1"><span class="pl15 pr15"> 至 </span><input maxlength="5" type="text" class="ant-input" v-model="item.limitEnd" style="width: 100px; flex: 1"></div>
-                  </Popover>
+                  </v-popover>
                 </div>
                 <div class="col-md-2 updateButton">
                   <Progress :data="{title: `正在更新标签页`, data: {serve, action: 'tag', model: 'source', id: `${item.limitStart}-${item.limitEnd}`,
@@ -104,16 +104,16 @@
               <div class="col-md-12" style="padding-bottom: 10px;"><span class="name">详情</span></div>
               <div>
                 <div class="col-md-5 limit relative">
-                  <Popover :content="`<div>排序: <span>${sort[item.sort]}</span></div>`" arrow="tb" offset="right" :move="-10" :keys="`static_${index}`">
+                  <v-popover :content="`<div>排序: <span>${sort[item.sort]}</span></div>`" arrow="tb" offset="right" :move="-10" :keys="`static_${index}`">
                     <ul>
                       <li @click="item.sort = i" v-for="(data, i) in sort" :key="i">{{data}}</li>
                     </ul>
-                  </Popover>
+                  </v-popover>
                 </div>
                 <div class="col-md-5 limit relative">
-                  <Popover :content="`<span>范围: ${item.limitStart} - ${item.limitEnd}</span>`" arrow="tb" offset="right" :move="-100" :keys="`static_${index}`">
+                  <v-popover :content="`<span>范围: ${item.limitStart} - ${item.limitEnd}</span>`" arrow="tb" offset="right" :move="-100" :keys="`static_${index}`">
                     <div class="p10" style="display: flex"><input maxlength="5" type="text" class="ant-input" v-model="item.limitStart" style="width: 100px; flex: 1"><span class="pl15 pr15"> 至 </span><input maxlength="5" type="text" class="ant-input" v-model="item.limitEnd" style="width: 100px; flex: 1"></div>
-                  </Popover>
+                  </v-popover>
                 </div>
                 <div class="col-md-2 updateButton">
                   <Progress :data="{title: `正在更新${item.name}详情页`, data: {serve, action: 'article', model: item.model, id: `${item.limitStart}-${item.limitEnd}`,
@@ -125,24 +125,24 @@
             <div class="card ml5" style="height: 98px; flex: 1">
               <div class="col-md-12 relative" style="padding-bottom: 10px;">
                 <span class="name mr10">其他素材</span>
-                <Popover :content="`<div>种类: <span>${currentKind.name}</span></div>`" arrow="tb" offset="right" :move="-10" :keys="`kind_${index}`">
+                <v-popover :content="`<div>种类: <span>${currentKind.name}</span></div>`" arrow="tb" offset="right" :move="-10" :keys="`kind_${index}`">
                   <ul class="p15">
                     <li @click="changeKind(data)" v-for="(data, i) in item.list" :key="i">{{data.name}}</li>
                   </ul>
-                </Popover>
+                </v-popover>
               </div>
               <div>
                 <div class="col-md-5 limit relative">
-                  <Popover :content="`<div>排序: <span>${sort[currentKind.sort]}</span></div>`" arrow="tb" offset="right" :move="-10" :keys="`static_${index}`">
+                  <v-popover :content="`<div>排序: <span>${sort[currentKind.sort]}</span></div>`" arrow="tb" offset="right" :move="-10" :keys="`static_${index}`">
                     <ul>
                       <li @click="currentKind.sort = i" v-for="(data, i) in sort" :key="i">{{data}}</li>
                     </ul>
-                  </Popover>
+                  </v-popover>
                 </div>
                 <div class="col-md-5 limit relative">
-                  <Popover :content="`<span>范围: ${currentKind.limitStart} - ${currentKind.limitEnd}</span>`" arrow="tb" offset="right" :move="-100" :keys="`static_${index}`">
+                  <v-popover :content="`<span>范围: ${currentKind.limitStart} - ${currentKind.limitEnd}</span>`" arrow="tb" offset="right" :move="-100" :keys="`static_${index}`">
                     <div class="p10" style="display: flex"><input maxlength="5" type="text" class="ant-input" v-model="currentKind.limitStart" style="width: 100px; flex: 1"><span class="pl15 pr15"> 至 </span><input maxlength="5" type="text" class="ant-input" v-model="currentKind.limitEnd" style="width: 100px; flex: 1"></div>
-                  </Popover>
+                  </v-popover>
                 </div>
                 <div class="col-md-2 updateButton">
                   <Progress :data="{title: `正在更新${currentKind.name}详情页`, data: {serve, action: 'article', model: item.model, type: currentKind.value, id: `${currentKind.limitStart}-${currentKind.limitEnd}`,
@@ -157,16 +157,16 @@
             <div class="col-md-12" style="padding-bottom: 10px;"><span class="name">详情</span></div>
             <div>
               <div class="col-md-2 limit relative">
-                <Popover :content="`<div>排序: <span>${sort[item.sort]}</span></div>`" arrow="tb" offset="right" :move="-10" :keys="`static_${index}`">
+                <v-popover :content="`<div>排序: <span>${sort[item.sort]}</span></div>`" arrow="tb" offset="right" :move="-10" :keys="`static_${index}`">
                   <ul>
                     <li @click="item.sort = i" v-for="(data, i) in sort" :key="i">{{data}}</li>
                   </ul>
-                </Popover>
+                </v-popover>
               </div>
               <div class="col-md-3 limit relative">
-                <Popover :content="`<span>范围: ${item.limitStart} - ${item.limitEnd}</span>`" arrow="tb" offset="right" :move="-100" :keys="`static_${index}`">
+                <v-popover :content="`<span>范围: ${item.limitStart} - ${item.limitEnd}</span>`" arrow="tb" offset="right" :move="-100" :keys="`static_${index}`">
                   <div class="p10" style="display: flex"><input maxlength="5" type="text" class="ant-input" v-model="item.limitStart" style="width: 100px; flex: 1"><span class="pl15 pr15"> 至 </span><input maxlength="5" type="text" class="ant-input" v-model="item.limitEnd" style="width: 100px; flex: 1"></div>
-                </Popover>
+                </v-popover>
               </div>
               <div class="col-md-6" style="display: flex;">
                 <v-progress />
@@ -198,12 +198,10 @@ import {
 import {
   useStore
 } from 'vuex'
-import Popover from '@/components/packages/popover/index.vue';
 import Progress from './components/progress.vue';
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    Popover,
     Progress
   },
   props: {

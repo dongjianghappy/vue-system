@@ -13,9 +13,6 @@
     <template v-slot:content3>
       <List :render="init" :data="{ coding }" :dataList="dataList" :tabsIndex='tabsIndex' :auth="auth" />
     </template>
-    <template v-slot:content4>
-      <List :render="init" :data="{ coding }" :dataList="dataList" :tabsIndex='tabsIndex' :auth="auth" />
-    </template>
   </v-tabs>
 </div>
 </template>

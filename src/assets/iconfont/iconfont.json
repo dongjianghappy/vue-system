@@ -6,6 +6,69 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11249797",
+      "name": "play",
+      "font_class": "play",
+      "unicode": "e851",
+      "unicode_decimal": 59473
+    },
+    {
+      "icon_id": "8474316",
+      "name": "music",
+      "font_class": "music",
+      "unicode": "e6c5",
+      "unicode_decimal": 59077
+    },
+    {
+      "icon_id": "7090046",
+      "name": "还原",
+      "font_class": "huanyuan",
+      "unicode": "e70f",
+      "unicode_decimal": 59151
+    },
+    {
+      "icon_id": "4777227",
+      "name": "缩小",
+      "font_class": "suoxiao",
+      "unicode": "ec13",
+      "unicode_decimal": 60435
+    },
+    {
+      "icon_id": "4777229",
+      "name": "放大",
+      "font_class": "fangda",
+      "unicode": "ec14",
+      "unicode_decimal": 60436
+    },
+    {
+      "icon_id": "6151214",
+      "name": "position",
+      "font_class": "position",
+      "unicode": "e7f1",
+      "unicode_decimal": 59377
+    },
+    {
+      "icon_id": "16619483",
+      "name": "type",
+      "font_class": "type",
+      "unicode": "e6de",
+      "unicode_decimal": 59102
+    },
+    {
+      "icon_id": "18991762",
+      "name": "theme",
+      "font_class": "theme1",
+      "unicode": "e889",
+      "unicode_decimal": 59529
+    },
+    {
+      "icon_id": "6988471",
+      "name": "mood",
+      "font_class": "mood",
+      "unicode": "ec4c",
+      "unicode_decimal": 60492
+    },
+    {
       "icon_id": "11938722",
       "name": "打勾",
       "font_class": "dagou",
@@ -865,13 +928,6 @@
       "font_class": "next",
       "unicode": "e61c",
       "unicode_decimal": 58908
-    },
-    {
-      "icon_id": "1910831",
-      "name": "play",
-      "font_class": "play",
-      "unicode": "e80b",
-      "unicode_decimal": 59403
     },
     {
       "icon_id": "376001",

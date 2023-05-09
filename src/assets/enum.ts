@@ -631,53 +631,6 @@ export const TEMPLATES = [
   },  
 ]
 
-// 推广类型
-export const COLOR = [
-  {
-    value: 'red',
-    name: '红色',
-  },
-  {
-    value: 'orange',
-    name: '橙色',
-  },
-  {
-    value: 'yellow',
-    name: '黄色',
-  },
-  {
-    value: 'green',
-    name: '绿色',
-  },
-  {
-    value: 'purple',
-    name: '紫色',
-  },
-  {
-    value: 'pink',
-    name: '粉色',
-  },
-  {
-    value: 'cyan',
-    name: '青色',
-  },
-  {
-    value: 'blue',
-    name: '蓝色',
-  },
-  {
-    value: 'brown',
-    name: '棕色',
-  },
-  {
-    value: 'white',
-    name: '白色',
-  },
-  {
-    value: 'black',
-    name: '黑色',
-  }   
-]
 
 const enums = {
   module: MODUDLE,
@@ -707,8 +660,7 @@ const enums = {
   banned_day: BANNED_DAY,
   reason_type: REASON_TYPES,
   serverName: SERVER_NAME,
-  templates: TEMPLATES,
-  color: COLOR
+  templates: TEMPLATES
 }
 
 export default enums

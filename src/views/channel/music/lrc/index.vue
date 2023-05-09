@@ -20,7 +20,7 @@
           <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
         </td>
         <td>
-          {{item.lrc_name}}
+          {{item.name}}
         </td>
         <td>
           {{item.datetime}}

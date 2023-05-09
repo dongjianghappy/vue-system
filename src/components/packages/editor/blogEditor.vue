@@ -3,7 +3,7 @@
   <div class="editor-wrap" style="border-bottom: 1px solid #eee; min-height: 40px;">
     <ul class="editor-button">
       <li class="left pl10">
-        <Popover :isShowss="popoverStatus" content='H<i class="iconfont icon-triangle" title="标题">' arrow="tb" offset="right" :move="-10" :keys="`static_${index}`">
+        <v-popover :isShowss="popoverStatus" content='H<i class="iconfont icon-triangle" title="标题">' arrow="tb" offset="right" :move="-10" :keys="`static_${index}`">
           <ul class="title">
             <li @click="handelClick({type: 'title', value: 0})">
               <h1>一级标题</h1>
@@ -24,7 +24,7 @@
               <h6>六级标题</h6>
             </li>
           </ul>
-        </Popover>
+        </v-popover>
       </li>
       <!-- <li class="left deg180" @click="handelClick('retrun')"><i class="iconfont icon-arrow" title="撤销"></i></li>
       <li class="left" @click="handelClick('forward')"><i class="iconfont icon-arrow" title="前进"></i></li> -->
@@ -37,7 +37,7 @@
       <li class="left" @click="handelClick('line')" title="插入分割线"><i class="iconfont icon-line"></i></li>
       <li class="left" @click="handelClick('link')" title="链接"><i class="iconfont icon-link"></i></li>
       <li class="left" title="图片">
-        <Popover :isShowss="popoverStatus" content='<i class="iconfont icon-img">' arrow="tb" offset="right" :move="-30" :keys="`static_${index}`">
+        <v-popover :isShowss="popoverStatus" content='<i class="iconfont icon-img">' arrow="tb" offset="right" :move="-30" :keys="`static_${index}`">
           <ul class="title">
             <li @click="handelClick('img')">
               插入
@@ -46,10 +46,10 @@
               <SpaceModal @selectImage="selectImage">空间</SpaceModal>
             </li>
           </ul>
-        </Popover>
+        </v-popover>
       </li>
       <li class="left" title="代码">
-        <Popover :isShowss="popoverStatus" content='<i class="iconfont icon-code font20">' arrow="tb" offset="right" :move="-45" :keys="`static_${index}`">
+        <v-popover :isShowss="popoverStatus" content='<i class="iconfont icon-code font20">' arrow="tb" offset="right" :move="-45" :keys="`static_${index}`">
           <ul class="title">
             <li @click="handelClick({type: 'code', value: 0})">
               HTML
@@ -61,7 +61,7 @@
               JavaScript
             </li>
           </ul>
-        </Popover>
+        </v-popover>
 
       </li>
       <li class="left" @click="handelClick('- 无序列表')" title="无序列表"><i class="iconfont icon-list" title="无序列表"></i></li>
@@ -101,7 +101,6 @@ import {
   ref,
   watch
 } from 'vue'
-import Popover from '@/components/packages/popover/index.vue';
 import SpaceModal from '../../../views/space/components/modalSpace.vue'
 import {
   marked
@@ -129,7 +128,6 @@ marked.setOptions({
 export default defineComponent({
       name: 'v-Search',
       components: {
-        Popover,
         SpaceModal
       },
       props: {

@@ -1,28 +1,31 @@
 <template>
-  <!-- @mouseover="handleclick" @mouseleave="handleleave"-->
-  <span @click="handleclick"
-        v-html="content"
-        style="display: inline-block"
-        :class="keys">
-  </span>
-  <transition>
-    <popover v-model:isShow="isShow"
-             :styles="style"
-             v-if="isShow">
-      <slot></slot>
-    </popover>
-  </transition>
+<!-- @mouseover="handleclick" @mouseleave="handleleave"-->
+<span @click="handleclick" v-html="content" style="display: inline-block" :class="keys">
+</span>
+<transition>
+  <popover v-model:isShow="isShow" :styles="style" v-if="isShow">
+    <slot></slot>
+  </popover>
+</transition>
 </template>
 
 <script lang="ts">
-import { defineComponent, getCurrentInstance, ref, reactive, computed, watch } from 'vue'
-import {useStore} from 'vuex'
+import {
+  defineComponent,
+  getCurrentInstance,
+  ref,
+  reactive,
+  computed
+} from 'vue'
+import {
+  useStore
+} from 'vuex'
 import popover from './popover.vue'
-
+import VueEvent from '@/utils/event'
 export default defineComponent({
   name: 'v-Search',
   components: {
-popover
+    popover
   },
   props: {
     keys: {
@@ -48,7 +51,7 @@ popover
     type: {
       type: String,
       default: "click"
-    },     
+    },
     // 按钮为包含HTML元素
     content: {
       type: String,
@@ -56,18 +59,19 @@ popover
     },
     getData: {
       type: Function
-    },
-    isShowss: {
-      type: Boolean,
-      default: false
-    },
+    }
   },
-  mounted(){
-    document.addEventListener("click", this.close);
-  },  
+  mounted() {
+    // document.addEventListener("click", this.close);
+    VueEvent.on("selectColor", (data: any) => {
+      // this.close
+    });
+  },
   emits: ['onClick'],
-  setup(props,context) {
-    const {ctx}:any = getCurrentInstance();
+  setup(props, context) {
+    const {
+      ctx
+    }: any = getCurrentInstance();
     const store = useStore();
     const isShow: any = ref(false)
     const tripsStatus = computed(() => store.getters['common/tripsStatus']);
@@ -80,75 +84,76 @@ popover
       w: "0"
     })
 
-
-    watch(props, (newValues, prevValues) => {
-     if(props.isShowss) {
-       isShow.value = false
-     }
-    })
-
-    function handleclick(e: any){
+    function handleclick(e: any) {
       isShow.value = !isShow.value
       const doc = document.documentElement
       const el = e.currentTarget;
-      const {clientWidth : _w, clientHeight: _h} = doc
-      const {offsetWidth : w, offsetHeight: h, offsetTop: top, offsetLeft: left} = el
+      const {
+        clientWidth: _w,
+        clientHeight: _h
+      } = doc
+      const {
+        offsetWidth: w,
+        offsetHeight: h,
+        offsetTop: top,
+        offsetLeft: left
+      } = el
       style.w = w
       style.h = h
-      
-      if(props.arrow === 'lr'){
+
+      if (props.arrow === 'lr') {
         style._top = top
-        if(_w/2-e.x <= 0){
-          if(props.offset === 'right'){
-            style._left = left+h+8
-            style.offset="right"
-          }else{
-            style._left = left-16
-            style.offset="left"
+        if (_w / 2 - e.x <= 0) {
+          if (props.offset === 'right') {
+            style._left = left + h + 8
+            style.offset = "right"
+          } else {
+            style._left = left - 16
+            style.offset = "left"
           }
-        }else{
-          if(props.offset === 'left'){
-            style._left = left-16
-            style.offset="left"
-          }else{
-            style._left = left+h+8
-            style.offset="right"
+        } else {
+          if (props.offset === 'left') {
+            style._left = left - 16
+            style.offset = "left"
+          } else {
+            style._left = left + h + 8
+            style.offset = "right"
           }
         }
-      }else{
+      } else {
         style._left = left
-        if(_h/2-e.y <= 0){
-          if(props.offset === 'bottom'){
-            style._top = top+h+8
-            style.offset="bottom"
-          }else{
-            style._top = top-16
-            style.offset="top"
+        if (_h / 2 - e.y <= 0) {
+          if (props.offset === 'bottom') {
+            style._top = top + h + 8
+            style.offset = "bottom"
+          } else {
+            style._top = top - 16
+            style.offset = "top"
           }
-        }else{
-          if(props.offset === 'top'){
-            style._top = top-16
-            style.offset="top"
-          }else{
-            style._top = top+h+8
-            style.offset="bottom"
+        } else {
+          if (props.offset === 'top') {
+            style._top = top - 16
+            style.offset = "top"
+          } else {
+            style._top = top + h + 8
+            style.offset = "bottom"
           }
         }
       }
       props.getData && props.getData()
     }
 
-    function handleover(e: any){
-      if(props.type === 'click'){
+    function handleover(e: any) {
+      if (props.type === 'click') {
         return
       }
       handleclick(e)
     }
 
-    function handleleave(e:any){
-      if(props.type !== 'click') {
+    function handleleave(e: any) {
+      if (props.type !== 'click') {
         isShow.value = false
-      }else{
+      } else {
         // store.dispatch('common/TripsStatus', false)
         // setTimeout(()=>{
         //   if(tripsStatus.value === false){
@@ -157,8 +162,9 @@ popover
         // },200)
       }
     }
-    function close(e: any){
-      if(e.target.className.indexOf(props.keys) > -1 || e.target.parentNode.className.indexOf(props.keys) > -1){
+
+    function close(e: any) {
+      if ((e.target.className && e.target.className.indexOf && e.target.className.indexOf(props.keys) > -1) || e.target.parentNode.className.indexOf(props.keys) > -1) {
         return
       }
       let list = document.getElementsByClassName("popover_wrap");

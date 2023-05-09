@@ -44,7 +44,7 @@
         <img style="width: 100%" :src="detail.image && detail.image[0]" alt="">
       </li>
     </ul>
-    <div class="mb15" style="overflow: hidden;"><v-uploads ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: 'C10000'}" :dataList="detail.img || []" uploadtype="design" @imgList="image" :style="'width: 135px'" /></div>
+    <div class="mb15" style="overflow: hidden;"><v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: 'C10000'}" :dataList="detail.img || []" uploadtype="design" @imgList="image" :style="'width: 135px'" /></div>
   </template>
 </v-drawer>
 </template>

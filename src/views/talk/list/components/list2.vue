@@ -29,6 +29,9 @@
             <span>
               <v-confirm name="删除" :data="{id: item.id, ...data }" type="text" api="delete" :render="render" operating="delete"></v-confirm>
             </span>
+            <span>
+              <v-confirm name="审核" :data="{id: item.id, management_checked: 1, ...data }" type="text" api="checkContent" :render="render" operating="check" :auth="true"></v-confirm>
+            </span>
           </v-space>
         </td>
       </tr>

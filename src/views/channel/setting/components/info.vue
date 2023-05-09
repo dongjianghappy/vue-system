@@ -10,7 +10,7 @@
         <div class="col-md-6"><input v-model="detail.name" type="text" placeholder="请输入频道名称" class="input-sm input-full" /></div>
         <div class="col-md-6 pl25">
           <input v-model="detail.icon" type="text" placeholder="请输入图标" class="input-sm input-150 mr15" />
-          <Popover content="选择图标" arrow="tb" offset="right" :move="-400" :keys="`static_${index}`">
+          <v-popover content="选择图标" arrow="tb" offset="right" :move="-400" :keys="`static_${index}`">
             <div style="display: flex; flex-wrap: wrap; padding: 16px; width: 400px">
               <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-home" style="color: rgb(153, 153, 153);"></i></span>
               <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-shezhi" style="color: rgb(153, 153, 153);"></i></span>
@@ -32,7 +32,7 @@
               <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-order" style="color: rgb(153, 153, 153);"></i></span>
               <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-user" style="color: rgb(153, 153, 153);"></i></span>
             </div>
-          </Popover>
+          </v-popover>
         </div>
 
       </li>
@@ -97,12 +97,8 @@ import {
   NAV_TYPE,
   SERVER_NAME
 } from '@/assets/enum'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'v-Search',
-  components: {
-    Popover
-  },
   props: {
     style: {
       type: Object,

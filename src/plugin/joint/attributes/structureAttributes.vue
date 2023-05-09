@@ -65,14 +65,12 @@ import {
   defineComponent,
   computed
 } from 'vue'
-import Popover from '@/components/packages/popover/index.vue';
 import NodeInfo from './components/nodeInfo.vue'
 import LinkLine from './components/linkLine.vue'
 import Broadcast from './components/broadcast.vue'
 export default defineComponent({
   name: "MymodalD",
   components: {
-    Popover,
     NodeInfo,
     LinkLine,
     Broadcast

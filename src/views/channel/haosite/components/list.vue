@@ -35,7 +35,7 @@
         <span>
           <v-confirm name="删除" :data="{id: item.id, coding: data.coding.art, operating: 'remove' }" type="text" api="removeAndRestore" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
         </span>
-        <Popover content="更多" arrow="tb" offset="right" :move="-950" :keys="`static_${index}`">
+        <v-popover content="更多" arrow="tb" offset="right" :move="-950" :keys="`static_${index}`">
           <div class="font14" style="width: 1000px;">
             <table width="100%" class="table-striped table-hover">
               <tr>
@@ -67,7 +67,7 @@
               <p>标签: {{item.tag}}</p>
             </div>
           </div>
-        </Popover>
+        </v-popover>
         <span>
           <v-confirm icon="top" :className="item.istop === '1' ? 'cl-red' : ''" :data="{id: item.id, field: 'istop', value: item.istop === '1' ? '0' : '1', coding: data.coding.art }" type="text" api="changeData" :render="render" operating="setTop" :auth="auth.checked('top')"></v-confirm>
         </span>
@@ -91,7 +91,6 @@ import {
   computed,
   jsonParse
 } from '@/utils'
-import Popover from '@/components/packages/popover/index.vue';
 import {
   PRIOVINCE
 } from '@/assets/const'
@@ -99,7 +98,6 @@ import Detail from './detail.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Popover,
     Detail
   },
   props: {

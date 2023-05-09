@@ -81,18 +81,18 @@ export default defineComponent({
 
     function init(param: any) {
 
-const sssss: any = {
+const params: any = {
         page: 1,
         pagesize: pagesize
       }
 
-      Object.assign(sssss, param)
+      Object.assign(params, param)
 
       store.dispatch('basic/Fetch', {
         state: 'partner',
         data: {
           coding: coding.art,
-          ...sssss
+          ...params
         }
       })
     }

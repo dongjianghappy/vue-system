@@ -30,9 +30,9 @@
     <i class="iconfont icon-arrow" />
   </button>
   <span v-if="simple === false">
-  前往
-  <input v-model="currentPage" type="text" class="input-50 align_center" @keyup.enter="handelClick(currentPage)" style="height: 32px;">
-  页
+    前往
+    <input v-model="currentPage" type="text" class="input-50 align_center" @keyup.enter="handelClick(currentPage)" style="height: 32px;">
+    页
   </span>
 </div>
 </template>
@@ -40,10 +40,7 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
-  ref,
-  useStore,
-  onMounted
+  useStore
 } from '@/utils'
 
 export default defineComponent({

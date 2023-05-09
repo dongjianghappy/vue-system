@@ -3,51 +3,17 @@
   <div class="module-head">
     <v-optionsbar title="歌谱管理">
       <template v-slot:extraright>
+        <v-toggledisplay v-model:toggle="toggleDisplay" />
         <Detail :data="{ coding }" :render="init" />
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-2">
-      <tr class="th">
-        <td class="col-md-1">选择</td>
-        <td class="col-md-6">名称</td>
-        <td class="col-md-1">专辑 </td>
-        <td class="col-md-1">种类</td>
-        <td class="col-md-1">状态</td>
-        <td class="col-md-2">操作</td>
-      </tr>
-      <tr v-for="(item, index) in dataList.list" :key="index">
-        <td>
-          <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
-        </td>
-        <td>
-          {{item.score_name}} <i class="iconfont icon-img"></i>
-        </td>
-        <td>
-          
-        </td>
-        <td></td>
-        <td>
-          <v-switch :data="{ item, field: 'checked', coding }" />
-        </td>
-        <td>
-          <v-space>
-            <span>
-              <Detail action="edit" :data="{id: item.id, coding}" :param="param" :render="init" />
-            </span>
-            <span>
-              <v-confirm name="删除" :data="{id: item.id, coding}" api="delete" :render="init" operating="delete"></v-confirm>
-            </span>
-            <span>预览</span>
-          </v-space>
-        </td>
-      </tr>
-    </table>
-    <v-nodata :data="dataList.list || []" />
-    <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, coding }" :sorceData="dataList.list" :render="init" v-if="dataList.list && dataList.list.length > 0" />
+    <Album :data="{coding}" :dataList="dataList" :render="init" v-if="toggleDisplay === 'album'" />
+    <List :dataList="dataList" :render="init" v-else />
   </div>
 </div>
+<v-layer v-model:isShow="showFlag" :data="currentData" :index="index" :dataList="dataList.list" @prevOrNext="prevOrNext" :img="currentImg" v-if="showFlag" type="album" />
 </template>
 
 <script lang="ts">
@@ -62,24 +28,35 @@ import {
 import {
   useStore
 } from 'vuex'
+import Album from './album.vue'
+import List from './list.vue'
 import Detail from './components/detail.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    Detail
+    Detail,
+    Album,
+    List
   },
   setup(props, context) {
     const store = useStore();
     const dataList = computed(() => store.getters['channel/musicScore']);
     const coding: any = channels().coding.score;
     const checkedList: any = ref([])
+    const toggleDisplay: any = ref("album")
 
-    function init() {
+    function init(param: any = {}) {
+const params: any = {
+        page: 1,
+        pagesize: 12
+      }
+
+      Object.assign(params, param)
+
       store.dispatch('channel/musicScoreAction', {
         data: {
           coding,
-          page: 1,
-          pagesize: 10
+          ...params
         }
       })
     }
@@ -90,7 +67,8 @@ export default defineComponent({
       coding,
       dataList,
       checkedList,
-      init
+      init,
+      toggleDisplay
     }
   }
 })

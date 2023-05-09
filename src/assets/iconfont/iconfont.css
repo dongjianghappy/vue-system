@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 286184 */
-  src: url('iconfont.woff2?t=1677900401022') format('woff2'),
-       url('iconfont.woff?t=1677900401022') format('woff'),
-       url('iconfont.ttf?t=1677900401022') format('truetype');
+  src: url('iconfont.woff2?t=1683353052181') format('woff2'),
+       url('iconfont.woff?t=1683353052181') format('woff'),
+       url('iconfont.ttf?t=1683353052181') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,42 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-play:before {
+  content: "\e851";
+}
+
+.icon-music:before {
+  content: "\e6c5";
+}
+
+.icon-huanyuan:before {
+  content: "\e70f";
+}
+
+.icon-suoxiao:before {
+  content: "\ec13";
+}
+
+.icon-fangda:before {
+  content: "\ec14";
+}
+
+.icon-position:before {
+  content: "\e7f1";
+}
+
+.icon-type:before {
+  content: "\e6de";
+}
+
+.icon-theme1:before {
+  content: "\e889";
+}
+
+.icon-mood:before {
+  content: "\ec4c";
 }
 
 .icon-dagou:before {
@@ -503,10 +539,6 @@
 
 .icon-next:before {
   content: "\e61c";
-}
-
-.icon-play:before {
-  content: "\e80b";
 }
 
 .icon-listen:before {

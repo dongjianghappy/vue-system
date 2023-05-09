@@ -31,7 +31,7 @@
         <span>
           <v-confirm name="置顶" :data="{id: item.id, coding: 'P0003' }" type="text" api="delete" :render="render" operating="delete"></v-confirm>
         </span>
-        <Popover content="更多" arrow="tb" offset="right" :move="-500" :keys="`static_${index}`">
+        <v-popover content="更多" arrow="tb" offset="right" :move="-500" :keys="`static_${index}`">
           <div class="font14">
             <table width="100%" class="table-striped table-hover">
               <tr>
@@ -56,7 +56,7 @@
               <p class="mb5">标签: {{item.tag}}</p>
             </div>
           </div>
-        </Popover>
+        </v-popover>
       </v-space>
     </td>
   </tr>
@@ -74,12 +74,8 @@ import {
   useRouter,
   ref
 } from '@/utils'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'v-Search',
-  components: {
-    Popover
-  },
   props: {
     data: {
       type: Object,

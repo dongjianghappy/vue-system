@@ -1,13 +1,13 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增歌谱"}}
+  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'edit'? "": "新增歌谱"}}
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑歌谱' : '新增歌谱' " :data="data" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑歌谱' : '新增歌谱' " :data="data" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
-        <span class="label">歌谱名称</span>
-        <input v-model="detail.score_name" type="text" placeholder="请输入标题" class="input-sm input-full" />
+        <span class="label">名称</span>
+        <input v-model="detail.name" type="text" placeholder="请输入标题" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">种类</span>
@@ -15,29 +15,17 @@
       </li>
       <li class="li">
         <span class="label">音调</span>
-        <v-select :enums="sourceType" v-model:value="detail.tune" />
+        <!-- <v-select :enums="sourceType" v-model:value="detail.tune" /> -->
+        <v-radiobutton name="ssss" v-model:checked="detail.tune" :enums="tune" v-model:value="detail.tune" />
       </li>
       <li class="li">
         <span class="label">显示</span>
         <v-radio label="是" name="checked" value="1" v-model:checked="detail.checked" />
         <v-radio label="否" name="checked" value="0" v-model:checked="detail.checked" />
       </li>
-      <li class="li">
+      <li class="li" style="overflow: auto;">
         <span class="label">谱子</span>
-        <SpaceModal>
-          <div class="space-wrap" style="display: flex;">
-            <div class="space-picture p10" style="background: rgb(250, 250, 250); flex: 2 1 0%; height: auto;">
-              <div class="pointer"><img width="250" height="100" alt=""></div>
-            </div>
-            <div style="flex: 1 1 0%;">
-              <div style="flex: 1 1 0%; display: flex; justify-content: center;">
-                <div>
-                  <div style="background: rgb(250, 250, 250); border: 2px dashed rgb(238, 238, 238); height: 150px; width: 150px; line-height: 150px; text-align: center;"><i class="iconfont icon-add font30"></i></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SpaceModal>
+        <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: data.coding}" :dataList="detail.img || []" uploadtype="music" @imgList="image" :style="'width: 135px'" />
       </li>
       <li class="li">
         <span class="label">说明</span>
@@ -53,6 +41,7 @@ import {
   defineComponent,
   ref,
   watch,
+  useStore
 } from '@/utils'
 import SpaceModal from '../../../../space/components/modalSpace.vue'
 import {
@@ -82,11 +71,35 @@ export default defineComponent({
     }
   },
   setup(props, context) {
+    const store = useStore()
     const isShow: any = ref(false)
     const detail: any = ref({})
     const drawer: any = ref(null)
     const upload: any = ref(null);
+    const img = ref("")
     const sourceType: any = LINK_TYPE
+    const tune = [{
+      label: 'C调',
+      value: 'C'
+    }, {
+      label: 'D调',
+      value: 'D'
+    }, {
+      label: 'E调',
+      value: 'E'
+    }, {
+      label: 'F调',
+      value: 'F'
+    }, {
+      label: 'G调',
+      value: 'G'
+    }, {
+      label: 'A调',
+      value: 'A'
+    }, {
+      label: 'B调',
+      value: 'B'
+    }]
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
@@ -94,18 +107,56 @@ export default defineComponent({
       }
     })
 
-    // 上传图片
-    function uploadImg() {
-      upload.value.handleclick()
+    // 监听图片上传
+    function image(a: any) {
+      debugger
+      img.value = a
+    }
+
+    function submit(cancel: any) {
+      const {
+        id,
+        name,
+        type,
+        tune,
+        checked,
+        content
+      } = detail.value
+
+      const param: any = {
+        name,
+        type,
+        tune,
+        checked,
+        content,
+        img: img.value
+      }
+      if (props.action === 'edit') {
+        param.id = id
+      }
+
+      store.dispatch('common/Fetch', {
+        api: props.action !== 'add' ? 'update' : 'insert',
+        data: {
+          coding: props.data.coding,
+          ...param
+
+        }
+      }).then(() => {
+        props.render()
+        isShow.value = false
+      })
     }
 
     return {
       isShow,
       detail,
       drawer,
-      uploadImg,
       upload,
-      sourceType
+      sourceType,
+      image,
+      tune,
+      submit
     }
   }
 })

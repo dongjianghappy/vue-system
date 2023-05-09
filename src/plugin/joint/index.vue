@@ -43,7 +43,6 @@ import Aside from './aside/index.vue'
 import Tool from './tool/index.vue'
 import Attributes from './attributes/index.vue'
 import VueEvent from '@/utils/event'
-import Popover from '@/components/packages/popover/index.vue';
 import {
   color,
 } from '@/assets/const'
@@ -56,7 +55,6 @@ export default defineComponent({
     Aside,
     Tool,
     Attributes,
-    Popover
   },
   props: {
     data: {

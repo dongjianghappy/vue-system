@@ -80,7 +80,8 @@ const codings: any = {
     collect: "E0005",
     singer: "E10000",
     lrc: "E10001",
-    score: "E10002"
+    score: "E10002",
+    album: "E10003"
   },
   video: {
     name: "video",

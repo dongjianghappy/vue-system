@@ -67,14 +67,12 @@ import {
   defineComponent,
   computed
 } from 'vue'
-import Popover from '@/components/packages/popover/index.vue';
 import NodeSpeech from './components/nodeSpeech.vue'
 import LinkSpeech from './components/linkSpeech.vue'
 import Broadcast from './components/broadcast.vue'
 export default defineComponent({
   name: "MymodalD",
   components: {
-    Popover,
     NodeSpeech,
     LinkSpeech,
     Broadcast

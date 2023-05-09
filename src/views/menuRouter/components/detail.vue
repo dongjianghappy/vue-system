@@ -27,7 +27,7 @@
       <li class="li">
         <span class="label">组件</span>
         <input v-model="detail.component" type="text" placeholder="请输入组件" class="input-sm input-150 mr10" />
-        <Popover content="选择组件" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`">
+        <v-popover content="选择组件" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`">
           <div style="display: flex; flex-wrap: wrap; padding: 16px;">
             <span style="width: 20%; padding: 10px 0px;">分类</span>
             <span style="width: 20%; padding: 10px 0px;">文档列表</span>
@@ -49,7 +49,7 @@
             <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-order" style="color: rgb(153, 153, 153);"></i></span>
             <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-user" style="color: rgb(153, 153, 153);"></i></span>
           </div>
-        </Popover>
+        </v-popover>
       </li>
       <li class="li">
         <span class="label">权限</span>
@@ -77,7 +77,7 @@
       <li class="li">
         <span class="label">图标</span>
         图标<input v-model="detail.icon" type="text" placeholder="请输入标题" class="input-sm input-150 mlr15" />
-        <Popover content="选择图标" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`">
+        <v-popover content="选择图标" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`">
           <div style="display: flex; flex-wrap: wrap; padding: 16px;">
             <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-home" style="color: rgb(153, 153, 153);"></i></span>
             <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-shezhi" style="color: rgb(153, 153, 153);"></i></span>
@@ -99,7 +99,7 @@
             <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-order" style="color: rgb(153, 153, 153);"></i></span>
             <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-user" style="color: rgb(153, 153, 153);"></i></span>
           </div>
-        </Popover>
+        </v-popover>
       </li>
     </ul>
   </template>
@@ -113,12 +113,8 @@ import {
   watch,
   useStore
 } from '@/utils'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'v-Search',
-  components: {
-    Popover
-  },
   props: {
     attrs: {
       type: Object,

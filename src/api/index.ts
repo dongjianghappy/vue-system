@@ -661,7 +661,56 @@ close (params: any) {
   // 选择主题
   chooseStyle (params: any) {
     return http.request('vue', 'chooseStyle', 'post', params)
-  }, 
+  },
+  
+  // 导出MySQL
+  exportMysql (params: any) {
+    return http.request('vue', 'exportMysql', 'post', params)
+  },
+
+  // 数据库管理
+  mysqldb (params: any) {
+    return http.request('vue', 'mysqldb', 'post', params)
+  },
+
+  // 切换数据库
+  changeMysql (params: any) {
+    return http.request('vue', 'changeMysql', 'post', params)
+  },
+
+  // 预览专辑
+  viewAlbum (params: any) {
+    return http.request('channel', 'viewAlbum', 'post', params)
+  },
+  // 查看歌手
+  viewSinger (params: any) {
+    return http.request('channel', 'viewSinger', 'post', params)
+  },
+
+  // 图片专辑
+  albumList (params: any) {
+    return http.request('user', 'albumList', 'post', params)
+  },
+
+  // 话题相册
+  talkAlbum (params: any) {
+    return http.request('talk', 'talkAlbum', 'post', params)
+  },
+
+  // 头像背景
+  GetHistoryPhotos (params: any) {
+    return http.request('user', 'getAllPhotos', 'post', params)
+  },     
+    
+  // 自定义相册
+  photoList (params: any) {
+    return http.request('user', 'photoList', 'post', params)
+  },
+
+  // 日志
+  journal (params: any) {
+    return http.request('user', 'journal', 'post', params)
+  },
 }
 
 export default api

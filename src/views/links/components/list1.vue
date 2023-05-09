@@ -39,7 +39,7 @@
             <span>
               <v-confirm name="删除" :data="{id: item.id, ...data }" type="text" api="delete" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
             </span>
-            <Popover content="更多" arrow="tb" offset="right" :move="-450" :keys="`static_${index}`">
+            <v-popover content="更多" arrow="tb" offset="right" :move="-450" :keys="`static_${index}`">
               <div class="font14" style="width: 500px;">
                 <table width="100%" class="table-striped table-hover col-left-1">
                   <tr>
@@ -56,7 +56,7 @@
                   </tr>
                 </table>
               </div>
-            </Popover>
+            </v-popover>
           </v-space>
         </td>
       </tr>
@@ -79,12 +79,10 @@ import {
   SERVER_NAME
 } from '@/assets/enum'
 import Detail from './detail.vue'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'ListView',
   components: {
     Detail,
-    Popover
   },
   props: {
     data: {

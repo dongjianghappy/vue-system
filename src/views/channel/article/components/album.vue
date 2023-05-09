@@ -5,15 +5,16 @@
     <div class="thumbnail p10 relative" style="background: rgb(255, 255, 255); overflow: hidden;">
       <v-thumbnail :data="item" :coding="data.coding.art" :type="type" :getNeighbor="getNeighbor" />
       <div class="caption relative" style="padding: 10px 0px; height: 40px;">
-        <span class="inputline updata nowrap" style="border: 0px dashed rgb(204, 204, 204); width: 100%; background: none; display: block !important;">{{item.title}}{{item.parent ? `(${item.parent})` : ""}} <i class="iconfont icon-top cl-red" v-if="item.istop === '1'" /></span>
+        <span class="inputline updata nowrap" style="border: 0px dashed rgb(204, 204, 204); width: 100%; background: none; display: block !important;">{{item.title}}{{item.image.length}}张{{item.parent ? `【${item.parent}】` : ""}} <i class="iconfont icon-top cl-red" v-if="item.istop === '1'" /></span>
       </div>
       <div class="relative" style="border-top: 1px dotted rgb(234, 234, 234); padding: 10px 0px; height: 40px; height: 53px; line-height: 34px;">
         <v-avatar :data="item" />{{item.nickname}}
         <span class="right">
-          <Popover content="操作" arrow="tb" offset="right" :move="-30" :keys="`static_${index}`">
+          <v-popover content="操作" arrow="tb" offset="right" :move="-30" :keys="`static_${index}`">
             <ul class="font14 p15" style="display: block">
               <li>
                 <uploadVideo action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" v-if="type === 'video'" />
+                <uploadPicture action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" v-else-if="type === 'image'" />
                 <v-button @onClick="handleClick(item)" :disabled="true" v-else>
                   编辑
                 </v-button>
@@ -25,7 +26,7 @@
                 <v-confirm name="置顶" :data="{id: item.id, field: 'istop', value: item.istop === '1' ? '0' : '1', coding: data.coding.art }" type="text" api="changeData" :render="render" operating="setTop" :auth="true"></v-confirm>
               </li>
             </ul>
-          </Popover>
+          </v-popover>
         </span>
       </div>
     </div>
@@ -52,18 +53,18 @@ import {
 import {
   useStore
 } from 'vuex'
-import Popover from '@/components/packages/popover/index.vue';
 import Video from '@/components/packages/play/videos.vue'
 import uploadVideo from '../../video/components/detail.vue'
+import uploadPicture from '../../picture/components/detail.vue'
 import {
   setDevtoolsHook
 } from '@vue/runtime-core';
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    Popover,
     Video,
     uploadVideo,
+    uploadPicture
   },
   props: {
     data: {

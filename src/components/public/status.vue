@@ -12,10 +12,6 @@ import {
 export default defineComponent({
   name: 'v-Switch',
   props: {
-    isbutton: {
-      type: Boolean,
-      default: true
-    },
     data: {
       type: Object,
       default: () => {
@@ -30,14 +26,6 @@ export default defineComponent({
       default: () => {
         return {}
       }
-    },
-    className: {
-      type: String,
-      default: ""
-    },
-    auth: {
-      type: Boolean,
-      default: false
     },
     msg: {
       type: Function,

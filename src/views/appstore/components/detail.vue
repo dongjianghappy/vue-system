@@ -2,13 +2,13 @@
 <v-button v-model:show="isShow" :disabled="auth">
   <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? '编辑': '新增应用'}}
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑应用' : '新增应用' " :data="data" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑应用' : '新增应用' " :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">新增类型</span>
         <v-select :enums="appCenter" :value="detail.type" @onChange="getGrade" :defaultValue="detail.type = detail.type ? detail.type : '1'" />
-        
+
       </li>
       <li class="li">
         <span class="label">应用名称</span>
@@ -27,22 +27,12 @@
         <v-radio label="开启" name="status" value="1" v-model:checked="detail.status" />
         <v-radio label="关闭" name="status" value="0" v-model:checked="detail.status" />
       </li>
-      <li class="li">
+      <li class="li" style="overflow: auto;">
         <span class="label">预览图</span>
-        <v-spacemodal>
-          <div class="space-wrap" style="display: flex;">
-            <div class="space-picture p10" style="background: rgb(250, 250, 250); flex: 2 1 0%; height: auto;">
-              <div class="pointer"><img width="250" height="100" alt=""></div>
-            </div>
-            <div style="flex: 1 1 0%;">
-              <div style="flex: 1 1 0%; display: flex; justify-content: center;">
-                <div>
-                  <div style="background: rgb(250, 250, 250); border: 2px dashed rgb(238, 238, 238); height: 150px; width: 150px; line-height: 150px; text-align: center;"><i class="iconfont icon-add font30"></i></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </v-spacemodal>
+        <SpaceModal v-model:image="detail.image">
+          <span class="right">选择图片</span>
+        </SpaceModal>
+        <img width="398" height="150" :src="detail.image" alt="">
       </li>
       <li class="li">
         <span class="label">描述</span>
@@ -54,6 +44,7 @@
 </template>
 
 <script lang="ts">
+import SpaceModal from '../../space/components/modalSpace.vue'
 import {
   defineComponent,
   ref,
@@ -65,7 +56,9 @@ import {
 } from '@/assets/enum'
 export default defineComponent({
   name: 'v-Search',
-  components: {},
+  components: {
+    SpaceModal
+  },
   props: {
     attrs: {
       type: Object,
@@ -136,9 +129,51 @@ export default defineComponent({
     // 选择权限
     function sssss(param: any) {
       let arr = gradeList.value.filter((item: any) => item.value === param)
+      detail.value.grade_id = arr[0].id
       detail.value.name = arr[0].name
       detail.value.module = arr[0].value
       detail.value.description = arr[0].description
+    }
+
+    function submit(params: any) {
+      debugger
+      const {
+        id,
+        grade_id,
+        type,
+        name,
+        image,
+        module,
+        sort,
+        status,
+        description
+      } = detail.value
+      
+      const param: any = {
+        grade_id,
+        type,
+        name,
+        image,
+        module,
+        sort,
+        status,
+        description
+      }
+      if (props.action === 'edit') {
+        param.id = id
+      }
+
+      store.dispatch('common/Fetch', {
+        api: props.action !== 'add' ? 'update' : 'insert',
+        data: {
+          coding: props.data.coding,
+          ...param,
+        }
+      }).then(() => {
+        props.render()
+        params.message()
+        params.cancel()
+      })
     }
 
     return {
@@ -151,7 +186,8 @@ export default defineComponent({
       uploadImg,
       getGrade,
       gradeList,
-      sssss
+      sssss,
+      submit
     }
   }
 })

@@ -15,16 +15,17 @@
         </li>
       </ul>
     </div>
-    <div class="header-right">
+    <div class="header-right" style="width: 440px">
       <ul style="display: flex; line-height: 64px;">
+        <li class="plr15"  style="width: 100px; line-height: 64px;"><v-play :userInfo="userInfo" :router="handleRouter" :hasMusicList="true" /></li>
         <li style="flex: 1">
-          <Popover :content="userInfo.nickname" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`">
+          <v-popover :content="userInfo.nickname" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`">
             <ul class="font14 cl-333 p15" style="display: block">
               <li style="height: 32px">
               <a :href="`http://www.dongblog.com/u/${userInfo.account}?token=${token}`" target="_brank" >个人中心</a></li>
               <li @click="routing('signOut')">退出</li>
             </ul>
-          </Popover>
+          </v-popover>
           <v-avatar :data="userInfo" style="margin-top: 16px;" />
         </li>
         <li class="mr15" style="width: 50px;">
@@ -67,12 +68,10 @@ import {
   information
 } from '@/assets/const'
 import Search from './Search.vue'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'v-Header',
   components: {
     Search,
-    Popover
   },
   emits: ['setRoute', 'update:collapse'],
   props: {

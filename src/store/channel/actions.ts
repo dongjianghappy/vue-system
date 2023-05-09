@@ -45,7 +45,12 @@ const actions = {
       ...data
     })
 
-    context.commit("setMusicList" , result.result);
+    debugger
+    if(params.isStore !== true){
+      // alert("ccc")
+      context.commit("setMusicList" , result.result);
+    }
+    
     return result
   }, 
   musicScoreAction: async (context: { commit: Commit; state: any}, params: any = {}) => {
