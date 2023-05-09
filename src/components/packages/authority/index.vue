@@ -133,10 +133,11 @@ export default defineComponent({
           ...props.data
         }
       }).then(res => {
+        debugger
         applicationList.value = res.result.application
         functionList.value = res.result.function
         channelList.value = res.result.channel
-        res.result.map((item: any) => {
+        res.result.channel.map((item: any) => {
           channelMenu.value.push({
             value: item.id,
             name: item.name

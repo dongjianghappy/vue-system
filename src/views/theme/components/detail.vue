@@ -19,7 +19,7 @@
       <li class="li">
         <span class="label">预览图</span>
         <div style="overflow: hidden;">
-          <v-uploads ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: data.coding}" :dataList="detail.img" uploadtype="theme" @imgList="image" :style="'width: 135px'" />
+          <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: data.coding}" :dataList="detail.img" uploadtype="theme" @imgList="image" :style="'width: 135px'" />
         </div>
       </li>
       <li class="li">

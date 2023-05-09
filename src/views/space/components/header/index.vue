@@ -30,12 +30,10 @@ import {
   information
 } from '@/assets/const'
 import Search from './Search.vue'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'v-Header',
   components: {
-    Search,
-    Popover
+    Search
   },
   emits: ['setRoute', 'update:collapse'],
   props: {

@@ -1,12 +1,12 @@
 <template>
 <div>
   <div v-for="(item, index) in dataList" :key="index" class="mb5" style="border: 1px solid #eee; bacoground: #f8f8fa">
-  <v-collapse :title="item.name" :iscollapse="true" :disableClick="true">
+  <v-collapse :title="item.name" :disabled="true">
       <template v-slot:extra>
       <v-space>
         <v-switch :data="{ item, field: 'status', ...data }" :auth="auth.checked('edit')" /> 
         <Detail action='edit' :data="{ id: item.id, ...data }" :render="render" :auth="auth.checked('edit')" /> 
-        <Popover content="更多" arrow="tb" offset="right" :move="-40" :keys="`popover-${item.id}`" v-if="auth.checked('del') || auth.checked('grade')" >
+        <v-popover content="更多" arrow="tb" offset="right" :move="-40" :keys="`popover-${item.id}`" v-if="auth.checked('del') || auth.checked('grade')" >
           <div class="p15 align_center" style="width: 80px; height: 100px">
             <ul class="font14" style="display: block">
               <li style="height: 32px">
@@ -17,12 +17,12 @@
               </li>
             </ul>
           </div>
-        </Popover>
+        </v-popover>
       </v-space>
     </template>
     <div style="display: flex">
-      <div class="mr15" style="width: 200px; height: 80px">
-        <img :src="item.image" style="width: 100%; height: 80px;">
+      <div class="mr15" style="width: 150px; height: 100px">
+        <img :src="item.image" style="border-radius: 4px; width: 100%; height: 100px;">
       </div>
       <div style="flex: 1">
         <div>
@@ -50,13 +50,11 @@ import {
 } from '@/utils'
 import Detail from './detail.vue'
 import Buttondetail from './buttondetail.vue'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
     Detail,
-    Buttondetail,
-    Popover
+    Buttondetail
   },
   props: {
     data: {

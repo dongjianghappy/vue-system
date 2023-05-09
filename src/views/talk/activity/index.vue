@@ -3,7 +3,8 @@
   <div class="module-head">
     <v-optionsbar title="话题管理">
       <template v-slot:extraright>
-        <Detail action='add' :data="{ coding }" :render="init" />
+        <v-condition name="类型" icon="type" field="type" :enums="[{name: '学生', value: '1'}, {name: '体育', value: '2'}]" :render="init" />
+        <Detail action='add' :data="{ coding: 'M10000' }" :render="init" />
       </template>
     </v-optionsbar>
   </div>
@@ -19,7 +20,7 @@
         <td class="col-md-1">状态</td>
         <td class="col-md-1">操作</td>
       </tr>
-      <tr v-for="(item, index) in dataList" :key="index">
+      <tr v-for="(item, index) in dataList.list" :key="index">
         <td>
           {{item.name}}
         </td>
@@ -27,19 +28,29 @@
           {{item.summary}}
         </td>
         <td>{{item.num}}</td>
-        <td @click="handleClick(item)" :class="item.vote === '0' || 'red'">{{item.vote === '0' ? '未开启' : '已开启'}}</td>
+        <td @click="handleClick(item)" :class="item.vote === '0' || 'red'">
+          <i class="iconfont icon-dot" :class="item.vote === '1' ? 'cl-green' : ''" />
+          {{item.vote === '0' ? '未开启' : '已开启'}}</td>
         <td>
-          {{item.datetime}}
+          {{item.times}}
         </td>
         <td>
-          <v-switch :data="{ item, field: 'checked', ...data }" />
+          <v-switch :data="{ item, field: 'status', coding: 'M10000' }" :auth="true" />
 
         </td>
         <td>
-          <span>删除</span>
+          <v-space>
+            <span>
+              <Detail action="edit" :data="{id: item.id, coding: 'M10000'}" :render="init" />
+            </span>
+            <span>
+              <v-confirm name="删除" :data="{id: item.id, coding: 'M10000' }" type="text" api="delete" :render="init" operating="delete" :auth="true"></v-confirm>
+            </span>
+          </v-space>
         </td>
       </tr>
     </table>
+    <v-nodata :data="dataList.list || []" />
   </div>
 </div>
 </template>
@@ -83,12 +94,17 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
 
-    function init(param: any) {
+    function init(param: any = {}) {
+      const params: any = {
+        page: 1,
+        pagesize: 25
+      }
+
+      Object.assign(params, param)
       store.dispatch('common/Fetch', {
-        api: "activity",
         data: {
-          page: 1,
-          pagesize: 50
+          coding: 'M10000',
+          ...params
         }
       }).then(res => {
         dataList.value = res.result
@@ -97,7 +113,7 @@ export default defineComponent({
 
     function handleClick(item: any) {
       let url: any = `/admin/vote/item?talkid=${item.id}&name=${item.name}`
-      if(item.vote !== '0'){
+      if (item.vote !== '0') {
         url = `/admin/vote/item/list?id=${item.vote}`
       }
       router.push(url)
@@ -107,8 +123,8 @@ export default defineComponent({
 
     return {
       dataList,
-      handleClick
-
+      handleClick,
+      init
     }
   }
 })

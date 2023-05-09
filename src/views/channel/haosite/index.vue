@@ -104,16 +104,12 @@ export default defineComponent({
     })
 
     function init(param: any) {
-      const sssss: any = {
+      const params: any = {
         page: 1,
         pagesize: 30
       }
-debugger
-      Object.assign(sssss, param)
 
-      // if (param) {
-      //   sssss.value = param
-      // }
+      Object.assign(params, param)
 
       const {
         type
@@ -125,15 +121,15 @@ debugger
         data: {
           coding: coding.art,
           management_checked: type === '2' ? -1 : type === '1' ? 0 : 1, // 是否审核,
-          ...sssss
+          ...params
         }
       })
     }
 
-    function handleClick(params: any) {
+    function handleClick(param: any) {
       let url = `/admin/${channelData.module}/list/add`
-      if (params !== 'add') {
-        url = url + `&id=${params.id}`
+      if (param !== 'add') {
+        url = url + `&id=${param.id}`
       }
 
       router.push(url)

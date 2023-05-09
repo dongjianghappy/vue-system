@@ -3,7 +3,7 @@
   <div class="module-head">
     <v-optionsbar title="音效素材">
       <template v-slot:extraright>
-        <Popover content="<i class='iconfont icon-time' />时长" arrow="tb" offset="right" :move="-250" keys="calendar">
+        <v-popover content="<i class='iconfont icon-time' />时长" arrow="tb" offset="right" :move="-250" keys="calendar">
           <div class="align_center" style="width: 300px; height: 150px;">
             <a class="col-md-3 p10" @click="handleDuration(item.value)" v-for="(item, index) in durationList" :key="index">
               <div class="cl">
@@ -11,7 +11,7 @@
               </div>
             </a>
           </div>
-        </Popover>
+        </v-popover>
         <Detail :coding="coding" :render="init" />
       </template>
     </v-optionsbar>
@@ -39,7 +39,7 @@
         <td>
           <v-category title="选择分类" :name="item.parent ? item.parent : '选择分类'" :data="{item, coding}" :isUpdate="true" type="text"></v-category>
         </td>
-        <td><Audio :data="{...item, index, number: dataList.list.length}" /></td>
+        <td><v-audio :data="{...item, index, number: dataList.list.length}" /></td>
         <td> {{durationTrans(item.duration)}}</td>
         <td> {{`${(item.size / 1024 / 1024).toFixed(3)}MB`}}</td>
         <td> {{item.format}}</td>
@@ -54,7 +54,7 @@
             <span>
               <v-confirm name="删除" :data="{id: item.id, coding}" api="delete" :render="init" operating="delete"></v-confirm>
             </span>
-            <Popover content="更多" arrow="tb" offset="right" :move="-650" :keys="`static_${index}`">
+            <v-popover content="更多" arrow="tb" offset="right" :move="-650" :keys="`static_${index}`">
               <div class="p15 font14" style="width: 700px;">
                 <table width="100%" class="table-striped table-hover">
                   <tr>
@@ -89,7 +89,7 @@
                 </table>
 
               </div>
-            </Popover>
+            </v-popover>
           </v-space>
         </td>
       </tr>
@@ -113,15 +113,11 @@ import {
 import {
   useStore
 } from 'vuex'
-import Popover from '@/components/packages/popover/index.vue';
 import Detail from './components/detail.vue'
-import Audio from '../player/audio.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    Popover,
-    Detail,
-    Audio
+    Detail
   },
   setup(props, context) {
     const store = useStore();
@@ -199,18 +195,18 @@ export default defineComponent({
 
     function init(param: any = {}) {
 
-      const sssss: any = {
+      const params: any = {
         page: 1,
         pagesize: 10
       }
 
-      Object.assign(sssss, param)
+      Object.assign(params, param)
       store.dispatch('channel/musicListAction', {
         api: "articleList",
         data: {
           coding: coding.art,
           kind: 'effects',
-          ...sssss
+          ...params
         }
       })
     }

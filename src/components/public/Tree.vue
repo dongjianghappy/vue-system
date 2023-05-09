@@ -34,7 +34,6 @@ export default defineComponent({
       default: []
     }
   },
-  // emits: ['update:checkedList'],
   setup(props, context) {
     function handleclick(id: any) {
       if (props.checkedList.indexOf(id) > -1) {

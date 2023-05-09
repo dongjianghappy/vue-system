@@ -26,12 +26,8 @@ import {
 import {
   // Breadcrumb
 } from '@/router/config'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'v-Header',
-  components: {
-    Popover
-  },
   props: {
     setRoute: {
       type: Function,

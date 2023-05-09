@@ -35,6 +35,7 @@ import EffectList from '../views/channel/video/effect.vue'
 import AnswerList from '../views/channel/question/index.vue'
 import SourcePsdList from '../views/channel/source/image.vue'
 import DesignList from '../views/channel/design/index.vue'
+import Album from '../views/channel/picture/album.vue'
 
 
 
@@ -75,8 +76,6 @@ import UserAudit from '../views/user/audit/index.vue'
 import UserBanuser from '../views/user/banuser/index.vue'
 import UserRecommend from '../views/user/recommend/index.vue'
 import UserSecurity from '../views/user/security/index.vue'
-import UserTheme from '../views/user/theme/index.vue'
-import Mood from '../views/user/mood/index.vue'
 import UserSetting from '../views/user/setting.vue'
 
 // 个人信息
@@ -99,7 +98,8 @@ import Ip from '../views/statistics/ip/index.vue'
 import ManagerLoginLog from '../views/log/index.vue'
 import UserLoginLog from '../views/log/userLog.vue'
 // import Operating from '../views/log/operating'
-import Mysql from '../views/mysql/index.vue'
+import MysqlIndex from '../views/mysql/index.vue'
+import Mysql from '../views/mysql/list.vue'
 import Collection from '../views/collection/index.vue'
 import collectionTemList from '../views/collection/temList.vue'
 import CollectionList from '../views/collection/list.vue'
@@ -164,6 +164,16 @@ import Activity from '../views/talk/activity/index.vue'
 import TalkCollect from '../views/talk/collect/index.vue'
 import TalkComment from '../views/talk/comment/index.vue'
 import TalkPraise from '../views/talk/praise/index.vue'
+import TalkAlbum from '../views/talk/album/index.vue'
+import PhotosAlbum from '../views/talk/album/photos.vue'
+import CustomAlbum from '../views/talk/album/custom.vue'
+import TalkJournal from '../views/talk/journal/index.vue'
+import TalkTheme from '../views/talk/theme/index.vue'
+import Mood from '../views/talk/mood/index.vue'
+import TalkStatistics from '../views/talk/statistics/index.vue'
+import TalkVisit from '../views/talk/statistics/visit/index.vue'
+import TalkIp from '../views/talk/statistics/ip/index.vue'
+
 
 const arrss: any = {
   Default,
@@ -206,6 +216,7 @@ const arrss: any = {
   AnswerList,
   SourcePsdList,
   DesignList,
+  Album,
   VideoList,
   
   Slideshow,
@@ -232,8 +243,12 @@ const arrss: any = {
   UserBanuser,
   UserRecommend,
   UserSecurity,
-  UserTheme,
+  TalkJournal,
+  TalkTheme,
   Mood,
+  TalkStatistics,
+  TalkVisit,
+  TalkIp,
   UserSetting,
   Personal,
   PersonalDefault,
@@ -246,6 +261,7 @@ const arrss: any = {
   collectionTemList,
   CollectionList,
   CollectionRecycle,
+  MysqlIndex,
   Mysql,
   Tag,
   // Order,
@@ -295,7 +311,10 @@ const arrss: any = {
   Activity,
   TalkCollect,
   TalkComment,
-  TalkPraise
+  TalkPraise,
+  TalkAlbum,
+  PhotosAlbum,
+  CustomAlbum
 }
 
 

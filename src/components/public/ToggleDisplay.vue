@@ -20,7 +20,6 @@ export default defineComponent({
   },
   emits: ['update:toggle'],
   setup(props, context) {
-
     function handelClick(param: any) {
       context.emit('update:toggle', param)
     }

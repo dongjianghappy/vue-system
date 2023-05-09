@@ -92,17 +92,17 @@ export default defineComponent({
     const checkedList: any = ref([])
 
     // 初始化
-    function init(params: any) {
-      const sssss: any = {
+    function init(param: any) {
+      const params: any = {
         page: 1,
         pagesize: 100
       }
 
-      Object.assign(sssss, params)
+      Object.assign(params, param)
       store.dispatch('common/Fetch', {
         data: {
           coding,
-          ...sssss
+          ...params
         }
       }).then(res => {
         dataList.value = res.result.list

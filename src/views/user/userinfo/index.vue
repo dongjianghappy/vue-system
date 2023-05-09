@@ -63,17 +63,17 @@ export default defineComponent({
     // 初始化
     function init(param: any) {
 
-      const sssss: any = {
+      const params: any = {
         page: 1,
         pagesize: pagesize
       }
 
-      Object.assign(sssss, param)
+      Object.assign(params, param)
       store.dispatch('user/userListAction', {
         tabsIndex: tabsIndex.value === '1' ? 1 : 0,
         data: {
           admin: tabsIndex.value,
-          ...sssss
+          ...params
         }
       })
     }

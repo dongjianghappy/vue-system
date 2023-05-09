@@ -1,6 +1,6 @@
 <template>
 <div class="radio-group">
-  <label class="relative" :class="{current: checked === item.value}" style="" v-for="(item, index) in enums" :key="index" @change="handleclick(item.value)">
+  <label class="relative" :class="{current: checked === item.value}" style="" v-for="(item, index) in enums" :key="index" @change="handleClick(item.value)">
     <input type="radio" :name="name" :value="item.value" v-model="checked" :checked="checked == item.value" class="mr5" style="float: left; display: none" />
     <span>{{item.label}}</span>
   </label></div>
@@ -35,11 +35,11 @@ export default defineComponent({
   },
   emits: [`update:checked`],
   setup(props, context) {
-    function handleclick(param: any) {
+    function handleClick(param: any) {
       context.emit(`update:checked`, param)
     }
     return {
-      handleclick
+      handleClick
     }
   }
 })

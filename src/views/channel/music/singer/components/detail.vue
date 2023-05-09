@@ -1,37 +1,20 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增歌手"}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增歌手"}}
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑歌手' : '新增歌手' " :data="data" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑歌手' : '新增歌手' " :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">歌手</span>
-        <input v-model="detail.singer" type="text" placeholder="请输入歌手" class="input-sm input-full" />
+        <input v-model="detail.name" type="text" placeholder="请输入歌手" class="input-sm input-full" />
+      </li>
+      <li class="li" style="overflow: auto;">
+        <span class="label">照片</span>
+        <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: data.coding}" :dataList="detail.img || []" uploadtype="music" @imgList="image" :style="'width: 135px'" />
       </li>
       <li class="li">
-        <span class="label">专辑</span>
-        <input v-model="detail.album" type="text" placeholder="请输入专辑" class="input-sm input-full" />
-      </li>
-      <li class="li">
-        <span class="label">封面</span>
-        <SpaceModal>
-          <div class="space-wrap" style="display: flex;">
-            <div class="space-picture p10" style="background: rgb(250, 250, 250); flex: 2 1 0%; height: auto;">
-              <div class="pointer"><img width="250" height="100" alt=""></div>
-            </div>
-            <div style="flex: 1 1 0%;">
-              <div style="flex: 1 1 0%; display: flex; justify-content: center;">
-                <div>
-                  <div style="background: rgb(250, 250, 250); border: 2px dashed rgb(238, 238, 238); height: 150px; width: 150px; line-height: 150px; text-align: center;"><i class="iconfont icon-add font30"></i></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SpaceModal>
-      </li>
-      <li class="li">
-        <span class="label">封面</span>
+        <span class="label">描述</span>
         <textarea v-model="detail.introduction" placeholder="请输入歌手介绍" class="w-full"></textarea>
       </li>
     </ul>
@@ -44,56 +27,90 @@ import {
   defineComponent,
   ref,
   watch,
+  useStore
 } from '@/utils'
 import SpaceModal from '../../../../space/components/modalSpace.vue'
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-    SpaceModal
-  },
-  props: {
-    action: {
-      type: String,
-      default: "add"
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    }
-  },
-  setup(props, context) {
-    const isShow: any = ref(false)
-    const drawer: any = ref(null)
-    const upload: any = ref(null);
-    const detail: any = ref({})
-    
-    // 监听
-    watch([isShow], async (newValues, prevValues) => {
-      if (isShow.value) {
-        detail.value = await drawer.value.init()
-      }
-    })
+      name: 'v-Search',
+      components: {
+        SpaceModal
+      },
+      props: {
+        action: {
+          type: String,
+          default: "add"
+        },
+        data: {
+          type: Object,
+          default: () => {
+            return {}
+          }
+        },
+        render: {
+          type: Function,
+          default: () => {
+            return 'Default function'
+          }
+        }
+      },
+      setup(props, context) {
+        const store = useStore()
+        const isShow: any = ref(false)
+        const drawer: any = ref(null)
+        const upload: any = ref(null);
+        const detail: any = ref({})
+        const img = ref("")
 
-    // 上传图片
-    function uploadImg() {
-      upload.value.handleclick()
-    }
+        // 监听
+        watch([isShow], async (newValues, prevValues) => {
+          if (isShow.value) {
+            detail.value = await drawer.value.init()
+          }
+        })
 
-    return {
-      isShow,
-      detail,
-      drawer,
-      uploadImg,
-      upload,
-    }
-  }
-})
+        // 监听图片上传
+        function image(a: any) {
+          debugger
+          img.value = a
+        }
+
+        function submit(cancel: any) {
+          const {
+            id,
+            name,
+            introduction,
+          } = detail.value
+
+          const param: any = {
+            name,
+            introduction,
+            img: img.value
+          }
+          if (props.action === 'edit') {
+            param.id = id
+          }
+
+          store.dispatch('common/Fetch', {
+            api: props.action !== 'add' ? 'update' : 'insert',
+            data: {
+              coding: props.data.coding,
+              ...param
+
+            }
+          }).then(() => {
+            props.render()
+            isShow.value = false
+          })
+        }
+
+          return {
+            isShow,
+            detail,
+            drawer,
+            upload,
+            submit,
+            image
+          }
+        }
+      })
 </script>

@@ -30,13 +30,13 @@
         <td>
           <v-space class="relative">
             <Detail1 :auth="auth.checked('start')" />
-            <Popover content="更多" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`" v-if="auth.checked('list') || auth.checked('tem') || auth.checked('del')">
+            <v-popover content="更多" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`" v-if="auth.checked('list') || auth.checked('tem') || auth.checked('del')">
               <ul class="font14" style="display: block">
                 <li style="height: 32px" @click="handleSelectServer(`/admin/collection/list?fid=${item.id}&name=${item.name}`)" v-if="auth.checked('list')">列表</li>
                 <li style="height: 32px" @click="handleSelectServer(`/admin/collection/temlist?fid=${item.id}&name=${item.name}`)" v-if="auth.checked('tem')">临时</li>
                 <li style="height: 32px" @click="handleSelectServer(index)" v-if="auth.checked('del')">删除</li>
               </ul>
-            </Popover>
+            </v-popover>
           </v-space>
         </td>
       </tr>
@@ -58,13 +58,11 @@ import {
 } from '@/utils'
 import Detail from './components/detail.vue'
 import Detail1 from './components/detail1.vue'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'VollectionViewdd',
   components: {
     Detail,
     Detail1,
-    Popover
   },
   setup(props, context) {
     const {

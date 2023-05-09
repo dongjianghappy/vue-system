@@ -18,7 +18,7 @@
         <li @click="exportImage('png')">导出PNG</li>
         <li>全屏</li>
 
-        <Popover :content="`<span style='
+        <v-popover :content="`<span style='
             background: ${currentColor};
             margin: 0 5px;
             display: flex;
@@ -41,7 +41,7 @@
               <div style="margin-left: 5px;">{{currentColor}}</div>
             </div>
           </div>
-        </Popover>
+        </v-popover>
         <!-- <v-titleattribute /> -->
 
         <li>
@@ -119,7 +119,7 @@
 
               <span>填充</span>
               <div class="">
-                <Popover :content="`<span style='
+                <v-popover :content="`<span style='
             background: ${currentColor};
             margin: 0 5px;
             display: flex;
@@ -142,7 +142,7 @@
                       <div style="margin-left: 5px;">{{currentColor}}</div>
                     </div>
                   </div>
-                </Popover>
+                </v-popover>
               </div>
             </div>
 
@@ -179,7 +179,6 @@ import {
 } from 'vue'
 import graphs from './indexss';
 import VueEvent from '@/utils/event'
-import Popover from '@/components/packages/popover/index.vue';
 import {
   color
 } from '@/assets/const'
@@ -188,9 +187,6 @@ import {
 } from '@/utils';
 export default defineComponent({
   name: "MymodalD",
-  components: {
-    Popover
-  },
   props: {
     data: {
       type: Object,

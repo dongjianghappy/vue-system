@@ -15,12 +15,8 @@ import {
   defineComponent,
   getCurrentInstance
 } from 'vue'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'v-Search',
-  components: {
-    Popover,
-  },
   props: {
     name: {
       type: String,

@@ -18,18 +18,18 @@
         <i class="infos demoimg iconfont icon-article"></i>
       </span>
       <!-- <span class="relative" v-if="item.image.length">
-        <Popover content="<i class='iconfont icon-img'></i>" arrow="lr" offset="right" :move="-70" :keys="`popover-img$-${index}`" type="hover">
+        <v-popover content="<i class='iconfont icon-img'></i>" arrow="lr" offset="right" :move="-70" :keys="`popover-img$-${index}`" type="hover">
           <div class="p10 w250">
             <img :src="item.cover" style="width: 100%" />
           </div>
-        </Popover>
+        </v-popover>
       </span> -->
       <span class="relative" v-if="item.flags.length > 0">
-        <Popover content="<i class='iconfont icon-tags'></i>" arrow="tb" offset="right" :move="0" :keys="`popover-img$-${index}`" type="hover">
+        <v-popover content="<i class='iconfont icon-tags'></i>" arrow="tb" offset="right" :move="0" :keys="`popover-img$-${index}`" type="hover">
           <div class="w250">
             <span class="mr10" v-for="(data, i) in data.aaa" :key="i"><i class="iconfont" :class="`icon-${data.icon}`" v-if="item.flags.indexOf(data.tag) > -1" />{{item.flags.indexOf(data.tag) > -1 ? data.value : "" }}</span>
           </div>
-        </Popover>
+        </v-popover>
       </span>
     </td>
     <td>
@@ -53,7 +53,7 @@
         <span>
           <v-confirm name="删除" :data="{id: item.id, coding: data.coding.art, operating: 'remove' }" type="text" api="removeAndRestore" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
         </span>
-        <Popover content="更多" arrow="tb" offset="right" :move="-650" :keys="`static_${index}`">
+        <v-popover content="更多" arrow="tb" offset="right" :move="-650" :keys="`static_${index}`">
           <div class="p15 font14" style="width: 700px;">
             <table width="100%" class="table-striped table-hover">
               <tr>
@@ -98,7 +98,7 @@
               <p>标签: {{item.tag}}</p>
             </div>
           </div>
-        </Popover>
+        </v-popover>
         <span>
           <v-confirm icon="top" :className="item.istop === '1' ? 'cl-red' : ''" :data="{id: item.id, field: 'istop', value: item.istop === '1' ? '0' : '1', coding: data.coding.art }" type="text" api="changeData" :render="render" operating="setTop" :auth="auth.checked('top')"></v-confirm>
         </span>
@@ -124,7 +124,6 @@ import {
   computed,
   jsonParse
 } from '@/utils'
-import Popover from '@/components/packages/popover/index.vue';
 import Graph from '../../../robot/graph/index.vue'
 import SourceDetail from '../../source/components/detail.vue'
 import DesignDetail from '../../design/components/detail.vue'
@@ -133,7 +132,6 @@ import OfficeDetail from '../../office/components/detail.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Popover,
     Graph,
     SourceDetail,
     DesignDetail,

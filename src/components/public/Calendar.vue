@@ -296,10 +296,10 @@ export default defineComponent({
   user-select: none;
 
   color: #606266;
-  border: 1px solid #e4e7ed;
+  // border: 1px solid #e4e7ed;
   // box-shadow: 0 2px 12px 0 #0000006e;
-  background: #fff;
-  border-radius: 4px;
+  // background: #fff;
+  // border-radius: 4px;
   margin: auto;
 
   .cal_header {
@@ -348,8 +348,8 @@ export default defineComponent({
     height: calc(100% - 34px);
 
     .cal_m_day_cell {
-      border-bottom: 1px solid #ebeef5;
-      border-right: 1px solid #ebeef5;
+      // border-bottom: 1px solid #ebeef5;
+      // border-right: 1px solid #ebeef5;
       width: 100%;
       // min-height: 40px;
       line-height: 24px;

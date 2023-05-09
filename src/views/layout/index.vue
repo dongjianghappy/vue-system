@@ -20,8 +20,6 @@
       </div>
     </div>
   </div>
-
-  <!-- <router-view /> -->
 </div>
 </template>
 
@@ -43,6 +41,7 @@ import Header from './components/header/index.vue'
 import Sidebar from './components/sidebar/index.vue'
 import Position from './components/position/index.vue'
 import Default from './components/default.vue'
+import VueEvent from '@/utils/event'
 export default defineComponent({
   name: 'IndexView ',
   components: {
@@ -91,6 +90,17 @@ export default defineComponent({
     onMounted(() => {
       module.value = window.location.pathname.split("/")[2] || "basic";
       sessionStorage.setItem('sidebar', module.value)
+
+      VueEvent.on("reload", (data: any) => {
+        
+        setTimeout(()=>{
+          store.dispatch('common/Fetch', {
+            api: "signOut"
+          }).then(res => {
+            router.push(`/login`)
+          })
+        }, 3000)
+      });
       // router.push(window.location.pathname+window.location.search)
     })
 

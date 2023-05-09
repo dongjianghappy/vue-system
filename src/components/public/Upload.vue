@@ -1,37 +1,31 @@
 <template>
 <div>
   <div class="ablumimg p15">
-    <ul v-if="file === 'image'">
-      <li v-for="(item, index) in imgList" :key="index" style="width: 100px; height: 100px;" draggable="true" @dragend="handleDragEnd($event, item)" @dragstart="handleDragStart($event, item)" @dragenter="handleDragEnter($event, item)" @dragover.prevent="handleDragOver($event, item)">
+    <!-- 图片上传 -->
+    <ul v-if="file === 'image' || (file === 'talk' && imgList.length)">
+      <li v-for="(item, index) in imgList" :key="index" draggable="true" @dragend="handleDragEnd($event, item)" @dragstart="handleDragStart($event, item)" @dragenter="handleDragEnter($event, item)" @dragover.prevent="handleDragOver($event, item)">
         <img draggable="true" :src="item.src" v-if="item.status ==='complete'" />
         <div class="load1" v-else>
           <div class="loader">Loading...</div>
         </div>
         <div class="cover" style="top: 0; display: none;"><i class="iconfont icon-close removeimg" @click="remove(index)"></i></div>
       </li>
-      <li class="upfile" style="width: 100px; height: 100px;" @click="handleclick"><i class="iconfont icon-add"></i></li>
+      <li class="upfile" @click="handleclick"><i class="iconfont icon-add"></i></li>
     </ul>
-    <div style="display: inline-block" v-else-if="file === 'music'">
-      <div style="display: inline-block; border-radius: 60px;
-    background: #f8f8fa; width: 80px; height: 80px;  line-height: 85px;"><i class="iconfont icon-upload-file font32" /></div>
-      <div>拖拽音频到此处或点击上传</div>
-      <button class="btn btn-default w-full" @click="handleclick">上传音频</button>
+    <!-- 音视频上传 -->
+    <div class="inline" v-else-if="file === 'music'">
+      <div class="add-button-file"><i class="iconfont icon-upload-file font32" /></div>
+      <div>拖拽{{file === 'music' ? '音频' : '视频'}}到此处或点击上传</div>
+      <button class="btn btn-default w-full" @click="handleclick">上传{{file === 'music' ? '音频' : '视频'}}</button>
     </div>
-    <div style="display: inline-block" v-else>
-      <div style="display: inline-block; border-radius: 60px;
-    background: #f8f8fa; width: 80px; height: 80px;  line-height: 85px;"><i class="iconfont icon-upload-file font32" /></div>
-      <div>拖拽视频到此处或点击上传</div>
-      <button class="btn btn-default w-full" @click="handleclick">上传视频</button>
-    </div>
-
-  </div> <input type="file" id="filElem" :accept="format" multiple="multiple" class="FileUpload_file_27ilM" style="display: none" @change="getFile">
+  </div>
+  <input type="file" id="FileUpload" :accept="format" multiple="multiple" class="FileUpload_file_27ilM" style="display: none" @change="getFile">
 </div>
 </template>
 
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   ref
 } from 'vue'
 import {
@@ -63,13 +57,14 @@ export default defineComponent({
 
   setup(props, context) {
     const store = useStore();
-    const filElem = ref("filElem")
-    let imgList: any = ref([])
-    const dragging = ref(null)
+    const FileUpload = ref("FileUpload") // 选择文件id
+    let imgList: any = ref([]) // 文件内容
+    const dragging = ref(null) // 拖拽状态
     const box: any = ref(0)
 
+    // 选择文件
     function getFile() {
-      let _obj: any = document.getElementById(filElem.value);
+      let _obj: any = document.getElementById(FileUpload.value);
       context.emit('update:haschoose', _obj.files)
       for (let i = 0; i < _obj.files.length; i++) {
         imgList.value.push({
@@ -79,54 +74,48 @@ export default defineComponent({
 
         let fd = new FormData()
         fd.append('upload' + i, _obj.files[i])
-        debugger
         store.dispatch('common/uploadImg', {
           uploadtype: props.uploadtype,
           dir: props.data.dir,
           upload: true,
           data: fd,
           progress: (e: any) => {
-            debugger
             let url = URL.createObjectURL(_obj.files[i])
             let element = new Audio(url)
-            // element.id="id_123123123"
             let format = _obj.files[i].name.split('.')[1]
             element.addEventListener('loadedmetadata', () => {
-              // time = Math.round(element.duration * 100) / 100
-              
               context.emit('update:file', {
-              name: _obj.files[i].name,
-              fileUrl: url,
-              cover: "",
-              format: format, // 格式
-              duration: element.duration,
-              progresstotal: e.total,
-              bar: (e.loaded * 100) / e.total,
-              size: `${(e.total / 1024 / 1024).toFixed(3)}MB`,
-              loaded: `${(e.loaded / 1024 / 1024).toFixed(3)}MB`
-            })
+                name: _obj.files[i].name,
+                fileUrl: url,
+                cover: "",
+                format: format, // 格式
+                duration: element.duration,
+                progresstotal: e.total,
+                bar: (e.loaded * 100) / e.total,
+                size: `${(e.total / 1024 / 1024).toFixed(3)}MB`,
+                loaded: `${(e.loaded / 1024 / 1024).toFixed(3)}MB`
+              })
             })
 
-            
           }
         }).then(res => {
-          let aaa: any = imgList.value.filter((item: any) => item.status === "upload")
-          aaa[0].status = "complete"
-          aaa[0].src = res[0].img
-
+          // 上传成功后，将状态改成完成并且展示图片
+          let arr: any = imgList.value.filter((item: any) => item.status === "upload")
+          arr[0].status = "complete"
+          arr[0].src = res[0].img
           context.emit('imgList', img(imgList.value))
         })
       }
     }
 
+    // 文件处理
     function img(data: any) {
       let abc = ""
       if (data.length) {
         abc = "|"
         for (let i = 0; i < data.length; i++) {
           let v = data[i].src.split("/");
-          debugger
-          v = v[v.length - 1].split(".")[0] + "|"
+          v = v[v.length - 1] + "|"
           abc += v
         }
       }
@@ -134,7 +123,7 @@ export default defineComponent({
     }
 
     function handleclick() {
-      let _obj: any = document.getElementById(filElem.value);
+      let _obj: any = document.getElementById(FileUpload.value);
       _obj.dispatchEvent(new MouseEvent('click'))
     }
 
@@ -189,9 +178,25 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .current {
   padding: 2px;
   border: 2px dashed #fff;
+}
+
+.ablumimg {
+  li {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.add-button-file {
+  display: inline-block;
+  border-radius: 60px;
+  background: #f8f8fa;
+  width: 80px;
+  height: 80px;
+  line-height: 85px;
 }
 </style>

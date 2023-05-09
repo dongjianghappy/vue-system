@@ -3,7 +3,7 @@
   <template v-if="type==='image'">
     <div style="flex: 1; display: flex; flex-flow: column;">
       <div class="relative" style="flex: 1; text-align: center;">
-        <img :src="currentImg" style=" width: 450px; height: 100%" @click.stop />
+        <img :src="currentImg" style=" width: 450px; height: 100%; display: inline;" @click.stop />
         <div class="layer-button close absolute" style="line-height: 60px;" @click="handleclick"><i class="iconfont icon-close font20 pointer" /></div>
         <div class="layer-button prev absolute deg180" @click.stop @click="toggle(-1)" v-if="index !== 0">
           <i class="iconfont icon-arrow pointer" style="font-size: 32px !important; line-height: 60px;" />
@@ -12,9 +12,10 @@
           <i class="iconfont icon-arrow pointer" style="font-size: 32px !important; line-height: 60px;" />
         </div>
       </div>
+      <audio :src="data.file" loop autoplay style="display: none"></audio>
       <div style="background: #000; height: 90px" v-if="data.image.length > 1" @click.stop>
         <ul style="display: flex; justify-content: center; height: 90px; align-items: center;">
-          <li class="mlr5" v-for="(img, index) in data.image" :key="index" style="width: 4.2%;" @click="showImg(img, index)">
+          <li class="picture-viewer p5 " :class="{'picture-viewer-current': index === i}" v-for="(img, i) in data.image" :key="i" style="width: 4.2%;" @click="showImg(img, i)">
             <img :src="img" style="width: 100%; height: 100%;" />
           </li>
         </ul>
@@ -27,7 +28,7 @@
     </video>
     <div class="layer-button close absolute" style="line-height: 60px;" @click="handleclick"><i class="iconfont icon-close font20 pointer" /></div>
   </div>
-  <div class="layer-info relative" @click.stop>
+  <div class="layer-info relative" @click.stop v-if="hasInfo">
     <div class="relative">
       <div class="con-list">
         <div class="con-wrap">
@@ -47,9 +48,9 @@
         </div>
       </div>
     </div>
-    <div class="absolute bg-red align_center p10" style="  display: flex; bottom: 0; left: 0; right: 0; height: 80px;">
-      <div class="btn btn-default m5" style="flex: 1; line-height: 40px;" @click="prevOrNext('prev')">上一条</div>
-      <div class="btn btn-default m5" style="flex: 1; line-height: 40px;" @click="prevOrNext('next')">下一条</div>
+    <div class="absolute align_center p10" style="background: #f8f8fa; display: flex; bottom: 0; left: 0; right: 0; height: 90px;">
+      <div class="btn btn-default m5" style="flex: 1; line-height: 45px;" @click="prevOrNext('prev')">上一条</div>
+      <div class="btn btn-default m5" style="flex: 1; line-height: 45px;" @click="prevOrNext('next')">下一条</div>
     </div>
   </div>
 </div>
@@ -62,6 +63,7 @@ import {
   ref,
   watch
 } from 'vue'
+import VueEvent from '@/utils/event'
 export default defineComponent({
   name: 'v-Layer',
   props: {
@@ -81,7 +83,11 @@ export default defineComponent({
         return
       }
     },
-    isShow: Boolean
+    isShow: Boolean,
+    hasInfo: {
+      type: Boolean,
+      default: true
+    }
   },
   emits: ['update:isShow'],
   setup(props, context) {
@@ -89,6 +95,7 @@ export default defineComponent({
     const currentVideo: any = ref(props.data.video)
     const show_video: any = ref(null)
     const index: any = ref(0)
+    const keyStatus: any = ref(false)
     document.getElementsByTagName("html")[0].style.overflow = "hidden"
 
     // 监听
@@ -105,6 +112,7 @@ export default defineComponent({
 
     function handleclick() {
       document.getElementsByTagName("html")[0].style.overflow = ""
+      keyStatus.value = false
       context.emit('update:isShow', false)
     }
 
@@ -137,6 +145,25 @@ export default defineComponent({
     onMounted(() => {
       // 监听播放结束
       // show_video.value.addEventListener("ended", prevOrNext("next"));
+      keyStatus.value = true
+      document.onkeydown = (e: any) => {
+        if (!keyStatus.value) {
+          return
+        }
+        if (e.keyCode == '27') {
+          handleclick()
+        }
+        if (e.keyCode == '37') {
+          toggle(-1)
+        }
+        if (e.keyCode == '39') {
+          toggle(1)
+        }
+      }
+
+      if(props.data.file){
+        VueEvent.emit("musicStop");
+      }
     })
 
     return {
@@ -197,6 +224,18 @@ export default defineComponent({
   .layer-info {
     background: #fff;
     width: 350px
+  }
+
+  .picture-viewer {
+    opacity: 0.5;
+
+    &.picture-viewer-current {
+      opacity: 1;
+    }
+
+    img {
+      border-radius: 2px;
+    }
   }
 }
 </style>

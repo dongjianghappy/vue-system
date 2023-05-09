@@ -7,7 +7,7 @@
           <v-search :render="init" />
         </span>
         <span>
-          <Popover content="<i class='iconfont icon-calendar' />" arrow="tb" offset="right" :move="-150" keys="calendar">
+          <v-popover content="<i class='iconfont icon-calendar' />" arrow="tb" offset="right" :move="-150" keys="calendar">
             <div style="width: 350px; height: 350px;">
               <v-calendar @changeMonth="changeMonth" @changeDay="changeDay">
                 <template v-slot:default="row">
@@ -22,10 +22,10 @@
                 </template>
               </v-calendar>
             </div>
-          </Popover>
+          </v-popover>
         </span>
         <span>
-          <Popover content="<i class='iconfont icon-list' />" arrow="tb" offset="right" :move="-650" keys="cateList">
+          <v-popover content="<i class='iconfont icon-list' />" arrow="tb" offset="right" :move="-650" keys="cateList">
             <div class="p15" style="width: 750px; height: 300px;">
               <perfect-scrollbar>
                 <div class="item_t" style="min-height: 120px">
@@ -41,10 +41,10 @@
                 </div>
               </perfect-scrollbar>
             </div>
-          </Popover>
+          </v-popover>
         </span>
         <v-condition name="排序" icon="sort-desc" field="sorter" :enums="[{value: 'id desc', name: '递减'}, {value: 'id asc', name: '递增'}]" :render="init" />
-        <Popover content="<i class='iconfont icon-font-colors' />" arrow="tb" offset="right" :move="-250" keys="calendar">
+        <v-popover content="<i class='iconfont icon-font-colors' />" arrow="tb" offset="right" :move="-250" keys="calendar">
           <div class="color-list color-wrap" style="width: 300px; height: 150px;">
             <a class="col-md-3 color p5" @click="handleColor()">
               <div class="cl">
@@ -58,12 +58,13 @@
               </div>
             </a>
           </div>
-        </Popover>
+        </v-popover>
         <!-- <v-condition name="颜色" icon="font-colors" field="color" :enums="colorList" :render="init" v-if="channelData.module ==='picture'" /> -->
         <v-toggledisplay v-model:toggle="toggleDisplay" />
-        <v-button @onClick="handleClick('add')" :disabled="auth.checked('add')" v-if="channelData.module !=='video' && channelData.module !=='source' && channelData.module !=='design' && channelData.module !=='office'">
+        <v-button @onClick="handleClick('add')" :disabled="auth.checked('add')" v-if="channelData.module !=='picture' && channelData.module !=='video' && channelData.module !=='source' && channelData.module !=='design' && channelData.module !=='office'">
           <i class="iconfont icon-anonymous-iconfont" />新增文档
         </v-button>
+        <PictureDetail :coding="coding" :render="init" v-else-if="channelData.module ==='picture'" />
         <SourceDetail :coding="coding" :render="init" v-else-if="channelData.module ==='source'" />
         <DesignDetail :coding="coding" :render="init" v-else-if="channelData.module ==='design'" />
         <OfficeDetail :coding="coding" :render="init" v-else-if="channelData.module ==='office'" />
@@ -104,7 +105,7 @@ import {
 } from '@/assets/const'
 import {
   COLOR
-} from '@/assets/enum'
+} from '@/assets/common_const'
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
 import List3 from "./components/list3.vue"
@@ -114,11 +115,10 @@ import uploadVideo from '../video/components/detail.vue'
 import SourceDetail from '../source/components/detail.vue'
 import DesignDetail from '../design/components/detail.vue'
 import OfficeDetail from '../office/components/detail.vue'
-import Popover from '@/components/packages/popover/index.vue';
+import PictureDetail from '../picture/components/detail.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    Popover,
     List,
     List2,
     List3,
@@ -127,7 +127,8 @@ export default defineComponent({
     uploadVideo,
     SourceDetail,
     DesignDetail,
-    OfficeDetail
+    OfficeDetail,
+    PictureDetail
   },
   props: {
     type: {
@@ -208,12 +209,12 @@ export default defineComponent({
 
     function init(param: any) {
 
-      const sssss: any = {
+      const params: any = {
         page: 1,
         pagesize: pagesize
       }
 
-      Object.assign(sssss, param)
+      Object.assign(params, param)
       const {
         type
       }: any = route.query
@@ -226,17 +227,17 @@ export default defineComponent({
         data: {
           coding: coding.art,
           management_checked: type === '2' ? -1 : type === '1' ? 0 : 1, // 是否审核,
-          ...sssss
+          ...params
         }
       }).then(res => {
         loading.value = true
       })
     }
 
-    function handleClick(params: any) {
+    function handleClick(param: any) {
       let url = `/admin/${channelData.module}/list/add`
-      if (params !== 'add') {
-        url = url + `&id=${params.id}`
+      if (param !== 'add') {
+        url = url + `&id=${param.id}`
       }
 
       router.push(url)

@@ -8,7 +8,6 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   ref,
 } from 'vue'
 
@@ -45,7 +44,6 @@ export default defineComponent({
 
     function handleDragOver(e: any) {
       e.dataTransfer.dropEffect = 'move'
-
     }
 
     function handleDragEnter(e: any, item: any) {

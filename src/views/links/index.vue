@@ -66,27 +66,24 @@ export default defineComponent({
     })
 
     // 初始化
-    function init(params: any) {
+    function init(param: any) {
 
-      const sssss: any = {
+      const params: any = {
         page: 1,
         pagesize: pagesize
       }
 
-      Object.assign(sssss, params)
+      Object.assign(params, param)
 
-      const param: any = {
-        coding,
-        method: tabsIndex.value === "1" ? 1 : 0, // 是否出售1: 交换, 0: 出售
-        apply_checked: tabsIndex.value === '2' ? 0 : 1, // 是否审核1: 审核, 0: 未审核
-        ...sssss
-      }
       if (tabsIndex.value === '2') delete param.method
       loading.value = false
       store.dispatch('basic/linkAction', {
         tabsIndex: tabsIndex.value,
         data: {
-          ...param
+          coding,
+        method: tabsIndex.value === "1" ? 1 : 0, // 是否出售1: 交换, 0: 出售
+        apply_checked: tabsIndex.value === '2' ? 0 : 1, // 是否审核1: 审核, 0: 未审核
+          ...params
         }
       }).then(res => {
         loading.value = true

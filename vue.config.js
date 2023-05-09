@@ -2,7 +2,7 @@ module.exports = {
     // outputDir: 'dist',   //build输出目录
     // assetsDir: 'assets', //静态资源目录（js, css, img）
     // lintOnSave: false, //是否开启eslint
-    // publicPath: process.env.NODE_ENV === 'production' ? '/admins/' : './',
+    publicPath: process.env.NODE_ENV === 'production' ? '/admins/' : '/',
       lintOnSave: process.env.NODE_ENV === 'development',
       productionSourceMap: false,
     devServer: {

@@ -175,26 +175,26 @@ export default defineComponent({
     })
 
     // 初始化
-    function getPosition(params: any) {
-      const sssss: any = {
+    function getPosition(param: any) {
+      const params: any = {
         page: 1,
         pagesize: 100
       }
 
-      Object.assign(sssss, params)
+      Object.assign(params, param)
       store.dispatch('common/Fetch', {
         api: "getAdPosition",
         data: {
           website: site.value && site.value.id || props.data.website,
           ad_id: props.data.id,
-          ...sssss
+          ...params
         }
       }).then(res => {
         positionList.value = res.result !== true ? res.result : []
       })
     }
 
-    function submit(params: any) {
+    function submit(param: any) {
       const position_id: any = []
 
       // 已选的广告位匹配当前广告或者未选的广告位才追加到position_id数组中
@@ -216,8 +216,8 @@ export default defineComponent({
         }
       }).then(() => {
         props.render()
-        params.message()
-        params.cancel()
+        param.message()
+        param.cancel()
       })
     }
 

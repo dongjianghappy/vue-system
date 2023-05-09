@@ -39,36 +39,49 @@
           <v-tag v-model:tags="detail.tag" />
         </li>
         <li class="li">
-          <span class="label">所属分类</span>
+          <span class="label">所属风格</span>
           {{detail.parent}}
-          <v-category name="选择分类" :data="{item: detail, coding: coding.cate}" type="text"></v-category>
+          <v-category name="选择风格" :data="{item: detail, coding: coding.cate}" :isMore="true" type="text"></v-category>
 
         </li>
+        <li class="li" v-if="detail.kind === 'music'">
+          <span class="label">语种</span>
+          <v-radiobutton name="language" v-model:checked="detail.language" :enums="[{label: '华语', value: 'chinese'}, {label: '粤语', value: 'guangdong'},{label: '欧美', value: 'english'}, {label: '日语', value: 'Japanese'},{label: '韩语', value: 'korea'}, {label: '其他', value: 'other'}]" />
+        </li>    
+        <li class="li" v-if="detail.kind === 'music'">
+          <span class="label">乐器</span>
+          <v-radiobutton name="musical_instrument" v-model:checked="detail.musical_instrument" :enums="[{label: '吉他', value: '0'}, {label: '架子鼓', value: '1'}, {label: '钢琴', value: '2'}]" />
+        </li>       
         <li class="li">
           <span class="label">类型</span>
-          <v-radiobutton name="kind" v-model:checked="detail.kind" :enums="[{label: '音效', value: 'effects'}, {label: '歌曲', value: 'music'}]" />
+          <v-radiobutton name="kind" v-model:checked="detail.kind" :enums="[{label: '歌曲', value: 'music'}, {label: '音效', value: 'effects'}]" />
         </li>
         <li style="padding-left: 100px" v-if="detail.kind === 'music'">
           <ul class="plr15" style="background: #f8f8fa;">
             <li class="li">
               <span class="label">歌手</span>
-              <span class="mr15">{{singer.name}}</span>
-              <Choose title="选择歌手" :data="data" v-model:checked="singer" type="radio" :render="init" />
+              <span class="mr15">{{detail.singer}}</span>
+              <v-choose title="选择歌手" :data="{ item: detail, field: 'singer' }" coding="E10000" @choose="chooseSinger" type="radio" :render="init" />
             </li>
             <li class="li">
               <span class="label">专辑</span>
-              <span class="mr15">{{special.name}}</span>
-              <Choose title="选择专辑" :data="data" v-model:checked="special" type="radio" :render="init" />
+              <span class="mr15">{{detail.album}}</span>
+              <v-choose title="选择专辑" :data="{ item: detail, field: 'album', condition: {singer_id: detail.singer_id} }" coding="E10003" @choose="chooseSinger" type="radio" :render="init" :disabled="detail.singer_id ==='0'" />
             </li>
             <li class="li">
               <span class="label">歌词</span>
-              <span class="mr15">{{lrc.name}}</span>
-              <Choose title="选择歌词" :data="data" v-model:checked="lrc" type="radio" :render="init" />
+              <span class="mr15">{{detail.lrc}}</span>
+              <v-choose title="选择歌词" :data="{ item: detail, field: 'lrc', condition: {namess: detail.name} }" coding="E10001" @choose="chooseSinger" type="radio" :render="init" />
+            </li>
+            <li class="li">
+              <span class="label">歌谱</span>
+              <span class="mr15">{{detail.score}}</span>
+              <v-choose title="选择歌谱" :data="{ item: detail, field: 'score', condition: {namess: detail.name} }" coding="E10002" @choose="chooseSinger" type="radio" :render="init" />
             </li>
           </ul>
-        </li>
+        </li>     
         <li class="li">
-          <span class="label">音效描述</span>
+          <span class="label">音频描述</span>
           <textarea placeholder="请输入单页摘要" v-model="detail.summary" class="w-full"></textarea>
         </li>
       </ul>
@@ -85,12 +98,10 @@ import {
   watch,
   durationTrans
 } from '@/utils'
-import Choose from '../../../../links/components/chooseSite.vue'
 import SpaceModal from '../../../../space/components/modalSpace.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Choose,
     SpaceModal
   },
   props: {
@@ -178,13 +189,36 @@ export default defineComponent({
       }
     }
 
+    function chooseSinger(param: any){
+      const {field, data} = param
+      if(field === 'singer'){
+        detail.value.singer_id = data.id
+        detail.value.singer = data.name
+      }else if(field === 'album'){
+        detail.value.album_id = data.id
+        detail.value.album = data.name
+      }else if(field === 'lrc'){
+        detail.value.lrc_id = data.id
+        detail.value.lrc = data.name
+      }else if(field === 'score'){
+        detail.value.score_id = data.id
+        detail.value.score = data.name
+      }
+    }
+
     function submit(params: any) {
       debugger
       const {
         id,
         fid,
+        singer_id,
+        album_id,
+        lrc_id,
+        score_id,
         title,
         kind,
+        language,
+        musical_instrument,
         summary,
         tag,
         format,
@@ -195,8 +229,14 @@ export default defineComponent({
       } = detail.value
       const param: any = {
         fid,
+        singer_id,
+        album_id,
+        lrc_id,
+        score_id,
         title,
         kind: kind || 'effects',
+        language: language || 'chinese',
+        musical_instrument: musical_instrument || '0',
         summary,
         tag: tag ? tag.join(',') : "",
         format,
@@ -235,16 +275,9 @@ export default defineComponent({
       lrc,
       submit,
       onPlay,
-      isplay
+      isplay,
+      chooseSinger
     }
   }
 })
 </script>
-
-function dataURLtoFile(dataBase64: string, arg1: string) {
-  throw new Error('Function not implemented.')
-}
-
-function dataURLtoFile(dataBase64: string, arg1: string) {
-  throw new Error('Function not implemented.')
-}

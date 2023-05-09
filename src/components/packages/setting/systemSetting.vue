@@ -9,8 +9,8 @@
   <template v-slot:content>
     <v-collapse :title="item.name" v-for="(item, index) in dataList" :key="index">
       <template v-slot:extra>
-    <AddSetting action="add" />
-  </template>
+        <AddSetting action="add" />
+      </template>
       <ul class="form-wrap-box">
         <li class="li mb15" v-for="(item, i) in item.list" :key="i">
           <span class="label">
@@ -94,7 +94,7 @@ export default defineComponent({
       })
     }
 
-    function getValue(param: any){
+    function getValue(param: any) {
       store.commit('user/setSettingValue', {
         ...param
       })

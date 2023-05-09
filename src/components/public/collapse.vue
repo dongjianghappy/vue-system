@@ -1,9 +1,9 @@
 <template>
 <div class="collapse">
-  <div class="collapse-head ptb10" @click="handleShow">
-    <i v-if="!collapse" class="iconfont icon-arrow arrow " :class="collapse ? 'deg90' : ''"></i>
+  <div class="collapse-head ptb10" @click="handleClick">
+    <span :class="{ 'deg90': collapse}" style="display: inline-block;"><i class="iconfont icon-arrow arrow "></i></span>
     <span>{{title}}</span>
-    <span class="right align_right" >
+    <span class="right align_right">
       <slot name="extra"></slot>
     </span>
   </div>
@@ -26,7 +26,7 @@ export default defineComponent({
       type: String,
       default: ""
     },
-    disableClick: {
+    disabled: {
       type: Boolean,
       default: false
     }
@@ -35,21 +35,16 @@ export default defineComponent({
   setup(props, context) {
     let collapse: any = ref(true)
 
-    function handleShow(params: any) {
-      if(props.disableClick) return
+    function handleClick(params: any) {
+      if (props.disabled) {
+        return
+      }
       collapse.value = !collapse.value
     }
     return {
-      handleShow,
+      handleClick,
       collapse
     }
   }
 })
 </script>
-
-<style scoped>
-.current {
-  color: #40a9ff !important;
-}
-</style>
-

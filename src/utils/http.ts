@@ -22,7 +22,7 @@ export default class http {
   constructor (options?: any) {
     if (!options) {
       this.baseConfig = {
-        baseURL: '/admincms/api/', // 设置跨域代理接口统一的前置地址  http://www.dongblog.com  http://127.0.0.1  http://www.yunxi10.com
+        baseURL: process.env.NODE_ENV === 'development' ? '/admincms/api/' : 'http://www.yunxi10.com/admincms/api/', // 设置跨域代理接口统一的前置地址  http://www.dongblog.com  http://127.0.0.1  http://www.yunxi10.com
         timeout: 300000,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',

@@ -3,7 +3,7 @@
   <div class="module-head">
     <v-optionsbar title="核心词">
       <template v-slot:extraright>
-        <Popover content="频道" arrow="tb" offset="right" :move="-250" keys="calendar">
+        <v-popover content="频道" arrow="tb" offset="right" :move="-250" keys="calendar">
           <div style="width: 350px; height: 200px;">
             <ul class="p10 font14 align_center">
               <li class="col-md-3 mb5" @click="handleChannel()">所有</li>
@@ -12,7 +12,7 @@
               </li>
             </ul>
           </div>
-        </Popover>
+        </v-popover>
         <Detail action='add' :data="{ coding }" :render="init" />
       </template>
     </v-optionsbar>
@@ -67,13 +67,11 @@ import {
   useRoute,
   codings
 } from '@/utils'
-import Popover from '@/components/packages/popover/index.vue';
 import Detail from './components/detail.vue'
 import DetailFlag from './components/detailFlag.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    Popover,
     Detail,
     DetailFlag
   },
@@ -91,34 +89,34 @@ export default defineComponent({
     })
 
     function init(param: any = {}) {
-      let aaaa: any = {}
+      let _param: any = {}
       if (route.path === '/admin/tag/core') {
-        aaaa = {
+        _param = {
           type: 1,
           ...param
         }
       } else if (route.path === '/admin/tag/target') {
-        aaaa = {
+        _param = {
           type: 2,
           ...param
         }
       } else {
-        aaaa = {
+        _param = {
           type: 0,
           ...param
         }
       }
-      const sssss: any = {
+      const params: any = {
         page: 1,
         pagesize: 50
       }
 
-      Object.assign(sssss, aaaa)
+      Object.assign(params, _param)
 
       store.dispatch('common/Fetch', {
         data: {
           coding: "O0003",
-          ...sssss
+          ...params
         }
       }).then(res => {
         dataList.value = res.result.list

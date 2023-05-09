@@ -1,5 +1,5 @@
 <template>
-<div class="mask" @click="handleclick"></div>
+<div class="mask" @click="handleClick"></div>
 </template>
 
 <script lang="ts">
@@ -17,11 +17,11 @@ export default defineComponent({
   },
   emits: ['update:isShow'],
   setup(props, context) {
-    function handleclick() {
+    function handleClick() {
       context.emit('update:isShow', !props.isShow)
     }
     return {
-      handleclick
+      handleClick
     }
   }
 })

@@ -52,7 +52,7 @@
               <span>
                 <Detail action="edit" :data="{uid: item.account, coding: 'P0005' }" :render="render" />
               </span>
-              <Popover content="更多" arrow="tb" offset="right" :move="-650" :keys="`static_${index}`">
+              <v-popover content="更多" arrow="tb" offset="right" :move="-650" :keys="`static_${index}`">
                 <div class="font14" style="width: 650px">
                   <table width="100%" class="table-striped table-hover">
                     <tr>
@@ -73,7 +73,7 @@
                     </tr>
                   </table>
                 </div>
-              </Popover>
+              </v-popover>
               <span>
                 <v-confirm icon="mail" :data="{uid: item.account}" :className="item.recommend === '1' ? 'cl-5bc0de' : ''" type="text" api="push" :render="render" operating="push"></v-confirm>
               </span>
@@ -108,7 +108,6 @@ import {
   computed,
   useStore
 } from '@/utils'
-import Popover from '@/components/packages/popover/index.vue';
 import AddButton from './setGrade.vue'
 import SetBan from './setBan.vue'
 import Detail from './detail.vue'
@@ -119,7 +118,6 @@ export default defineComponent({
   name: 'HomeViewdd',
   components: {
     Detail,
-    Popover,
     AddButton,
     SetBan
   },

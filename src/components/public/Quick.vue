@@ -1,5 +1,5 @@
 <template>
-<span :class="{inputline: isEdit, 'quick-edit': isInput === 'input'}" :style="[style]" @click="getFocus" @blur="getBuler">{{value}}</span>
+<span :class="{inputline: isEdit, 'quick-edit': isInput === 'input', 'no-event': auth}" :style="[style]" @click="getFocus" @blur="getBuler">{{value}}</span>
 </template>
 
 <script lang="ts">
@@ -16,10 +16,6 @@ export default defineComponent({
       default: () => {
         return {}
       }
-    },
-    width: {
-      type: String,
-      default: "100%"
     },
     value: {
       type: String,
@@ -52,9 +48,6 @@ export default defineComponent({
 
     function getFocus(e: any) {
       isInput.value = "input"
-      if (!props.auth) {
-        return
-      }
       e.currentTarget.setAttribute("contenteditable", true)
       isEdit.value = true
       e.currentTarget.focus()

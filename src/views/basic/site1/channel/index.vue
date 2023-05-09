@@ -4,11 +4,11 @@
   <div class="module-head">
     <v-optionsbar :title="`${route.query.name}导航列表`">
       <template v-slot:extraleft>
-        <Popover :content="`主导航`" arrow="tb" offset="right" :move="-35" :keys="`static111}`">
+        <v-popover :content="`主导航`" arrow="tb" offset="right" :move="-35" :keys="`static111}`">
           <ul>
             <li class="font14" style="line-height: 35px;" @click="handleClicksss(item, i)" v-for="(item, i) in navType" :key="i">{{item.name}}</li>
           </ul>
-        </Popover>
+        </v-popover>
       </template>
       <template v-slot:extraright>
         <space>
@@ -101,12 +101,10 @@ import {
   NAV_TYPE,
 } from '@/assets/enum'
 import Detail from './components/detail.vue'
-import Popover from '@/components/packages/popover/index.vue';
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    Detail,
-    Popover
+    Detail
   },
   setup(props, context) {
     const {

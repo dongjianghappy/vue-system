@@ -92,7 +92,7 @@
         相册
       </div>
       <div class="module-content plr15" style="min-height: 290px">
-        <v-uploads ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: 'P0002'}" :dataList="detail.img" :uploadtype="channelData.module" @imgList="image" :style="'width: 135px'" />
+        <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: 'P0002'}" :dataList="detail.img" :uploadtype="channelData.module" @imgList="image" :style="'width: 135px'" />
       </div>
     </div>
   </div>

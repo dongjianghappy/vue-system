@@ -1,6 +1,7 @@
 <template>
 <div style="width: 150px; display: flex; justifyItems: flex-start">
-  <Popover :content="`<span style='
+
+  <v-popover :content="`<span style='
             background: ${style.color || currentColor};
             margin: 0 5px;
             display: flex;
@@ -23,7 +24,7 @@
         <div style="margin-left: 5px;">{{style.color || currentColor}}</div>
       </div>
     </div>
-  </Popover>
+  </v-popover>
   <span style="
             margin-right: 5px;
             display: flex;
@@ -70,16 +71,12 @@ import {
   getCurrentInstance,
   ref
 } from 'vue'
-import Popover from '@/components/packages/popover/index.vue';
 import {
   color
 } from '@/assets/const'
 
 export default defineComponent({
-  name: 'v-TitleAttribute',
-  components: {
-    Popover
-  },
+  name: 'v-Search',
   data() {
     return {
       background: "#f1f1f1"

@@ -23,7 +23,7 @@
     <td>{{item.dbut}}</td>
     <td>{{item.dbtime}}</td>
     <td>
-      <span>备份</span>
+      <span><Exports :data="item" /></span>
     </td>
   </tr>
 </table>
@@ -31,6 +31,7 @@
 </template>
 
 <script lang="ts">
+import Exports from './export.vue'
 import {
   defineComponent,
   getCurrentInstance,
@@ -43,6 +44,9 @@ import {
 export default defineComponent({
   name: 'v-List',
   emits: ['onClick'],
+  components: {
+    Exports
+  },
   setup(props, context) {
     const store = useStore();
     const dataList: any = ref([])
