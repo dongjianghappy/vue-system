@@ -2,9 +2,9 @@
 <v-button v-model:show="isShow" :disabled="auth">
   查看
 </v-button>
-<v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" action="add" :title="data.name" :style="{width: '350'}" :hasfooter="false" >
+<v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" action="add" :title="data.name" :style="{width: '350'}" :hasfooter="false">
   <template v-slot:content v-if="isShow">
-    <table width="100%" class="table-striped">
+    <table class="table-striped">
       <tr>
         <td class="col-md-6">用户</td>
         <td class="col-md-6">会员账号</td>
@@ -41,10 +41,6 @@ export default defineComponent({
     name: {
       type: String,
       default: ""
-    },
-    action: {
-      type: String,
-      default: "add"
     },
     // 是否展示
     disabled: {

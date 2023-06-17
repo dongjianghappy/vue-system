@@ -16,7 +16,7 @@
   </div>
   <div class="module-content p15" style="overflow: inherit;">
     <div v-if="view === 0">
-      <table width="100%" class="table-striped table-hover col-left-2">
+      <table class="table-striped table-hover col-left-2">
         <tr class="th">
           <td class="col-md-1">选择</td>
           <td class="col-md-3">用户</td>
@@ -31,12 +31,7 @@
             <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
           </td>
           <td style="display: flex">
-            <div class="relative" style=" width: 32px; height: 32px; border-radius: 50%; overflow: hidden; display: inline-block;">
-              <img :src="item.photos" class="mr10" style="width: 32px; height: 32px;">
-              <span class="absolute font12 cl-red" style="background: #fff; right: 0; bottom: 0px" v-if="item.role !== '0'">
-                员
-              </span>
-            </div>
+            <v-avatar :data="item" :condition="{tag: item.role !== '0', value: '员'}"></v-avatar>
             <div class="pl5" style="flex: 1; height: 32px; line-height: 32px; display: inline-block;">
               {{item.nickname}}
             </div>
@@ -50,11 +45,11 @@
           <td>
             <v-space class="relative">
               <span>
-                <Detail action="edit" :data="{uid: item.account, coding: 'P0005' }" :render="render" />
+                <Detail action="edit" :data="{uid: item.account, coding: data.coding }" :render="render" />
               </span>
               <v-popover content="更多" arrow="tb" offset="right" :move="-650" :keys="`static_${index}`">
                 <div class="font14" style="width: 650px">
-                  <table width="100%" class="table-striped table-hover">
+                  <table class="table-striped table-hover">
                     <tr>
                       <td class="col-md-1">用户类型</td>
                       <td class="col-md-1">用户状态</td>
@@ -82,8 +77,9 @@
         </tr>
       </table>
       <v-nodata :data="dataList.list" />
-
-      <v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding: data.coding.art }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="render" />
+      <div class="mt15 align_right">
+        <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="render" />
+      </div>
     </div>
     <v-calendar @changeMonth="changeMonth" height="145px" v-else>
       <template v-slot:default="row">
@@ -106,10 +102,8 @@ import {
   defineComponent,
   ref,
   computed,
-  useStore
+  useStore,
 } from '@/utils'
-import AddButton from './setGrade.vue'
-import SetBan from './setBan.vue'
 import Detail from './detail.vue'
 import {
   BANNED_TYPE,
@@ -117,14 +111,14 @@ import {
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    Detail,
-    AddButton,
-    SetBan
+    Detail
   },
   props: {
     data: {
-      type: String,
-      default: ""
+      type: Object,
+      default: () => {
+        return {}
+      }
     },
     render: {
       type: Function,
@@ -158,7 +152,6 @@ export default defineComponent({
         }
       }).then((res: any) => {
         calendarData.value = res.result
-        debugger
       })
     }
 
@@ -168,13 +161,12 @@ export default defineComponent({
         let date: any = new Date()
         init({
           year: date.getFullYear(),
-          month: date.getMonth()+1
+          month: date.getMonth() + 1
         })
       }
     }
 
     function changeMonth(data: any) {
-      debugger
       init({
         year: data.fullYear,
         month: data.month

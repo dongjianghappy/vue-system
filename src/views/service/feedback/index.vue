@@ -4,19 +4,15 @@
     <v-optionsbar title="意见反馈"></v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-12">
       <tr class="th">
-        <td class="col-md-1">选择</td>
         <td class="col-md-2">用户</td>
-        <td class="col-md-5">反馈内容</td>
-        <td class="col-md-2">反馈日期</td>
+        <td class="col-md-6">内容</td>
+        <td class="col-md-2">日期</td>
         <td class="col-md-1">状态</td>
         <td class="col-md-1">操作</td>
       </tr>
       <tr v-for="(item, index) in dataList.list" :key="index">
-        <td>
-          <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
-        </td>
         <td style="line-height: 35px;">
           <v-avatar :data="item" />{{item.nickname}}
         </td>
@@ -29,7 +25,9 @@
       </tr>
     </table>
     <v-nodata :data="dataList.list || []" />
-    <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, coding }" :pagination="{total: 10, page: 10, pagesize: 10}" :sorceData="dataList.list" :render="init" v-if="dataList.list && dataList.list.length > 0" :auth="auth" />
+    <div class="mt15 align_right">
+      <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="init" />
+    </div>
   </div>
 </div>
 </template>
@@ -39,7 +37,8 @@ import {
   defineComponent,
   onMounted,
   computed,
-  useStore
+  useStore,
+  codings
 } from '@/utils'
 
 export default defineComponent({
@@ -48,22 +47,29 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
     const dataList = computed(() => store.getters['basic/feedback']);
+    const coding: any = codings['service'].feedback;
 
-    function init() {
+    function init(param: any = {}) {
+      const params: any = {
+        page: 1,
+        pagesize: 10
+      }
+      Object.assign(params, param)
+
       store.dispatch('basic/Fetch', {
-        api: "feedback",
         state: 'feedback',
         data: {
-          page: 1,
-          pagesize: 10
+          coding,
+          ...params
         }
       })
     }
-    
+
     onMounted(init)
 
     return {
-      dataList
+      dataList,
+      init
     }
   }
 })

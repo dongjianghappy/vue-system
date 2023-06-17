@@ -14,6 +14,10 @@
         <div class="content">{{detail.name}}</div>
       </div>
       <div class="item-list">
+        <div class="label">话题：</div>
+        <div class="content">{{detail.talk_name}}</div>
+      </div>      
+      <div class="item-list">
         <div class="label">有效时间：</div>
         <div class="content">{{detail.start_time}} 至 {{detail.last_time}}</div>
       </div>
@@ -60,11 +64,9 @@ import {
   defineComponent,
   onMounted,
   ref,
+  useStore,
   useRoute
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Detail from '../components/detail.vue'
 export default defineComponent({
   name: 'HomeViewdd',
@@ -94,7 +96,6 @@ export default defineComponent({
       dataList,
       detail,
       init
-
     }
   }
 })

@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow">
   <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? '编辑': '新增广告'}}
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑广告' : '新增广告' " :data="data" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑广告' : '新增广告'" :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -15,10 +15,10 @@
       </li>
       <li class="li">
         <span class="label">展示站点</span>
-        <span class="mr15">{{site.name}}</span>
-        <ChooseSite :data="{id: data.website}" :render="init" v-model:checked="site" type="radio" @onClick="()=>detail.position = []" />
+        <span class="mr15">{{detail.website_name}}</span>
+        <v-choose :data="{item: detail, coding: codings.site.list, condition: {status: 1}}" v-model:checked="detail.website" type="radio" @choose="choose" />
       </li>
-      <li style="padding-left: 100px" v-if="site.id">
+      <li style="padding-left: 100px" v-if="detail.website">
         <ul class="p15" style="background: #f8f8fa;">
           <template v-if="positionList.length > 0">
             <template v-for="(item, k) in positionList" :key="k">
@@ -90,9 +90,9 @@
           </li>
           <li class="li">
             <span class="label">图片</span>
-            <SpaceModal v-model:image="detail.image">
+            <v-spaceModal v-model:image="detail.image">
               <span class="right">选择图片</span>
-            </SpaceModal>
+            </v-spaceModal>
             <textarea placeholder="图片地址展示" v-model="detail.image" class="w-full" disabled></textarea>
           </li>
           <li class="li">
@@ -108,23 +108,17 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   ref,
   useStore,
   watch,
+  codings
 } from '@/utils'
-import ChooseSite from '../../links/components/chooseSite.vue'
 import {
   LINK_TYPE,
   SERVER_NAME
 } from '@/assets/enum'
-import SpaceModal from '../../space/components/modalSpace.vue'
 export default defineComponent({
   name: 'v-Search',
-  components: {
-    ChooseSite,
-    SpaceModal
-  },
   props: {
     action: {
       type: String,
@@ -149,49 +143,40 @@ export default defineComponent({
     const drawer: any = ref(null)
     const sourceType: any = LINK_TYPE
     const serverName: any = SERVER_NAME
-    const checkedList: any = ref([])
     const positionChecked: any = ref([])
     const store = useStore()
     const positionList = ref([])
-    const site: any = ref({})
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
         detail.value = await drawer.value.init()
-        checkedList.value = detail.value.website ? detail.value.website.split(",") : []
-        getPosition({
-          page: 1
-        })
+        detail.value.website_name = detail.value.website[0].name
+        detail.value.website = detail.value.website[0].id
+        getPosition()
       }
-    })
-
-    // 监听
-    watch([site], async (newValues, prevValues) => {
-      getPosition({
-        page: 1
-      })
-
     })
 
     // 初始化
-    function getPosition(param: any) {
-      const params: any = {
-        page: 1,
-        pagesize: 100
-      }
-
-      Object.assign(params, param)
+    function getPosition() {
       store.dispatch('common/Fetch', {
         api: "getAdPosition",
         data: {
-          website: site.value && site.value.id || props.data.website,
-          ad_id: props.data.id,
-          ...params
+          website: detail.value.website,
+          ad_id: props.data.id
         }
       }).then(res => {
         positionList.value = res.result !== true ? res.result : []
       })
+    }
+
+    function choose(param: any) {
+      const {
+        data
+      } = param
+      detail.value.website = data.id
+      detail.value.website_name = data.name
+      getPosition()
     }
 
     function submit(param: any) {
@@ -199,7 +184,7 @@ export default defineComponent({
 
       // 已选的广告位匹配当前广告或者未选的广告位才追加到position_id数组中
       positionList.value.map((item: any) => {
-        if(item.ad_id === detail.value.id || item.ad_id === '0'){
+        if (item.ad_id === detail.value.id || item.ad_id === '0') {
           position_id.push(item.id)
         }
       })
@@ -211,7 +196,7 @@ export default defineComponent({
           callback: 'bindAd',
           ...detail.value,
           position: detail.value.position && detail.value.position.length > 0 ? detail.value.position.join(',') : "",
-          website: site.value.id,
+          website: detail.value.website,
           position_id: position_id.length > 0 ? position_id.join(',') : ""
         }
       }).then(() => {
@@ -222,16 +207,16 @@ export default defineComponent({
     }
 
     return {
+      codings,
       isShow,
       detail,
       drawer,
       sourceType,
       serverName,
-      checkedList,
       positionList,
       positionChecked,
       submit,
-      site
+      choose
     }
   }
 })

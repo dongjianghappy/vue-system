@@ -10,7 +10,7 @@
       </div>
     </div>
     <div v-if="type==='manage'" style="display: flex; justify-content: space-between;">
-      <AddButton :data="{id: item.id, ...data}" :render="init" action="edit" :channel="channel" />
+      <AddPage :data="{id: item.id, ...data}" :render="init" action="edit" :channel="channel" />
       <AddModule :data="{fid: item.id, ...data}" :render="init" action="add" :index="index" />
     </div>
   </div>
@@ -36,12 +36,12 @@ import {
   getCurrentInstance,
   useStore
 } from '@/utils'
-import AddButton from './addlink.vue'
+import AddPage from './addPage.vue'
 import AddModule from './addModule.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    AddButton,
+    AddPage,
     AddModule
   },
   props: {

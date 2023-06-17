@@ -8,7 +8,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-2">用户</td>
@@ -42,30 +42,27 @@ import {
   getCurrentInstance,
   onMounted,
   computed,
-  ref
-} from 'vue'
-import {
-  useStore
-} from 'vuex'
+  useStore,
+  ref,
+  channels
+} from '@/utils'
 export default defineComponent({
   name: 'HomeViewdd',
-  components: {
-
-  },
   setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
+    const coding: any = channels().coding;
     const store = useStore();
     const dataList = computed(() => store.getters['basic/partner']);
-    const coding: any = proxy.$coding['partner'];
     const checkedList: any = ref([])
 
     function init() {
       store.dispatch('basic/Fetch', {
-        api: 'praise',
+        api: 'articleRelated',
         data: {
-          coding: "A0000",
+          coding: coding.art,
+          name: 'praise',
           page: 1,
           pagesize: 10
         }

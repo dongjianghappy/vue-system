@@ -25,7 +25,7 @@ import {
 export default defineComponent({
   name: 'v-Search',
   components: {
-    
+
   },
   props: {
     action: {
@@ -59,7 +59,6 @@ export default defineComponent({
     })
 
     function submit(cancel: any) {
-
       const {
         name,
         value,
@@ -81,7 +80,7 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
         api: props.action !== "add" ? 'update' : "insert",
         data: {
-          coding: 'P0019',
+          coding: props.data.coding,
           ...param
         }
       }).then(() => {
@@ -93,7 +92,7 @@ export default defineComponent({
     return {
       isShow,
       detail,
-      
+      dialog,
       submit
     }
   }

@@ -1,15 +1,11 @@
 <template>
 <div class="module-wrap">
   <div class="module-head">
-    <v-optionsbar title="所有采集列表">
-      <template v-slot:extraright>
-        
-      </template>
+    <v-optionsbar title="临时采集列表">
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-7">标题</td>
@@ -42,7 +38,6 @@ import {
   defineComponent,
   onMounted,
   ref,
-  watch,
   codings,
   useStore,
   useRoute
@@ -63,11 +58,8 @@ export default defineComponent({
         pagesize: 10
       }
 
-      const {
-        fid
-      }: any = route.query
-      if (fid) {
-        param.fid = fid
+      if (route.query.fid) {
+        param.fid = route.query.fid
       }
 
       store.dispatch('common/Fetch', {

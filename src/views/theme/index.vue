@@ -1,6 +1,6 @@
 <template>
 <div class="module-wrap nobg">
-  <v-tabs :tabs="menu" type="vertical">
+  <v-tabs :tabs="tabsTheme" type="vertical">
     <template v-slot:content1>
       <List :render="init" :data="{coding: coding.theme}" :type='tabsIndex' :dataList="dataList" />
     </template>
@@ -14,21 +14,19 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   onMounted,
   ref,
   watch,
   useRoute,
+  useStore,
+  codings
 } from '@/utils'
 import {
-  useStore
-} from 'vuex'
+  tabsTheme
+} from '@/assets/const'
 import Detail from './components/detail.vue'
 import List from './components/list.vue'
 
-import {
-  linkPage
-} from '@/assets/const'
 export default defineComponent({
   name: 'IndexView',
   components: {
@@ -36,24 +34,12 @@ export default defineComponent({
     Detail
   },
   setup(props, context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
-    const coding: any = proxy.$coding['style'];
+    const coding: any = codings;
     const dataList: any = ref([])
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
-    let menu: any = ref([{
-        name: "主题风格",
-        value: "appstore1"
-      },
-      {
-        name: "背景特效",
-        value: "appstore2"
-      }
-    ])
-    let page: any = ref(linkPage[0])
+    let menu: any = ref()
 
     // 监听路由
     watch(route, (newValues, prevValues) => {
@@ -63,16 +49,11 @@ export default defineComponent({
       }
     })
 
-    // 初始化
     function init() {
-      const {
-        type
-      }: any = route.query
-
       store.dispatch('common/Fetch', {
-        api: tabsIndex.value === '1' ? 'effects' : 'theme',
+        api: 'theme',
         data: {
-          coding: tabsIndex.value === '1' ? 'T0003' : 'T0002'
+          coding: tabsIndex.value === '1' ? coding.effects : coding.theme
         }
       }).then(res => {
         dataList.value = res.result
@@ -82,9 +63,9 @@ export default defineComponent({
     onMounted(init)
 
     return {
+      tabsTheme,
       coding,
       menu,
-      page,
       tabsIndex,
       init,
       dataList

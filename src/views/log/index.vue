@@ -4,7 +4,7 @@
     <v-optionsbar title="管理员登录"></v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-123">
+    <table class="table-striped table-hover col-left-123">
       <tr class="th">
         <td class="col-md-2">管理员名称</td>
         <td class="col-md-1">身份</td>
@@ -18,11 +18,11 @@
       <tr v-for="(item, index) in dataList.list" :key="index">
         <td style="display: flex;">
           <div style=" width: 32px; height: 32px; border-radius: 50%; overflow: hidden; display: inline-block;">
-              <img :src="item.photos" class="mr10" style="width: 32px; height: 32px;">
-            </div>
-            <div class="pl5" style="flex: 1; height: 32px; line-height: 32px; display: inline-block;">
-              {{item.nickname}}
-            </div>
+            <img :src="item.photos" class="mr10" style="width: 32px; height: 32px;">
+          </div>
+          <div class="pl5" style="flex: 1; height: 32px; line-height: 32px; display: inline-block;">
+            {{item.nickname}}
+          </div>
         </td>
         <td>{{item.role}}</td>
         <td>{{item.browser}}</td>
@@ -34,6 +34,9 @@
       </tr>
     </table>
     <v-nodata :data="dataList.list || []" />
+    <div class="mt15 align_right">
+      <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="init" />
+    </div>
   </div>
 </div>
 </template>
@@ -43,22 +46,29 @@ import {
   defineComponent,
   onMounted,
   computed,
-  useStore
+  useStore,
+  codings
 } from '@/utils'
 
 export default defineComponent({
   name: 'ManageView',
   setup(props, context) {
     const store = useStore();
+    const coding: any = codings['user'].manager_log;
     const dataList = computed(() => store.getters['basic/manageLog']);
 
-    function init() {
+    function init(param: any = {}) {
+      const params: any = {
+        page: 1,
+        pagesize: 10
+      }
+      Object.assign(params, param)
+
       store.dispatch('basic/Fetch', {
         state: 'manageLog',
         data: {
-          coding: "U0006",
-          page: 1,
-          pagesize: 10
+          coding,
+          ...params
         }
       })
     }
@@ -66,7 +76,8 @@ export default defineComponent({
     onMounted(init)
 
     return {
-      dataList
+      dataList,
+      init
     }
   }
 })

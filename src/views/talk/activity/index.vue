@@ -4,13 +4,13 @@
     <v-optionsbar title="话题管理">
       <template v-slot:extraright>
         <v-condition name="类型" icon="type" field="type" :enums="[{name: '学生', value: '1'}, {name: '体育', value: '2'}]" :render="init" />
-        <Detail action='add' :data="{ coding: 'M10000' }" :render="init" />
+        <Detail action='add' :data="{ coding }" :render="init" />
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
 
-    <table width="100%" class="table-striped table-hover col-left-12">
+    <table class="table-striped table-hover col-left-12">
       <tr class="th">
         <td class="col-md-2">话题</td>
         <td class="col-md-4">说明</td>
@@ -35,16 +35,16 @@
           {{item.times}}
         </td>
         <td>
-          <v-switch :data="{ item, field: 'status', coding: 'M10000' }" :auth="true" />
+          <v-switch :data="{ item, field: 'status', coding }" :auth="true" />
 
         </td>
         <td>
           <v-space>
             <span>
-              <Detail action="edit" :data="{id: item.id, coding: 'M10000'}" :render="init" />
+              <Detail action="edit" :data="{id: item.id, coding}" :render="init" />
             </span>
             <span>
-              <v-confirm name="删除" :data="{id: item.id, coding: 'M10000' }" type="text" api="delete" :render="init" operating="delete" :auth="true"></v-confirm>
+              <v-confirm name="删除" :data="{id: item.id, coding }" type="text" api="delete" :render="init" operating="delete" :auth="true"></v-confirm>
             </span>
           </v-space>
         </td>
@@ -70,12 +70,10 @@ import {
 } from '@/utils'
 
 import Detail from './components/detail.vue'
-import DetailFlag from './components/detailFlag.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    Detail,
-    DetailFlag
+    Detail
   },
   props: {
     type: {
@@ -90,7 +88,7 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore();
     const dataList: any = ref([])
-    const coding: any = codings['link'];
+    const coding: any = codings.talk.activity;
     const route = useRoute();
     const router = useRouter();
 
@@ -101,9 +99,10 @@ export default defineComponent({
       }
 
       Object.assign(params, param)
+      
       store.dispatch('common/Fetch', {
         data: {
-          coding: 'M10000',
+          coding,
           ...params
         }
       }).then(res => {
@@ -119,9 +118,10 @@ export default defineComponent({
       router.push(url)
     }
 
-    onMounted(() => init('1'))
+    onMounted(init)
 
     return {
+      coding,
       dataList,
       handleClick,
       init

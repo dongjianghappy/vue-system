@@ -2,9 +2,10 @@
 <v-button v-model:show="isShow" :disabled="auth">
   <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? '编辑': '新增友情'}}
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑友情链接' : '新增友情链接' " :data="data" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑友情链接' : '新增友情链接' " :data="{...data, coding: data.coding.links}" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
+     
       <li class="li">
         <span class="label">网站名称</span>
         <input v-model="detail.name" type="text" placeholder="请输入标题" class="input-sm input-full" />
@@ -15,10 +16,10 @@
       </li>
       <li class="li">
         <span class="label">展示站点</span>
-        <template v-for="(item, index) in siteList" :key="index">
-          <span v-if="checkedList.indexOf(item.id) > -1" class="mr15">{{item.name}}</span>
+        <template v-for="(item, index) in detail.website" :key="index">
+          <span class="mr15">{{item.name}}</span>
         </template>
-        <ChooseSite :data="data" :render="init" v-model:checked="checkedList" />
+        <v-choose :data="{...data, coding: data.coding.site.list, condition: {status: 1}}" v-model:checked="detail.website" @choose="choose" />
       </li>
       <li class="li">
         <span class="label">顺序</span>
@@ -36,7 +37,6 @@
       </li>
       <li class="li">
         <span class="label">来源</span>
-        {{sourceType}}
         <v-select :enums="sourceType" v-model:value="detail.source" :defaultValue="detail.source = detail.source ? detail.source : '5'" />
       </li>
       <li class="li">
@@ -86,14 +86,9 @@ import {
 } from '@/utils'
 import {
   LINK_TYPE,
-  SERVER_NAME
 } from '@/assets/enum'
-import ChooseSite from './chooseSite.vue'
 export default defineComponent({
   name: 'v-Detail',
-  components: {
-    ChooseSite
-  },
   props: {
     action: {
       type: String,
@@ -111,12 +106,6 @@ export default defineComponent({
         return 'Default function'
       }
     },
-    siteList: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },    
     auth: {
       type: Boolean,
       default: false
@@ -127,25 +116,43 @@ export default defineComponent({
     const isShow: any = ref(false)
     const drawer: any = ref(null)
     const sourceType: any = LINK_TYPE
-    const serverName: any = SERVER_NAME
     const detail: any = ref({})
-    const checkedList: any = ref([])
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
         detail.value = await drawer.value.init()
-        checkedList.value = detail.value.website ? detail.value.website.split(",") : []
       }
     })
 
+    function choose(param: any) {
+      const {
+        data
+      } = param
+
+      let index = detail.value.website.findIndex((item: any) => item.id === data.id)
+      if (index === -1) {
+        detail.value.website.push({
+          id: data.id,
+          name: data.name
+        })
+      } else {
+        detail.value.website.splice(index, 1)
+      }
+    }
+
     function submit(params: any) {
+      let arr = []
+      for (let i = 0; i < detail.value.website.length; i++) {
+        arr.push(detail.value.website[i].id)
+      }
+
       store.dispatch('common/Fetch', {
         api: props.action !== 'add' ? 'update' : 'insert',
         data: {
-          coding: props.data.coding,
+          coding: props.data.coding.links,
           ...detail.value,
-          website: checkedList.value.join(',')
+          website: arr.join(',')
         }
       }).then(() => {
         props.render()
@@ -159,9 +166,8 @@ export default defineComponent({
       detail,
       drawer,
       sourceType,
-      serverName,
+      choose,
       submit,
-      checkedList
     }
   }
 })

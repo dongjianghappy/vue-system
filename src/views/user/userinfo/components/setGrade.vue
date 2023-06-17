@@ -28,7 +28,7 @@ import {
 export default defineComponent({
   name: 'v-Search',
   components: {
-    
+
   },
   props: {
     attrs: {

@@ -41,7 +41,7 @@ import {
 export default defineComponent({
   name: 'v-Search',
   components: {
-    
+
   },
   props: {
     action: {
@@ -80,13 +80,12 @@ export default defineComponent({
       }
     })
 
-   // 监听图片上传
+    // 监听图片上传
     function image(a: any) {
-      debugger
       img.value = a
     }
 
- function submit(cancel: any) {
+    function submit(cancel: any) {
       const {
         id,
         name,
@@ -101,7 +100,7 @@ export default defineComponent({
         summary,
         img: img.value
       }
-debugger
+      debugger
       if (props.action === 'edit') {
         param.id = id
       }
@@ -116,7 +115,7 @@ debugger
         props.render()
         isShow.value = false
       })
-    }   
+    }
 
     return {
       isShow,

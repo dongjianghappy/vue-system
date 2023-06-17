@@ -18,13 +18,12 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-1">id</td>
         <td class="col-md-7">名称</td>
         <td class="col-md-1">频道</td>
-        <!-- <td class="col-md-1">属性</td> -->
         <td class="col-md-2">操作</td>
       </tr>
       <tr v-for="(item, index) in dataList" :key="index">
@@ -38,9 +37,6 @@
           {{item.name}}
         </td>
         <td>{{item.channel ? item.channel : "-" }}</td>
-        <!-- <td>
-          <DetailFlag action='add' :data="{item, coding }" :render="init" />
-        </td> -->
         <td>
           <v-space>
             <span>
@@ -78,7 +74,7 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
     const dataList: any = ref([])
-    const coding: any = codings['tag'].art;
+    const coding: any = codings['tag'];
     const route = useRoute();
     const channelMenu: any = ref([])
     const channel: any = computed(() => store.getters['user/channel']);
@@ -115,7 +111,7 @@ export default defineComponent({
 
       store.dispatch('common/Fetch', {
         data: {
-          coding: "O0003",
+          coding: coding,
           ...params
         }
       }).then(res => {
@@ -142,10 +138,7 @@ export default defineComponent({
       })
     }
 
-    onMounted(() => {
-      init()
-
-    })
+    onMounted(init)
 
     return {
       coding,

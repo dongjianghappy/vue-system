@@ -9,7 +9,7 @@
   </div>
 <v-drawer ref="drawer" v-model:show="isShow" action="add" title="请选择" :style="{width: 450}" :hasfooter="false">
   <template v-slot:content v-if="isShow">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1"> 选择</td>
         <td class="col-md-2">标题 </td>

@@ -6,7 +6,7 @@
   </div>
   <div class="module-content plr15">
 
-    <table width="100%" class="table-striped table-hover col-left-3">
+    <table class="table-striped table-hover col-left-3">
       <tr class="th">
         <td class="col-md-2">人物</td>
         <td class="col-md-2">对话时间</td>

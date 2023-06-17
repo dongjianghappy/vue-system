@@ -1,8 +1,8 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont icon-anonymous-iconfont" />选择节点类型
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? '编辑': '选择节点类型'}}
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" title="选择节点类型" :style="{width: '520', height: '300'}" @submit="submit">
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" title="选择节点类型" :data="data" :style="{width: '520', height: '300'}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -63,7 +63,7 @@ export default defineComponent({
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
-        // dialog.value = await dialog.value.init()
+        detail.value = await dialog.value.init()
       }
     })
 
@@ -71,13 +71,12 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
         api: props.action !== 'add' ? 'update' : 'insert',
         data: {
-          coding: props.data.coding.cate,
+          coding: props.data.coding,
           ...detail.value,
         }
       }).then(() => {
         props.render()
         isShow.value = false
-        // params.message()
       })
     }
 

@@ -41,9 +41,6 @@
         <span class="label">内容</span>
         <textarea placeholder="请输入内容" v-model="detail.content" class="w-full h350"></textarea>
       </li>
-      <li class="li" v-if="coding.art === 'K0000'">
-        <img style="width: 100%" :src="detail.image && detail.image[0]" alt="">
-      </li>
     </ul>
   </template>
 </v-drawer>
@@ -91,11 +88,7 @@ export default defineComponent({
     const store = useStore()
     const isShow: any = ref(false)
     const drawer: any = ref(null)
-    const upload: any = ref(null);
     const detail: any = ref({})
-    const aaa: any = ref([])
-    const img = ref("")
-
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
@@ -108,17 +101,6 @@ export default defineComponent({
         }
       }
     })
-
-    // 上传图片
-    function uploadImg() {
-      upload.value.handleclick()
-    }
-
-    // 监听图片上传
-    function image(a: any) {
-      debugger
-      img.value = a
-    }
 
     function submit(params: any) {
       const {
@@ -137,7 +119,6 @@ export default defineComponent({
         fid,
         title,
         html,
-        img: img.value,
         summary,
         content,
         tag: tag ? tag.join(',') : "",
@@ -166,11 +147,7 @@ export default defineComponent({
       isShow,
       detail,
       drawer,
-      uploadImg,
-      upload,
-      submit,
-      aaa,
-      image
+      submit
     }
   }
 })

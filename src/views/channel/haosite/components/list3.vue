@@ -1,5 +1,5 @@
 <template>
-<table width="100%" class="table-striped table-hover col-left-24">
+<table class="table-striped table-hover col-left-24">
   <tr class="th">
     <td class="col-md-1">选择</td>
     <td class="col-md-5">名称</td>

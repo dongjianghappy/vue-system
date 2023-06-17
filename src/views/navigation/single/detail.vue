@@ -92,7 +92,7 @@
         相册
       </div>
       <div class="module-content plr15" style="min-height: 290px">
-        <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: 'P0002'}" :dataList="detail.img" :uploadtype="channelData.module" @imgList="image" :style="'width: 135px'" />
+        <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding}" :dataList="detail.img" :uploadtype="channelData.module" @imgList="image" :style="'width: 135px'" />
       </div>
     </div>
   </div>
@@ -111,7 +111,8 @@ import {
   ref,
   useRoute,
   useRouter,
-  channels
+  channels,
+  codings
 } from '@/utils'
 import {
   useStore
@@ -142,7 +143,7 @@ export default defineComponent({
     const route = useRoute();
     let status: any = ref(false)
     const router: any = useRouter();
-    const coding: any = proxy.$coding['navigation'].single;
+    const coding: any = codings.single;
     const detail: any = ref({})
     let checkedList: any = ref([])
     const dataList: any = ref([])
@@ -181,7 +182,7 @@ export default defineComponent({
         store.dispatch('common/Fetch', {
           api: "detail",
           data: {
-            coding: "P0002",
+            coding,
             id: route.query.id
           }
         }).then(res => {
@@ -237,7 +238,7 @@ export default defineComponent({
         keyword: keyword ? keyword.join(',') : "",
         flags: flags ? `|${flags.join("|")}|` : "",
         style: JSON.stringify(style),
-        coding: "P0002",
+        coding
       }
       if (route.query.id) {
         param.id = detail.value.id

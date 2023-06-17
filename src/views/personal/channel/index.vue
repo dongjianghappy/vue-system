@@ -77,9 +77,6 @@ import Comment from '../../channel/comment/index.vue'
 import Praise from '../../channel/praise/index.vue'
 import Download from '../../channel/download/index.vue'
 
-import {
-  linkPage
-} from '@/assets/const'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {

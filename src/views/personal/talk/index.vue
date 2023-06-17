@@ -44,9 +44,6 @@ import Collect from '../../talk/collect/index.vue'
 import Comment from '../../talk/comment/index.vue'
 import Praise from '../../talk/praise/index.vue'
 
-import {
-  linkPage
-} from '@/assets/const'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {

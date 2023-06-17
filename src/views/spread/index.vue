@@ -10,7 +10,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr>
         <td class="col-md-1">选择</td>
         <td class="col-md-2">推广名称</td>
@@ -76,11 +76,11 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
         data: {
           coding,
-          page: 1,
-          pagesize: 10
+          // page: 1,
+          // pagesize: 10
         }
       }).then(res => {
-        dataList.value = res.result.list
+        dataList.value = res.result
         setTimeout(() => {
           proxy.$drag.init((res: any) => {
 

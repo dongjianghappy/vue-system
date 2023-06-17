@@ -3,12 +3,12 @@
   <div class="module-head">
     <v-optionsbar title="角色管理">
       <template v-slot:extraright>
-        <Detail action='add' :data="{ coding: coding.role }" :render="init" />
+        <Detail action='add' :data="{ coding }" :render="init" />
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-1">
+    <table class="table-striped table-hover col-left-1">
       <tr class="th">
         <td class="col-md-4">名称</td>
         <td class="col-md-4">个数</td>
@@ -28,9 +28,9 @@
         </td>
         <td>
           <v-space>
-            <Detail action='edit' :data="{id: item.id, coding: coding.role }" :render="init" />
+            <Detail action='edit' :data="{id: item.id, coding }" :render="init" />
             <span>
-              <v-confirm name="删除" :data="{id: item.id, coding: coding.role}" type="text" api="delete" :render="init" operating="delete"></v-confirm>
+              <v-confirm name="删除" :data="{id: item.id, coding}" type="text" api="delete" :render="init" operating="delete"></v-confirm>
             </span>
             <ViewUser :data="{...item}" />
             <span @click="handleClick(item)">
@@ -51,7 +51,8 @@ import {
   getCurrentInstance,
   onMounted,
   ref,
-  useRouter
+  useRouter,
+  codings
 } from '@/utils'
 import {
   useStore
@@ -71,16 +72,14 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
     const dataList: any = ref([]);
-    const coding: any = proxy.$coding['user'];
+    const coding: any = codings.user.role;
     const checkedList: any = ref([])
 
     function init() {
       store.dispatch('common/Fetch', {
         api: 'roleList',
         data: {
-          coding: coding.role,
-          page: 1,
-          pagesize: 10
+          coding
         }
       }).then(res => {
         dataList.value = res.result

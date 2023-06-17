@@ -1,6 +1,6 @@
 <template>
 <div class="module-wrap nobg">
-  <v-tabs :tabs="menu" type="vertical">
+  <v-tabs :tabs="tabsUser" type="vertical">
     <template v-slot:content1>
       <List :render="init" :data={coding} :dataList="dataList" />
     </template>
@@ -18,11 +18,12 @@ import {
   ref,
   watch,
   useRoute,
+  useStore,
   codings
 } from '@/utils'
 import {
-  useStore
-} from 'vuex'
+  tabsUser
+} from '@/assets/const'
 import Detail from './components/detail.vue'
 import List from './components/list.vue'
 import Manage from './components/manage.vue'
@@ -39,33 +40,20 @@ export default defineComponent({
     const coding: any = codings['user'];
     const dataList: any = ref([])
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
-    const pagesize: any = 10
-    let menu: any = ref([{
-        name: "普通用户",
-        value: "appstore1"
-      },
-      {
-        name: "管理员",
-        value: "appstore3"
-      }
-    ])
 
     // 监听路由
     watch(route, (newValues, prevValues) => {
       if (route.path === '/admin/user/list') {
         tabsIndex.value = route.query.type
-        init({
-          page: 1
-        })
+        init()
       }
     })
 
     // 初始化
-    function init(param: any) {
-
+    function init(param: any = {}) {
       const params: any = {
         page: 1,
-        pagesize: pagesize
+        pagesize: 10
       }
 
       Object.assign(params, param)
@@ -79,13 +67,11 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      init({
-        page: 1
-      })
+      init()
     })
 
     return {
-      menu,
+      tabsUser,
       init,
       dataList,
       coding

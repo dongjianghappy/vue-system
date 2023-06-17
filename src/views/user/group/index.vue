@@ -8,7 +8,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-4">
+    <table class="table-striped table-hover col-left-4">
       <tr class="th">
         <td class="col-md-1">等级</td>
         <td class="col-md-2">等级图标</td>
@@ -66,18 +66,18 @@ export default defineComponent({
           pagesize: 100
         }
       }).then(res => {
-      dataList.value = res.result
-    })
-  }
+        dataList.value = res.result
+      })
+    }
 
-  onMounted(init)
+    onMounted(init)
 
-  return {
-    coding,
-    dataList,
-    checkedList,
-    init
+    return {
+      coding,
+      dataList,
+      checkedList,
+      init
+    }
   }
-}
 })
 </script>

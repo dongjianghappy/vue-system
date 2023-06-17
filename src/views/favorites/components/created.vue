@@ -1,6 +1,6 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' ? 'add' : 'edit'}`" />{{action === 'add' ? '创建收藏夹' : ''}}
+  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'add' ? '创建收藏夹' : ''}}
 </v-button>
 <v-dialog ref="dialog" v-model:show="isShow" :title="action === 'add' ? '创建收藏夹' : '编辑收藏夹'" :action="action" :data="data" :style="{width: '520', height: '200'}" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
@@ -96,7 +96,8 @@ export default defineComponent({
       textType,
       isShow,
       detail,
-      submit
+      submit,
+      dialog
     }
   }
 })

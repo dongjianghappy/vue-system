@@ -1,6 +1,6 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' ? 'add' : 'edit'}`" />{{action === 'edit'? '修改项目信息': '创建投票'}}
+  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'edit'? '修改项目信息': '创建投票'}}
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '修改项目信息' : '创建投票' " api="selectVoteList" :submit="submit" :submitApi="{insert: 'createVote', update: 'updateVote'}" :data="data" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
@@ -14,7 +14,8 @@
       </li>
       <li class="li">
         <span class="label">话题绑定</span>
-        <input v-model="detail.talk_id" type="text" placeholder="请输入话题绑定" class="input-sm input-150" />
+        <span class="mr15">{{detail.talk_name}}</span>
+        <v-choose title="选择话题" :data="{ item: detail, field: 'talk_id', coding: codings.talk.activity }" v-model:checked="detail.talk_id" @choose="choose" type="radio" />
       </li>
       <li class="li">
         <span class="label">截止时间</span>
@@ -43,11 +44,11 @@
         <v-radio label="单投" name="choose" value="1" v-model:checked="detail.choose" />
         <v-radio label="多投" name="choose" value="0" v-model:checked="detail.choose" />
       </li>
-      <li class="li" style="background: #eee">
+      <li class="li" style="background: #f8f8fa">
         <span>选项列表</span>
-        <span class="ml25" @click="clickAdd"><i class="iconfont icon-add" style="font-size: 18px !important"></i></span>
+        <span class="ml25" @click="clickAdd"><i class="iconfont icon-anonymous-iconfont" style="font-size: 18px !important"></i></span>
       </li>
-      <li class="li" style="background: #eee">
+      <li class="li" style="background: #f8f8fa">
         <span class="label"></span>
         <div class="mb5 clearfix" v-for="(item, index) in List" :key="index">
           <div class="col-md-1" style="line-height: 38px;">选项{{index+1}}</div>
@@ -73,7 +74,8 @@ import {
   defineComponent,
   ref,
   watch,
-  useStore
+  useStore,
+  codings
 } from '@/utils'
 export default defineComponent({
   name: 'v-Detail',
@@ -127,6 +129,12 @@ export default defineComponent({
       List.value.splice(index, 1)
     }
 
+    function choose(param: any){
+      const {field, data} = param
+      detail.value.talk_id = data.id
+      detail.value.talk_name = data.name
+    }
+
     // 确认按钮
     function submit(params: any) {
       const {
@@ -175,13 +183,15 @@ export default defineComponent({
     }
 
     return {
+      codings,
       isShow,
       List,
       detail,
       drawer,
       clickAdd,
       clickRemove,
-      submit
+      submit,
+      choose
     }
   }
 })

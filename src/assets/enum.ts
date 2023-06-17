@@ -62,6 +62,7 @@ export const MODUDLE: any = [
   },
 ]
 
+// 自定义表单
 export const TEXT_TYPE = [
   {
     value: 'input',
@@ -631,6 +632,10 @@ export const TEMPLATES = [
   },  
 ]
 
+export const enumSort = {
+  'desc': '递减',
+  'asc': '递增',
+}
 
 const enums = {
   module: MODUDLE,

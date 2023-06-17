@@ -4,20 +4,20 @@
 </v-button>
 <v-drawer v-model:show="isShow" title="系统设置" :style="{width: '400'}" :hasfooter="false" :auth="auth">
   <template v-slot:extra>
-    <SettingType action="add" />
+    <SettingType action="add" :data="{coding: data.coding.setting_type}" />
   </template>
   <template v-slot:content>
     <v-collapse :title="item.name" v-for="(item, index) in dataList" :key="index">
       <template v-slot:extra>
-        <AddSetting action="add" />
+        <AddSetting action="add" :data="{fid: item.id, coding: data.coding.setting}" />
       </template>
       <ul class="form-wrap-box">
         <li class="li mb15" v-for="(item, i) in item.list" :key="i">
           <span class="label">
             {{item.remark}}
-            <AddButton :data="{id: item.id, ...data}" :render="init" action="edit" />
+            <AddSetting :data="{id: item.id, coding: data.coding.setting}" :render="init" action="edit" />
           </span>
-          <v-switch :data="{ item, field: 'value', coding: 'P0018' }" @toggle="getValue" className="right" :auth="true" />
+          <v-switch :data="{ item, field: 'value', coding: data.coding.setting }" @toggle="getValue" className="right" :auth="true" />
         </li>
       </ul>
     </v-collapse>
@@ -49,18 +49,6 @@ export default defineComponent({
       type: Object,
       default: () => {
         return {}
-      }
-    },
-    dataList: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    setRoute: {
-      type: Function,
-      default: () => {
-        return
       }
     },
     auth: {

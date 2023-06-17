@@ -9,7 +9,7 @@
   </div>
   <div class="module-content plr15">
 
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-6">公告通知 </td>
@@ -22,6 +22,8 @@
           <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
         </td>
         <td>
+          【<span v-if="item.display_location === '1'">微博</span>
+          <span v-else>网站</span>】
           <span className="mr5 cl-red" v-if="item.type === '1'">公告</span>
           <span className="mr5 cl-green" v-else>通知</span>
           {{item.title}}
@@ -79,7 +81,7 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore();
     const dataList = computed(() => store.getters['basic/announcement']);
-    const coding: any = codings['announcement'];
+    const coding: any = codings['service'].announcement;
     const checkedList: any = ref([])
 
     function init() {

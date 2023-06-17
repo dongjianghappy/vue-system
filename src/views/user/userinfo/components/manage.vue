@@ -7,7 +7,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content p15">
-    <table width="100%" class="table-striped table-hover col-left-2">
+    <table class="table-striped table-hover col-left-2">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-3">用户</td>
@@ -20,12 +20,7 @@
           <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
         </td>
         <td style="display: flex">
-          <div class="relative" style=" width: 32px; height: 32px; border-radius: 50%; overflow: hidden; display: inline-block;">
-            <img :src="item.photos" class="mr10" style="width: 32px; height: 32px;">
-            <span class="absolute font12 cl-red" style="background: #fff; right: 0; bottom: 0px" v-if="item.role !== '0'">
-              员
-            </span>
-          </div>
+          <v-avatar :data="item" :condition="{tag: item.role !== '0', value: '员'}"></v-avatar>
           <div class="pl5" style="flex: 1; height: 32px; line-height: 32px; display: inline-block;">
             {{item.nickname}}
           </div>
@@ -35,7 +30,7 @@
         </td>
         <td>{{gradeList[item.role]}}</td>
         <td>
-          <Detail action="edit" :data="{uid: item.account, coding: 'P0005' }" :render="render" />
+          <Detail action="edit" :data="{uid: item.account }" :render="render" />
         </td>
       </tr>
     </table>
@@ -61,8 +56,10 @@ export default defineComponent({
   },
   props: {
     data: {
-      type: String,
-      default: ""
+      type: Object,
+      default: () => {
+        return {}
+      }
     },
     render: {
       type: Function,
@@ -80,10 +77,11 @@ export default defineComponent({
     const gradeList = computed(() => {
       return store.getters['user/role']
     });
+
     function init() {
       store.dispatch('user/roleAction', {
         data: {
-          coding: "U0016",
+          coding: props.data.coding.role,
           page: 1,
           pagesize: 10
         }

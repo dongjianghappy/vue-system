@@ -3,9 +3,7 @@
 <Personal v-else-if="module === 'personal'" />
 <div class="layout" v-else>
   <Header @setRoute="setRoute" v-model:collapse="collapse" />
-
   <div class="layout" style="flex-direction: row;">
-
     <div class="sidebar" :class="collapse? 'w200': 'w70'">
       <Sidebar :module="module" :collapse="collapse" />
     </div>
@@ -14,7 +12,6 @@
       <div class="absolute p25" style=" top:45px; bottom: 0; overflow: auto; width: 100%;">
         <Default v-if="path === '/admin' || path === '/admin/'" />
         <div v-else>
-
           <router-view />
         </div>
       </div>
@@ -24,7 +21,6 @@
 </template>
 
 <script lang="ts">
-// <router-view />
 import {
   defineComponent,
   computed,
@@ -92,8 +88,8 @@ export default defineComponent({
       sessionStorage.setItem('sidebar', module.value)
 
       VueEvent.on("reload", (data: any) => {
-        
-        setTimeout(()=>{
+
+        setTimeout(() => {
           store.dispatch('common/Fetch', {
             api: "signOut"
           }).then(res => {
@@ -101,7 +97,6 @@ export default defineComponent({
           })
         }, 3000)
       });
-      // router.push(window.location.pathname+window.location.search)
     })
 
     return {

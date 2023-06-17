@@ -8,7 +8,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content p15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1"> 选择</td>
         <td class="col-md-2">网站名称 </td>

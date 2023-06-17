@@ -1,8 +1,8 @@
 <template>
 <v-button v-model:show="isShow" :disabled="true">
-  <i class="iconfont" :class="`icon-${action === 'add' ? 'add' : 'edit'}`" />
+  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增模块" width="520px" :height="index==='2' ? '380px' : '250px'" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增模块" :style="{width: 520, height: index==='2' ? 450 : 300}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -13,6 +13,10 @@
         <span class="label">字段</span>
         <input type="text" v-model="detail.value" placeholder="请输入字段" class="input-sm input-full" />
       </li>
+      <li class="li">
+        <span class="label">icon图标</span>
+        <input type="text" v-model="detail.icon" placeholder="请输入icon图标" class="input-sm input-full" />
+      </li>
       <li class="li" v-if="index === '2'">
         <span class="label">可禁言</span>
         <v-radio label="否" name="is_write" value="0" v-model:checked="detail.is_write" />
@@ -20,7 +24,7 @@
       </li>
       <li class="li" v-if="index === '2'">
         <span class="label">提示信息</span>
-        <textarea placeholder="请输入信息" v-model="detail.tips" class="w-full" ></textarea>
+        <textarea placeholder="请输入信息" v-model="detail.tips" class="w-full"></textarea>
       </li>
     </ul>
   </template>
@@ -37,16 +41,7 @@ import {
 
 export default defineComponent({
   name: 'v-Search',
-  components: {
-    
-  },
   props: {
-    attrs: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
     index: {
       type: String,
       default: '0',
@@ -82,11 +77,11 @@ export default defineComponent({
     })
 
     function submit(cancel: any) {
-
       const {
         name,
         value,
         is_write,
+        icon,
         sort,
         tips,
         remark
@@ -97,6 +92,7 @@ export default defineComponent({
         value,
         is_write,
         sort,
+        icon,
         tips,
         remark
       }
@@ -104,11 +100,10 @@ export default defineComponent({
       if (props.action !== "add") { //  && props.param
         param.id = detail.value.id
       }
-      debugger
+
       store.dispatch('common/Fetch', {
         api: props.action !== "add" ? 'update' : "insert",
         data: {
-          coding: 'U50002',
           ...props.data,
           ...param
         }
@@ -121,7 +116,7 @@ export default defineComponent({
     return {
       isShow,
       detail,
-      
+      dialog,
       submit
     }
   }

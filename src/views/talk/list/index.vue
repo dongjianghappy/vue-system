@@ -1,6 +1,6 @@
 <template>
 <div class="ptb5" style="background: #fff">
-  <v-tabs :tabs="menu">
+  <v-tabs :tabs="tabsTalk">
     <template v-slot:extra>
       <v-search field="uid" placeholder="用户账号查找" :render="init" />
     </template>
@@ -26,11 +26,11 @@ import {
   useRouter,
   codings,
 } from '@/utils'
+import {
+  tabsTalk
+} from '@/assets/const'
 import List from './components/list.vue'
 import List2 from './components/list2.vue'
-import {
-  appstorePage
-} from '@/assets/const'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
@@ -41,25 +41,15 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
     const router: any = useRouter();
-    const coding: any = 'M0000';
-    let menu: any = ref([{
-        name: "微博管理",
-        value: "advertisement1"
-      },
-      {
-        name: "正在审核",
-        value: "advertisement2"
-      }
-    ])
+    const coding: any = codings.talk.art;
+    
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
     const dataList: any = ref([])
 
-// 监听路由
+    // 监听路由
     watch(router.currentRoute, (newValues, prevValues) => {
       if (newValues.path === prevValues.path) {
-        init({
-          page: 1
-        })
+        init()
       }
     })
 
@@ -89,8 +79,8 @@ export default defineComponent({
     onMounted(init)
 
     return {
+      tabsTalk,
       coding,
-      menu,
       tabsIndex,
       init,
       dataList

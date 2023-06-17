@@ -2,10 +2,10 @@
 <v-button v-model:show="isShow" :disabled="auth">
   {{name}}
 </v-button>
-<v-drawer v-model:show="isShow" :title="title" :top="64" width="500" :auth="auth">
+<v-drawer v-model:show="isShow" :title="title" :top="64" :hasfooter="false" :auth="auth">
   <template v-slot:extra v-if="type==='manage'">
     <v-space>
-      <AddButton :data="data" :render="init" :channel="channelMenu" />
+      <AddPage :data="data" :render="init" :channel="channelMenu" />
     </v-space>
   </template>
   <template v-slot:content>
@@ -19,10 +19,11 @@
       {
         name: "功能管理"
       }
-    ]'  v-model:index="indexsss" :isEmit="true" :extra="false" >
+    ]' v-model:index="indexsss" :isEmit="true" :extra="false">
       <template v-slot:content1>
         <div class="aside-wrap" style="min-height: 650px">
-          <div class="aside-nav p0 pt10" :style="`width: ${type==='manage' ? '80px' : '70px'}`">
+          <div class="aside-nav p0 pt10" style="width: 80px">
+            <!-- 频道列表 -->
             <div class="aside-list pointer pr0" :class="[{current: currentIndex === index}]" v-for="(item, index) in channelList" :key="index" @click="handleClick(index)">
               <i class="iconfont" :class="`icon-${icon}`" v-if="icon" />
               {{item.name}}
@@ -30,15 +31,15 @@
             </div>
           </div>
           <div class="aside-content">
-            <List v-for="(item, index) in channelList" :key="index" :dataList="item.list" :channel_id="item.grade_id" v-show="currentIndex === index" :channel="channelMenu" :data="data" :type="type" :uid="uid"></List>
+            <List v-for="(item, index) in channelList" :key="index" :dataList="item.list" :channel_id="item.grade_id" v-show="currentIndex === index" :channel="channelMenu" :data="data" :type="type" :render="init"></List>
           </div>
         </div>
       </template>
       <template v-slot:content2>
-        <ApplicationList :dataList="applicationList" :data="{...data, coding: 'P0010'}" :type="type" :uid="uid" />
+        <ApplicationList :dataList="applicationList" :data="{...data, coding: 'P0010'}" :type="type" />
       </template>
       <template v-slot:content3>
-        <ApplicationList :dataList="functionList" :data="{...data, coding: 'P0010',}" :type="type" :uid="uid" />
+        <ApplicationList :dataList="functionList" :data="{...data, coding: 'P0010',}" :type="type" />
       </template>
     </v-tabs>
   </template>
@@ -56,12 +57,12 @@ import {
 import List from './list.vue'
 import ApplicationList from './applicationList.vue'
 import FunctionList from './functionList.vue'
-import AddButton from './addlink.vue'
+import AddPage from './addPage.vue'
 import AddModule from './addModule.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    AddButton,
+    AddPage,
     AddModule,
     List,
     ApplicationList,
@@ -85,10 +86,6 @@ export default defineComponent({
       default: () => {
         return {}
       }
-    },
-    uid: {
-      type: String,
-      default: ""
     },
     auth: {
       type: Boolean,
@@ -116,24 +113,15 @@ export default defineComponent({
         init()
       }
     })
-    // 监听
-    watch(indexsss, async (newValues, prevValues) => {
-      
-    })
-
-
 
     function init() {
       channelMenu.value = []
       store.dispatch('common/Fetch', {
         api: props.type === 'manage' ? 'talkSetting' : 'userAuthority',
         data: {
-          coding: 'U50002',
-          uid: props.uid,
           ...props.data
         }
       }).then(res => {
-        debugger
         applicationList.value = res.result.application
         functionList.value = res.result.function
         channelList.value = res.result.channel
@@ -150,22 +138,6 @@ export default defineComponent({
       currentIndex.value = index
     }
 
-    function handelExpand(param: any) {
-      param.extand = !param.extand
-    }
-
-    function handleDefault(param: any) {
-      store.dispatch('common/Fetch', {
-        api: 'setDefault',
-        data: {
-          id: param.id,
-          fid: param.fid
-        }
-      }).then(res => {
-        init()
-      })
-    }
-
     return {
       isShow,
       currentIndex,
@@ -178,16 +150,8 @@ export default defineComponent({
       handleClick,
       module,
       init,
-      handelExpand,
-      handleDefault,
       indexsss
     }
   }
 })
 </script>
-
-<style scoped>
-.extand {
-  display: none;
-}
-</style>

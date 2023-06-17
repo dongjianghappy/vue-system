@@ -2,10 +2,11 @@
 <v-button v-model:show="isShow">
   <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "上传音频"}}
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑音频' : '上传音频' " :data="{...data, coding: coding.art}" api="articleDetail" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑音频' : '上传音频' " :data="{...data, coding: data.coding.art}" api="articleDetail" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <audio ref="show_video" :src="fileInfo.fileUrl || detail.file" type="video/mp4">
     </audio>
+    {{data.coding}}
     <div class="pt50" style="text-align: center;" v-show="action === 'add' && !file">
       <v-upload ref="upload" @imgList="image" v-model:haschoose="file" :show="false" file="music" v-model:file="fileInfo" uploadtype="music" format=".mp3, .wav" />
     </div>
@@ -61,22 +62,22 @@
             <li class="li">
               <span class="label">歌手</span>
               <span class="mr15">{{detail.singer}}</span>
-              <v-choose title="选择歌手" :data="{ item: detail, field: 'singer' }" coding="E10000" @choose="chooseSinger" type="radio" :render="init" />
+              <v-choose title="选择歌手" :data="{ item: detail, field: 'singer', coding: data.coding.singer }" v-model:checked="detail.singer_id" @choose="chooseSinger" type="radio" />
             </li>
             <li class="li">
               <span class="label">专辑</span>
               <span class="mr15">{{detail.album}}</span>
-              <v-choose title="选择专辑" :data="{ item: detail, field: 'album', condition: {singer_id: detail.singer_id} }" coding="E10003" @choose="chooseSinger" type="radio" :render="init" :disabled="detail.singer_id ==='0'" />
+              <v-choose title="选择专辑" :data="{ item: detail, field: 'album', coding: data.coding.album, condition: {singer_id: detail.singer_id} }" v-model:checked="detail.album_id" @choose="chooseSinger" type="radio" :disabled="detail.singer_id ==='0'" />
             </li>
             <li class="li">
               <span class="label">歌词</span>
               <span class="mr15">{{detail.lrc}}</span>
-              <v-choose title="选择歌词" :data="{ item: detail, field: 'lrc', condition: {namess: detail.name} }" coding="E10001" @choose="chooseSinger" type="radio" :render="init" />
+              <v-choose title="选择歌词" :data="{ item: detail, field: 'lrc', coding: data.coding.lrc, condition: {namess: detail.name} }" v-model:checked="detail.lrc_id" @choose="chooseSinger" type="radio" />
             </li>
             <li class="li">
               <span class="label">歌谱</span>
               <span class="mr15">{{detail.score}}</span>
-              <v-choose title="选择歌谱" :data="{ item: detail, field: 'score', condition: {namess: detail.name} }" coding="E10002" @choose="chooseSinger" type="radio" :render="init" />
+              <v-choose title="选择歌谱" :data="{ item: detail, field: 'score', coding: data.coding.score, condition: {namess: detail.name} }" v-model:checked="detail.score_id" @choose="chooseSinger" type="radio" />
             </li>
           </ul>
         </li>     

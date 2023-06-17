@@ -1,6 +1,6 @@
 <template>
 <div class="ptb5" style="background: #fff">
-  <v-tabs :tabs="menu">
+  <v-tabs :tabs="tabsArticle">
     <template v-slot:extra>
       <v-space>
         <span class="pt10">
@@ -101,6 +101,7 @@ import {
   useStore
 } from 'vuex'
 import {
+  tabsArticle,
   visitPage
 } from '@/assets/const'
 import {
@@ -151,35 +152,12 @@ export default defineComponent({
     const loading: any = ref(false)
     const pagesize: any = 10
 
-    let menu: any = ref([{
-        name: "文档管理",
-        value: "appstore1"
-      },
-      {
-        name: "正在审核",
-        value: "appstore2"
-      },
-      {
-        name: "已退回",
-        value: "appstore2"
-      }
-    ])
     const colorList = COLOR
     const cateList: any = ref([])
+    const albumArray = ['picture', 'video', 'website']
 
-    if (channelData.module === 'picture') {
-      menu.value[0].name = "图片管理"
+    if (albumArray.indexOf(channelData.module) > -1) {
       toggleDisplay.value = 'album'
-    } else if (channelData.module === 'video') {
-      menu.value[0].name = "视频管理"
-      toggleDisplay.value = 'album'
-    } else if (channelData.module === 'website') {
-      menu.value[0].name = "网站管理"
-      toggleDisplay.value = 'album'
-    } else if (channelData.module === 'source') {
-      menu.value[0].name = "资源管理"
-    } else if (channelData.module === 'funny') {
-      menu.value[0].name = "搞笑段子"
     }
 
     let page: any = ref(visitPage[0])
@@ -283,13 +261,13 @@ export default defineComponent({
     })
 
     return {
+      tabsArticle,
       coding,
       loading,
       colorList,
       init,
       channelData,
       page,
-      menu,
       type,
       handleClick,
       aaa,

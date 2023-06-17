@@ -5,7 +5,6 @@
       <template v-slot:extraleft>
         <v-popover :content="`${module.name}模板`" arrow="tb" offset="right" :move="-10" :keys="`static111}`">
           <ul>
-
             <li class="font14" style="line-height: 35px;" @click="handleClicksss(data, i)" v-for="(data, i) in sorter" :key="i">{{data}}</li>
           </ul>
         </v-popover>
@@ -19,23 +18,24 @@
   <div class="module-content p0">
     <div v-if="!isEdit">
       <div class="col-md-2 p10" v-for="(item, index) in dataList" :key="index">
-        <div class="card space-wrap relative align_center" @click="handleClick(item)">
-          <div :class="`space-file`">
-            <div>
-              <img src="@/assets/image/file.jpg" alt="" v-if="item.type === 'folder'">
-              <img src="@/assets/image/ie.png" alt="" v-else-if="item.type === 'htm'">
-              <img src="@/assets/image/css_file.png" alt="" v-else-if="item.type === 'css'">
-              <img src="@/assets/image/js.jpg" v-else alt="">
+        <v-cards :data="{title: '昨日阅读', value: '0'}">
+          <template v-slot:content>
+            <div class="relative align_center" @click="handleClick(item)">
+              <img src="@/assets/image/file.jpg" alt="" v-if="item.type === 'folder'" style="width: 60%; height: 60%">
+              <img src="@/assets/image/ie.png" alt="" v-else-if="item.type === 'htm'" style="width: 60%; height: 60%">
+              <img src="@/assets/image/css_file.png" alt="" v-else-if="item.type === 'css'" style="width: 60%; height: 60%">
+              <img src="@/assets/image/js.jpg" v-else alt="" style="width: 60%; height: 60%">
             </div>
             <div class="nowrap">{{item.name}}</div>
-          </div>
-        </div>
 
+          </template>
+        </v-cards>
       </div>
+      <v-nodata :data="dataList" />
     </div>
     <div class="p10" v-else>
       <textarea v-model="dataList.content" style="width: 100%; height: 600px" />
-      <button class="btn btn-default">保存</button>
+      <v-button>保存</v-button>
     </div>
   </div>
 </div>
@@ -44,40 +44,19 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
   watch,
   getQuery,
+  useStore,
   useRouter,
   useRoute
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
-import EditFile from './components/editFile.vue';
-import Button from '@/components/common/Button.vue';
 export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    EditFile,
-    Button
-  },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
+  name: 'Template',
   setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const dataList: any = ref([])
-    const dir: any = ref("")
     const router = useRouter();
     const route = useRoute();
     const sorter: any = {
@@ -142,14 +121,12 @@ export default defineComponent({
         prevArr.splice(prevArr.length - 1, 1)
         prevArr.push(prevUrl)
       }
-      // this.setState({ isEdit: false })
       router.push(prevArr.join('&'))
     }
 
     onMounted(() => {
       if (JSON.stringify(getQuery()) === '{}') {
         router.push(`/admin/template?channel=0`)
-        // this.props.history.push(`/admin/template?channel=0`)
       } else {
         const {
           channel,
@@ -158,14 +135,11 @@ export default defineComponent({
 
         module.value.name = sorter[0]
         module.value.value = channel
-
         isEdit.value = file !== undefined ? true : false,
-
           init({
             dir: window.location.search.split('?')[1],
           })
       }
-
     })
 
     return {
@@ -176,7 +150,6 @@ export default defineComponent({
       handleClick,
       handelReturn,
       isEdit
-
     }
   }
 })

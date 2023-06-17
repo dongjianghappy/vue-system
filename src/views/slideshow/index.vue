@@ -3,7 +3,7 @@
   <div class="module-head">
     <v-optionsbar title="幻灯片管理">
       <template v-slot:extraright>
-        <span class="mr10" @click="handleCreateJson">生成JSON</span>
+        <span class="mr10" @click="handleCreateJson">导出数据</span>
         <Detail :data="{ coding }" :render="init" :auth="auth.checked('add')" />
       </template>
     </v-optionsbar>
@@ -15,8 +15,8 @@
         <div class="ptb15">
           <span class="bold">{{item.channelname}}</span> - {{item.name}}
           <v-space class="right">
-          <Detail action="edit" :data="{id: item.id, coding }" :param="param" :render="init" :auth="auth.checked('edit')" />
-          <v-switch :data="{ item, field: 'status', coding }" :auth="auth" />
+            <Detail action="edit" :data="{id: item.id, coding }" :param="param" :render="init" :auth="auth.checked('edit')" />
+            <v-switch :data="{ item, field: 'status', coding }" :auth="auth" />
           </v-space>
         </div>
       </div>
@@ -63,16 +63,16 @@ export default defineComponent({
       router.push(`/admin/slideshow/list?name=${param.name}&fid=${param.id}`)
     }
 
-    function handleCreateJson(){
+    function handleCreateJson() {
       store.dispatch('common/Fetch', {
         api: "createAdJson",
         data: {
           type: 'slideshow'
         }
       }).then((res: any) => {
-        
+
       })
-      
+
     }
 
     onMounted(init)

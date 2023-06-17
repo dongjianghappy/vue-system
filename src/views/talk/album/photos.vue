@@ -8,7 +8,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <v-tabs :tabs="[{name: '头像',value: 'photos'},{name: '头像背景',value: 'background'},{name: '主页背景',value: 'banner'}]" :isEmit="true" v-model:index="index">
+    <v-tabs :tabs="tabsTalkAlbum" :isEmit="true" v-model:index="index">
       <template v-slot:content1>
         <List kind="photos" />
 
@@ -31,12 +31,13 @@ import {
   getCurrentInstance,
   onMounted,
   computed,
-  ref
-} from 'vue'
-import List from './components/list.vue'
-import {
+  ref,
   useStore
-} from 'vuex'
+} from '@/utils'
+import {
+  tabsTalkAlbum
+} from '@/assets/const'
+import List from './components/list.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
@@ -66,6 +67,7 @@ export default defineComponent({
     onMounted(init)
 
     return {
+      tabsTalkAlbum,
       coding,
       dataList,
       checkedList,

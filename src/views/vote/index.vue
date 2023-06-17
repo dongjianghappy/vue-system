@@ -8,7 +8,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-1">
+    <table class="table-striped table-hover col-left-1">
       <tr class="th">
         <td class="col-md-6">投票名称</td>
         <td class="col-md-2">投票人数</td>
@@ -19,7 +19,7 @@
         <td>{{item.name}}</td>
         <td>{{item.vote}}</td>
         <td>
-          <v-switch :data="{ item, field: 'status', coding }" />
+          <v-switch :data="{ item, field: 'status', coding }" :auth="true" />
         </td>
         <td>
           <v-space>
@@ -50,7 +50,7 @@ import {
 import Detail from './components/detail.vue'
 
 export default defineComponent({
-  name: 'VoteView',
+  name: 'Vote',
   components: {
     Detail
   },

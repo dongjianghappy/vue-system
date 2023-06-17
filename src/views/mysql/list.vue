@@ -1,6 +1,6 @@
 <template>
 <div class="bg-white">
-  <v-tabs :tabs="menu">
+  <v-tabs :tabs="tabsMysql">
     <template v-slot:content1>
       <List :coding="coding" />
     </template>
@@ -18,10 +18,11 @@ import {
   ref,
   watch,
   useRoute,
+  useStore
 } from '@/utils'
 import {
-  useStore
-} from 'vuex'
+  tabsMysql
+} from '@/assets/const'
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
 export default defineComponent({
@@ -34,15 +35,6 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
     const dataList = computed(() => store.getters['website/webinfo']);
-    let menu: any = ref([{
-        name: "数据库列表",
-        value: "appstore1"
-      },
-      {
-        name: "备份管理",
-        value: "appstore2"
-      }
-    ])
 
     let type: any = ref(1)
 
@@ -54,8 +46,8 @@ export default defineComponent({
     })
 
     return {
-      dataList,
-      menu
+      tabsMysql,
+      dataList
     }
   }
 })

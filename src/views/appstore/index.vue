@@ -1,6 +1,6 @@
 <template>
 <div class="ptb5" style="background: #fff">
-  <v-tabs :tabs="menu">
+  <v-tabs :tabs="tabsApp">
     <template v-slot:extra>
       <Detail action='add' :data="{ coding }" :render="init" :auth="auth.checked('add')" />
     </template>
@@ -28,11 +28,11 @@ import {
   useRoute,
   codings,
 } from '@/utils'
+import {
+  tabsApp
+} from '@/assets/const'
 import Detail from './components/detail.vue'
 import List from './components/list.vue'
-import {
-  appstorePage
-} from '@/assets/const'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
@@ -46,7 +46,6 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
     const coding: any = codings['appstore'];
-    let menu: any = ref(appstorePage)
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
     const dataList: any = ref([])
 
@@ -63,9 +62,7 @@ export default defineComponent({
       store.dispatch('setting/appstoreAction', {
         tabsIndex: tabsIndex.value,
         data: {
-          type: tabsIndex.value === 3 ? 0 : parseInt(tabsIndex.value) + 1,
-          page: 1,
-          pagesize: 10
+          type: tabsIndex.value === 3 ? 0 : parseInt(tabsIndex.value) + 1
         }
       }).then(res => {
         dataList.value = res.result
@@ -75,8 +72,8 @@ export default defineComponent({
     onMounted(init)
 
     return {
+      tabsApp,
       coding,
-      menu,
       tabsIndex,
       init,
       dataList,

@@ -68,7 +68,6 @@ import {
 } from '@/utils'
 export default defineComponent({
   name: 'v-Search',
-  components: {},
   props: {
     action: {
       type: String,

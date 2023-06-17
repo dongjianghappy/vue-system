@@ -9,7 +9,7 @@
     </div>
     <div class="module-content plr15">
 
-      <table width="100%" class="table-striped table-hover col-left-12">
+      <table class="table-striped table-hover col-left-12">
         <tr class="th">
           <td class="col-md-3">订单号</td>
           <td class="col-md-4">订单名称</td>

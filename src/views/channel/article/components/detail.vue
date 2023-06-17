@@ -109,7 +109,7 @@
             </div>
             <div>
               {{detail.music_name}}
-              <v-choose title="选择音乐" :data="{ item: detail, field: 'singer' }" coding="E0000" @choose="choose" type="radio" api="articleList" :render="init" />
+              <v-choose title="选择音乐" :data="{ item: detail, field: 'singer' }" coding="E0000" @choose="choose" type="radio" api="articleList" />
             </div>
           </li>
 
@@ -165,7 +165,7 @@ import {
 import {
   useStore
 } from 'vuex'
-import Source from '../../setting/source.vue'
+import Source from '../../setting/source/index.vue'
 import Editor from '@/components/packages/editor/index.vue'
 
 export default defineComponent({
@@ -374,7 +374,6 @@ export default defineComponent({
     }
 
     function choose(param: any) {
-      debugger
       const {
         field,
         data

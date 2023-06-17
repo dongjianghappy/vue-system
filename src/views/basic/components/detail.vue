@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow">
   <i class="iconfont icon-anonymous-iconfont" />自定义
 </v-button>
-<v-dialog v-model:show="isShow" title="自定义字段" :style="{width: '520', height: '450'}" :confirm="true" :cancel="true" @submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" title="自定义字段" :data="data" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -19,7 +19,7 @@
       </li>
       <li class="li">
         <span class="label">文本类型</span>
-        <v-select :enums="textType" v-model:value="detail.text_type" :defaultValue="detail.text_type = detail.text_type ? detail.text_type : 'input'" />
+        <v-select :enums="TEXT_TYPE" v-model:value="detail.text_type" :defaultValue="detail.text_type = detail.text_type ? detail.text_type : 'input'" />
       </li>
       <li class="li">
         <span class="label">说明</span>
@@ -27,7 +27,7 @@
       </li>
     </ul>
   </template>
-</v-dialog>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -42,7 +42,7 @@ import {
   TEXT_TYPE,
 } from '@/assets/enum'
 export default defineComponent({
-  name: 'v-Detail',
+  name: 'Detail',
   props: {
     data: {
       type: Object,
@@ -55,17 +55,14 @@ export default defineComponent({
       default: () => {
         return 'Default function'
       }
-    },
-    auth: {
-      type: Boolean,
-      default: false
-    },
+    }
   },
   setup(props, context) {
-    const {proxy}:any = getCurrentInstance();
+    const {
+      proxy
+    }: any = getCurrentInstance();
     const store = useStore();
     const isShow: any = ref(false)
-    const textType = TEXT_TYPE
     const detail: any = ref({})
 
     function submit(params: any) {
@@ -80,7 +77,7 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
         api: "insert",
         data: {
-          coding: 'P0000',
+          coding: props.data.coding,
           remark,
           name,
           value,
@@ -97,7 +94,7 @@ export default defineComponent({
     }
 
     return {
-      textType,
+      TEXT_TYPE,
       isShow,
       detail,
       submit

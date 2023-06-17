@@ -9,7 +9,7 @@
   </div>
   <div class="module-content plr15">
 
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-1">编号</td>
@@ -34,15 +34,15 @@
         <td>{{item.number}}</td>
         <td>{{item.datetime}}</td>
         <td>
-          <v-switch :data="{ item, field: 'status', coding }" />
+          <v-switch :data="{ item, field: 'status', coding }" :auth="true" />
         </td>
         <td>
           <v-space>
             <span>
-              <Detail action="edit" :data="{id: item.id, coding }" :render="render" />
+              <Detail action="edit" :data="{id: item.id, coding }" :render="init" />
             </span>
             <span>
-              <v-confirm name="删除" :data="{id: item.id, coding }" type="text" api="delete" :render="render" operating="delete"></v-confirm>
+              <v-confirm name="删除" :data="{id: item.id, coding }" type="text" api="delete" :render="init" operating="delete"></v-confirm>
             </span>
           </v-space>
         </td>
@@ -88,7 +88,8 @@ export default defineComponent({
 
     return {
       dataList,
-      coding
+      coding,
+      init
     }
   }
 })

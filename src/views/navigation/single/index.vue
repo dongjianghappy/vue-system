@@ -4,13 +4,13 @@
     <v-optionsbar title="单页导航">
       <template v-slot:extraright>
         <v-button @onClick="handleClick('add')" :disabled="auth.checked('add')">
-          <i class="iconfont icon-add" />新增单页
+          <i class="iconfont icon-anonymous-iconfont" />新增单页
         </v-button>
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-34">
+    <table class="table-striped table-hover col-left-34">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-1">顺序</td>
@@ -59,7 +59,8 @@ import {
   ref,
   useStore,
   useRouter,
-  useRoute
+  useRoute,
+  codings
 } from '@/utils'
 export default defineComponent({
   name: 'SingleView',
@@ -70,7 +71,7 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
     const router: any = useRouter();
-    const coding: any = proxy.$coding['navigation'].single;
+    const coding: any = codings.single;
     const dataList: any = ref([])
     const checkedList: any = ref([])
 

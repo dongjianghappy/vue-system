@@ -1,6 +1,6 @@
 <template>
 <div class="bg-white">
-  <v-tabs :tabs="menu">
+  <v-tabs :tabs="tabsUserAudit">
     <template v-slot:content1>
       <List :coding="coding" :dataList="dataList" />
     </template>
@@ -18,11 +18,12 @@ import {
   computed,
   ref,
   watch,
+  useStore,
   useRoute,
 } from '@/utils'
 import {
-  useStore
-} from 'vuex'
+  tabsUserAudit
+} from '@/assets/const'
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
 export default defineComponent({
@@ -45,16 +46,7 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
     const dataList = computed(() => store.getters['website/webinfo']);
-    let menu: any = ref([{
-        name: "注册审核",
-        value: "appstore1"
-      },
-      {
-        name: "邮箱审核",
-        value: "appstore2"
-      }
-    ])
-    
+
     let type: any = ref(1)
 
     // 监听路由
@@ -65,8 +57,8 @@ export default defineComponent({
     })
 
     return {
-      dataList,
-      menu
+      tabsUserAudit,
+      dataList
     }
   }
 })

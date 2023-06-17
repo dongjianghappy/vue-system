@@ -19,12 +19,16 @@
         <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
       </li>
       <li class="li">
+        <span class="label">位置</span>
+        <v-radiobutton name="display_location" v-model:checked="detail.display_location" :enums="[{label: '网站', value: '0'}, {label: '微博', value: '1'}]" />
+      </li>
+      <li class="li">
         <span class="label">类型</span>
         <v-select :enums="sourceType" v-model:value="detail.type" :defaultValue="detail.type = detail.type ? detail.type : '1'" />
       </li>
     </ul>
     <div class="edit-article">
-      <Editor v-model:contentsss="detail.content" />
+      <v-editor v-model:contentsss="detail.markdown" :data="detail" />
     </div>
   </template>
 </v-drawer>
@@ -39,12 +43,8 @@ import {
 import {
   ANNOUNCEMENT_TYPE,
 } from '@/assets/enum'
-import Editor from '@/components/packages/editor/index.vue'
 export default defineComponent({
   name: 'v-Search',
-  components: {
-    Editor
-  },
   props: {
     action: {
       type: String,

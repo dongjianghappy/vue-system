@@ -1,13 +1,13 @@
 <template>
 <span @click="handleclick">设置</span>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" title="用户设置" :top="64" :data="data" api="userDetail" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" title="用户设置" :top="64" :data="{uid: data.uid}" api="userDetail" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <div class="mb15">
       <v-space>
         <span>用户状态: {{bannedType[detail.status]}}
           <SetBan :data="detail" /></span>
         <span>
-          <Authority name="用户权限" title="权限管理" :data="{coding: 'U50002'}" :uid="data.uid" :auth="true" /></span>
+          <v-authority name="用户权限" title="权限管理" :data="{uid: data.uid, coding: data.coding.config}" :auth="true" /></span>
         <span><a :href="`/admin/personal?uid=${detail.account}`" target="_brank">查看</a></span>
       </v-space>
     </div>
@@ -33,15 +33,13 @@ import {
   watch,
 } from '@/utils'
 import SetBan from './setBan.vue'
-import Authority from '@/components/packages/authority/index.vue'
 import {
   BANNED_TYPE,
 } from '@/assets/enum'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    SetBan,
-    Authority
+    SetBan
   },
   props: {
     action: {
@@ -80,16 +78,14 @@ export default defineComponent({
     function init() {
       store.dispatch('common/Fetch', {
         data: {
-          coding: "U0016",
-          page: 1,
-          pagesize: 10
+          coding: props.data.coding.role
         }
       }).then(res => {
         const data: any = [{
           value: 0,
           name: "普通用户"
         }]
-        res.result.list.map((item: any) => {
+        res.result.map((item: any) => {
           data.push({
             value: item.id,
             name: item.name

@@ -8,7 +8,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-14">
+    <table class="table-striped table-hover col-left-14">
       <tr class="th">
         <td class="col-md-1">策略名称</td>
         <td class="col-md-1">周期</td>
@@ -16,7 +16,7 @@
         <td class="col-md-7">积分说明</td>
         <td class="col-md-1">操作</td>
       </tr>
-      <tr v-for="(item, index) in dataList.list" :key="index">
+      <tr v-for="(item, index) in dataList" :key="index">
         <td>
           {{item.name}}
         </td>
@@ -52,6 +52,7 @@ import {
   onMounted,
   computed,
   useStore,
+  ref,
   codings
 } from '@/utils'
 import Detail from './components/detail.vue'
@@ -62,17 +63,17 @@ export default defineComponent({
   },
   setup(props, context) {
     const store = useStore();
-    const dataList = computed(() => store.getters['basic/partner']);
-    const coding: any = codings['user'].sign;
+    const dataList: any = ref([])
+    const coding: any = codings['user'].cycle;
 
     function init() {
       store.dispatch('basic/Fetch', {
-        state: 'partner',
         data: {
-          coding: 'U0011',
-          page: 1,
-          pagesize: 10
+          coding: coding
         }
+      }).then((res: any) => {
+        debugger
+        dataList.value = res.result
       })
     }
 

@@ -5,7 +5,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-1">
+    <table class="table-striped table-hover col-left-1">
       <tr class="th">
         <td class="col-md-2 pl25">频道名称</td>
         <td class="col-md-2">频道ID</td>

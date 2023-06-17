@@ -86,7 +86,7 @@ export default defineComponent({
       }
     })
 
-   function submit(params: any) {
+    function submit(params: any) {
       store.dispatch('common/Fetch', {
         api: props.action !== 'add' ? 'update_anpassen' : 'add_anpassen',
         data: {
@@ -99,7 +99,7 @@ export default defineComponent({
         params.message()
         params.cancel()
       })
-    }    
+    }
 
     return {
       textType,

@@ -1,11 +1,10 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? "编辑": "新增导航"}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增导航"}}
 </v-button>
-<v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑导航' : '新增导航' " :data="data" api="navigationDetail" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑导航' : '新增导航' " :data="data" api="navigationDetail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
-    <div class="alert-description ptb10 plr15">说明</div>
-    <v-tabs :tabs="menu" method="click">
+    <v-tabs :tabs="tabsNav" method="click">
       <template v-slot:content1>
         <ul class="form-wrap-box">
           <li class="li">
@@ -34,7 +33,6 @@
             <ul class="p15" style="background: rgb(248, 248, 250);">
               <li class="vertical">
                 <ChooseCate :data="data" :render="init" :cateList="cateList" @getCate="getCate" :module="detail.module" />
-
               </li>
             </ul>
           </li>
@@ -69,7 +67,7 @@
           </li>
           <li class="li">
             <span class="label">类型</span>
-            <v-select :enums="navType" v-model:value="detail.navtype" :defaultValue="detail.navtype = detail.navtype ? detail.navtype : 'main'" />
+            <v-select :enums="NAV_TYPE" v-model:value="detail.navtype" :defaultValue="detail.navtype = detail.navtype ? detail.navtype : 'main'" />
           </li>
           <li class="li">
             <span class="label">展示更多中</span>
@@ -113,6 +111,7 @@ import {
   useStore,
   computed
 } from '@/utils'
+import {tabsNav} from '@/assets/const'
 import {
   NAV_TYPE,
 } from '@/assets/enum'
@@ -152,12 +151,6 @@ export default defineComponent({
         return 'Default function'
       }
     },
-    siteList: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
     auth: {
       type: Boolean,
       default: false
@@ -167,17 +160,9 @@ export default defineComponent({
     const store = useStore();
     const isShow: any = ref(false)
     const drawer: any = ref(null)
-    const navType: any = NAV_TYPE
     const cateList: any = ref([])
     const tagList: any = ref([])
     const articleList: any = ref([])
-    const menu: any = ref([{
-        name: "导航信息"
-      },
-      {
-        name: "页面信息"
-      }
-    ])
     const detail: any = ref({})
     const channel = computed(() => {
       const enums = store.getters['user/channel'].map((item: any) => {
@@ -205,7 +190,6 @@ export default defineComponent({
     })
 
     function getCate(param: any) {
-      debugger
       let arr = cateList.value.filter((item: any) => item.id === param.id)
 
       if (arr.length > 0) {
@@ -219,7 +203,6 @@ export default defineComponent({
     }
 
     function getTag(param: any) {
-      debugger
       let arr = tagList.value.filter((item: any) => item.id === param.id)
 
       if (arr.length > 0) {
@@ -230,10 +213,9 @@ export default defineComponent({
         id: param.id,
         name: param.name
       })
-    }    
+    }
 
     function getArticle(param: any) {
-      debugger
       let index = articleList.value.findIndex((item: any) => item.id === param.id)
       if (index > -1) {
         articleList.value.splice(index, 1)
@@ -261,7 +243,7 @@ export default defineComponent({
       const tagArr: any = []
       tagList.value.map((item: any) => {
         tagArr.push(item.id)
-      })      
+      })
 
       const artArr: any = []
       articleList.value.map((item: any) => {
@@ -288,11 +270,11 @@ export default defineComponent({
     }
 
     return {
+      tabsNav,
       isShow,
       drawer,
       channel,
-      menu,
-      navType,
+      NAV_TYPE,
       detail,
       submit,
       cateList,

@@ -4,16 +4,20 @@
   <ul class="position-nav align_center">
     <li class="ant-col ant-col-2 pointer"><i class="iconfont icon-more font18" @click="handleRouter('appstore', 'setting')"></i></li>
     <li class="ant-col ant-col-2">
-      <SystemSetting :auth="true" />
+      <SystemSetting :auth="true" :data={coding} />
     </li>
     <li class="ant-col ant-col-2" v-if="channel.length>0">
-      <v-drawershow name='<i class="iconfont icon-app pointer"></i>' title="频道" icon="add" type="text" :style="{width: '800'}" :data="1" initialValues="initialValues" :renderList="getData">
+      <v-drawershow name='<i class="iconfont icon-app pointer"></i>' icon="add" type="text" :style="{width: '800'}" :data="1" initialValues="initialValues" :renderList="getData">
         <template v-slot:content>
-          <ul class="channel-boxs">
+          <ul>
             <li class="col-md-3 p5" v-for="(item, index) in channel" :key="index" draggable="true" @mouseover="hover(item)" @mouseleave="leave(item)" @click="handleRouter(item.module)" @dragend="handleDragEnd($event, item)" @dragstart="handleDragStart($event, item)" @dragenter="handleDragEnter($event, item)" @dragover.prevent="handleDragOver($event, item)">
-              <div class="channel-list p25" :class="{isopen: item.status === '1'}"  style="box-shadow: 0 1px 3px rgb(27 95 160 / 10%) !important;">
-              <v-chanelcard :data="{item, name: item.name, coding: 'O0000'}" className="channel-bg" />
-              </div>
+              <v-cards :class="{isopen: item.status === '1'}">
+                <template v-slot:content>
+                  <div class="font16" style="height: 50px; line-height: 50px;">
+                    {{item.name}}
+                  </div>
+                </template>
+              </v-cards>
             </li>
           </ul>
         </template>
@@ -41,6 +45,7 @@ import {
   defineComponent,
   computed,
   useStore,
+  codings
 } from '@/utils'
 import SystemSetting from '@/components/packages/setting/systemSetting.vue'
 
@@ -62,6 +67,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const store = useStore();
+    const coding: any = codings
     const module: any = MODUDLE
     const channel = computed(() => store.getters['user/channel']);
     const setting = computed(() => store.getters['user/setting']);
@@ -80,7 +86,7 @@ export default defineComponent({
       })
     }
 
-        function hover(item: any) {
+    function hover(item: any) {
       item.hover = true
     }
 
@@ -89,6 +95,7 @@ export default defineComponent({
     }
 
     return {
+      coding,
       module,
       channel,
       setting,
@@ -100,17 +107,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style lang="less">
-.collapse{
-  background: #fff;
-  .collapse-head{
-    padding: 15px;
-    background: #f8f8fa;
-  }
-  .collapse-list{
-    background: #fff;
-  }
-}
-
-</style>

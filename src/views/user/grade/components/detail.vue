@@ -15,7 +15,7 @@
       </li>
       <li class="li">
         <span class="label">字段</span>
-        <input v-model="detail.value" type="text" placeholder="请输入字段" class="input-sm input-full" />
+        <input v-model="detail.value" type="text" placeholder="请输入字段或频道模块名称" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">类型</span>
@@ -98,7 +98,7 @@ export default defineComponent({
         }
       }).then(res => {
         props.render()
-        cancel()
+        isShow.value = false
       })
     }
 

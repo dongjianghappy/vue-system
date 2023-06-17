@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="mt25">
-      <table width="100%" class="table-striped table-hover col-left-1">
+      <table class="table-striped table-hover col-left-1">
       <tr class="th">
         <td class="col-md-2">歌曲</td>
         <td class="col-md-1">风格</td>

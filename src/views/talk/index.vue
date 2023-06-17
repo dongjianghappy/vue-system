@@ -50,19 +50,9 @@
         <ul class="form-wrap-box">
           <li class="li mb10"><span class="label">模块展示</span>
             <span class="right">
-              <Authority name="设置"  title="权限管理" type="manage" :data="{coding: 'U50002'}" :auth="true" />
+              <v-authority name="设置" title="权限管理" type="manage" :data="{coding: coding.config}" :auth="true" />
             </span>
           </li>
-          <!-- <li class="li mb10"><span class="label">聚合标签</span>
-            <span class="right">
-              <Tag action="edit" :render="renderChannel" :data="{channel_id: channelData.id, coding: 'O0002'}" :auth="auth.checked('tag')" />
-            </span>
-          </li>
-          <li class="li mb10"><span class="label">内容来源</span>
-            <span class="right">
-              <Source action="edit" :render="renderChannel" :data="{channel_id: channelData.id, coding: 'O0017'}" :auth="auth.checked('tag')" />
-            </span>
-          </li> -->
         </ul>
       </div>
     </div>
@@ -78,17 +68,16 @@ import {
   onMounted,
   computed,
   ref,
-  useStore
+  useStore,
+  codings
 } from '@/utils'
 import {
   ChartLine
 } from '@/components/packages/chart/index'
-import Authority from '@/components/packages/authority/index.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    ChartLine,
-    Authority
+    ChartLine
   },
   props: {
     style: {
@@ -104,7 +93,7 @@ export default defineComponent({
       ctx
     }: any = getCurrentInstance();
     const store = useStore();
-
+    const coding = codings.talk
     const user: any = computed(() => store.getters['basic/userDefault'].user || {});
     const hours: any = computed(() => {
       let aaa = store.getters['basic/userDefault'].year || {}
@@ -152,6 +141,7 @@ export default defineComponent({
 
     onMounted(init)
     return {
+      coding,
       user,
       // order,
       hours,

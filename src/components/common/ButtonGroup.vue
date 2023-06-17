@@ -10,7 +10,6 @@
   </div>
   <div class="col-md-8 align_right">
     <v-space class="mt15">
-      <!-- <v-pagination :pagination="pagination" :render="render" v-if="Object.keys(pagination).length" /> -->
       <v-pagination :pagination="pagination" :render="render" />
     </v-space>
   </div>

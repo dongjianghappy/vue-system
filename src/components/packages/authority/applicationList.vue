@@ -16,12 +16,12 @@ import {
   getCurrentInstance,
   useStore
 } from '@/utils'
-import AddButton from './addlink.vue'
+import AddPage from './addPage.vue'
 import AddModule from './addModule.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    AddButton,
+    AddPage,
     AddModule
   },
   props: {

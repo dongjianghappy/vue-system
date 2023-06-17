@@ -7,13 +7,13 @@
           <v-search :render="render" field="name" />
           <v-condition name="网站" icon="select" field="website" :enums="siteEnum" :render="render" />
           <v-condition name="平台" icon="select" field="source" :enums="sourceType" :render="render" />
-          <Detail action='add' :data="data" :render="render" :siteList="siteList" :auth="auth.checked('add')" />
+          <Detail action='add' :data="data" :render="render" :auth="auth.checked('add')" />
         </v-space>
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content p15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1"> 选择</td>
         <td class="col-md-2">网站名称 </td>
@@ -41,14 +41,14 @@
         <td>
           <v-space class="relative">
             <span>
-              <Detail action="edit" :data="{id: item.id, ...data }" :render="render" :siteList="siteList" :auth="auth.checked('edit')" />
+              <Detail action="edit" :data="{id: item.id, ...data }" :render="render" :auth="auth.checked('edit')" />
             </span>
             <span>
               <v-confirm name="删除" :data="{id: item.id, ...data }" type="text" api="delete" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
             </span>
             <v-popover content="更多" arrow="tb" offset="right" :move="-500" :keys="`static_${index}`">
               <div class="font14" style="width: 550px;">
-                <table width="100%" class="table-striped table-hover col-left-1">
+                <table class="table-striped table-hover col-left-1">
                   <tr>
                     <td class="col-md-1">ID</td>
                     <td class="col-md-4">展示站点</td>
@@ -107,12 +107,6 @@ export default defineComponent({
       type: Function,
       default: () => {
         return
-      }
-    },
-    siteList: {
-      type: Object,
-      default: () => {
-        return {}
       }
     },
     siteEnum: {

@@ -7,11 +7,11 @@
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">网站名称</span>
-        <input v-model="detail.name" type="text" placeholder="请输入网站名称" class="input-sm input-full" />
+        <input v-model="detail.name" type="text" placeholder="请输入站点名称" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">域名</span>
-        <input v-model="detail.domain" type="text" placeholder="请输入域名" class="input-sm input-full" />
+        <input v-model="detail.domain" type="text" placeholder="请输入站点域名" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">状态</span>
@@ -33,15 +33,8 @@ import {
   ref,
   watch,
 } from '@/utils'
-import {
-  ANNOUNCEMENT_TYPE,
-} from '@/assets/enum'
-import Editor from '@/components/packages/editor/index.vue'
 export default defineComponent({
   name: 'v-Search',
-  components: {
-    Editor
-  },
   props: {
     action: {
       type: String,
@@ -66,10 +59,9 @@ export default defineComponent({
   },
   setup(props, context) {
     const isShow: any = ref(false)
-    const sourceType: any = ANNOUNCEMENT_TYPE
     const drawer: any = ref(null)
     const detail: any = ref({})
-    // 监听
+
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
         detail.value = await drawer.value.init()
@@ -77,10 +69,10 @@ export default defineComponent({
     })
 
     return {
+      drawer,
       isShow,
-      sourceType,
-      detail,
-      drawer
+      detail
+      
     }
   }
 })

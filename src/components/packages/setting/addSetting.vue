@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="true">
   <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'add' ? '新增系统设置' : ''}}
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增系统设置" :style="{width: '520', height: '300'}" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增系统设置" :style="{width: '520', height: '300'}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -73,6 +73,7 @@ export default defineComponent({
     function submit(cancel: any) {
 
       const {
+        fid,
         name,
         value,
         sort,
@@ -81,6 +82,7 @@ export default defineComponent({
       } = detail.value
 
       const param: any = {
+        fid: fid || props.data.fid,
         name,
         value,
         sort,
@@ -95,7 +97,7 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
         api: props.action !== "add" ? 'update' : "insert",
         data: {
-          coding: 'P0018',
+          coding: props.data.coding,
           ...param
         }
       }).then(() => {
@@ -105,6 +107,7 @@ export default defineComponent({
     }
 
     return {
+      dialog,
       isShow,
       detail,
       textType,

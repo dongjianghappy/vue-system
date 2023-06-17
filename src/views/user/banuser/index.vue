@@ -8,7 +8,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-7">
+    <table class="table-striped table-hover col-left-7">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-1">头像</td>
@@ -80,13 +80,7 @@ export default defineComponent({
     });
 
     function init() {
-      store.dispatch('user/banUserAction', {
-        data: {
-          coding: 'P0005',
-          page: 1,
-          pagesize: 25
-        }
-      })
+      store.dispatch('user/banUserAction')
     }
 
     onMounted(init)

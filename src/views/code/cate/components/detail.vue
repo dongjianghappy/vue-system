@@ -15,7 +15,7 @@
                 <input v-model="detail.name" type="text" class="input-sm input-full" :style="[detail.style]" />
               </div>
               <div style="flex: 1">
-              <v-titleattribute :style="detail.style || {}" :setStyle="(param) => detail.style = param" />
+                <v-titleattribute :style="detail.style || {}" :setStyle="(param) => detail.style = param" />
               </div>
               <div>
                 <button class="btn btn-default btn-primary" @click="handleUpdate(detail)">生成静态</button>
@@ -26,7 +26,6 @@
             <span class="label">所属分类</span>
             {{detail.parent}}
             <v-category name="选择分类" :data="{item: detail, ...data}" :isInt="true" type="text"></v-category>
-
           </li>
           <li class="li">
             <span class="label">顺序</span>
@@ -41,22 +40,12 @@
             <span class="label">分类路径</span>
             <input v-model="detail.dir_file" type="text" class="input-sm input-full" />
           </li>
-          <li class="li">
+          <li class="li" style="overflow: auto;">
             <span class="label">预览图</span>
             <SpaceModal v-model:image="detail.image">
-              <div class="space-wrap" style="display: flex;">
-                <div class="space-picture p10" style="background: rgb(250, 250, 250); flex: 2 1 0%; height: auto;">
-                  <div class="pointer"><img :src="detail.image" width="250" height="100" alt=""></div>
-                </div>
-                <div style="flex: 1 1 0%;">
-                  <div style="flex: 1 1 0%; display: flex; justify-content: center;">
-                    <div>
-                      <div style="background: rgb(250, 250, 250); border: 2px dashed rgb(238, 238, 238); height: 150px; width: 150px; line-height: 150px; text-align: center;"><i class="iconfont icon-add font30"></i></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <span class="right">选择图片</span>
             </SpaceModal>
+            <img width="398" height="150" :src="detail.image">
           </li>
         </ul>
       </template>
@@ -135,10 +124,6 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-    checkboxList: {
-      type: Array,
-      default: []
-    },
     render: {
       type: Function,
       default: () => {
@@ -186,7 +171,6 @@ export default defineComponent({
 
     // 保存
     function submit() {
-
       const {
         style,
         flags,

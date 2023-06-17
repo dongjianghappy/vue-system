@@ -1,6 +1,6 @@
 <template>
 <div>
-    <table width="100%" class="table-striped table-hover col-left-2">
+    <table class="table-striped table-hover col-left-2">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-7">简谱名称</td>

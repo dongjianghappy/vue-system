@@ -359,7 +359,18 @@ export const MODUDLE = [
   },
 ]
 
-export const linkPage = [
+// 导航编辑
+export const tabsNav = [
+	{
+		name: "导航信息"
+	},
+	{
+		name: "页面信息"
+	}
+]
+
+// 友情链接
+export const tabsLink = [
 	{
 		name: "交换友链",
 		value: "link1"
@@ -372,9 +383,22 @@ export const linkPage = [
 		name: "申请友链",
 		value: "link3"
 	}
-] // ['link1', 'link2', 'link3']
+]
 
-export const appstorePage = [
+// 主题
+export const tabsTheme = [
+	{
+		name: "主题风格",
+		value: "appstore1"
+	},
+	{
+		name: "背景特效",
+		value: "appstore2"
+	}
+]
+
+// 应用商城
+export const tabsApp = [
 	{
 		name: "频道管理",
 		value: "appstore1"
@@ -385,6 +409,138 @@ export const appstorePage = [
 	},
 	{
 		name: "功能特效",
+		value: "appstore3"
+	}
+]
+
+// 数据库
+export const tabsMysql = [
+	{
+		name: "数据库列表",
+		value: "appstore1"
+	},
+	{
+		name: "备份管理",
+		value: "appstore2"
+	}
+]
+
+// 频道内容
+export const tabsArticle = [
+	{
+		name: "内容管理",
+		value: "appstore1"
+	},
+	{
+		name: "正在审核",
+		value: "appstore2"
+	},
+	{
+		name: "已退回",
+		value: "appstore2"
+	}
+]
+
+// 用户信息
+
+export const tabsUserInfo = [
+	{
+		name: "个人资料",
+		value: "appstore1"
+	},
+	{
+		name: "修改密码",
+		value: "appstore2"
+	}
+]
+
+// 用户列表
+export const tabsUser = [
+	{
+		name: "普通用户",
+		value: "appstore1"
+	},
+	{
+		name: "管理员",
+		value: "appstore3"
+	}
+]
+
+// 用户权限
+export const tabsUserGrade = [
+	{
+		name: "频道权限",
+		value: "appstore1"
+	},
+	{
+		name: "应用权限",
+		value: "appstore2"
+	},
+	{
+		name: "功能权限",
+		value: "appstore2"
+	}
+]
+
+// 用户注册
+export const tabsUserAudit = [
+	{
+		name: "注册审核",
+		value: "appstore1"
+	},
+	{
+		name: "邮箱审核",
+		value: "appstore2"
+	}
+]
+
+// 微博内容
+export const tabsTalk = [
+	{
+		name: "微博管理",
+		value: "advertisement1"
+	},
+	{
+		name: "正在审核",
+		value: "advertisement2"
+	}
+]
+
+// 用户博客
+export const tabsBlog = [
+	{
+		name: "博客管理",
+		value: "advertisement1"
+	},
+	{
+		name: "正在审核",
+		value: "advertisement2"
+	}
+]
+
+// 用户相册
+export const tabsTalkAlbum = [
+	{name: '头像',value: 'photos'},
+	{name: '头像背景',value: 'background'},
+	{name: '主页背景',value: 'banner'}
+]
+
+// 微博主题
+export const tabsTalkTheme = [
+	{
+		name: "主题风格",
+		value: "appstore1"
+	},
+	{
+		name: "背景特效",
+		value: "appstore2"
+	},
+	{
+		name: "挂件装饰",
+		value: "appstore3"
+	},
+	{
+		name: "鼠标特效",
 		value: "appstore3"
 	}
 ]

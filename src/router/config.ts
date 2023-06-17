@@ -14,7 +14,7 @@ import ModuleDefault from '../views/channel/index.vue'
 // import ChannelIndex from '../views/channel/default.vue'
 
 import Channel from '../views/channel/cate/index.vue'
-import ChannelSetting from '../views/channel/setting/index.vue'
+// import ChannelSetting from '../views/channel/setting/index.vue'
 import ArticleList from '../views/channel/article/index.vue'
 import Recycle from '../views/channel/recycle/index.vue'
 import Article from '../views/channel/article/components/detail.vue'
@@ -44,7 +44,7 @@ import Default from '../views/layout/components/default.vue'
 import Basic from '../views/basic/index.vue'
 import Theme from '../views/theme/index.vue'
 import Site from '../views/basic/site/index.vue'
-import SiteChannel from '../views/basic/site/channel/index.vue'
+// import SiteChannel from '../views/basic/site/channel/index.vue'
 import Navigation from '../views/navigation/index.vue'
 import NavigationMain from '../views/navigation/main/index.vue'
 import Single from '../views/navigation/single/index.vue'
@@ -58,7 +58,7 @@ import SlideshowList from '../views/slideshow/list/index.vue'
 import Partner from '../views/partner/index.vue'
 import Advertisement from '../views/advertisement/index.vue'
 import AdvertisementPosition from '../views/advertisement/position/index.vue'
-import AdvertisementOrder from '../views/advertisement/order/index.vue'
+// import AdvertisementOrder from '../views/advertisement/order/index.vue'
 import Links from '../views/links/index.vue'
 
 // // 用户组件
@@ -170,6 +170,7 @@ import CustomAlbum from '../views/talk/album/custom.vue'
 import TalkJournal from '../views/talk/journal/index.vue'
 import TalkTheme from '../views/talk/theme/index.vue'
 import Mood from '../views/talk/mood/index.vue'
+import Blog from '../views/talk/blog/index.vue'
 import TalkStatistics from '../views/talk/statistics/index.vue'
 import TalkVisit from '../views/talk/statistics/visit/index.vue'
 import TalkIp from '../views/talk/statistics/ip/index.vue'
@@ -180,7 +181,7 @@ const arrss: any = {
   Basic,
   Theme,
   Site,
-  SiteChannel,
+  // SiteChannel,
     Navigation,
   NavigationMain,
   Single,
@@ -189,13 +190,13 @@ const arrss: any = {
   ModuleDefault,
   // ChannelIndex,
   Channel,
-  ChannelSetting,
+  // ChannelSetting,
   ArticleList,
   Article,
   Links,
   Advertisement,
   AdvertisementPosition,
-  AdvertisementOrder,
+  // AdvertisementOrder,
   Spread,
   Partner,
 
@@ -246,6 +247,7 @@ const arrss: any = {
   TalkJournal,
   TalkTheme,
   Mood,
+  Blog,
   TalkStatistics,
   TalkVisit,
   TalkIp,

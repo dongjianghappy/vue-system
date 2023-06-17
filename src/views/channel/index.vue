@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="col-md-4" style="padding-left: 8px;">
-         <div class="col-md-4">
+        <div class="col-md-4">
           <v-statisticcard name="评论" :value="data.total_visit || 0" />
         </div>
         <div class="col-md-4">
@@ -62,33 +62,32 @@
   </div>
 </div>
 <div class="col-md-2" style="overflow: auto;">
-
   <div style="padding-left: 8px;">
     <div class="module-wrap">
       <div class="module-head">
         设置
-        <v-switch :data="{ item: channel, field: 'status', coding: 'O0000' }" className="right" :auth="auth" />
+        <v-switch :data="{ item: dataList, field: 'status', coding: coding.channel }" className="right" :auth="auth" />
       </div>
       <div class="module-content plr15" style="height: 545px">
         <ul class="form-wrap-box">
           <li class="li mb10"><span class="label">频道信息</span>
             <span class="right">
-              <Info action="edit" :data="{id: channelData.id, coding: 'O0000'}" :render="renderChannel" :auth="auth.checked('info')" />
+              <Info action="edit" :data="{id: channel.id, coding: coding.channel}" :render="renderChannel" :auth="auth.checked('info')" />
             </span>
           </li>
           <li class="li mb10"><span class="label">展示设置</span>
             <span class="right">
-              <ShowSetting :data="{channel_id: channelData.id ,coding: 'O0018'}" :auth="auth.checked('display')" />
+              <v-setting :data="{channel_id: channel.id ,coding: coding.channel_config}" :auth="auth.checked('display')" />
             </span>
           </li>
           <li class="li mb10"><span class="label">聚合标签</span>
             <span class="right">
-              <Tag action="edit" :render="renderChannel" :data="{channel_id: channelData.id, coding: 'O0002'}" :auth="auth.checked('tag')" />
+              <Tag action="edit" :render="renderChannel" :data="{channel_id: channel.id, coding: coding.label}" :auth="auth.checked('tag')" />
             </span>
           </li>
           <li class="li mb10"><span class="label">内容来源</span>
             <span class="right">
-              <Source action="edit" :render="renderChannel" :data="{channel_id: channelData.id, coding: 'O0017'}" :auth="auth.checked('tag')" />
+              <Source action="edit" :render="renderChannel" :data="{channel_id: channel.id, coding: coding.content_source}" :auth="auth.checked('tag')" />
             </span>
           </li>
         </ul>
@@ -108,45 +107,32 @@ import {
   ref,
   watch,
   useStore,
-  useRoute,
+  codings,
   channels,
   useRouter
 } from '@/utils'
 import {
   ChartLine
 } from '@/components/packages/chart/index'
-import Info from './setting/components/info.vue'
+import Info from './setting/index.vue'
 import Tag from './setting/tag/index.vue'
-import Source from './setting/source.vue'
-import ShowSetting from '../../components/packages/setting/index.vue'
+import Source from './setting/source/index.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
     Info,
     Tag,
     Source,
-    ShowSetting,
     ChartLine
   },
-  props: {
-    style: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
-  },
-  emits: ['onClick'],
   setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
-    const channelData: any = channels();
-    const coding: any = ref(channels().coding.art);
+    let channel: any = ref(channels());
     const store = useStore();
-    const route = useRoute();
     const router = useRouter()
-    const channel: any = ref({})
+    const dataList: any = ref({})
     const data: any = computed(() => store.getters['basic/channelDefault'] || {});
     const arrChannel = ['source', 'article', 'tech', 'picture', 'website', 'funny', 'notes', 'music']
 
@@ -154,11 +140,8 @@ export default defineComponent({
     watch(router.currentRoute, (newValues, prevValues) => {
       let arr = newValues.path.split("/")
       if (newValues.path !== prevValues.path && arr.length === 3 && arrChannel.indexOf(arr[2]) > -1) {
-        setTimeout(() => {
-
-          coding.value = channels().coding.art;
-          init()
-        }, 1)
+        channel.value = channels();
+        init()
       }
     })
 
@@ -177,51 +160,41 @@ export default defineComponent({
           height: 400
         }
       }
-
     });
 
     const article: any = computed(() => store.getters['basic/channelDefault'].list || []);
 
-    // 初始化
     function renderChannel() {
       store.dispatch('common/Fetch', {
         api: "detail",
         data: {
-          coding: "O0000",
-          id: channelData.id,
+          coding: codings.channel,
+          id: channel.value.id,
         }
       }).then(res => {
-        channel.value = res.result
+        dataList.value = res.result
       })
     }
 
-    // 初始化
     function init() {
+      renderChannel()
       store.dispatch('basic/ChannelDefault', {
         data: {
-          coding: coding.value
+          coding: channel.value.coding.art
         }
       })
     }
 
-    function handleclick() {
-      context.emit('onClick')
-    }
-
-    onMounted(() => {
-      init()
-      renderChannel()
-    })
+    onMounted(init)
     return {
-      channelData,
+      coding: codings,
       channel,
-      coding,
+      dataList,
       data,
       hours,
       article,
-      handleclick,
       renderChannel,
-      auth: proxy.$auth.init(`channel/${channelData.module}`)
+      auth: proxy.$auth.init(`channel/${channel.module}`)
     }
   }
 })

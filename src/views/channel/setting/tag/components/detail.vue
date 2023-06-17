@@ -1,14 +1,10 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? '编辑': '新增标签'}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? '编辑': '新增标签'}}
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑友情链接' : '新增标签' " :width="500" :data="data" :param="detail" :render="render">
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增标签" :style="{width: '520', height: '500'}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
-      <!-- <li class="li">
-        <span class="label">频道</span>
-        <input v-model="detail.name" type="text" placeholder="请输入频道" class="input-sm input-full" />
-      </li> -->
       <li class="li">
         <span class="label">备注</span>
         <input v-model="detail.remark" type="text" placeholder="请输入备注" class="input-sm input-full" />
@@ -53,12 +49,12 @@
             <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-email" style="color: rgb(153, 153, 153);"></i></span>
             <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-order" style="color: rgb(153, 153, 153);"></i></span>
             <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-user" style="color: rgb(153, 153, 153);"></i></span>
-            </div>
+          </div>
         </v-popover>
       </li>
     </ul>
   </template>
-</v-drawer>
+</v-dialog>
 </template>
 
 <script lang="ts">
@@ -97,20 +93,20 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const isShow: any = ref(false)
     const detail: any = ref({})
-    const drawer: any = ref(null)
+    const dialog: any = ref(null)
     const sourceType: any = LABEL_TYPE
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
-        detail.value = await drawer.value.init()
+        detail.value = await dialog.value.init()
       }
     })
 
     return {
       isShow,
       detail,
-      drawer,
+      dialog,
       sourceType
     }
   }

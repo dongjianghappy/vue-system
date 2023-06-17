@@ -1,6 +1,6 @@
 <template>
 <div class="module-wrap nobg">
-  <v-tabs :tabs="menu" type="vertical">
+  <v-tabs :tabs="tabsUserInfo" type="vertical">
     <template v-slot:content1>
       <Info :render="init" :data="{ coding }" />
     </template>
@@ -21,11 +21,11 @@ import {
   useStore,
   useRoute,
 } from '@/utils'
+import {
+  tabsUserInfo
+} from '@/assets/const'
 import Info from './info/index.vue'
 import Password from './components/password.vue'
-import {
-  linkPage
-} from '@/assets/const'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
@@ -41,21 +41,10 @@ export default defineComponent({
     const route = useRoute();
     const coding: any = proxy.$coding['link'];
     const dataList: any = ref([])
-    let menu: any = ref([{
-        name: "个人资料",
-        value: "appstore1"
-      },
-      {
-        name: "修改密码",
-        value: "appstore2"
-      }
-    ])
-    let page: any = ref(linkPage[0])
 
     // 监听路由
     watch(route, (newValues, prevValues) => {
       let qq: any = route.query
-      page.value = linkPage[qq.type]
       init()
     })
 
@@ -75,9 +64,8 @@ export default defineComponent({
     onMounted(init)
 
     return {
+      tabsUserInfo,
       coding,
-      menu,
-      page,
       init,
       dataList
     }

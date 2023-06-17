@@ -1,17 +1,17 @@
 <template>
 <div class="bg-white ptb5">
-  <v-tabs :tabs="menu">
+  <v-tabs :tabs="tabsUserGrade">
     <template v-slot:extra>
-      <Detail :data="{coding: 'U0003'}" />
+      <Detail :data="{coding}" :render="init" />
     </template>
     <template v-slot:content1>
-      <List :data="{coding: 'U0003'}" name='频道名称' :dataList="dataList" />
+      <List :data="{coding}" name='频道名称' :dataList="dataList" :render="init" />
     </template>
     <template v-slot:content2>
-      <List :data="{coding: 'U0003'}" name='应用名称' :dataList="dataList" />
+      <List :data="{coding}" name='应用名称' :dataList="dataList" :render="init" />
     </template>
     <template v-slot:content3>
-      <List :data="{coding: 'U0003'}" name='权限名称' :dataList="dataList" />
+      <List :data="{coding}" name='权限名称' :dataList="dataList" :render="init" />
     </template>
   </v-tabs>
 </div>
@@ -20,14 +20,15 @@
 <script lang="ts">
 import {
   defineComponent,
-  getCurrentInstance,
   onMounted,
   ref,
   watch,
   useStore,
   useRoute,
+  codings
 } from '@/utils'
 import {
+  tabsUserGrade,
   visitPage
 } from '@/assets/const'
 import List from "./components/list.vue"
@@ -41,20 +42,8 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
     const route = useRoute();
+    const coding: any = codings.user.grade
     const dataList: any = ref([]);
-    let menu: any = ref([{
-        name: "频道权限",
-        value: "appstore1"
-      },
-      {
-        name: "应用权限",
-        value: "appstore2"
-      },
-      {
-        name: "功能权限",
-        value: "appstore2"
-      }
-    ])
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
     let page: any = ref(visitPage[0])
     let type: any = ref(1)
@@ -79,9 +68,11 @@ export default defineComponent({
     }
     onMounted(init)
     return {
+      tabsUserGrade,
+      coding,
       dataList,
-      page,
-      menu
+      init,
+      page
     }
   }
 })

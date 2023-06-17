@@ -20,8 +20,8 @@
       </li>
       <li class="li">
         <span class="label">所属页面</span>
-        {{detail.parent}}{{detail.fid}}
-        <v-category name="选择页面" :data="{item: detail, coding: 'P0015'}" :isInt="true" type="text" api="routerSelect"></v-category>
+        {{detail.parent}}
+        <v-category name="选择页面" :data="{item: detail, ...data}" :isInt="true" type="text" api="routerSelect"></v-category>
 
       </li>
       <li class="li">
@@ -116,12 +116,6 @@ import {
 export default defineComponent({
   name: 'v-Search',
   props: {
-    attrs: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
     action: {
       type: String,
       default: "add"
@@ -191,8 +185,6 @@ export default defineComponent({
     }
 
     function submit(cancel: any) {
-      props
-      debugger
       const {
         id,
         fid,
@@ -227,20 +219,20 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
         api: props.action !== "add" ? 'update' : "insert",
         data: {
-          coding: 'P0015',
+          coding: props.data.coding,
           ...param
         }
       }).then(res => {
         props.render()
-        cancel()
+        isShow.value = false
       })
     }
 
-    function handelUpdate(){
+    function handelUpdate() {
       store.dispatch('common/Fetch', {
         api: "updateSort",
         data: {
-          coding: 'P0015',
+          coding: props.data.coding,
           id: props.data.id
         }
       })

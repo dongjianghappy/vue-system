@@ -128,7 +128,6 @@ export default defineComponent({
                 form.push({
                   id: item.id,
                   sort: item.sort,
-                  // isshow: item.isshow,
                 })
                 if (item.list) {
                   loop(item.list)
@@ -153,12 +152,11 @@ export default defineComponent({
     }
 
     function handleSave() {
-debugger
       dataList.value.map((item: any, index: any) => item.sort = index + 1)
 
       store.dispatch('common/Save', {
         data: {
-          coding: "T0001",
+          coding,
           data: JSON.stringify(dataList.value),
         }
       }).then(res => {
@@ -177,6 +175,7 @@ debugger
       handleClick,
       handleSave,
       isMove,
+      init,
       auth: proxy.$auth.init('slideshow/list')
     }
   }

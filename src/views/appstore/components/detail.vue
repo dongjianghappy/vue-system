@@ -60,12 +60,6 @@ export default defineComponent({
     SpaceModal
   },
   props: {
-    attrs: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
     action: {
       type: String,
       default: "add"
@@ -92,7 +86,6 @@ export default defineComponent({
     const isShow: any = ref(false)
     const detail: any = ref({})
     const drawer: any = ref(null)
-    const upload: any = ref(null);
     const appCenter: any = APP_CENTER
     const gradeList: any = ref([])
 
@@ -103,15 +96,6 @@ export default defineComponent({
         getGrade(detail.value.type)
       }
     })
-
-    function handleclick(param: any) {
-      isShow.value = !isShow.value
-    }
-
-    // 上传图片
-    function uploadImg() {
-      upload.value.handleclick()
-    }
 
     function getGrade(param: any) {
       detail.value.type = param
@@ -148,7 +132,7 @@ export default defineComponent({
         status,
         description
       } = detail.value
-      
+
       const param: any = {
         grade_id,
         type,
@@ -179,11 +163,8 @@ export default defineComponent({
     return {
       appCenter,
       isShow,
-      handleclick,
       detail,
       drawer,
-      upload,
-      uploadImg,
       getGrade,
       gradeList,
       sssss,

@@ -6,7 +6,7 @@
   </div>
   <div class="module-content plr15">
 
-    <table width="100%" class="table-striped table-hover col-left-1">
+    <table class="table-striped table-hover col-left-1">
       <tr class="th">
         <td class="col-md-7">日志 </td>
         <td class="col-md-2">时间</td>
@@ -21,7 +21,7 @@
           {{item.times}}
         </td>
         <td>
-          <v-switch :data="{ item, field: 'status', coding }" :auth="auth.checked('edit')" />
+          <v-switch :data="{ item, field: 'checked', coding }" :auth="auth.checked('edit')" />
         </td>
         <td>
           <v-space>
@@ -67,7 +67,7 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore();
     const dataList: any = ref({})
-    const coding: any = codings['announcement'];
+    const coding: any = codings.talk.journal.art;
     const checkedList: any = ref([])
 
     function init() {

@@ -1,5 +1,5 @@
 <template>
-<table width="100%" class="table-striped table-hover col-left-1">
+<table class="table-striped table-hover col-left-1">
   <tr class="th">
     <td class="col-md-3">日期</td>
     <td class="col-md-3">关键词(个)</td>

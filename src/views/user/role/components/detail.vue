@@ -56,7 +56,7 @@ export default defineComponent({
       }
     })
 
-    function submit(params: any) {
+    function submit() {
       store.dispatch('common/Fetch', {
         api: props.action !== 'add' ? 'update' : 'insert',
         data: {
@@ -65,10 +65,9 @@ export default defineComponent({
         }
       }).then(() => {
         props.render()
-        params.message()
-        params.cancel()
+        isShow.value = false
       })
-    }    
+    }
 
     return {
       isShow,

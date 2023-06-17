@@ -4,19 +4,15 @@
     <v-optionsbar title="留言板"></v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-12">
       <tr class="th">
-        <td class="col-md-1">选择</td>
         <td class="col-md-2">用户</td>
-        <td class="col-md-5">留言内容</td>
-        <td class="col-md-2">留言日期</td>
+        <td class="col-md-6">内容</td>
+        <td class="col-md-2">日期</td>
         <td class="col-md-1">状态</td>
         <td class="col-md-1">回复</td>
       </tr>
       <tr v-for="(item, index) in dataList.list" :key="index">
-        <td>
-          <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
-        </td>
         <td style="line-height: 35px;">
           <v-avatar :data="item" />{{item.nickname}}
         </td>
@@ -24,14 +20,18 @@
           {{item.name}}
         </td>
         <td>{{item.times}}</td>
-        <td><v-switch :data="{ item, field: 'checked', coding }" :auth="auth.checked('status')" /></td>
         <td>
-          <Reply :data="{item, coding}" api="delete" :auth="auth.checked('reply')" ></Reply>
+          <v-switch :data="{ item, field: 'checked', coding }" :auth="auth.checked('status')" />
+        </td>
+        <td>
+          <Reply :data="{...item, coding}" api="delete" :render="init" :auth="auth.checked('reply')"></Reply>
         </td>
       </tr>
     </table>
     <v-nodata :data="dataList.list || []" />
-    <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, coding }" :pagination="{total: 10, page: 10, pagesize: 10}" :sorceData="dataList.list" :render="init" v-if="dataList.list && dataList.list.length > 0" :auth="auth" />
+    <div class="mt15 align_right">
+      <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="init" />
+    </div>
   </div>
 </div>
 </template>
@@ -59,15 +59,19 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore();
     const dataList = computed(() => store.getters['basic/messageBoard']);
-    const coding: any = codings['messageBoard'];
+    const coding: any = codings['service'].message_board.list
 
-    function init() {
+    function init(param: any = {}) {
+      const params: any = {
+        page: 1,
+        pagesize: 10
+      }
+      Object.assign(params, param)
       store.dispatch('basic/Fetch', {
         api: "messageBoard",
         state: 'messageBoard',
         data: {
-          page: 1,
-          pagesize: 10
+          ...params
         }
       })
     }
@@ -77,6 +81,7 @@ export default defineComponent({
     return {
       coding,
       dataList,
+      init,
       auth: proxy.$auth.init('messageBoard')
     }
   }

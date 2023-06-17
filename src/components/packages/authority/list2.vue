@@ -10,25 +10,24 @@
       </div>
     </div>
     <div v-if="type==='manage'" style="display: flex; justify-content: space-between;">
-      asdsdas
-      <AddButton :data="{id: item.id, ...data}" :render="init" action="edit" :channel="channel" />
-      <AddModule :data="{fid: item.id, ...data}" :render="init" action="add" :index="index" />
+      <AddPage :data="{id: item.id, ...data}" action="edit" :channel="channel" :render="render"  />
+      <AddModule :data="{fid: item.id, ...data}" action="add" :index="index" :render="render" />
     </div>
   </div>
   <div>
     <ul style="padding-left: 30px;">
-      <li class="li mb15" :class="{'extand': item.extand}" v-for="(list, i) in item.list" :key="i">
+      <li class="li mb15" :class="{'extand': item.extand}" v-for="(list, i) in item.list" :key="i" draggable="true" @dragend="handleDragEnd($event, item.list)" @dragstart="handleDragStart($event, list)" @dragenter="handleDragEnter($event, item.list, list)" @dragover.prevent="handleDragOver($event)">
         <span class="label">
           {{list.name}}
           <i class="iconfont icon-ban cl-red" v-if="list.ban === '1'" />
-          <AddModule :data="{id: list.id, ...data}" :render="init" action="edit" :index="index" v-if="type==='manage'" />
+          <AddModule :data="{id: list.id, ...data}" action="edit" :index="index" :render="render"  v-if="type==='manage'" />
           <span v-if="type==='manage'">
             <i class="iconfont icon-right" v-if="list.is_default === '1'" @click="handleDefault(list)" />
             <i class="iconfont icon-error" v-else @click="handleDefault(list)" />
           </span>
         </span>
         <v-switch v-if="type==='manage'" :data="{ item: list, field: 'status', ...data }" className="right" :auth="true" />
-        <v-switch v-else :data="{ item: list, field: 'authority', ...data }" :param="{uid: uid, field: list.value, channel_id: channel_id}" api="setUserAuthority" :msg="message" className="right" :auth="true" />
+        <v-switch v-else :data="{ item: list, field: 'authority', ...data }" :param="{uid: data.uid, field: list.value, channel_id: channel_id}" api="setUserAuthority" :msg="message" className="right" :auth="true" />
       </li>
     </ul>
   </div>
@@ -39,14 +38,15 @@
 import {
   defineComponent,
   getCurrentInstance,
-  useStore
+  useStore,
+  ref
 } from '@/utils'
-import AddButton from './addlink.vue'
+import AddPage from './addPage.vue'
 import AddModule from './addModule.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    AddButton,
+    AddPage,
     AddModule
   },
   props: {
@@ -57,10 +57,6 @@ export default defineComponent({
       }
     },
     type: {
-      type: String,
-      default: ""
-    },
-    uid: {
       type: String,
       default: ""
     },
@@ -81,6 +77,12 @@ export default defineComponent({
     index: {
       type: String,
       default: "0"
+    },
+    render: {
+      type: Function,
+      default: () => {
+        return 'Default function'
+      }
     }
   },
   setup(props, context) {
@@ -88,6 +90,9 @@ export default defineComponent({
       proxy
     }: any = getCurrentInstance();
     const store = useStore()
+    const dragging: any = ref(null)
+    const moveIndex: any = ref("")
+    const enterIndex: any = ref("")
 
     function handelExpand(param: any) {
       param.extand = !param.extand
@@ -100,7 +105,55 @@ export default defineComponent({
           id: param.id,
           fid: param.fid
         }
-      }).then(res => {})
+      })
+    }
+
+    function handleDragStart(e: any, item: any) {
+      dragging.value = item
+    }
+
+    function handleDragEnd(e: any, list: any) {
+      let item = list.splice(enterIndex.value, 1, dragging.value)[0]; // 这一步是将要替换的删除，并将移动的插入，最后返回被删除的数组
+      list[moveIndex.value] = item;
+      moveSave(list)
+    }
+
+    function handleDragOver(e: any) {
+      e.dataTransfer.dropEffect = 'move'
+    }
+
+    function handleDragEnter(e: any, list: any, item: any) {
+      e.dataTransfer.effectAllowed = 'move'
+
+      if (item === dragging.value) {
+        return
+      }
+      const newItems = list
+      moveIndex.value = newItems.findIndex((i: any) => {
+        return i === dragging.value
+      })
+
+      enterIndex.value = newItems.findIndex((i: any) => {
+        return i === item
+      })
+    }
+
+    function moveSave(list: any) {
+      let form: any = []
+      list.map((item: any, index: any) => {
+        item.sort = 1 + index
+        form.push({
+          id: item.id,
+          sort: item.sort,
+        })
+      })
+      store.dispatch('common/Fetch', {
+        api: 'updateSave',
+        data: {
+          coding: props.data.coding,
+          data: JSON.stringify(form),
+        }
+      })
     }
 
     function message(message: any) {
@@ -111,6 +164,10 @@ export default defineComponent({
     return {
       handelExpand,
       handleDefault,
+      handleDragStart,
+      handleDragEnd,
+      handleDragOver,
+      handleDragEnter,
       message
     }
   }

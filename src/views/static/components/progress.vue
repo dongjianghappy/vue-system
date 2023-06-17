@@ -93,7 +93,6 @@ export default defineComponent({
               },
             })
           } else {
-            console.log(res.result)
             const param: any = {
                 serve,
                 action,

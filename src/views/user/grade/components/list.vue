@@ -1,5 +1,5 @@
 <template>
-<table width="100%" class="table-striped table-hover col-left-12">
+<table class="table-striped table-hover col-left-12">
   <tr class="th">
     <td class="col-md-1">{{name}}</td>
     <td class="col-md-4">描述</td>
@@ -15,23 +15,23 @@
     <td>{{item.name}}</td>
     <td>{{item.description}}</td>
     <td>
-      <v-switch :data="{ item, field: 'visitors', coding: 'U0003' }" :auth="true" />
+      <v-switch :data="{ item, field: 'visitors', coding: data.coding }" :auth="true" />
     </td>
     <td>
-      <v-switch :data="{ item, field: 'ordinary_member', coding: 'U0003' }" :auth="true" />
+      <v-switch :data="{ item, field: 'ordinary_member', coding: data.coding }" :auth="true" />
     </td>
     <td>
-      <v-switch :data="{ item, field: 'senior_member', coding: 'U0003' }" :auth="true" />
+      <v-switch :data="{ item, field: 'senior_member', coding: data.coding }" :auth="true" />
     </td>
     <td>
-      <v-switch :data="{ item, field: 'vip_member', coding: 'U0003' }" :auth="true" />
+      <v-switch :data="{ item, field: 'vip_member', coding: data.coding }" :auth="true" />
     </td>
     <td>
-      <v-switch :data="{ item, field: 'super_vip_member', coding: 'U0003' }" :auth="true" />
+      <v-switch :data="{ item, field: 'super_vip_member', coding: data.coding }" :auth="true" />
     </td>
     <td><i class="iconfont icon-right cl-green font18"></i></td>
     <td>
-      <Detail action="edit" :data="{id: item.id, ...data}" />
+      <Detail action="edit" :data="{id: item.id, ...data}" :render="render" />
     </td>
   </tr>
 </table>
@@ -57,23 +57,19 @@ export default defineComponent({
     },
     name: {
       type: String,
-      default: "频道名称"
+      default: ""
     },
     dataList: {
       type: Object,
       default: () => {
         return {}
       }
-    }
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-    function handleclick() {
-      context.emit('onClick')
-    }
-
-    return {
-      handleclick
+    },
+    render: {
+      type: Function,
+      default: () => {
+        return 'Default function'
+      }
     }
   }
 })

@@ -17,7 +17,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-2">
+    <table class="table-striped table-hover col-left-2">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-3">名称</td>
@@ -56,7 +56,7 @@
             </span>
             <v-popover content="更多" arrow="tb" offset="right" :move="-650" :keys="`static_${index}`">
               <div class="p15 font14" style="width: 700px;">
-                <table width="100%" class="table-striped table-hover">
+                <table class="table-striped table-hover">
                   <tr>
                     <td class="col-md-1">ID</td>
                     <td class="col-md-2">编号</td>

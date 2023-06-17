@@ -6,14 +6,14 @@
         <v-space>
           <v-condition name="帅选" field="fid" :enums="favorites" :render="init" />
           <Favorites :data="{ coding: coding.cate }" :render="init" />
-          <Detail action='add' :data="{ coding }" :favorites="favorites" :render="init" :auth="true" />
+          <Detail action='add' :data="{ coding: coding.art }" :favorites="favorites" :render="init" :auth="true" />
         </v-space>
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
 
-    <table width="100%" class="table-striped table-hover col-left-12">
+    <table class="table-striped table-hover col-left-12">
       <tr class="th">
         <td class="col-md-2">名称</td>
         <td class="col-md-4">链接</td>
@@ -34,7 +34,7 @@
         </td>
         <td>
           <v-space>
-            <Detail action="edit" :data="{id: item.id, coding }" :favorites="favorites" :render="init" :auth="true" />
+            <Detail action="edit" :data="{id: item.id, coding: coding.art }" :favorites="favorites" :render="init" :auth="true" />
             <span>
               <v-confirm name="删除" :data="{id: item.id, coding: coding.art }" type="text" api="delete" :render="init" operating="delete" :auth="true"></v-confirm>
             </span>
@@ -83,8 +83,8 @@ export default defineComponent({
 
     function init(params: any) {
       store.dispatch('common/Fetch', {
-        api: "favoriteList",
         data: {
+          coding: coding.art,
           ...params
         }
       }).then(res => {

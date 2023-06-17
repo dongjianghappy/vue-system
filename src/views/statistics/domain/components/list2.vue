@@ -1,5 +1,5 @@
 <template>
-<table width="100%" class="table-striped table-hover col-left-234">
+<table class="table-striped table-hover col-left-234">
   <tr class="th">
     <td class="col-md-1">id</td>
     <td class="col-md-2">来路域名</td>

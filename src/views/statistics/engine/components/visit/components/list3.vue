@@ -1,5 +1,5 @@
 <template>
-<table width="100%" class="table-striped table-hover col-left-23">
+<table class="table-striped table-hover col-left-23">
   <tr class="th">
     <td class="col-md-2">浏览时间</td>
     <td class="col-md-4">页面来源</td>

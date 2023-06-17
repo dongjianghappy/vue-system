@@ -1,7 +1,7 @@
 <template>
-<table width="100%" class="table-striped table-hover col-left-1">
+<table class="table-striped table-hover col-left-1">
   <h3 class="pl10 font14">今日占比</h3>
-  <table width="100%" class="table-striped table-hover col-left-2">
+  <table class="table-striped table-hover col-left-2">
     <tr class="th">
       <td class="col-md-1">序号</td>
       <td class="col-md-5">搜索词</td>
@@ -24,7 +24,7 @@
     </tr>
   </table>
   <h3 class="pl10 font14">所有占比</h3>
-  <table width="100%" class="table-striped table-hover col-left-2">
+  <table class="table-striped table-hover col-left-2">
     <tr class="th">
       <td class="col-md-1">序号</td>
       <td class="col-md-5">搜索词</td>

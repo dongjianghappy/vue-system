@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow">调用</v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" title="选择话术 " :submit="submit" :data="data" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
-    <table width="100%" class="table-striped">
+    <table class="table-striped">
       <tr>
         <td class="col-md-2">选择</td>
         <td class="col-md-10">意图</td>

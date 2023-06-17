@@ -12,7 +12,7 @@
   </div>
   <div class="module-content plr15">
 
-    <table width="100%" class="table-striped table-hover col-left-1">
+    <table class="table-striped table-hover col-left-1">
       <tr class="th">
         <td class="col-md-2 pl25">注释</td>
         <td class="col-md-1">字段名</td>
@@ -72,7 +72,7 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
     const router = useRouter()
-    const coding: any = codings['customize'];
+    const coding: any = codings['custom'];
     const dataList: any = ref([])
     const channel_id: any = route.query.id
 

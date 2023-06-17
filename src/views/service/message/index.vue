@@ -6,7 +6,7 @@
   </div>
   <div class="module-content plr15">
 
-    <table width="100%" class="table-striped table-hover col-left-2">
+    <table class="table-striped table-hover col-left-2">
       <tr>
         <td class="col-md-1"> 选择</td>
         <td class="col-md-7">消息标题 </td>
@@ -42,8 +42,9 @@ import {
   onMounted,
   computed,
   ref,
-  watch
-} from 'vue'
+  watch,
+  codings
+} from '@/utils'
 import {
   useStore
 } from 'vuex'
@@ -65,6 +66,7 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute()
     const router = useRouter()
+    const coding: any = codings.service.message
     const dataList: any = ref([])
     const messageType: any = message
     let arr = window.location.pathname.split("/")
@@ -87,7 +89,7 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
 
         data: {
-          coding: "Q0006",
+          coding,
           page: 1,
           pagesize: 10,
           status: type !== 'all' ? type === 'unread' ? "1" : "0" : ""

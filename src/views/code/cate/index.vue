@@ -4,14 +4,14 @@
     <v-optionsbar title="代码种类">
       <template v-slot:extraright>
         <space>
-          <Detail action='add' :data="{ coding }" :render="init" :checkboxList="aaa" />
+          <Detail action='add' :data="{ coding }" :render="init" />
         </space>
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
 
-    <table width="100%" class="table-striped table-hover col-left-2">
+    <table class="table-striped table-hover col-left-2">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-8">分类名称</td>
@@ -34,7 +34,7 @@
           <td>
             <v-space>
               <span>
-                <Detail action="edit" :data="{id: item.id, coding}" :disabled="isMove" :param="param" :render="init" :checkboxList="aaa" />
+                <Detail action="edit" :data="{id: item.id, coding}" :disabled="isMove" :param="param" :render="init" />
               </span>
               <span>
                 <v-confirm name="删除" :data="{id: item.id, coding}" :disabled="isMove" type="text" api="delete" :render="init" operating="delete"></v-confirm>
@@ -58,7 +58,7 @@
               <v-space>
 
                 <span>
-                  <Detail action="edit" :data="{id: data.id, coding}" :disabled="isMove" :param="param" :render="init" :checkboxList="aaa" />
+                  <Detail action="edit" :data="{id: data.id, coding}" :disabled="isMove" :param="param" :render="init" />
                 </span>
                 <span>
                   <v-confirm name="删除" :data="{id: data.id, coding}" type="text" api="delete" :render="init" operating="delete"></v-confirm>
@@ -67,7 +67,6 @@
             </td>
           </tr>
 
-          
         </template>
       </template>
     </table>
@@ -84,6 +83,7 @@ import {
   onMounted,
   computed,
   ref,
+  codings
 } from '@/utils'
 import {
   useStore
@@ -97,40 +97,24 @@ export default defineComponent({
     Detail
   },
   setup(props, context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
-    const coding: any = "K30001";
+    const coding: any = codings['code'].cate;
     const dataList: any = ref([])
     const checkedList: any = ref([])
-    const aaa: any = ref([])
 
     function init() {
       store.dispatch('common/Fetch', {
         api: "cateList",
         data: {
-          coding: 'K30001'
+          coding: coding
         }
       }).then(res => {
         dataList.value = res.result
       })
     }
 
-    function checkbox() {
-      store.dispatch('common/Fetch', {
-        api: "getFlag",
-        data: {
-
-        }
-      }).then(res => {
-        aaa.value = res.result
-      })
-    }
-
     onMounted(() => {
       init()
-      checkbox()
     })
 
     return {
@@ -138,8 +122,7 @@ export default defineComponent({
       coding,
       dataList,
       checkedList,
-      init,
-      aaa
+      init
     }
   }
 })

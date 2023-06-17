@@ -9,7 +9,7 @@
       <template v-slot:content1>
         <ul class="form-wrap-box">
           <li class="li">
-            
+
             <span class="label">分类名称</span>
             <div style="display: flex">
               <div style="flex: 1">
@@ -37,23 +37,13 @@
             <span class="label">分类路径</span>
             <input v-model="detail.dir_file" type="text" class="input-sm input-full" />
           </li>
-          <li class="li">
-        <span class="label">预览图</span>
-        <SpaceModal v-model:image="detail.image">
-          <div class="space-wrap" style="display: flex;">
-            <div class="space-picture p10" style="background: rgb(250, 250, 250); flex: 2 1 0%; height: auto;">
-              <div class="pointer"><img :src="detail.image" width="250" height="100" alt=""></div>
-            </div>
-            <div style="flex: 1 1 0%;">
-              <div style="flex: 1 1 0%; display: flex; justify-content: center;">
-                <div>
-                  <div style="background: rgb(250, 250, 250); border: 2px dashed rgb(238, 238, 238); height: 150px; width: 150px; line-height: 150px; text-align: center;"><i class="iconfont icon-add font30"></i></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SpaceModal>
-      </li>
+          <li class="li" style="overflow: auto;">
+            <span class="label">预览图</span>
+            <SpaceModal v-model:image="detail.image">
+              <span class="right">选择图片</span>
+            </SpaceModal>
+            <img width="398" height="150" :src="detail.image">
+          </li>
           <li class="li">
             <span class="label">聚合标签</span>
             <v-checkboxgroup :tagList="aaa" :checked="detail.checkboxList" />
@@ -231,8 +221,6 @@ export default defineComponent({
     }
 
     onMounted(() => {
-
-      
 
     })
 

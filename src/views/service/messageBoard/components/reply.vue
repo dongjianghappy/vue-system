@@ -7,12 +7,12 @@
         <ul>
           <li>
             <div className="user-info">
-              <v-avatar :data="detail" />
-              {{detail.nickname}}
+              <v-avatar :data="data" />
+              {{data.nickname}}
             </div>
-            <div className="content">{{detail.content}}</div>
+            <div className="content">{{data.content}}</div>
           </li>
-          <li className="reply-list" v-for="(item, index) in detail.reply_list" :key="index">
+          <li className="reply-list" v-for="(item, index) in data.list" :key="index">
             <div className="manager-info">
               <v-avatar :data="item" />
               {{item.username}}
@@ -73,35 +73,18 @@ export default defineComponent({
     const content: any = ref("")
     const detail: any = ref([])
 
-    // 监听
-    watch([isShow], async (newValues, prevValues) => {
-      if (isShow.value) {
-        init()
-      }
-    })
-
-    function init() {
-      store.dispatch('common/Fetch', {
-        api: "viewMessageBoard",
-        data: {
-          id: props.data && props.data.item.id
-        }
-      }).then(res => {
-        detail.value = res.result
-      })
-    }
-
     function submit(params: any) {
       store.dispatch('common/Fetch', {
         api: "replyMessageBoard",
         data: {
-          fid: props.data && props.data.item.id,
+          fid: props.data && props.data.id,
           content: content.value
         }
       }).then(res => {
         proxy.$hlj.message({
           msg: "编辑成功"
         })
+        props.render()
       })
 
     }
@@ -115,12 +98,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style scoped>
-.current {
-  background: #1890ff;
-  border-radius: 2px;
-  color: #fff;
-
-}
-</style>

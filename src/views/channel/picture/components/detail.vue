@@ -61,7 +61,7 @@
             <span class="label">背景音乐</span>
             <span>
               {{detail.music_name}}
-              <v-choose title="选择音乐" :data="{ item: detail, field: 'singer' }" coding="E0000" @choose="choose" type="radio" api="articleList" :render="init" />
+              <v-choose title="选择音乐" :data="{ item: detail, field: 'singer' }" coding="E0000" @choose="choose" type="radio" api="articleList" />
             </span>
           </li>
           <li class="li">
@@ -259,8 +259,7 @@ export default defineComponent({
         props.render({
           page: page.value
         })
-        params.message()
-        params.cancel()
+        isShow.value = false
       })
     }
 

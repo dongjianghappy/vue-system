@@ -1,13 +1,18 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增特效"}}
+  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'edit'? "": "新增特效"}}
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑特效' : '新增特效' " :data="data" :style="{width: '600', height: '670'}" :confirm="true" :cancel="true" @submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑特效' : '新增特效' " :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">名称</span>
         <input v-model="detail.name" type="text" placeholder="请输入标题" class="input-sm input-full" />
+      </li>
+      <li class="li">
+        <span class="label">显示</span>
+        <v-radio label="是" name="status" value="1" v-model:checked="detail.status" />
+        <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
       </li>
       <li class="li">
         <span class="label">DOM元素</span>
@@ -35,7 +40,7 @@
       </li>
     </ul>
   </template>
-</v-dialog>
+</v-drawer>
 </template>
 
 <script lang="ts">
@@ -69,17 +74,17 @@ export default defineComponent({
   setup(props, context) {
     const store: any = useStore()
     const isShow: any = ref(false)
-    const dialog: any = ref(null)
+    const drawer: any = ref(null)
     const detail: any = ref({})
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
-        detail.value = await dialog.value.init()
+        detail.value = await drawer.value.init()
       }
     })
 
-        function submit(params: any) {
+    function submit(params: any) {
       store.dispatch('common/Fetch', {
         api: props.action !== 'add' ? 'update' : 'insert',
         data: {
@@ -88,14 +93,13 @@ export default defineComponent({
         }
       }).then(() => {
         props.render()
-        params.message()
-        params.cancel()
+        isShow.value = false
       })
     }
 
     return {
       isShow,
-      dialog,
+      drawer,
       detail,
       submit
     }

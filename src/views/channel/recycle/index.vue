@@ -3,12 +3,11 @@
   <div class="module-head">
     <v-optionsbar title="回收站">
       <template v-slot:extraright>
-
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-3">文档名称</td>
@@ -25,10 +24,10 @@
           {{item.title}}
         </td>
         <td>
-           {{item.parent}}
+          {{item.parent}}
         </td>
         <td>
-           {{item.times}}
+          {{item.times}}
         </td>
         <td> {{item.delete_datetime}}</td>
         <td>
@@ -71,20 +70,25 @@ export default defineComponent({
     const {
       proxy
     }: any = getCurrentInstance();
-    const channelData: any = channels();
+    const channel: any = channels();
     const store = useStore();
     const dataList: any = ref([]);
     const coding: any = channels().coding.art;
     const checkedList: any = ref([])
 
-    function init() {
+    function init(param: any = {}) {
+      const params: any = {
+        page: 1,
+        pagesize: 10
+      }
+      Object.assign(params, param)
+
       store.dispatch('common/Fetch', {
         api: "articleList",
         data: {
           recycle: true,
           coding,
-          page: 1,
-          pagesize: 10
+          ...params
         }
       }).then(res => {
         dataList.value = res.result
@@ -98,7 +102,7 @@ export default defineComponent({
       dataList,
       checkedList,
       init,
-      auth: proxy.$auth.init(`channel/${channelData.module}/recycle`)
+      auth: proxy.$auth.init(`channel/${channel.module}/recycle`)
     }
   }
 })

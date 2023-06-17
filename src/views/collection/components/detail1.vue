@@ -4,7 +4,7 @@
 </v-button>
 <v-dialog v-model:show="isShow" title="开始采集" :style="{width: '650', height: '750'}" @submit="submit">
   <template v-slot:content v-if="isShow">
-    <h3 class="mb25">节点名称: 张文钦</h3>
+    <h3 class="mb25">节点名称</h3>
     <div class="alert-description ptb10 plr15 font12">
       <p>1、采集网址必须为完整URL地址</p>
       <p>2、开始区域和结束区域必须为采集页面唯一一个html代码标识</p>

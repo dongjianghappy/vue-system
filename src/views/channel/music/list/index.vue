@@ -23,12 +23,12 @@
           </v-popover>
         </span>
         <v-condition name="语种" icon="web1" field="language" :enums="[{name: '华语', value: 'chinese'}, {name: '粤语', value: 'guangdong'},{name: '欧美', value: 'english'}, {name: '日语', value: 'Japanese'},{name: '韩语', value: 'korea'}, {name: '其他', value: 'other'}]" :render="init" />
-        <Detail :coding="coding" :render="init" />
+        <Detail :data="{coding}" :render="init" />
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-2">
+    <table class="table-striped table-hover col-left-2">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-2">歌曲</td>
@@ -74,7 +74,7 @@
         <td>
           <v-space>
             <span>
-              <Detail action="edit" :data="{id: item.id}" :coding="coding" :param="param" :render="init" />
+              <Detail action="edit" :data="{id: item.id, coding}" :param="param" :render="init" />
             </span>
             <span>
               <v-confirm name="删除" :data="{id: item.id, coding: coding.art}" api="delete" :render="init" operating="delete"></v-confirm>
@@ -97,7 +97,7 @@ import {
   computed,
   ref,
   channels,
-  durationTrans
+  durationTrans,
 } from '@/utils'
 import {
   useStore

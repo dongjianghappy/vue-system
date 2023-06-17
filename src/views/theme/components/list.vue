@@ -3,9 +3,9 @@
   <div class="module-head">
     <v-optionsbar :title="type !== '1' ? '主题风格' : '背景特效'">
       <template v-slot:extraright>
-        <span class="mr10" @click="handleCreateJson">生成JSON</span>
-        <Detail action='add' :data="data" :render="init" v-if="type !== '1'" />
-        <Detail1 action='add' :data="data" :render="init" v-else />
+        <span class="mr10" @click="handleCreateJson">导出数据</span>
+        <Detail action='add' :data="data" :render="render" v-if="type !== '1'" />
+        <Detail1 action='add' :data="data" :render="render" v-else />
       </template>
     </v-optionsbar>
   </div>
@@ -17,8 +17,8 @@
           <i class="iconfont icon-checkbox m0" :class="{'cl-red': item.status == '1'}" style="right: 0; top: 0; padding: 2px; z-index:1" />
         </div>
         <div class="ptb15">{{item.name}}
-          <Detail action="edit" :data="{id: item.id, ...data}" :param="param" :render="init" v-if="type !== '1'" />
-          <Detail1 action="edit" :data="{id: item.id, ...data}" :param="param" :render="init" v-else />
+          <Detail action="edit" :data="{id: item.id, ...data}" :param="param" :render="render" v-if="type !== '1'" />
+          <Detail1 action="edit" :data="{id: item.id, ...data}" :param="param" :render="render" v-else />
           <span class="right" style="width: 20px; height: 20px;" :style="{background: item.color}"></span>
         </div>
       </div>
@@ -43,9 +43,9 @@ export default defineComponent({
   },
   props: {
     dataList: {
-      type: Object,
+      type: Array,
       default: () => {
-        return {}
+        return []
       }
     },
     data: {
@@ -90,9 +90,7 @@ export default defineComponent({
           item.status = 0
         })
         param.status = res.result.status
-        
       })
-      
     }
 
     function handleCreateJson(){

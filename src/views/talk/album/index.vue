@@ -28,12 +28,10 @@ import {
   getCurrentInstance,
   onMounted,
   computed,
+  useStore,
   ref
-} from 'vue'
+} from '@/utils'
 import List from './components/list.vue'
-import {
-  useStore
-} from 'vuex'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {

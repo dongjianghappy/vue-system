@@ -1,14 +1,14 @@
 <template>
 <div class="module-wrap">
   <div class="module-head">
-    <v-optionsbar title="知识管理">
+    <v-optionsbar title="代码管理">
       <template v-slot:extraright>
         <Detail :coding="coding" :render="init" />
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-2">
+    <table class="table-striped table-hover col-left-2">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-5">名称</td>
@@ -59,6 +59,7 @@ import {
   onMounted,
   computed,
   ref,
+  codings
 } from '@/utils'
 import {
   useStore
@@ -72,10 +73,7 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
     const dataList = computed(() => store.getters['basic/partner']);
-    const coding: any = {
-      cate: 'K30001',
-      art: 'K30000'
-    };
+    const coding: any = codings['code'];
     const checkedList: any = ref([])
     const pagesize: any = 10
 

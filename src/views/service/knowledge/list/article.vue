@@ -9,7 +9,7 @@
   </div>
   <div class="module-content plr15">
 
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr v-for="(item, index) in dataList" :key="index">
         <td class="col-md-1"> <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" /></td>
         <td class="col-md-10">{{item.title}} </td>

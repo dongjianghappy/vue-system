@@ -5,7 +5,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-3">文档名称</td>
@@ -31,9 +31,6 @@
         <td>
           <v-space>
             <span>
-              <Detail action="edit" :data="{id: item.id, coding}" :param="param" :render="init" />
-            </span>
-            <span>
               <v-confirm name="还原" :data="{id: item.id, coding}" type="text" api="removeAndRestore" :render="init" operating="restore" :auth="auth.checked('reduction')"></v-confirm>
             </span>
             <span>
@@ -54,7 +51,6 @@ import {
   defineComponent,
   getCurrentInstance,
   onMounted,
-  computed,
   ref,
   useStore,
   codings

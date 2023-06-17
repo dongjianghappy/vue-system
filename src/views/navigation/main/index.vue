@@ -20,7 +20,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-5"><span class="icon-cate"></span>名称</td>
@@ -96,6 +96,7 @@ import {
   useStore,
   useRoute,
   jsonParse,
+  codings
 } from '@/utils'
 import {
   NAV_TYPE,
@@ -112,7 +113,7 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
-    const coding: any = proxy.$coding['navigation'].main;
+    const coding: any = codings.navigation;
     const dataList: any = ref([])
     const checkedList: any = ref([])
     const isMove: any = ref(false)

@@ -2,23 +2,25 @@
 <v-button v-model:show="isShow" :disabled="auth">
   站点设置
 </v-button>
-<v-drawer v-model:show="isShow" title="展示设置" :style="{width: data.channel_id === 0 ? '245' : '500'}" :hasfooter="false" :auth="auth">
+<v-drawer v-model:show="isShow" title="展示设置" :style="{width: data.channel_id === 0 ? '350' : '500'}" :hasfooter="false">
   <template v-slot:extra>
-    <AddButton :data="data" :render="init" />
+    <AddModule :data="data" :render="init" />
   </template>
   <template v-slot:content>
+    <!-- 网站首页设置 -->
     <div class="channel-box" v-if="data.channel_id === 0">
       <ul class="form-wrap-box">
         <li class="li mb15" v-for="(item, index) in dataList" :key="index">
           <span class="label">
             {{item.name}}
-            <AddButton :data="{id: item.id, ...data}" :render="init" action="edit" />
+            <AddModule :data="{id: item.id, ...data}" :render="init" action="edit" />
           </span>
           <v-switch :data="{ item, field: 'index_page', ...data }" className="right" :auth="true" />
         </li>
       </ul>
     </div>
-    <table width="100%" class="table-striped table-hover col-left-1" v-else>
+    <!-- 网站频道设置 -->
+    <table class="table-striped table-hover col-left-1" v-else>
       <tr class="th">
         <td class="col-md-4">名称</td>
         <td class="col-md-2">首页 </td>
@@ -28,7 +30,7 @@
       <tr v-for="(item, index) in dataList" :key="index">
         <td>
           {{item.name}}
-          <AddButton :data="{id: item.id, ...data}" :render="init" action="edit" />
+          <AddModule :data="{id: item.id, ...data}" :render="init" action="edit" />
         </td>
         <td><v-switch :data="{ item, field: 'index_page', ...data }" className="right" :auth="true" /></td>
         <td><v-switch :data="{ item, field: 'list_page', ...data }" className="right" :auth="true" /></td>
@@ -49,11 +51,11 @@ import {
   ref,
   watch
 } from 'vue'
-import AddButton from './addButton.vue'
+import AddModule from './addModule.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    AddButton
+    AddModule
   },
   props: {
     data: {

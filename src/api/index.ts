@@ -83,6 +83,10 @@ const api:any =  {
   cateList(params: any) {
     return http.request('common', 'systemCate', 'post', params)
   },
+   // 文章相关功能如评论、点赞、收藏
+   articleRelated(params: any) {
+    return http.request('channel', 'articleRelated', 'post', params)
+  },  
   // 简单分类
   simpleCategory (params: any) {
     return http.request('common', 'simpleCategory', 'post', params)
@@ -154,6 +158,10 @@ const api:any =  {
   // 背景特效
   effects(params: any) {
     return http.request('vue_user', 'effects', 'post', params)
+  },
+  // 挂件装饰
+  pendant(params: any) {
+    return http.request('vue_user', 'pendant', 'post', params)
   },
   // 关闭
   openAndClose(params: any) {
@@ -710,6 +718,15 @@ close (params: any) {
   // 日志
   journal (params: any) {
     return http.request('user', 'journal', 'post', params)
+  },
+
+  // 获取挂件文件
+  getPendantFile (params: any) {
+    return http.request('user', 'getPendantFile', 'post', params)
+  },
+  // 鼠标特效
+  getCursorFile (params: any) {
+    return http.request('user', 'getCursorFile', 'post', params)
   },
 }
 

@@ -3,12 +3,12 @@
   <div class="module-head">
     <v-optionsbar title="所有采集列表">
       <template v-slot:extraright>
-        
+
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-4">标题</td>
@@ -46,22 +46,12 @@ import {
   onMounted,
   ref,
   watch,
+  useStore,
   useRoute,
   codings
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
-
 export default defineComponent({
   name: 'HomeViewdd',
-  components: {},
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
   setup(props, context) {
     const {
       proxy
@@ -77,18 +67,13 @@ export default defineComponent({
     })
 
     function init() {
-
       const param: any = {
-        coding: "O0009",
         page: 1,
         pagesize: 10
       }
 
-      const {
-        fid
-      }: any = route.query
-      if (fid) {
-        param.fid = fid
+      if (route.query.fid) {
+        param.fid = route.query.fid
       }
 
       store.dispatch('common/Fetch', {

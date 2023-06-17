@@ -8,14 +8,14 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-8">伙伴名称</td>
         <td class="col-md-1">状态</td>
         <td class="col-md-2">操作</td>
       </tr>
-      <tr v-for="(item, index) in dataList.list" class="dragObj" :key="index" draggable="true" :index="index">
+      <tr v-for="(item, index) in dataList.list" :key="index" :index="index">
         <td>
           <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
         </td>
@@ -65,7 +65,7 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore();
     const dataList = computed(() => store.getters['basic/partner']);
-    const coding: any = codings['partner'];
+    const coding: any = codings.partner;
     const checkedList: any = ref([])
 
     function init() {

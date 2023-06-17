@@ -11,8 +11,9 @@
       </li>
       <li class="li">
         <span class="label">网站</span>
-        <span class="mr15">{{site.name}}</span>
-        <ChooseSite :data="{id: data.website}" :render="init" v-model:checked="site" type="radio" :action="action" :disabled="action === 'edit' && detail.ad_id !== '0'" :message="action === 'edit' && detail.ad_id !== '0' && '已绑定广告不能更换站点'" @onClick="()=>checkedList = []" />
+        <span class="mr15">{{detail.website_name}}</span>
+        {{detail.website_id}}
+        <v-choose :data="{item: detail, coding: codings.site.list, condition: {status: 1}}" v-model:checked="detail.website" type="radio" :disabled="action === 'edit' && detail.ad_id !== '0'" :message="action === 'edit' && detail.ad_id !== '0' && '已绑定广告不能更换站点'" @choose="choose" />
       </li>
       <li style="padding-left: 100px">
         <ul class="plr15" style="background: #f8f8fa;">
@@ -36,13 +37,11 @@
         <span class="label">引用标签</span>
         <input v-model="detail.label" type="text" placeholder="请输入dom元素id" class="input-sm input-150" /> (页面dom元素id)
       </li>
-
       <li class="li">
         <span class="label">启用</span>
         <v-radio label="是" name="status" value="1" v-model:checked="detail.status" />
         <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
       </li>
-
       <li class="li">
         <span class="label">描述</span>
         <textarea placeholder="请输入代码" v-model="detail.description" class="w-full"></textarea>
@@ -58,18 +57,11 @@ import {
   getCurrentInstance,
   ref,
   useStore,
-  watch
+  watch,
+  codings
 } from '@/utils'
-import ChooseSite from '../../../links/components/chooseSite.vue'
-import {
-  LINK_TYPE,
-  SERVER_NAME
-} from '@/assets/enum'
 export default defineComponent({
   name: 'v-Search',
-  components: {
-    ChooseSite,
-  },
   props: {
     action: {
       type: String,
@@ -96,8 +88,6 @@ export default defineComponent({
     const isShow: any = ref(false)
     const detail: any = ref({})
     const drawer: any = ref(null)
-    const sourceType: any = LINK_TYPE
-    const serverName: any = SERVER_NAME
     const site: any = ref({})
     const checkedList: any = ref([])
 
@@ -105,11 +95,36 @@ export default defineComponent({
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
         detail.value = await drawer.value.init()
-        if(detail.value.page){
+        if (detail.value.page) {
           checkedList.value = detail.value.page
         }
+        detail.value.website_name = detail.value.website[0].name
+        detail.value.website = detail.value.website[0].id
+        getPosition()
       }
     })
+
+    // 初始化
+    function getPosition() {
+      store.dispatch('common/Fetch', {
+        api: "siteList",
+        data: {
+          website: detail.value.website
+        }
+      }).then(res => {
+        site.value = res.result !== true ? res.result[0] : []
+      })
+    }
+
+    function choose(param: any) {
+      debugger
+      const {
+        data
+      } = param
+      detail.value.website = data.id
+      detail.value.website_name = data.name
+      getPosition()
+    }
 
     function submit(params: any) {
 
@@ -137,13 +152,13 @@ export default defineComponent({
     }
 
     return {
+      codings,
       isShow,
       detail,
       drawer,
-      sourceType,
-      serverName,
       submit,
       site,
+      choose,
       checkedList
     }
   }

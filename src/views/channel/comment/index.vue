@@ -8,7 +8,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table width="100%" class="table-striped table-hover col-left-23">
+    <table class="table-striped table-hover col-left-23">
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-2">用户</td>
@@ -68,17 +68,17 @@ export default defineComponent({
     const {
       proxy
     }: any = getCurrentInstance();
-    const channelData: any = channels();
+    const coding: any = channels().coding;
     const store = useStore();
     const dataList = computed(() => store.getters['basic/partner']);
-    const coding: any = proxy.$coding['partner'];
     const checkedList: any = ref([])
 
     function init() {
       store.dispatch('basic/Fetch', {
-        state: 'partner',
+        api: 'articleRelated',
         data: {
-          coding,
+          coding: coding.art,
+          name: 'comment',
           page: 1,
           pagesize: 10
         }
@@ -92,7 +92,7 @@ export default defineComponent({
       dataList,
       checkedList,
       init,
-      auth: proxy.$auth.init(`channel/${channelData.module}/comment`)
+      auth: proxy.$auth.init(`channel/${coding.name}/comment`)
     }
   }
 })
