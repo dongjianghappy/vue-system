@@ -30,7 +30,7 @@
         </td>
       </tr>
     </table>
-    <v-nodata :data="dataList" />
+    <!-- <v-nodata :data="dataList" /> -->
     <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, coding }" :sorceData="dataList" :render="init" />
   </div>
 </div>

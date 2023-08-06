@@ -37,7 +37,7 @@
             </div>
           </li>
           <li class="vertical">
-            <Editor v-model:contentsss="detail.markdown" />
+            <v-editor v-model:contentsss="detail.markdown" />
           </li>
           <li class="vertical">
             <div class="label">聚合标签</div>
@@ -121,12 +121,12 @@ import {
   TEMPLATES,
 } from '@/assets/enum'
 // import Source from '../../setting/source.vue'
-import Editor from '@/components/packages/editor/index.vue'
+// import Editor from '@/components/packages/editor/index.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
     // Source,
-    Editor
+    // Editor
   },
   props: {
     type: {

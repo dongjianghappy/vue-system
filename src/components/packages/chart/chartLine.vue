@@ -8,8 +8,7 @@
     <div className="bar-title">
       <div v-for="(item, index) in chartOptions.title" :key="index">
         {{item}}
-        <span style="background: #f00" v-if="chartOptions.title.length > 1"></span>
-
+        <span :class="`chart-bg-${index+1}`" v-if="chartOptions.title.length > 1"></span>
       </div>
 
     </div>
@@ -56,3 +55,21 @@ export default defineComponent({
   }
 })
 </script>
+
+<style>
+.ct-series-b .ct-bar, .ct-series-b .ct-line, .ct-series-b .ct-point, .ct-series-b .ct-slice-donut {
+    stroke: #5470c6;
+}
+.ct-series-c .ct-bar, .ct-series-c .ct-line, .ct-series-c .ct-point, .ct-series-c .ct-slice-donut {
+    stroke: #4ea852;
+}
+.chart-bg-1{
+  background: #d70206 !important;
+}
+.chart-bg-2{
+  background: #5470c6 !important;
+}
+.chart-bg-3{
+  background: #4ea852 !important;
+}
+</style>

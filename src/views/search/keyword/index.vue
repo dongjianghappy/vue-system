@@ -1,14 +1,28 @@
 <template>
-<div class="ptb5" style="background: #fff">
-  <v-tabs :tabs="menu">
-    <template v-slot:content1>
-      <List :render="init" :coding="coding" :dataList="dataList" />
-    </template>
-    <template v-slot:content2>
-      <List :render="init" :coding="coding" :dataList="dataList" />
-    </template>
-  </v-tabs>
+<div class="module-wrap">
+  <div class="module-head">
+    <v-optionsbar title="搜索词库">
+      <template v-slot:extraright>
+
+      </template>
+    </v-optionsbar>
   </div>
+  <div class="module-content plr15">
+    <table class="table-striped table-hover col-left-12">
+      <tr class="th">
+        <td class="col-md-3">关键词</td>
+        <td class="col-md-9">次数</td>
+      </tr>
+      <tr v-for="(item, index) in dataList.list" :key="index">
+        <td>{{item.word}}</td>
+        <td>{{item.number}}</td>
+      </tr>
+    </table>
+    <div class="mt15 align_right">
+      <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="init" />
+    </div>
+  </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -20,6 +34,7 @@ import {
   ref,
   watch,
   useRoute,
+  codings
 } from '@/utils'
 import {
   useStore
@@ -30,7 +45,9 @@ import {
 import List from "./components/list.vue"
 export default defineComponent({
   name: 'HomeViewdd',
-  components: {List},
+  components: {
+    List
+  },
   props: {
     type: {
       type: String,
@@ -45,8 +62,8 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
     const dataList: any = ref([]);
-     let menu: any = ref([
-      {
+    const coding: any = codings
+    let menu: any = ref([{
         name: "今日搜索词",
         value: "advertisement2"
       },
@@ -55,7 +72,7 @@ export default defineComponent({
         value: "advertisement3"
       }
     ])
-     const pagesize: any = 10
+    const pagesize: any = 10
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
 
     // 监听路由
@@ -68,13 +85,17 @@ export default defineComponent({
       }
     })
 
-    function init(param: any) {
+    function init(param: any = {}) {
+      const params: any = {
+        page: 1,
+        pagesize: 10
+      }
+      Object.assign(params, param)
+
       store.dispatch('common/Fetch', {
-        api: "searchWordList",
         data: {
-          time: tabsIndex.value === '1' ? 'all' : "today",
-          pagesize: pagesize,
-          ...param
+          coding: route.path.indexOf("talk") === -1  ? coding.search.word : coding.talk.search.word,
+          ...params
         }
       }).then((res: any) => {
         dataList.value = res.result
@@ -90,8 +111,8 @@ export default defineComponent({
       dataList,
       tabsIndex,
       menu,
+      init
     }
   }
 })
 </script>
-

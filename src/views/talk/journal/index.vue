@@ -54,12 +54,12 @@ import {
   useStore
 } from 'vuex'
 import Detail from './components/detail.vue'
-import Editor from '@/components/packages/editor/index.vue'
+// import Editor from '@/components/packages/editor/index.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
     Detail,
-    Editor
+    // Editor
   },
   setup(props, context) {
     const {

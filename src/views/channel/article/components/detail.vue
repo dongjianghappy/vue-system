@@ -31,13 +31,20 @@
                   <v-tag v-model:tags="detail.tag" />
                 </div>
               </li>
+                            <li class="vertical">
+                <div class="label">描述</div>
+                <div>
+                  <textarea placeholder="请输入单页描述" v-model="detail.description" class="w-full"></textarea>
+                </div>
+              </li>
               <li class="vertical">
-                <Editor v-model:contentsss="detail.markdown" :data="detail" />
+                <div class="label">内容</div>
+                <v-editor v-model:contentsss="detail.markdown" :data="detail" />
               </li>
               <li class="vertical">
                 <div class="label">摘要</div>
                 <div>
-                  <textarea placeholder="请输入单页摘要" v-model="detail.summary" class="w-full"></textarea>
+                  <v-editordesc v-model:contentsss="detail.summary_markdown" :data="detail" />
                 </div>
               </li>
               <li class="vertical">
@@ -63,7 +70,7 @@
           </template>
         </v-tabs>
 
-        <div>
+        <div class="plr15">
           <button class="btn btn-default btn-primary" @click="save">保存</button>
         </div>
       </div>
@@ -92,17 +99,6 @@
               <v-category name="选择分类" :data="{item: detail, coding: channelData.coding}" :isMore="true" type="text"></v-category>
             </div>
           </li>
-
-          <li class="vertical">
-            <div class="label">所属专辑
-
-            </div>
-            <div>
-              {{detail.parent}}
-              <v-category name="选择专辑" :data="{item: detail, coding: '123'}" :isMore="true" type="text"></v-category>
-            </div>
-          </li>
-
           <li class="vertical">
             <div class="label">背景音乐
 
@@ -166,13 +162,13 @@ import {
   useStore
 } from 'vuex'
 import Source from '../../setting/source/index.vue'
-import Editor from '@/components/packages/editor/index.vue'
+// import Editor from '@/components/packages/editor/index.vue'
 
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
     Source,
-    Editor
+    // Editor
   },
   props: {
     type: {
@@ -214,12 +210,6 @@ export default defineComponent({
     }, {
       name: 'tag',
       message: "标签不能为空"
-    }, {
-      name: 'fid',
-      message: "请选择分类"
-    }, {
-      name: 'summary',
-      message: "请输入摘要内容"
     }]
 
     // 聚合标签
@@ -283,7 +273,8 @@ export default defineComponent({
         source,
         source_url,
         background_music,
-        summary,
+        description,
+        summary_markdown,
         markdown,
         tag,
         color,
@@ -310,7 +301,9 @@ export default defineComponent({
           source,
           source_url,
           background_music,
-          summary,
+          description,
+          summary: summary_markdown ? marked.parse(summary_markdown) : "",
+          summary_markdown,
           content: markdown ? marked.parse(markdown) : "",
           markdown,
           tag: tag ? tag.join(',') : "",

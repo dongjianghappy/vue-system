@@ -102,6 +102,10 @@ export default defineComponent({
           value: item.id
         })
       })
+      channelArr.push({
+          name: "微博",
+          value: "1000"
+        })
       return channelArr
     });
     const detail: any = ref({})

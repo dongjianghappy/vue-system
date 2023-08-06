@@ -46,8 +46,24 @@ const actions = {
     return result
   },      
 
+  TalkdefaultSearch: async (context: { commit: Commit; state: any}, params: any = {}) => {
+    const data = params.data || {}
+    const { result }:any = await api.TalkdefaultSearch({
+      ...data
+    })
 
+    context.commit("setSearchDefault" , result.result);
+    return result
+  },  
+  DefaultStatistics: async (context: { commit: Commit; state: any}, params: any = {}) => {
+    const data = params.data || {}
+    const { result }:any = await api.talkDefaultStatistics({
+      ...data
+    })
 
+    context.commit("setDefaultStatistics" , result.result);
+    return result
+  },
 
 }
 

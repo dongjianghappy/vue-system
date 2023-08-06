@@ -10,12 +10,16 @@
         <input type="text" v-model="detail.remark" placeholder="请输入名称" class="input-sm input-full" />
       </li>
       <li class="li">
+        <span class="label">文本类型</span>
+        <v-select :enums="textType" v-model:value="detail.text_type" :defaultValue="detail.text_type = detail.text_type ? detail.text_type : 'switch'" @onChange="handleChange" />
+      </li>
+      <li class="li" v-if="!isCheckbox">
         <span class="label">字段</span>
         <input type="text" v-model="detail.name" placeholder="请输入字段" class="input-sm input-full" />
       </li>
-      <li class="li">
-        <span class="label">文本类型</span>
-        <v-select :enums="textType" v-model:value="detail.text_type" :defaultValue="detail.text_type = detail.text_type ? detail.text_type : 'switch'" />
+      <li class="li" v-else>
+        <span class="label">字段</span>
+        <v-radiobutton name="name" v-model:checked="detail.name" :enums="[{label: '查询字段', value: 'field'}, {label: '搜索频道', value: 'channel'},{label: '特殊条件', value: 'condition'}, {label: '时间范围', value: 'time'}]" />
       </li>
     </ul>
   </template>
@@ -48,6 +52,10 @@ export default defineComponent({
         return {}
       }
     },
+    menu: {
+      type: Array,
+      default: []
+    },
     render: {
       type: Function,
       default: () => {
@@ -61,6 +69,7 @@ export default defineComponent({
     const dialog: any = ref(null)
     const detail: any = ref({})
     const textType = TEXT_TYPE
+    const isCheckbox: any = ref(false)
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
@@ -68,6 +77,15 @@ export default defineComponent({
         detail.value = await dialog.value.init()
       }
     })
+
+    function handleChange(param: any){
+      debugger
+      if(param === 'checkbox'){
+        isCheckbox.value = true
+      }else{
+        isCheckbox.value = false
+      }
+    }
 
     function submit(cancel: any) {
 
@@ -94,7 +112,7 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
         api: props.action !== "add" ? 'update' : "insert",
         data: {
-          coding: 'P0017',
+          coding: props.data.coding,
           ...param
         }
       }).then(() => {
@@ -107,7 +125,10 @@ export default defineComponent({
       isShow,
       detail,
       textType,
-      submit
+      submit,
+      dialog,
+      handleChange,
+      isCheckbox
     }
   }
 })

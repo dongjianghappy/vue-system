@@ -53,4 +53,4 @@ form(Vue)
 Vue.use(PerfectScrollbar)
 Vue.use(chartist)
 Vue.config.globalProperties.$coding = codings
-Vue.use(store).use(router).use(VueMarkdownEditor).mount('#app')
+Vue.use(store).use(router).mount('#app')

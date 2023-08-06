@@ -15,6 +15,7 @@
               <li>
                 <uploadVideo action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" v-if="type === 'video'" />
                 <uploadPicture action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" v-else-if="type === 'image'" />
+                <WebsiteDetail action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" v-else-if="type === 'website'" />
                 <v-button @onClick="handleClick(item)" :disabled="true" v-else>
                   编辑
                 </v-button>
@@ -56,6 +57,7 @@ import {
 import Video from '@/components/packages/play/videos.vue'
 import uploadVideo from '../../video/components/detail.vue'
 import uploadPicture from '../../picture/components/detail.vue'
+import WebsiteDetail from '../../website/components/detail.vue'
 import {
   setDevtoolsHook
 } from '@vue/runtime-core';
@@ -64,7 +66,8 @@ export default defineComponent({
   components: {
     Video,
     uploadVideo,
-    uploadPicture
+    uploadPicture,
+    WebsiteDetail
   },
   props: {
     data: {

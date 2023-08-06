@@ -61,19 +61,21 @@
         </v-popover>
         <!-- <v-condition name="颜色" icon="font-colors" field="color" :enums="colorList" :render="init" v-if="channelData.module ==='picture'" /> -->
         <v-toggledisplay v-model:toggle="toggleDisplay" />
-        <v-button @onClick="handleClick('add')" :disabled="auth.checked('add')" v-if="channelData.module !=='picture' && channelData.module !=='video' && channelData.module !=='source' && channelData.module !=='design' && channelData.module !=='office'">
+        <v-button @onClick="handleClick('add')" :disabled="auth.checked('add')" v-if="channelData.module !=='picture' && channelData.module !=='video' && channelData.module !=='source' && channelData.module !=='design' && channelData.module !=='office' && channelData.module !=='website'&& channelData.module !=='words'">
           <i class="iconfont icon-anonymous-iconfont" />新增文档
         </v-button>
         <PictureDetail :coding="coding" :render="init" v-else-if="channelData.module ==='picture'" />
         <SourceDetail :coding="coding" :render="init" v-else-if="channelData.module ==='source'" />
         <DesignDetail :coding="coding" :render="init" v-else-if="channelData.module ==='design'" />
         <OfficeDetail :coding="coding" :render="init" v-else-if="channelData.module ==='office'" />
+        <WebsiteDetail :coding="coding" :render="init" v-else-if="channelData.module ==='website'" />
+        <WordsDetail :coding="coding" :render="init" v-else-if="channelData.module ==='words'" />
         <uploadVideo :coding="coding" v-else />
       </v-space>
     </template>
     <template v-slot:content1>
       <List :type='page.value' :data="{...channelData, coding, aaa}" :render="init" v-if="toggleDisplay === 'list'" :loading="loading" :auth="auth" />
-      <Album :data="{...channelData, coding, aaa}" :render="init" v-else :loading="loading" :auth="auth" :type="channelData.module === 'video' ? 'video' : 'image'" />
+      <Album :data="{...channelData, coding, aaa}" :render="init" v-else :loading="loading" :auth="auth" :type="channelData.module" />
     </template>
     <template v-slot:content2>
       <List2 :type='page.value' :data="{...channelData}" :render="init" :loading="loading" :auth="auth" />
@@ -117,6 +119,8 @@ import SourceDetail from '../source/components/detail.vue'
 import DesignDetail from '../design/components/detail.vue'
 import OfficeDetail from '../office/components/detail.vue'
 import PictureDetail from '../picture/components/detail.vue'
+import WebsiteDetail from '../website/components/detail.vue'
+import WordsDetail from '../words/components/detail.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
@@ -129,7 +133,9 @@ export default defineComponent({
     SourceDetail,
     DesignDetail,
     OfficeDetail,
-    PictureDetail
+    PictureDetail,
+    WebsiteDetail,
+    WordsDetail
   },
   props: {
     type: {

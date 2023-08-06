@@ -36,6 +36,7 @@ import AnswerList from '../views/channel/question/index.vue'
 import SourcePsdList from '../views/channel/source/image.vue'
 import DesignList from '../views/channel/design/index.vue'
 import Album from '../views/channel/picture/album.vue'
+import WordsList from '../views/channel/words/index.vue'
 
 
 
@@ -95,6 +96,7 @@ import Visit from '../views/statistics/visit/index.vue'
 import Domain from '../views/statistics/domain/index.vue'
 import Engine from '../views/statistics/engine/index.vue'
 import Ip from '../views/statistics/ip/index.vue'
+import UserOnline from '../views/statistics/user/index.vue'
 import ManagerLoginLog from '../views/log/index.vue'
 import UserLoginLog from '../views/log/userLog.vue'
 // import Operating from '../views/log/operating'
@@ -121,8 +123,8 @@ import Job from '../views/service/job/index.vue'
 import Resume from '../views/service/job/resum/index.vue'
 import Message from '../views/service/message/index.vue'
 import MessageDetail from '../views/service/message/components/detail.vue'
-import KnowledgeCate from '../views/service/knowledge/cate/index.vue'
-import KnowledgeList from '../views/service/knowledge/list/index.vue'
+import ServiceKnowledgeCate from '../views/service/knowledge/cate/index.vue'
+import ServiceKnowledgeList from '../views/service/knowledge/list/index.vue'
 import KnowledgeArticle from '../views/service/knowledge/list/article.vue'
 import Spread from '../views/spread/index.vue'
 import Space from '../views/space/index.vue'
@@ -130,6 +132,10 @@ import Space from '../views/space/index.vue'
 import codeDefault from '../views/code/index.vue'
 import codeCate from '../views/code/cate/index.vue'
 import codeList from '../views/code/list/index.vue'
+
+import KnowledgeDefault from '../views/knowledge/index.vue'
+import CommonSenseCate from '../views/commonSense/cate/index.vue'
+import CommonSenseList from '../views/commonSense/list/index.vue'
 
 
 import Customize from '../views/customize/index.vue'
@@ -153,6 +159,7 @@ import Search from '../views/search/index.vue'
 import SearchView from '../views/search/index.vue'
 import SearchKeyword from '../views/search/keyword/index.vue'
 import searchList from '../views/search/searchList/index.vue'
+import SearchUser from '../views/search/searchUser/index.vue'
 
 import Template from '../views/template/index.vue'
 
@@ -170,10 +177,14 @@ import CustomAlbum from '../views/talk/album/custom.vue'
 import TalkJournal from '../views/talk/journal/index.vue'
 import TalkTheme from '../views/talk/theme/index.vue'
 import Mood from '../views/talk/mood/index.vue'
+import TalkSign from '../views/talk/sign/index.vue'
+import Group from '../views/talk/group/index.vue'
+import Bookmark from '../views/talk/bookmark/index.vue'
 import Blog from '../views/talk/blog/index.vue'
 import TalkStatistics from '../views/talk/statistics/index.vue'
-import TalkVisit from '../views/talk/statistics/visit/index.vue'
-import TalkIp from '../views/talk/statistics/ip/index.vue'
+// import TalkVisit from '../views/talk/statistics/visit/index.vue'
+// import TalkIp from '../views/talk/statistics/ip/index.vue'
+import TalkSearch from '../views/talk/search/index.vue'
 
 
 const arrss: any = {
@@ -218,6 +229,7 @@ const arrss: any = {
   SourcePsdList,
   DesignList,
   Album,
+  WordsList,
   VideoList,
   
   Slideshow,
@@ -230,6 +242,7 @@ const arrss: any = {
   Domain,
   Engine,
   Ip,
+  UserOnline,
   // User,
   UserBasic,
 //   // UserPassword,
@@ -247,10 +260,15 @@ const arrss: any = {
   TalkJournal,
   TalkTheme,
   Mood,
+  TalkSign,
+  Group,
+  Bookmark,
   Blog,
   TalkStatistics,
-  TalkVisit,
-  TalkIp,
+  // TalkVisit,
+  // TalkIp,
+  TalkSearch,
+  SearchUser,
   UserSetting,
   Personal,
   PersonalDefault,
@@ -280,8 +298,8 @@ const arrss: any = {
   Resume,
   Message,
   MessageDetail,
-  KnowledgeCate,
-  KnowledgeList,
+  ServiceKnowledgeCate,
+  ServiceKnowledgeList,
   KnowledgeArticle,
   Customize,
   CustomizeList,
@@ -292,6 +310,8 @@ const arrss: any = {
   codeDefault,
   codeCate,
   codeList,
+  CommonSenseCate,
+  CommonSenseList,
 //   SettingChannel,
   Vote,
   VoteList,

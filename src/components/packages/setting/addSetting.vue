@@ -1,6 +1,6 @@
 <template>
 <v-button v-model:show="isShow" :disabled="true">
-  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'add' ? '新增系统设置' : ''}}
+  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />
 </v-button>
 <v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增系统设置" :style="{width: '520', height: '300'}" @submit="submit">
   <template v-slot:content v-if="isShow">

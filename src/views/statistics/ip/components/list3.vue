@@ -5,22 +5,26 @@
     <td class="col-md-9">IP</td>
     <td class="col-md-2">访问时间</td>
   </tr>
-  <tr v-for="(item, index) in dataList" :key="index">
+  <tr v-for="(item, index) in dataList.list" :key="index">
     <td>{{item.id}}</td>
     <td>{{item.ip}}</td>
     <td>{{item.datetime}}</td>
   </tr>
 </table>
-<v-nodata :data="dataList || []" />
+<div class="mt15 align_right">
+  <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="init" />
+</div>
 </template>
 
 <script lang="ts">
 import {
   defineComponent,
   getCurrentInstance,
-  computed,
+  onMounted,
   useStore,
-  useRoute
+  useRoute,
+  ref,
+  codings
 } from '@/utils'
 
 export default defineComponent({
@@ -41,14 +45,33 @@ export default defineComponent({
     const {
       ctx
     }: any = getCurrentInstance();
+    const coding: any = codings
         const store = useStore();
     const route = useRoute();
 
-    const dataList = computed(() => {
-      return store.getters['setting/ip4'].list || []
-    });
+    const dataList: any = ref([])
+
+
+    function init(param: any = {}) {
+      const params: any = {
+        page: 1,
+        pagesize: 10
+      }
+      Object.assign(params, param)
+      store.dispatch('common/Fetch', {
+        data: {
+          coding: route.path.indexOf("talk") === -1 ? coding.statistics.ip_lib : coding.talk.statistics.ip_lib,
+          ...params
+        }
+      }).then((res: any) => {
+        dataList.value = res.result
+      })
+    }
+
+    onMounted(init)    
     return {
-      dataList
+      dataList,
+      init
     }
   }
 })

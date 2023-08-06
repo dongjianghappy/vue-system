@@ -18,7 +18,13 @@
         <span class="label">Style属性</span>
         <textarea v-model="detail.style" class="w-full"></textarea>
       </li>
-      <li class="li" style="overflow: hidden;">
+      <li class="li">
+        <span class="label">预览图</span>
+        <div style="overflow: hidden;">
+          <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: data.coding}" :dataList="detail.img" uploadtype="theme" @imgList="image" :style="'width: 135px'" />
+        </div>
+      </li>
+      <!-- <li class="li" style="overflow: hidden;">
         <span class="label">挂件</span>
         <div class="clearfix bg-f7f8fa" style="height: auto">
           <div class="p10">系统挂件图标, 每个挂件只能绑定一次</div>
@@ -27,7 +33,7 @@
            <i class="iconfont icon-checkbox m0 cl-red" style="right: 10px; top: 10px; padding: 2px; z-index: 1;" v-if="item === detail.file"></i>
            </div>
         </div>
-      </li>
+      </li> -->
     </ul>
   </template>
 </v-drawer>
@@ -73,23 +79,22 @@ export default defineComponent({
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
         detail.value = await drawer.value.init()
-        getPendant()
+        // getPendant()
       }
     })
 
     // 监听图片上传
     function image(a: any) {
-      debugger
       img.value = a
     }
 
-    function getPendant() {
-      store.dispatch('basic/Fetch', {
-        api: 'getPendantFile'
-      }).then((res: any) => {
-        fileList.value = res.result
-      })
-    }
+    // function getPendant() {
+    //   store.dispatch('basic/Fetch', {
+    //     api: 'getPendantFile'
+    //   }).then((res: any) => {
+    //     fileList.value = res.result
+    //   })
+    // }
 
     function choose(param: any) {
       detail.value.file = param
@@ -100,7 +105,6 @@ export default defineComponent({
       const {
         id,
         name,
-        file,
         grade,
         style,
         description,
@@ -110,8 +114,7 @@ export default defineComponent({
       const param: any = {
         name,
         grade,
-        // img: img.value,
-        file,
+        img: img.value,
         style,
         description,
         status,

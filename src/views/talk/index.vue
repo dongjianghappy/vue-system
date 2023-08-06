@@ -50,7 +50,12 @@
         <ul class="form-wrap-box">
           <li class="li mb10"><span class="label">模块展示</span>
             <span class="right">
-              <v-authority name="设置" title="权限管理" type="manage" :data="{coding: coding.config}" :auth="true" />
+              <v-authority name="设置" title="权限管理" type="manage" :data="{coding: coding.talk.config}" :auth="true" />
+            </span>
+          </li>
+          <li class="li mb10"><span class="label">用户设置</span>
+            <span class="right">
+              <UserSetting :auth="true" :data="{coding: coding.user}" />
             </span>
           </li>
         </ul>
@@ -74,10 +79,12 @@ import {
 import {
   ChartLine
 } from '@/components/packages/chart/index'
+import UserSetting from '@/components/packages/setting/userSetting.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    ChartLine
+    ChartLine,
+    UserSetting
   },
   props: {
     style: {
@@ -93,7 +100,7 @@ export default defineComponent({
       ctx
     }: any = getCurrentInstance();
     const store = useStore();
-    const coding = codings.talk
+    const coding = codings
     const user: any = computed(() => store.getters['basic/userDefault'].user || {});
     const hours: any = computed(() => {
       let aaa = store.getters['basic/userDefault'].year || {}

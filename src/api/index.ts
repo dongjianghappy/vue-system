@@ -29,10 +29,19 @@ const api:any =  {
     return http.request('vue', 'defaultStatistics', 'post', params)
   },
 
+  // 默认数据
+  talkDefaultStatistics(params: any) {
+    return http.request('vue', 'talkDefaultStatistics', 'post', params)
+  },
+
   // 搜索默认数据
   defaultSearch(params: any) {
     return http.request('vue', 'defaultSearch', 'post', params)
   },
+  // 微博搜索默认数据
+  TalkdefaultSearch(params: any) {
+    return http.request('vue', 'TalkdefaultSearch', 'post', params)
+  },  
 
   // 新增
   insert(params: any) {
@@ -500,10 +509,14 @@ const api:any =  {
   favoriteDetali(params: any) {
     return http.request('vue', 'favoriteDetali', 'post', params)
   },    
-  // 收藏夹
+  // 微博设置列表
   talkSetting(params: any) {
     return http.request('vue', 'talkSetting', 'post', params)
-  },     
+  },  
+  // 微博设置  
+  setTalkAuthority(params: any) {
+    return http.request('vue', 'setTalkAuthority', 'post', params)
+  },  
   // 刷新更新
   refreshBuild(params: any) {
     return http.request('vue', 'refreshBuild', 'post', params)
@@ -728,6 +741,20 @@ close (params: any) {
   getCursorFile (params: any) {
     return http.request('user', 'getCursorFile', 'post', params)
   },
+
+  // 用户自定义组
+  customGroup (params: any) {
+    return http.request('user', 'customGroup', 'post', params)
+  } ,   
+  // 话题搜索用户 
+  talkSearchUser (params: any) {
+    return http.request('talk', 'talkSearchUser', 'post', params)
+  } ,  
+  // 设置权限
+  setAuthority (params: any) {
+    return http.request('vue', 'setAuthority', 'post', params)
+  } ,  
+
 }
 
 export default api

@@ -24,6 +24,7 @@ const getters = {
   video: (state: any) => state.video || {},
   design: (state: any) => state.design || {},
   office: (state: any) => state.office || {},
+  words: (state: any) => state.words || {},
 }
 
 export default getters;

@@ -3,7 +3,7 @@
   <div class="mb10" style="overflow: auto;">
     <div class="col-md-3" style="padding-right: 8px;">
       <div class="col-md-6">
-        <v-statisticcard name="累计搜素" :value="data.search_total || 0" />
+        <v-statisticcard name="累计搜素111" :value="data.search_total || 0" />
       </div>
       <div class="col-md-6">
         <v-statisticcard name="关键词总量" :value="data.word_total || 0" />
@@ -144,6 +144,7 @@
     <div class="module-wrap">
       <div class="module-head">
         搜索设置
+        {{form}}
         <span class="right pointer" @click="submit">保存</span>
       </div>
       <div class="module-content p15">
@@ -171,7 +172,9 @@ import {
   computed,
   ref,
   useStore,
-  watch
+  useRoute,
+  watch,
+  codings
 } from '@/utils'
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
@@ -190,7 +193,9 @@ export default defineComponent({
     AddSetting
   },
   setup(props, context) {
+    const coding: any = codings
     const store = useStore();
+    const route = useRoute();
     const menu: any = ref([{
         name: "搜索概况",
         value: "advertisement1"
@@ -310,22 +315,26 @@ export default defineComponent({
 
     // 初始化
     function init() {
-      store.dispatch('basic/searchDefault')
+      if (route.path.indexOf("talk") !== -1) {
+        store.dispatch('talk/searchDefault')
+      } else {
+        store.dispatch('basic/searchDefault')
+      }
     }
 
-        // 保存
+    // 保存
     function submit(params: any) {
       const param: any = {}
-      for(let key in form.value) {
-        if(form.value[key] instanceof Array){
+      for (let key in form.value) {
+        if (form.value[key] instanceof Array) {
           param[key] = form.value[key].length > 0 ? `|${form.value[key].join("|")}|` : ""
-        }else{
+        } else {
           param[key] = form.value[key]
         }
       }
 
       store.dispatch('common/Fetch', {
-        api:'updateInfo',
+        api: 'updateInfo',
         data: {
           coding: "P0017",
           ...param
@@ -336,6 +345,7 @@ export default defineComponent({
     }
 
     onMounted(init)
+
     return {
       data,
       menu,

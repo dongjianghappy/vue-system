@@ -81,7 +81,7 @@
         <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="render" />
       </div>
     </div>
-    <v-calendar @changeMonth="changeMonth" height="145px" v-else>
+    <v-calendar @changeMonth="changeMonth" :style="{height: '145px'}" v-else>
       <template v-slot:default="row">
         <template v-for="(item, index) in calendarData" :key="index">
           <div style="display: flex; flex-wrap:wrap; position: absolute; width: 100%; bottom: 0px; top: 25px; padding: 10px" v-if="item.date == `${row.item.fullYear}-${row.item.month}-${row.item.day}`">

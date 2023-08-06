@@ -357,6 +357,13 @@ export const MODUDLE = [
     type: 'plate',
     icon: 'robot',
   },
+	{
+    module: 'commonSense',
+    value: 'commonSense',
+    name: '常识',
+    type: 'plate',
+    icon: 'robot',
+  },
 ]
 
 // 导航编辑
@@ -518,11 +525,41 @@ export const tabsBlog = [
 	}
 ]
 
+// 组类
+export const tabsGroup = [
+	{
+		name: "日志",
+		value: "link1"
+	},
+	{
+		name: "相册",
+		value: "link2"
+	},
+	{
+		name: "书签",
+		value: "link3"
+	},
+	{
+		name: "笔记",
+		value: "link1"
+	},
+	{
+		name: "图片",
+		value: "link2"
+	}
+]
+
 // 用户相册
 export const tabsTalkAlbum = [
 	{name: '头像',value: 'photos'},
 	{name: '头像背景',value: 'background'},
 	{name: '主页背景',value: 'banner'}
+]
+
+// 心情管理
+export const tabsMood = [
+	{name: '系统心情',value: 'photos'},
+	{name: '用户心情',value: 'background'}
 ]
 
 // 微博主题
@@ -545,17 +582,29 @@ export const tabsTalkTheme = [
 	}
 ]
 
-export const visitPage = [
+// 签到管理
+export const tabsSign = [
 	{
-		name: "访问概况量",
+		name: "用户签到",
 		value: "appstore1"
 	},
 	{
-		name: "今日受访",
+		name: "签到喜爱",
+		value: "appstore2"
+	}
+]
+
+export const visitPage = [
+	{
+		name: "访问明细",
+		value: "appstore1"
+	},
+	{
+		name: "每日概况",
 		value: "appstore2"
 	},
 	{
-		name: "受访明细",
+		name: "日期查看",
 		value: "appstore3"
 	}
 ]

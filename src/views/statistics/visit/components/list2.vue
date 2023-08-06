@@ -1,29 +1,36 @@
 <template>
-<table class="table-striped table-hover col-left-2">
+<table class="table-striped table-hover col-left-1">
   <tr class="th">
-    <td class="col-md-1">序号</td>
-    <td class="col-md-9">受访页面URL</td>
-    <td class="col-md-1">浏览次数</td>
-    <td class="col-md-1">占比</td>
+    <td class="col-md-3">时间</td>
+    <td class="col-md-3 ">IP</td>
+    <td class="col-md-3">新Ip</td>
+    <td class="col-md-3">访问次数</td>
+    <!-- <td class="col-md-2">用户量</td>
+    <td class="col-md-2">区域</td> -->
   </tr>
-   <tr v-for="(item, index) in dataList" :key="index">
-    <td>{{item.id}}</td>
-    <td>{{item.source_url}}</td>
-    <td>{{item.url}}</td>
-    <td>{{item.visit}}</td>
-    <td>{{item.nums}}</td>
+  <tr v-for="(item, index) in dataList.list" :key="index">
+    <td>{{item.times}}</td>
+    <td>{{item.ip}}</td>
+    <td>{{item.nip}}</td>
+    <td>{{item.pv}}</td>
+    <!-- <td>{{item.user}}</td>
+    <td>{{item.user}}</td> -->
   </tr>
 </table>
-<v-nodata :data="dataList || []" />
+<div class="mt15 align_right">
+  <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="init" />
+</div>
 </template>
 
 <script lang="ts">
 import {
   defineComponent,
   getCurrentInstance,
-    computed,
+  onMounted,
   useStore,
-  useRoute
+  useRoute,
+  ref,
+  codings
 } from '@/utils'
 
 export default defineComponent({
@@ -31,33 +38,37 @@ export default defineComponent({
   components: {
 
   },
-  props: {
-    style: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
-  },
   emits: ['onClick'],
   setup(props, context) {
     const {
       ctx
     }: any = getCurrentInstance();
+    const coding: any = codings
     const store = useStore();
     const route = useRoute();
+    const dataList: any = ref([]);
 
-    const dataList = computed(() => {
-      return store.getters['setting/visit2'].list || []
-    });
-
-    function handleclick() {
-      context.emit('onClick')
+    function init(param: any = {}) {
+      const params: any = {
+        page: 1,
+        pagesize: 10
+      }
+      Object.assign(params, param)
+      store.dispatch('common/Fetch', {
+        data: {
+          coding: route.path.indexOf("talk") === -1 ? coding.statistics.ip : coding.talk.statistics.ip,
+          ...params
+        }
+      }).then((res: any) => {
+        dataList.value = res.result
+      })
     }
 
+    onMounted(init)
+
     return {
-      handleclick,
-      dataList
+      dataList,
+      init
     }
   }
 })

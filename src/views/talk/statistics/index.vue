@@ -1,43 +1,6 @@
 <template>
 <div class="mb10" style="overflow: auto;">
-  <div class="col-md-3" style="padding-right: 8px;">
-    <div class="col-md-4">
-      <v-statisticcard name="累计览量" :value="visit.total_visit || 0" />
-    </div>
-    <div class="col-md-4">
-      <v-statisticcard name="昨日览量" :value="visit.yesterday && visit.yesterday.pv || 0" />
-    </div>
-    <div class="col-md-4">
-      <v-statisticcard name="今日览量" :value="visit.today && visit.today.pv || 0" />
-    </div>
-  </div>
-  <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
-    <div class="col-md-4">
-      <v-statisticcard name="累计IP" :value="visit.total_ip || 0" />
-    </div>
-    <div class="col-md-4">
-      <v-statisticcard name="昨日IP" :value="visit.yesterday && visit.yesterday.ip || 0" />
-    </div>
-    <div class="col-md-4">
-      <v-statisticcard name="今日IP" :value="visit.today && visit.today.ip || 0" />
-    </div>
-  </div>
-  <div class="col-md-3" style="padding-left: 8px; padding-right: 8px;">
-    <div class="col-md-6">
-      <v-statisticcard name="累计搜索" value="2,836" />
-    </div>
-    <div class="col-md-6">
-      <v-statisticcard name="今日搜索" value="2,836" />
-    </div>
-  </div>
-  <div class="col-md-3" style="padding-left: 8px;">
-    <div class="col-md-6">
-      <v-statisticcard name="最高浏览" value="2,836" />
-    </div>
-    <div class="col-md-6">
-      <v-statisticcard name="最高IP" value="2,836" />
-    </div>
-  </div>
+  <Card :data="visit" />
 </div>
 <div class="mb10" style="overflow: auto;">
   <div class="col-md-9" style=" padding-right: 8px;">
@@ -67,7 +30,7 @@
   <div class="col-md-5" style=" padding-right: 8px;">
     <div class="module-wrap">
       <div class="module-head">
-        最近7天访问量
+        近7天数据量统计
       </div>
       <div class="module-content plr15" style="height: 320px">
         <ChartLine :chartData="weekVisit.data" :chartOptions="weekVisit.options" />
@@ -77,7 +40,7 @@
   <div class="col-md-7" style="padding-left: 8px;">
     <div class="module-wrap">
       <div class="module-head">
-        本月访问量
+        本月数据量统计
       </div>
       <div class="module-content plr15" style="height: 320px">
         <ChartLine :chartData="weekIp.data" :chartOptions="weekIp.options" />
@@ -100,9 +63,11 @@ import {
   ChartLine,
   ChartPie
 } from '@/components/packages/chart/index'
+import Card from "./components/card.vue"
 export default defineComponent({
   name: 'v-Search',
   components: {
+    Card,
     ChartLine,
     ChartPie
   },
@@ -121,15 +86,17 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore();
 
-    const visit: any = computed(() => store.getters['basic/defaultStatistics'].visit || {});
+    const visit: any = computed(() => store.getters['talk/defaultStatistics'].visit || {});
     const hours: any = computed(() => {
-      let aaa = store.getters['basic/defaultStatistics'].hours || {}
+      let aaa = store.getters['talk/defaultStatistics'].hours || {}
       return {
         data: {
           labels: aaa.label,
           series: [
-            [...(aaa.value && aaa.value.today_online) || []],
             [...(aaa.value && aaa.value.today_visit) || []],
+            [...(aaa.value && aaa.value.yestday_visit) || []],
+            [...(aaa.value && aaa.value.user_online) || []],
+            
             // [...(aaa.value && aaa.value.yestday_online) || []],
             // [...(aaa.value && aaa.value.yestday_visit) || []]
           ]
@@ -142,7 +109,7 @@ export default defineComponent({
         },
         options: {
           // title: ["今日浏览量", "今日在线", "昨日浏览量", "昨日在线"],
-          title: ["今日浏览量", "昨日浏览量"],
+          title: ["今日浏览量", "昨日浏览量", "用户在线"],
           height: 400
         }
       }
@@ -151,7 +118,7 @@ export default defineComponent({
 
     // 搜索引擎
     const engine: any = computed(() => {
-      let aaa = store.getters['basic/defaultStatistics'].engine || {}
+      let aaa = store.getters['talk/defaultStatistics'].engine || {}
       return {
         data: {
           labels: aaa.labels, //['谷歌', '百度', '搜狗', "360", "必应", "头条"],
@@ -159,14 +126,14 @@ export default defineComponent({
         },
         options: {
           background: "#5ab25e",
-          title: ["今日搜索"],
+          title: ["分布区域"],
           height: 200
         }
       }
     });
 
     const register: any = computed(() => {
-      let aaa = store.getters['basic/defaultStatistics'].week || {}
+      let aaa = store.getters['talk/defaultStatistics'].week || {}
       return {
         data: {
           labels: aaa.label,
@@ -184,7 +151,7 @@ export default defineComponent({
 
     // 七天访问量
         const weekVisit: any = computed(() => {
-      let aaa = store.getters['basic/defaultStatistics'].week || {}
+      let aaa = store.getters['talk/defaultStatistics'].week || {}
       return {
         data: {
           labels: aaa.label,
@@ -200,7 +167,7 @@ export default defineComponent({
           // ]
         },
         options: {
-          title: ["7天浏览量", "7天在线"],
+          title: ["7天浏览量", "在线用户"],
           height: 250
         }
       }
@@ -209,14 +176,14 @@ export default defineComponent({
 
     // 七天IP量
         const weekIp: any = computed(() => {
-      let aaa = store.getters['basic/defaultStatistics'].month || {}
+      let aaa = store.getters['talk/defaultStatistics'].month || {}
       debugger
       return {
         data: {
           labels: aaa.label,
           series: [
             [...(aaa.value && aaa.value.visit) || []],
-            [...(aaa.value && aaa.value.ip) || []]
+            [...(aaa.value && aaa.value.online) || []]
           ]
           // "series": [
           //   [0, 23, 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0],
@@ -226,7 +193,7 @@ export default defineComponent({
           // ]
         },
         options: {
-          title: ["本月浏览量", "本月IP量"],
+          title: ["本月浏览量", "在线用户"],
           height: 250
         }
       }
@@ -234,7 +201,7 @@ export default defineComponent({
     });
 
     function init() {
-      store.dispatch('basic/DefaultStatistics')
+      store.dispatch('talk/DefaultStatistics')
     }
 
     function handleclick() {

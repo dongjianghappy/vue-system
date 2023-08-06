@@ -642,6 +642,32 @@ export const channel = {
 			del: 'b:office:recycle:delete'
 		}
 	},	
+	// 词语
+	words: {
+		status: 'b:words:status',
+		display: 'b:words:display',
+		info: 'b:words:info',
+		tag: 'b:words:tag',
+		cate: {
+			add: 'b:words:cate:add',
+			del: 'b:words:cate:edit',
+			edit: 'b:words:cate:delete'
+		},
+		art: {
+			add: 'b:words:list:add',
+			del: 'b:words:list:delete',
+			edit: 'b:words:list:edit',
+			top: 'b:words:list:top'
+		},
+		comment: {
+			show: 'b:words:comment:show',
+			del: 'b:words:comment:delete'
+		},
+		recycle: {
+			reduction: 'b:words:recycle:reduction',
+			del: 'b:words:recycle:delete'
+		}
+	},		
 }
 
 

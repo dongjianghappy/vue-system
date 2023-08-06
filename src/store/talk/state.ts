@@ -2,7 +2,9 @@ export interface State {
   talk: any;
   collect: any,
   comment: any,
-  praise: any
+  praise: any,
+  searchDefault: any;
+  defaultStatistics: any;
 }
 
 
@@ -13,7 +15,9 @@ const initState: State = {
   },
   collect: [],
   comment: [],
-  praise: []
+  praise: [],
+  searchDefault: {},
+  defaultStatistics: {},
 
 }
 

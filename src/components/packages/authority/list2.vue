@@ -10,24 +10,36 @@
       </div>
     </div>
     <div v-if="type==='manage'" style="display: flex; justify-content: space-between;">
-      <AddPage :data="{id: item.id, ...data}" action="edit" :channel="channel" :render="render"  />
+      <AddPage :data="{id: item.id, ...data}" action="edit" :channel="channel" :render="render" />
       <AddModule :data="{fid: item.id, ...data}" action="add" :index="index" :render="render" />
     </div>
   </div>
-  <div>
+  <div class="form-wrap-box">
     <ul style="padding-left: 30px;">
-      <li class="li mb15" :class="{'extand': item.extand}" v-for="(list, i) in item.list" :key="i" draggable="true" @dragend="handleDragEnd($event, item.list)" @dragstart="handleDragStart($event, list)" @dragenter="handleDragEnter($event, item.list, list)" @dragover.prevent="handleDragOver($event)">
+      <li class="li mt5 mb10" style="padding: 0px 5px 0px 146px;" :class="{'extand': item.extand}" v-for="(list, i) in item.list" :key="i" draggable="true" @dragend="handleDragEnd($event, item.list)" @dragstart="handleDragStart($event, list)" @dragenter="handleDragEnter($event, item.list, list)" @dragover.prevent="handleDragOver($event)">
         <span class="label">
           {{list.name}}
           <i class="iconfont icon-ban cl-red" v-if="list.ban === '1'" />
-          <AddModule :data="{id: list.id, ...data}" action="edit" :index="index" :render="render"  v-if="type==='manage'" />
+          <AddModule :data="{id: list.id, ...data}" action="edit" :index="index" :render="render" v-if="type==='manage'" />
           <span v-if="type==='manage'">
             <i class="iconfont icon-right" v-if="list.is_default === '1'" @click="handleDefault(list)" />
             <i class="iconfont icon-error" v-else @click="handleDefault(list)" />
           </span>
         </span>
-        <v-switch v-if="type==='manage'" :data="{ item: list, field: 'status', ...data }" className="right" :auth="true" />
+        <span class="right">
+        <v-switch v-if="type==='manage'" :data="{ item: list, field: 'status', ...data }" className="right" api="setTalkAuthority" :msg="message" :auth="true" />
         <v-switch v-else :data="{ item: list, field: 'authority', ...data }" :param="{uid: data.uid, field: list.value, channel_id: channel_id}" api="setUserAuthority" :msg="message" className="right" :auth="true" />
+        </span>
+        <span class="right mr15" v-if="type==='manage'">
+          <Grade :data="{id: list.id, name: list.name, grade: list.grade, channel_grade: list.channel_grade}" :coding="data.coding" :render="render" />
+          <span>
+            <span><i class="iconfont icon-dagou" :class="list.grade && list.grade[0].visitors === '1' ? 'cl-green': 'cl-ccc'" /></span>
+            <span><i class="iconfont icon-dagou" :class="list.grade && list.grade[0].ordinary_member === '1' ? 'cl-green': 'cl-ccc'" /></span>
+            <span><i class="iconfont icon-dagou" :class="list.grade && list.grade[0].senior_member === '1' ? 'cl-green': 'cl-ccc'" /></span>
+            <span><i class="iconfont icon-dagou" :class="list.grade && list.grade[0].vip_member === '1' ? 'cl-green': 'cl-ccc'" /></span>
+            <span><i class="iconfont icon-dagou" :class="list.grade && list.grade[0].super_vip_member === '1' ? 'cl-green': 'cl-ccc'" /></span>
+          </span>
+        </span>
       </li>
     </ul>
   </div>
@@ -43,11 +55,13 @@ import {
 } from '@/utils'
 import AddPage from './addPage.vue'
 import AddModule from './addModule.vue'
+import Grade from './grade.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
     AddPage,
-    AddModule
+    AddModule,
+    Grade
   },
   props: {
     data: {

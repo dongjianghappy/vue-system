@@ -1,7 +1,7 @@
 <template>
 <div id="tagInputContainer" class="tagInputContainer pr120" style="position:relative">
   <div class="tag-box" v-for="(item, index) in tags" :key="index" draggable="true" @dragend="handleDragEnd($event, item)" @dragstart="handleDragStart($event, item)" @dragenter="handleDragEnter($event, item)" @dragover.prevent="handleDragOver($event, item)"><span>{{item}}</span> <a class="deltag" href="javascript:;" title="删除" @click="remove(index)" v-if="isEdit">×</a></div>
-  <input v-model="model" v-if="isEdit" @blur="input" type="text" placeholder="请输入标签" style="border:0">
+  <input v-model="model" v-if="isEdit" @blur="input" type="text" placeholder="多个词使用'/'或','隔开" style="border:0">
 </div>
 </template>
 
@@ -72,7 +72,27 @@ export default defineComponent({
 
     function input() {
       if (model.value !== "") {
-        props.tags.push(model.value)
+
+        model.value = model.value.replaceAll(',', '/')
+
+        let words = []
+        if (model.value.indexOf("/") > -1) {
+          words = model.value.split("/")
+        }
+
+        if (words.length > 0) {
+          for (let i = 0; i < words.length; i++) {
+            if (props.tags.indexOf(words[i]) === -1) {
+              props.tags.push(words[i])
+            }
+
+          }
+        } else {
+          if (props.tags.indexOf(model.value) === -1) {
+            props.tags.push(model.value)
+          }
+        }
+
         model.value = ""
         context.emit('update:tags', props.tags)
       }

@@ -46,6 +46,7 @@
         <SourceDetail action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" :auth="auth.checked('edit')" v-if="data.module === 'source'" />
         <DesignDetail action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'design'" />
         <OfficeDetail action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'office'" />
+        <WordsDetail action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'words'" />
         <v-button @click="handleClick(item)" :disabled="auth.checked('edit')" v-else >
           编辑
         </v-button>
@@ -128,6 +129,7 @@ import Graph from '../../../robot/graph/index.vue'
 import SourceDetail from '../../source/components/detail.vue'
 import DesignDetail from '../../design/components/detail.vue'
 import OfficeDetail from '../../office/components/detail.vue'
+import WordsDetail from '../../words/components/detail.vue'
 
 export default defineComponent({
   name: 'v-Search',
@@ -135,7 +137,8 @@ export default defineComponent({
     Graph,
     SourceDetail,
     DesignDetail,
-    OfficeDetail
+    OfficeDetail,
+    WordsDetail
   },
   props: {
     data: {

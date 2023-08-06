@@ -12,6 +12,17 @@ const mutations = {
   setPraise: (state: any, params: any) => {
     state.praise = params || []
   },
+  setSearchDefault: (state: any, params: any) => {
+    const result = [];
+    for(let i=0,len=params.hot.length;i<len;i+=5){
+      result.push(params.hot.slice(i,i+5));
+    }  
+    params.find = result
+    state.searchDefault = params
+  },
+  setDefaultStatistics: (state: any, params: any) => {
+    state.defaultStatistics = params
+  },  
 }
 
 export default mutations

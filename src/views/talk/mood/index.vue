@@ -16,7 +16,8 @@
         </template>
         <div class="clearfix">
           <div class="col-md-1" style="padding: 10px;" v-for="(list, i) in item.list" :key="i">
-            <div class="mood relative" :style="{background: list.color}">{{list.name}} 
+            <div class="mood relative" :style="{background: list.color}">
+              <List :data="{...list}" />
               <span style="position: absolute; bottom: -25px; right: 0px; padding-top: 25px;">
               <Detail1 action="edit" :data="{id: list.id, coding: coding.art }" :render="init" :auth="true" />
               </span>
@@ -43,11 +44,13 @@ import {
 } from 'vuex'
 import Detail from './components/detail.vue'
 import Detail1 from './components/detail1.vue'
+import List from './list/index.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
     Detail,
-    Detail1
+    Detail1,
+    List
   },
   setup(props, context) {
     const {

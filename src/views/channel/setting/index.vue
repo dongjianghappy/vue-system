@@ -7,9 +7,12 @@
     <ul class="form-wrap-box">
       <li class="li clearfix">
         <span class="label">频道名称</span>
-        <div class="col-md-6"><input v-model="detail.name" type="text" placeholder="请输入频道名称" class="input-sm input-full" /></div>
-        <div class="col-md-6 pl25">
-          <input v-model="detail.icon" type="text" placeholder="请输入图标" class="input-sm input-150 mr15" />
+        <div class="col-md-7"><input v-model="detail.name" type="text" placeholder="请输入频道名称" class="input-sm input-full" /></div>
+        <div  class="col-md-1">
+          <v-colorpicker @color="chooseColor" :color="detail.color" attr="fill" />
+        </div>
+        <div class="col-md-4">
+          <input v-model="detail.icon" type="text" placeholder="请输入图标" class="input-sm input-100 mr15" />
           <v-popover content="选择图标" arrow="tb" offset="right" :move="-400" :keys="`static_${index}`">
             <div style="display: flex; flex-wrap: wrap; padding: 16px; width: 400px">
               <span style="width: 20%; padding: 10px 0px;"><i class="iconfont icon-home" style="color: rgb(153, 153, 153);"></i></span>
@@ -123,11 +126,16 @@ export default defineComponent({
       }
     })
 
+    function chooseColor(param: any) {
+      detail.value.color = param.value
+    }
+
     function submit(params: any) {
       const {
         name,
         icon,
         sort,
+        color,
         server,
         status,
         seotitle,
@@ -145,6 +153,7 @@ export default defineComponent({
           name,
           icon,
           sort,
+          color,
           server,
           status,
           seotitle,
@@ -158,6 +167,7 @@ export default defineComponent({
           msg: "编辑成功"
         })
         props.render()
+        isShow.value = false
       })
     }
 
@@ -166,7 +176,8 @@ export default defineComponent({
       detail,
       submit,
       drawer,
-      serverName
+      serverName,
+      chooseColor
     }
   }
 })

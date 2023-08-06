@@ -20,6 +20,7 @@
         name: "功能管理"
       }
     ]' v-model:index="indexsss" :isEmit="true" :extra="false">
+    
       <template v-slot:content1>
         <div class="aside-wrap" style="min-height: 650px">
           <div class="aside-nav p0 pt10" style="width: 80px">
@@ -31,15 +32,28 @@
             </div>
           </div>
           <div class="aside-content">
-            <List v-for="(item, index) in channelList" :key="index" :dataList="item.list" :channel_id="item.grade_id" v-show="currentIndex === index" :channel="channelMenu" :data="data" :type="type" :render="init"></List>
+            <List v-for="(item, index) in channelList" :key="index" :dataList="item" :channel_id="item.grade_id" v-show="currentIndex === index" :channel="channelMenu" :data="data" :type="type" :render="init"></List>
           </div>
         </div>
       </template>
       <template v-slot:content2>
-        <ApplicationList :dataList="applicationList" :data="{...data, coding: 'P0010'}" :type="type" />
+        <!-- <ApplicationList :dataList="applicationList" :data="{...data, coding: 'P0010'}" :type="type" /> -->
+        <div class="aside-wrap" style="min-height: 650px">
+          <div class="aside-nav p0 pt10" style="width: 80px">
+            <!-- 频道列表 -->
+            <div class="aside-list pointer pr0" :class="[{current: currentIndex === index}]" v-for="(item, index) in applicationList" :key="index" @click="handleClick(index)">
+              <i class="iconfont" :class="`icon-${icon}`" v-if="icon" />
+              {{item.name}}
+              <i class="iconfont icon-permissions" v-if="item.grade === '0'" />
+            </div>
+          </div>
+          <div class="aside-content">
+            <List v-for="(item, index) in applicationList" :key="index" :dataList="item" :channel_id="item.grade_id" v-show="currentIndex === index" :channel="channelMenu" :data="data" :type="type" :render="init"></List>
+          </div>
+        </div>
       </template>
       <template v-slot:content3>
-        <ApplicationList :dataList="functionList" :data="{...data, coding: 'P0010',}" :type="type" />
+        <ApplicationList :dataList="functionList" :data="data" :type="type" />
       </template>
     </v-tabs>
   </template>
@@ -131,6 +145,12 @@ export default defineComponent({
             name: item.name
           })
         })
+        res.result.application.map((item: any) => {
+          channelMenu.value.push({
+            value: item.id,
+            name: item.name
+          })
+        })        
       })
     }
 

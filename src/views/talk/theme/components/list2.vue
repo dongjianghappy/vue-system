@@ -10,7 +10,7 @@
   <div class="module-content p15">
     <div class="col-md-2 p10" v-for="(item, index) in dataList" :key="index">
       <div class="p10" style="border: 1px solid #f0f0f0;">
-        <div><img @click="handleClick(item)" :src="item.file" style="width: 100%; height: 145px"></div>
+        <div><img @click="handleClick(item)" :src="item.image" style="width: 100%; height: 145px"></div>
         <div class="ptb15">{{item.name}}
         <Detail action="edit" :data="{id: item.id, ...data}" :param="param" :render="render" />
         </div>

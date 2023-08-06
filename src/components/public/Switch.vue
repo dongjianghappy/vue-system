@@ -68,9 +68,11 @@ export default defineComponent({
           coding,
           id: item.id,
           status: field,
+          value: item[field] == '1' ? '0' : '1',
           ...props.param
         }
       }).then(res => {
+        debugger
         if (res.result.type) {
           item[res.result.type] = res.result.value
           context.emit('toggle', {

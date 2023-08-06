@@ -20,6 +20,7 @@ export interface State {
   video: any;
   design: any;
   office: any;
+  words: any;
 }
 
 
@@ -131,6 +132,12 @@ const initState: State = {
     returnList: {},
   },
   office: {
+    cateList: [],
+    articleList: {},
+    auditList: {},
+    returnList: {},
+  },
+  words: {
     cateList: [],
     articleList: {},
     auditList: {},

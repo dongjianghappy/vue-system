@@ -24,7 +24,7 @@
       </li>
     </ul>
     <div class="edit-article">
-      <Editor v-model:contentsss="detail.content" />
+      <v-editor v-model:contentsss="detail.content" />
     </div>
   </template>
 </v-drawer>
@@ -39,11 +39,11 @@ import {
 import {
   ANNOUNCEMENT_TYPE,
 } from '@/assets/enum'
-import Editor from '@/components/packages/editor/index.vue'
+// import Editor from '@/components/packages/editor/index.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    Editor
+    // Editor
   },
   props: {
     action: {
