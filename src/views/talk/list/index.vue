@@ -58,7 +58,7 @@ export default defineComponent({
 
       const params: any = {
         page: 1,
-        pagesize: 10
+        pagesize: 25
       }
 
       Object.assign(params, param)

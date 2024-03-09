@@ -1,6 +1,6 @@
 <template>
-<i class="iconfont icon-right font18" v-if="data.item[data.field] === '1'" @click.stop="handleclick(data.item)" />
-<i class="iconfont icon-error font18" v-else @click.stop="handleclick(data.item)" />
+<i class="iconfont m0" :class="`icon-${icon[0]}`" :style="`color: ${color[0]}`" v-if="data.item[data.field] === '1'" @click.stop="handleclick(data.item)" />
+<i class="iconfont m0" :class="`icon-${icon[1]}`" :style="`color: ${color[1]}`" v-else @click.stop="handleclick(data.item)" />
 </template>
 
 <script lang="ts">
@@ -12,6 +12,14 @@ import {
 export default defineComponent({
   name: 'v-Switch',
   props: {
+    icon: {
+      type: Array,
+      default: ['right', 'error']
+    },
+    color: {
+      type: Array,
+      default: ['#8cd52e', '#f00']
+    },
     data: {
       type: Object,
       default: () => {

@@ -199,10 +199,16 @@ export default defineComponent({
     }
 
     function handleScale(scale: any){
-      if(pic.value.width*scale < props.image.width){
-        return 
+      if(pic.value.width == props.image.width && scale == "0.5"){
+        pic.value.width = props.image.width*0.75
+      }else if(pic.value.width < props.image.width && scale == "2"){
+        pic.value.width = props.image.width
+      }else{
+        if(pic.value.width*scale < props.image.width){
+          return 
+        }
+        pic.value.width = pic.value.width*scale
       }
-       pic.value.width = pic.value.width*scale
     }
 
     return {

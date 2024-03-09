@@ -34,6 +34,9 @@
             <v-avatar :data="item" :condition="{tag: item.role !== '0', value: '员'}"></v-avatar>
             <div class="pl5" style="flex: 1; height: 32px; line-height: 32px; display: inline-block;">
               {{item.nickname}}
+              <span>
+                <i class="iconfont icon-spread" :class="item.active === '1' ? 'cl-5bc0de' : ''" @click="handleClick(item)" />
+              </span>
             </div>
           </td>
           <td>
@@ -173,6 +176,17 @@ export default defineComponent({
       })
     }
 
+    function handleClick(param: any){
+      store.dispatch('common/Fetch', {
+        api: "activeUser",
+        data: {
+          uid: param.account
+        }
+      }).then((res: any) => {
+        props.render()
+      })
+    }
+
     return {
       checkedList,
       dataList,
@@ -181,7 +195,8 @@ export default defineComponent({
       gradeEnum,
       view,
       handleShow,
-      changeMonth
+      changeMonth,
+      handleClick
     }
   }
 })

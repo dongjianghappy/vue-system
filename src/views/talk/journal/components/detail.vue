@@ -1,49 +1,54 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "发布公告通知"}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增模板"}}
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑公告通知' : '发布公告通知' " :data="data" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑模板' : '新增模板' " :style="{width: '450'}" :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
-    <ul class="form-wrap-box">
-      <li class="li">
-        <span class="label">公共通知</span>
-        <input v-model="detail.title" type="text" placeholder="请输入公共通知" class="input-sm input-full" />
-      </li>
-      <li class="li">
-        <span class="label">顺序</span>
-        <input v-model="detail.sort" type="text" placeholder="请输入顺序" class="input-sm input-150" />
-      </li>
-      <li class="li">
-        <span class="label">显示</span>
-        <v-radio label="是" name="status" value="1" v-model:checked="detail.status" />
-        <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
-      </li>
-      <li class="li">
-        <span class="label">类型</span>
-        <v-select :enums="sourceType" v-model:value="detail.type" :defaultValue="detail.type = detail.type ? detail.type : '1'" />
-      </li>
-    </ul>
-    <div class="edit-article">
-      <v-editor v-model:contentsss="detail.content" />
-    </div>
+        <ul class="form-wrap-box">
+          <li class="li">
+            <span class="label">模板名称</span>
+            <div style="display: flex">
+              <div style="flex: 1">
+                <input v-model="detail.name" type="text" placeholder="请输入模板名称" class="input-sm input-full" :style="[detail.style]" />
+              </div>
+            </div>
+          </li>
+          <li class="li">
+            <span class="label">显示</span>
+            <v-radio label="是" name="status" value="1" v-model:checked="detail.status" />
+            <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
+          </li>
+          <li class="li">
+            <span class="label">背景</span>
+            <input v-model="detail.background" type="text" placeholder="请输入模板背景" class="input-sm input-full" :style="[detail.style]" />
+          </li>
+          <li class="li" style="overflow: auto;">
+            <span class="label">图片</span>
+            <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding:coding}" :dataList="detail.img || []" uploadtype="template" @imgList="image" :style="'width: 135px'" />
+          </li>
+          <li class="li">
+            <span class="label">描述</span>
+            <textarea placeholder="请输入描述" v-model="detail.description" class="w-full"></textarea>
+          </li>
+        </ul>
   </template>
 </v-drawer>
 </template>
 
 <script lang="ts">
 import {
+  marked
+} from 'marked';
+import {
   defineComponent,
   ref,
   watch,
+  useStore
 } from '@/utils'
-import {
-  ANNOUNCEMENT_TYPE,
-} from '@/assets/enum'
-// import Editor from '@/components/packages/editor/index.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    // Editor
+    
   },
   props: {
     action: {
@@ -68,10 +73,13 @@ export default defineComponent({
     }
   },
   setup(props, context) {
+    const store = useStore();
     const isShow: any = ref(false)
-    const sourceType: any = ANNOUNCEMENT_TYPE
     const drawer: any = ref(null)
+    const upload: any = ref(null);
     const detail: any = ref({})
+    const img = ref("")
+
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
@@ -79,11 +87,53 @@ export default defineComponent({
       }
     })
 
+// 监听图片上传
+    function image(a: any) {
+      debugger
+      img.value = a
+    }    
+
+
+    function submit(params: any) {
+      const {
+        id,
+        name,
+        	background,
+        description,
+        status
+      } = detail.value
+      const param: any = {
+name,
+img: img.value,
+        	background,
+        description,
+        status        
+        
+      }
+      if (props.action === 'edit') {
+        param.id = id
+      }
+
+      store.dispatch('common/Fetch', {
+        api: props.action !== 'add' ? 'update' : 'insert',
+        data: {
+          coding: props.data.coding,
+          ...param,
+        }
+      }).then(() => {
+        debugger
+        props.render()
+        isShow.value = false
+      })
+    }
+
     return {
       isShow,
-      sourceType,
+      upload,
       detail,
-      drawer
+      drawer,
+      image,
+      submit
     }
   }
 })

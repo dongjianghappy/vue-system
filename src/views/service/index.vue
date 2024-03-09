@@ -1,15 +1,15 @@
 <template>
 <div class="module-wrap">
   <div class="module-head">
-    <v-optionsbar title="站点信息">
+    <v-optionsbar title="联系信息">
       <template v-slot:extraright>
         <Detail :data="{ coding }" :render="init" />
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <v-basicinfo v-model:data="dataList.baisc" :edit="edit" title="基本信息" />
-    <v-basicinfo v-model:data="dataList.custom" :isDelete="true" :edit="edit" title="自定义管理" />
+    <v-basicinfo v-model:dataList="dataList.baisc" :edit="edit" title="基本信息" />
+    <v-basicinfo v-model:dataList="dataList.custom" :edit="edit" title="自定义管理" :isDelete="true" :render="init" :data="{coding: coding}" :auth="true" />
   </div>
 </div>
 </template>
@@ -19,8 +19,9 @@ import {
   defineComponent,
   getCurrentInstance,
   onMounted,
-  computed
-} from 'vue'
+  computed,
+  codings
+} from '@/utils'
 import {
   useStore
 } from 'vuex'
@@ -40,9 +41,9 @@ export default defineComponent({
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
-    const coding = "Q0002"
+    const coding = codings.service.contact
     const dataList = computed(() => {
-      const list = store.getters['website/webinfo']
+      const list = store.getters['website/contact']
       const baisc = list.filter(
         (item: any) => item.isdelete === '1' && item.name !== 'logo'
       )
@@ -58,7 +59,7 @@ export default defineComponent({
     });
 
     function init() {
-      store.dispatch('website/BasicInfo', {
+      store.dispatch('website/BasicContact', {
         coding
       })
     }
@@ -76,7 +77,6 @@ export default defineComponent({
           ...data
         }
       }).then(res => {
-        alert("fffdd")
         proxy.$hlj.message({
           msg: "编辑成功"
         })
@@ -88,8 +88,8 @@ export default defineComponent({
     return {
       coding,
       dataList,
-      edit
-
+      edit,
+      init
     }
   }
 })

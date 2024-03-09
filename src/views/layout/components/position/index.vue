@@ -1,7 +1,9 @@
 <template>
-<div class="position-wrap">
-  <div class="position-dir pl15"><span>首页</span></div>
-  <ul class="position-nav align_center">
+<div class="position-wrap p0">
+  <div class="position-dir pl20" style="display: block; width: 763px;">
+    <div><v-scrolltext :dataList="messageList" /></div>
+  </div>
+  <ul class="position-nav align_center" style="padding: 12px;">
     <li class="ant-col ant-col-2 pointer"><i class="iconfont icon-more font18" @click="handleRouter('appstore', 'setting')"></i></li>
     <li class="ant-col ant-col-2">
       <SystemSetting :auth="true" :data={coding} />
@@ -45,7 +47,9 @@ import {
   defineComponent,
   computed,
   useStore,
-  codings
+  codings,
+  onMounted,
+  ref
 } from '@/utils'
 import SystemSetting from '@/components/packages/setting/systemSetting.vue'
 
@@ -69,6 +73,7 @@ export default defineComponent({
     const store = useStore();
     const coding: any = codings
     const module: any = MODUDLE
+    const messageList: any = ref([])
     const channel = computed(() => store.getters['user/channel']);
     const setting = computed(() => store.getters['user/setting']);
 
@@ -86,6 +91,15 @@ export default defineComponent({
       })
     }
 
+    function init() {
+      store.dispatch('common/Fetch', {
+        api: "scrollMessage"
+      }).then(res => {
+        debugger 
+        messageList.value = res.result
+      })
+    }
+
     function hover(item: any) {
       item.hover = true
     }
@@ -93,6 +107,10 @@ export default defineComponent({
     function leave(item: any) {
       item.hover = false
     }
+
+    onMounted(() => {
+      init()
+    })
 
     return {
       coding,
@@ -103,6 +121,7 @@ export default defineComponent({
       handleRouterss,
       hover,
       leave,
+      messageList
     }
   }
 })

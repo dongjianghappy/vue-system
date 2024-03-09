@@ -8,7 +8,7 @@
     <td class="col-md-2">区域</td>
   </tr>
   <tr v-for="(item, index) in dataList.list" :key="index">
-    <td>{{item.times}}</td>
+    <td>{{item.datetime}}</td>
     <td>
       <div style="word-break: break-all;">
         <span v-if="isWebsite">

@@ -2,12 +2,20 @@
 <v-button v-model:show="isShow">
   <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增选项"}}
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑选项' : '新增选项'" :data="data" :style="{width: '520', height: '400'}" @submit="submit">
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑选项' : '新增选项'" :data="data" :style="{width: '520', height: '600'}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">策略名称</span>
         <input v-model="detail.name" type="text" placeholder="请输入策略名称" class="input-sm input-full" />
+      </li>
+      <li class="li">
+        <span class="label">图标</span>
+        <input v-model="detail.icon" type="text" placeholder="请输入图标" class="input-sm input-100" />
+      </li>
+      <li class="li">
+        <span class="label">字段</span>
+        <input v-model="detail.value" type="text" placeholder="请输入字段" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">周期</span>
@@ -16,6 +24,10 @@
       <li class="li">
         <span class="label">积分</span>
         <input v-model="detail.integration" type="text" placeholder="请输入积分" class="input-sm input-full" />
+      </li>
+      <li class="li">
+        <span class="label">表达式</span>
+        <textarea v-model="detail.expression" placeholder="请输入表达式" class="w-full"></textarea>
       </li>
       <li class="li">
         <span class="label">积分说明</span>
@@ -72,15 +84,21 @@ export default defineComponent({
       const {
         id,
         name,
+        icon,
+        value,
         cycle,
         integration,
+        expression,
         explanation
       } = detail.value
 
       const param: any = {
         name,
+        icon,
+        value,
         cycle,
         integration,
+        expression,
         explanation,
         coding: props.data.coding
       }

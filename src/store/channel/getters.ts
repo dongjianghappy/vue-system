@@ -25,6 +25,7 @@ const getters = {
   design: (state: any) => state.design || {},
   office: (state: any) => state.office || {},
   words: (state: any) => state.words || {},
+  sound: (state: any) => state.sound || {},
 }
 
 export default getters;

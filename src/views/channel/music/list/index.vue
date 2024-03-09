@@ -48,9 +48,10 @@
         </td>
         <td>
           {{item.title}}
-          <span v-if="item.score.image">
+          <!-- <span v-if="item.score.image">
             <v-thumbnail :data="item" :coding="coding.score" icon="img" :hasInfo="false" />
-          </span>
+          </span> -->
+          <span class="ml5" title="设置背景音乐"><v-status :data="{ item, field: 'background_music', coding: coding.art }" :icon="['background-music-1', 'background-music-2']" :color="['#f00', '#ccc']" /></span>
           <!-- <span v-if="item.lrc_id !== 0">
             <v-thumbnail :data="item" :coding="coding.score" icon="img" :hasInfo="false" />
           </span> -->
@@ -130,7 +131,6 @@ export default defineComponent({
       store.dispatch('channel/musicListAction', {
         data: {
           coding: coding.art,
-          kind: 'music',
           ...params
         }
       })

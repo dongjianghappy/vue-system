@@ -1,17 +1,20 @@
 <template>
 <div class="module-wrap nobg">
-  <v-tabs :tabs="tabsTalkTheme" type="vertical">
+  <v-tabs :tabs="tabsTalkTheme" :className="{'con': 'tabs-content'}" type="vertical">
     <template v-slot:content1>
-      <List :render="init" :data="{coding: coding.theme}" :type='tabsIndex' :dataList="dataList" />
+      <Theme :render="init" :data="{coding: coding.theme}" :type='tabsIndex' :dataList="dataList" />
     </template>
     <template v-slot:content2>
-      <List :render="init" :data="{coding: coding.effects}" :type='tabsIndex' :dataList="dataList" />
+      <Effects :render="init" :data="{coding: coding.effects}" :type='tabsIndex' :dataList="dataList" />
     </template>
     <template v-slot:content3>
-      <List2 :render="init" :data="{coding: coding.pendant}" :type='tabsIndex' :dataList="dataList" />
+      <Background :render="init" :data="{coding: coding.theme_background}" :type='tabsIndex' :dataList="dataList" />
     </template>
     <template v-slot:content4>
-      <CursorList :render="init" :data="{coding: coding.cursor}" :type='tabsIndex' :dataList="dataList" />
+      <Pendant :render="init" :data="{coding: coding.pendant}" :type='tabsIndex' :dataList="dataList" />
+    </template>
+    <template v-slot:content5>
+      <Cursor :render="init" :data="{coding: coding.cursor}" :type='tabsIndex' :dataList="dataList" />
     </template>    
   </v-tabs>
 </div>
@@ -31,17 +34,21 @@ import {
 import {
   tabsTalkTheme
 } from '@/assets/const'
-import List from './components/list.vue'
-import List2 from './components/list2.vue'
-import CursorList from './components/cursorList.vue'
+import Theme from './theme/index.vue'
+import Effects from './effects/index.vue'
+import Background from './background/index.vue'
+import Pendant from './pendant/index.vue'
+import Cursor from './cursor/index.vue'
 
 
 export default defineComponent({
   name: 'IndexView',
   components: {
-    List,
-    List2,
-    CursorList
+    Theme,
+    Effects,
+    Background,
+    Pendant,
+    Cursor
   },
   setup(props, context) {
     const {
@@ -62,13 +69,17 @@ export default defineComponent({
     })
 
     // 初始化
-    function init() {
+    function init(param: any = {}) {
+      debugger
       let code = coding.theme
       if (tabsIndex.value === '1') {
         code = coding.effects
       } else if (tabsIndex.value === '2') {
-        code = coding.pendant
+        code = coding.theme_background
       } else if (tabsIndex.value === '3') {
+        code = coding.pendant
+      }
+       else if (tabsIndex.value === '4') {
         code = coding.cursor
       }
       
@@ -76,7 +87,8 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
         api: 'theme',
         data: {
-          coding: code
+          coding: code,
+          ...param
         }
       }).then(res => {
         dataList.value = res.result
@@ -95,3 +107,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="less">
+.tabs-content{
+  background: none !important;
+}
+</style>

@@ -5,8 +5,11 @@
       <List :render="init" :data="{coding: coding.sign}" :type='tabsIndex' :dataList="dataList" />
     </template>
     <template v-slot:content2>
-      <CursorList :render="init" :data="{coding: coding.sign_love}" :type='tabsIndex' :dataList="dataList" />
+      <CursorList :type='tabsIndex' />
     </template>    
+    <template v-slot:content3>
+      <ContentList :type='tabsIndex' />
+    </template>   
   </v-tabs>
 </div>
 </template>
@@ -27,13 +30,15 @@ import {
 } from '@/assets/const'
 import List from './components/list.vue'
 import CursorList from './components/cursorList.vue'
+import ContentList from './components/contentList.vue'
 
 
 export default defineComponent({
   name: 'IndexView',
   components: {
     List,
-    CursorList
+    CursorList,
+    ContentList
   },
   setup(props, context) {
     const {

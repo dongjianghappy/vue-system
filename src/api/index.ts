@@ -128,6 +128,10 @@ const api:any =  {
   push(params: any) {
     return http.request('user', 'push', 'post', params)
   },
+  // 活跃用户
+  activeUser(params: any) {
+    return http.request('user', 'activeUser', 'post', params)
+  },
   // 用户权限
   userGrade(params: any) {
     return http.request('vue_user', 'userGrade', 'post', params)
@@ -754,7 +758,36 @@ close (params: any) {
   setAuthority (params: any) {
     return http.request('vue', 'setAuthority', 'post', params)
   } ,  
+  // 滚动消息
+  scrollMessage (params: any) {
+    return http.request('vue', 'scrollMessage', 'post', params)
+  } ,  
+  // 查询设置
+  selectSetting (params: any) {
+    return http.request('vue', 'selectSetting', 'post', params)
+  },
+  ChooseTheme (params: any) {
+    return http.request('common', 'chooseTheme', 'post', params)
+  } , 
 
+  insertBackground (params: any) {
+    return http.request('vue', 'insertBackground', 'post', params)
+  } , 
+  updateBackground (params: any) {
+    return http.request('vue', 'updateBackground', 'post', params)
+  } , 
+  emoticonsList (params: any) {
+    return http.request('vue', 'emoticonsList', 'post', params)
+  } , 
+  getEmoticons (params: any) {
+    return http.request('vue', 'getEmoticons', 'post', params)
+  } , 
+  // 导入表情
+  importEmoticons (params: any) {
+    return http.request('vue', 'importEmoticons', 'post', params)
+  } ,   
+  
+  
 }
 
 export default api

@@ -32,7 +32,7 @@
       </div>
       <div class="p10" style=" overflow: auto;">
         <div class="col-md-3">
-          <SpaceModal>
+          <SpaceModal v-model:image="item.image">
             <img :src="item.image" width="265" height="105">
           </SpaceModal>
         </div>

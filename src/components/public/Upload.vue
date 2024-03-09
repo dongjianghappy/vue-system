@@ -19,7 +19,7 @@
       <li class="upfile" :style="style" @click="handleclick"><i class="iconfont icon-add"></i></li>
     </ul>
     <!-- 音视频上传 -->
-    <div class="inline" v-else-if="file === 'music'">
+    <div class="inline" v-else-if="file === 'music' || file === 'vidoe'">
       <div class="add-button-file"><i class="iconfont icon-upload-file font32" /></div>
       <div>拖拽{{file === 'music' ? '音频' : '视频'}}到此处或点击上传</div>
       <button class="btn btn-default w-full" @click="handleclick">上传{{file === 'music' ? '音频' : '视频'}}</button>

@@ -37,6 +37,8 @@ import SourcePsdList from '../views/channel/source/image.vue'
 import DesignList from '../views/channel/design/index.vue'
 import Album from '../views/channel/picture/album.vue'
 import WordsList from '../views/channel/words/index.vue'
+import Digital from '../views/channel/digital/index.vue'
+
 
 
 
@@ -73,11 +75,15 @@ import UserRole from '../views/user/role/index.vue'
 import RoleGrade from '../views/user/role/grade.vue'
 import UserGroup from '../views/user/group/index.vue'
 import UserSign from '../views/user/sign/index.vue'
+import UserGoldcoin from '../views/user/goldcoin/index.vue'
+import UserMedal from '../views/user/medal/index.vue'
 import UserAudit from '../views/user/audit/index.vue'
 import UserBanuser from '../views/user/banuser/index.vue'
 import UserRecommend from '../views/user/recommend/index.vue'
 import UserSecurity from '../views/user/security/index.vue'
 import UserSetting from '../views/user/setting.vue'
+import UserVerified from '../views/user/verified/index.vue'
+
 
 // 个人信息
 import Personal from '../views/personal/components/main/index.vue'
@@ -118,6 +124,8 @@ import Service from '../views/service/index.vue'
 import MessageBoard from '../views/service/messageBoard/index.vue'
 import Feedback from '../views/service/feedback/index.vue'
 import Announcement from '../views/service/announcement/index.vue'
+import History from '../views/service/history/index.vue'
+
 // import Email from '../views/email'
 import Job from '../views/service/job/index.vue'
 import Resume from '../views/service/job/resum/index.vue'
@@ -178,6 +186,7 @@ import TalkJournal from '../views/talk/journal/index.vue'
 import TalkTheme from '../views/talk/theme/index.vue'
 import Mood from '../views/talk/mood/index.vue'
 import TalkSign from '../views/talk/sign/index.vue'
+import TalkSchedule from '../views/talk/schedule/index.vue'
 import Group from '../views/talk/group/index.vue'
 import Bookmark from '../views/talk/bookmark/index.vue'
 import Blog from '../views/talk/blog/index.vue'
@@ -185,6 +194,7 @@ import TalkStatistics from '../views/talk/statistics/index.vue'
 // import TalkVisit from '../views/talk/statistics/visit/index.vue'
 // import TalkIp from '../views/talk/statistics/ip/index.vue'
 import TalkSearch from '../views/talk/search/index.vue'
+import Expression from '../views/talk/expression/index.vue'
 
 
 const arrss: any = {
@@ -230,6 +240,7 @@ const arrss: any = {
   DesignList,
   Album,
   WordsList,
+  Digital,
   VideoList,
   
   Slideshow,
@@ -253,6 +264,8 @@ const arrss: any = {
   RoleGrade,
   UserGroup,
   UserSign,
+  UserGoldcoin,
+  UserMedal,
   UserAudit,
   UserBanuser,
   UserRecommend,
@@ -261,6 +274,7 @@ const arrss: any = {
   TalkTheme,
   Mood,
   TalkSign,
+  TalkSchedule,
   Group,
   Bookmark,
   Blog,
@@ -268,8 +282,10 @@ const arrss: any = {
   // TalkVisit,
   // TalkIp,
   TalkSearch,
+  Expression,
   SearchUser,
   UserSetting,
+  UserVerified,
   Personal,
   PersonalDefault,
   PersonalBasic,
@@ -293,6 +309,7 @@ const arrss: any = {
   MessageBoard,
   Feedback,
   Announcement,
+  History,
 //   Email,
   Job,
   Resume,

@@ -22,8 +22,13 @@ export default defineComponent({
     checked: {
       type: Array,
       default: []
-    }
+    },
+    isEmit: {
+      type: Boolean,
+      default: false
+    },
   },
+  emits: ['save'],
   setup(props, context) {
     function handleclick(id: any) {
       if (props.checked.indexOf(id) > -1) {
@@ -31,6 +36,9 @@ export default defineComponent({
         props.checked.splice(index, 1)
       } else {
         props.checked.push(id)
+      }
+      if (props.isEmit === true) {
+        context.emit('save', props.checked)
       }
     }
     return {

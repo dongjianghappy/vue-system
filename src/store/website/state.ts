@@ -1,10 +1,12 @@
 export interface State {
   webinfo: any; 
+  contact: any; 
 }
 
 
 const initState: State = {
-  webinfo: []
+  webinfo: [],
+  contact: []
 }
 
 export default initState;

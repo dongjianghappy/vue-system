@@ -8,6 +8,13 @@ const actions = {
     })
     context.commit("setWebinfo" , result.result);
     return result.result
+  },
+  BasicContact: async (context: { commit: Commit; state: any}, params: any = {}) => {
+    const { result }:any = await api.basicInfo({
+      ...params 
+    })
+    context.commit("setContact" , result.result);
+    return result.result
   }
 }
 

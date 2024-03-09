@@ -2,6 +2,12 @@
 <div class="module-wrap">
   <div class="module-head">
     <v-optionsbar title="日志管理">
+      <template v-slot:extraright>
+        <v-space>
+          <Stationery :data="{ coding }" :render="init" :auth="auth.checked('add')" />
+          <Template :data="{ coding }" :render="init" :auth="auth.checked('add')" />          
+        </v-space>
+      </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
@@ -53,12 +59,14 @@ import {
 import {
   useStore
 } from 'vuex'
-import Detail from './components/detail.vue'
+import Template from './components/template.vue'
+import Stationery from './stationery/index.vue'
 // import Editor from '@/components/packages/editor/index.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    Detail,
+    Template,
+    Stationery
     // Editor
   },
   setup(props, context) {

@@ -4,12 +4,12 @@
     <div v-if="title" class="aside-list align_center" style="border-bottom: 1px solid #eee; height: 63px; line-height: 63px;">
       <h3>{{title}}</h3>
     </div>
-    <div class="aside-list pointer" :class="[{plr15: title}, {current: currentIndex === index}]" v-for="(item, index) in tabs" :key="index" @click="handleClick(index)">
+    <div class="aside-list pointer" :class="[{plr15: title}, {current: currentIndex === index}]" v-for="(item, index) in tabs" :key="index" @click="handleClick(item, index)">
       <i class="iconfont" :class="`icon-${icon}`" v-if="icon" />
       {{item.name}}
     </div>
   </div>
-  <div class="aside-content">
+  <div class="aside-content" :class="className.con">
     <div v-if="currentIndex === 0">
       <slot name="content1"></slot>
     </div>
@@ -41,7 +41,7 @@
 </div>
 <div class="tabs" v-else>
   <div class="nav-tabs" :class="className.nav">
-    <div class="tabs-list pointer" :class="[{current: currentIndex === index}]" v-for="(item, index) in tabs" :key="index" @click="handleClick(index)">{{item.name}}</div>
+    <div class="tabs-list pointer" :class="[{current: currentIndex === index}]" v-for="(item, index) in tabs" :key="index" @click="handleClick(item, index)">{{item.name}}</div>
     <div v-if="extra" class="pr15" style="flex: 1; text-align: right;">
       <slot name="extra"></slot>
     </div>
@@ -124,15 +124,16 @@ export default defineComponent({
       default: true
     },
   },
-  emits: ['update:index'],
+  emits: ['update:index', 'update:value'],
   setup(props, context) {
     const router = useRouter();
     let currentIndex = ref(0)
 
-    function handleClick(index: any) {
+    function handleClick(param: any, index: any) {
       if (props.isEmit === true) {
         currentIndex.value = index
         context.emit('update:index', index)
+        context.emit('update:value', param.value)
       } else {
         if (props.method === 'click') {
           currentIndex.value = index

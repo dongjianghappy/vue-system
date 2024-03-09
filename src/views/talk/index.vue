@@ -58,6 +58,11 @@
               <UserSetting :auth="true" :data="{coding: coding.user}" />
             </span>
           </li>
+          <li class="li mb10"><span class="label">查询设置</span>
+            <span class="right">
+              <HighQualityUser :auth="true" :data="{coding: coding.user}" />
+            </span>
+          </li>
         </ul>
       </div>
     </div>
@@ -80,11 +85,13 @@ import {
   ChartLine
 } from '@/components/packages/chart/index'
 import UserSetting from '@/components/packages/setting/userSetting.vue'
+import HighQualityUser from '@/components/packages/setting/highQualityUser.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
     ChartLine,
-    UserSetting
+    UserSetting,
+    HighQualityUser
   },
   props: {
     style: {

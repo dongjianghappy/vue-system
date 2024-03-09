@@ -44,6 +44,11 @@
         <v-radio label="单投" name="choose" value="1" v-model:checked="detail.choose" />
         <v-radio label="多投" name="choose" value="0" v-model:checked="detail.choose" />
       </li>
+      <li class="li">
+        <span class="label">图表类型</span>
+        <v-radio label="条形图" name="chart" value="1" v-model:checked="detail.chart" />
+        <v-radio label="柱状图" name="chart" value="0" v-model:checked="detail.chart" />
+      </li>
       <li class="li" style="background: #f8f8fa">
         <span>选项列表</span>
         <span class="ml25" @click="clickAdd"><i class="iconfont icon-anonymous-iconfont" style="font-size: 18px !important"></i></span>
@@ -55,7 +60,13 @@
           <div class="col-md-11">
             <div style="display: flex;">
               <div style="background: rgb(255, 255, 255); margin-right: 5px; border: 1px solid rgb(217, 217, 217); width: 40px; height: 40px;"></div>
-              <div style="flex: 1 1 0%;"><input placeholder="请输入选项名称" type="text" class="ant-input" v-model="item.votetitle" style="width: 90%; height: 40px;">
+              <div class="mr5 relative" style=" width: 80px; height: 40px;">
+                <v-colorpicker @color="(e) => item.color = e.value" :color="item.color" attr="fill" />
+                <!-- <input v-model="item.color" type="text" placeholder="颜色" class="input-sm" style="width: 100%; height: 40px;" /> -->
+              </div>
+              <div style="flex: 1">
+                <input placeholder="请输入选项名称" type="text" class="ant-input" v-model="item.votetitle" style="width: 30%; height: 40px;">
+                <input placeholder="请输入选项描述" type="text" class="ant-input" v-model="item.description" style="width: 55%; height: 40px;">
                 <span style="margin-left: 10px;">
                   <i class="iconfont icon-recycle" @click="clickRemove(index)"></i>
                 </span>
@@ -122,6 +133,7 @@ export default defineComponent({
         status: '',
         vote: '',
         votetitle: '',
+        description: ''
       })
     }
 
@@ -147,13 +159,16 @@ export default defineComponent({
         content,
         votetitle,
         choose,
+        chart,
       } = detail.value
 
       let listData: any = []
       List.value.map((item: any) => {
         listData.push({
           id: item.id,
-          votetitle: item.votetitle
+          votetitle: item.votetitle,
+          color: item.color,
+          description: item.description
         })
       })
 
@@ -166,6 +181,7 @@ export default defineComponent({
         content,
         votetitle,
         choose,
+        chart,
         list: JSON.stringify(listData)
       }
       if (props.action === "edit") {

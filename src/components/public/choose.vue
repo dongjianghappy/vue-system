@@ -18,7 +18,7 @@
             </label>
           </td>
           <td>
-            {{item.name || item.title}}
+            {{item.name || item.title || item.content}}
           </td>
         </tr>
       </template>

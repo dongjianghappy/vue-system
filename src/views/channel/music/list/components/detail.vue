@@ -6,9 +6,8 @@
   <template v-slot:content v-if="isShow">
     <audio ref="show_video" :src="fileInfo.fileUrl || detail.file" type="video/mp4">
     </audio>
-    {{data.coding}}
     <div class="pt50" style="text-align: center;" v-show="action === 'add' && !file">
-      <v-upload ref="upload" @imgList="image" v-model:haschoose="file" :show="false" file="music" v-model:file="fileInfo" uploadtype="music" format=".mp3, .wav" />
+      <v-upload ref="upload" @imgList="image" v-model:haschoose="file" :show="false" file="music" v-model:file="fileInfo" :uploadtype="kind === 'music' ? 'music' : 'sound'" format=".mp3, .wav" />
     </div>
     <div v-if="action === 'edit' || file">
      
@@ -40,24 +39,23 @@
           <v-tag v-model:tags="detail.tag" />
         </li>
         <li class="li">
-          <span class="label">所属风格</span>
+          <span class="label">{{kind === 'music' ? '所属风格' : '所属分类'}}</span>
           {{detail.parent}}
-          <v-category name="选择风格" :data="{item: detail, coding: coding.cate}" :isMore="true" type="text"></v-category>
-
+          <v-category :name="kind === 'music' ? '所属风格' : '所属分类'" :data="{item: detail, coding: data.coding.cate}" :isMore="true" type="text"></v-category>
         </li>
-        <li class="li" v-if="detail.kind === 'music'">
+        <li class="li" v-if="kind === 'music'">
           <span class="label">语种</span>
           <v-radiobutton name="language" v-model:checked="detail.language" :enums="[{label: '华语', value: 'chinese'}, {label: '粤语', value: 'guangdong'},{label: '欧美', value: 'english'}, {label: '日语', value: 'Japanese'},{label: '韩语', value: 'korea'}, {label: '其他', value: 'other'}]" />
         </li>    
-        <li class="li" v-if="detail.kind === 'music'">
+        <li class="li" v-if="kind === 'music'">
           <span class="label">乐器</span>
           <v-radiobutton name="musical_instrument" v-model:checked="detail.musical_instrument" :enums="[{label: '吉他', value: '0'}, {label: '架子鼓', value: '1'}, {label: '钢琴', value: '2'}]" />
         </li>       
-        <li class="li">
+        <!-- <li class="li">
           <span class="label">类型</span>
-          <v-radiobutton name="kind" v-model:checked="detail.kind" :enums="[{label: '歌曲', value: 'music'}, {label: '音效', value: 'effects'}]" />
-        </li>
-        <li style="padding-left: 100px" v-if="detail.kind === 'music'">
+          <v-radiobutton name="kind" v-model:checked="kind" :enums="[{label: '歌曲', value: 'music'}, {label: '音效', value: 'effects'}]" />
+        </li> -->
+        <li style="padding-left: 100px" v-if="kind === 'music'">
           <ul class="plr15" style="background: #f8f8fa;">
             <li class="li">
               <span class="label">歌手</span>
@@ -121,6 +119,10 @@ export default defineComponent({
       default: () => {
         return {}
       }
+    },
+    kind: {
+      type: String,
+      default: "music"
     },
     render: {
       type: Function,
@@ -217,7 +219,6 @@ export default defineComponent({
         lrc_id,
         score_id,
         title,
-        kind,
         language,
         musical_instrument,
         summary,
@@ -235,7 +236,6 @@ export default defineComponent({
         lrc_id,
         score_id,
         title,
-        kind: kind || 'effects',
         language: language || 'chinese',
         musical_instrument: musical_instrument || '0',
         summary,
@@ -253,7 +253,7 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
         api: props.action !== 'add' ? 'updateArticle' : 'insertArticle',
         data: {
-          coding: props.coding.art,
+          coding: props.data.coding.art,
           ...param,
         }
       }).then(() => {

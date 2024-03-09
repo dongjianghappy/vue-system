@@ -468,6 +468,10 @@ export const tabsUser = [
 		value: "appstore1"
 	},
 	{
+		name: "微博用户",
+		value: "appstore3"
+	},
+	{
 		name: "管理员",
 		value: "appstore3"
 	}
@@ -573,6 +577,10 @@ export const tabsTalkTheme = [
 		value: "appstore2"
 	},
 	{
+		name: "头像背景",
+		value: "appstore3"
+	},
+	{
 		name: "挂件装饰",
 		value: "appstore3"
 	},
@@ -589,7 +597,11 @@ export const tabsSign = [
 		value: "appstore1"
 	},
 	{
-		name: "签到喜爱",
+		name: "签到内容",
+		value: "appstore2"
+	},
+	{
+		name: "内容句子",
 		value: "appstore2"
 	}
 ]
@@ -652,3 +664,63 @@ export const message:any = {
 	messageBoard: "在线留言",
 	link: "友链申请",
 }
+
+// 系统设置
+export const tabsSetting = [
+	{
+		name: "管理设置",
+		value: 'manage',
+	},
+	{
+		name: "用户设置",
+		value: "user"
+	},
+	{
+		name: "查询设置",
+		value: "query"
+	},
+	{
+		name: "搜索设置",
+		value: "search"
+	}
+]
+
+// 系统设置
+export const themeTabs = [
+	{
+		name: "主题风格",
+		value: 'theme',
+	},
+	{
+		name: "背景特效",
+		value: "effects"
+	},
+	{
+		name: "头像背景",
+		value: "background"
+	},
+	{
+		name: "挂件装饰",
+		value: "pendant"
+	},
+	{
+		name: "鼠标效果",
+		value: "cursor"
+	}
+]
+
+// 格式
+export const imgFormat = [
+	{
+		name: "gif格式",
+		value: "gif"
+	},
+	{
+		name: "jpg格式",
+		value: "jpg"
+	},
+	{
+		name: "png格式",
+		value: "png"
+	}
+]

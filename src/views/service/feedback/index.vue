@@ -16,7 +16,10 @@
         <td style="line-height: 35px;">
           <v-avatar :data="item" />{{item.nickname}}
         </td>
-        <td>{{item.content}}</td>
+        <td>
+          {{item.content}}
+          <v-thumbnail :data="item" :coding="coding" icon="img" :hasInfo="false" v-if="item.image.length > 0" />
+        </td>
         <td>{{item.times}}</td>
         <td></td>
         <td>
@@ -68,6 +71,7 @@ export default defineComponent({
     onMounted(init)
 
     return {
+      coding,
       dataList,
       init
     }

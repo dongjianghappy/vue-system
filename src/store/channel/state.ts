@@ -21,6 +21,7 @@ export interface State {
   design: any;
   office: any;
   words: any;
+  sound: any;
 }
 
 
@@ -138,6 +139,12 @@ const initState: State = {
     returnList: {},
   },
   words: {
+    cateList: [],
+    articleList: {},
+    auditList: {},
+    returnList: {},
+  },
+  sound: {
     cateList: [],
     articleList: {},
     auditList: {},

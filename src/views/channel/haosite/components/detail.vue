@@ -1,6 +1,6 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'add'}`" />{{action === 'edit'? '编辑': '添加网站'}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? '编辑': '添加网站'}}
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑网站' : '添加网站' " api="articleDetail" :data="{coding: data.art, id: data.id}" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
@@ -20,7 +20,7 @@
       <li class="li">
         <span class="label">网站类型</span>
         {{detail.parent}}
-        <v-category name="选择页面" :data="{item: detail, coding: data.cate}" type="text"></v-category>
+        <v-category name="选择分类" :data="{item: detail, coding: data.cate}" :isMore="true" type="text"></v-category>
       </li>
       <li class="li">
         <span class="label">显示</span>

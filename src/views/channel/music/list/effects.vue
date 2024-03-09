@@ -12,7 +12,7 @@
             </a>
           </div>
         </v-popover>
-        <Detail :coding="coding" :render="init" />
+        <Detail :data="{coding}" :render="init" kind="effects" />
       </template>
     </v-optionsbar>
   </div>
@@ -49,7 +49,7 @@
         <td>
           <v-space class="relative">
             <span>
-              <Detail action="edit" :data="{id: item.id}" :coding="coding" :param="param" :render="init" />
+              <Detail action="edit" :data="{id: item.id, coding}" :param="param" :render="init" kind="effects" />
             </span>
             <span>
               <v-confirm name="删除" :data="{id: item.id, coding}" api="delete" :render="init" operating="delete"></v-confirm>
@@ -95,7 +95,7 @@
       </tr>
     </table>
     <v-nodata :data="dataList.list || []" />
-    <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, coding }" :sorceData="dataList.list" :render="init" v-if="dataList.list && dataList.list.length > 0" />
+    <v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding: coding.art }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="init" :auth="auth" />
   </div>
 </div>
 </template>
@@ -205,7 +205,6 @@ export default defineComponent({
         api: "articleList",
         data: {
           coding: coding.art,
-          kind: 'effects',
           ...params
         }
       })

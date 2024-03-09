@@ -11,14 +11,24 @@
     <table class="table-striped table-hover col-left-14">
       <tr class="th">
         <td class="col-md-1">策略名称</td>
+        <td class="col-md-1">图标</td>
+        <td class="col-md-1">字段</td>
         <td class="col-md-1">周期</td>
         <td class="col-md-1">积分</td>
-        <td class="col-md-7">积分说明</td>
+        <td class="col-md-1">表达式</td>
+        <td class="col-md-4">积分说明</td>
+        <td class="col-md-1">状态</td>
         <td class="col-md-1">操作</td>
       </tr>
       <tr v-for="(item, index) in dataList" :key="index">
         <td>
           {{item.name}}
+        </td>
+        <td>
+          <i :class="`iconfont icon-${item.icon} font24`" />
+        </td>
+        <td>
+          {{item.value}}
         </td>
         <td>
           {{item.cycle}}
@@ -27,7 +37,13 @@
           {{item.integration}}
         </td>
         <td>
+          {{item.expression}}
+        </td>
+        <td>
           {{item.explanation}}
+        </td>
+        <td>
+          <v-switch :data="{ item, field: 'status', coding }" :auth="true" />
         </td>
         <td>
           <v-space>

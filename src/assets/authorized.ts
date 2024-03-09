@@ -667,7 +667,33 @@ export const channel = {
 			reduction: 'b:words:recycle:reduction',
 			del: 'b:words:recycle:delete'
 		}
-	},		
+	},
+	// 音效
+	sound: {
+		status: 'b:sound:status',
+		display: 'b:sound:display',
+		info: 'b:sound:info',
+		tag: 'b:sound:tag',
+		cate: {
+			add: 'b:sound:cate:add',
+			del: 'b:sound:cate:edit',
+			edit: 'b:sound:cate:delete'
+		},
+		art: {
+			add: 'b:sound:list:add',
+			del: 'b:sound:list:delete',
+			edit: 'b:sound:list:edit',
+			top: 'b:sound:list:top'
+		},
+		comment: {
+			show: 'b:sound:comment:show',
+			del: 'b:sound:comment:delete'
+		},
+		recycle: {
+			reduction: 'b:sound:recycle:reduction',
+			del: 'b:sound:recycle:delete'
+		}
+	},				
 }
 
 

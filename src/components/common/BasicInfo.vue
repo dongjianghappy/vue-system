@@ -15,7 +15,7 @@
           </span>
         </div>
         <template v-else>
-          <input type="text" v-model="item.value" class="input-sm input-full" v-if="item.text_type === 'single'">
+          <input type="text" v-model="item.value" class="input-sm input-full" v-if="item.text_type === 'input'">
           <textarea placeholder="请输入字段说明" v-model="item.value" class="w-full" v-else-if="item.text_type === 'textarea'"></textarea>
         </template>
       </li>

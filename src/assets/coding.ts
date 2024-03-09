@@ -125,7 +125,9 @@ const codings: any = {
       cate: 'U0620015',
       collect: 'U0620013',
       comment: 'U0620014',
-      praise: 'U0620016'
+      praise: 'U0620016',
+      template: 'U0620039',
+      stationery: 'U0620040'
     },
     message_board: {
       message: 'U0620017',
@@ -306,6 +308,15 @@ const codings: any = {
     praise: "U0280004",
     collect: "U0280005",
   },
+  sound: {
+    name: "sound",
+    art: "U0290000",
+    info: "U0290001",
+    cate: "U0290002",
+    comment: "U0290003",
+    praise: "U0290004",
+    collect: "U0290005",
+  },  
   advertisement: "U0500000",
   advertisement_position: "U0500001",
   appstore: 'U0500002',
@@ -319,6 +330,10 @@ const codings: any = {
   common_sense: {
     art: "U0520012",
     cate: "U0520013"
+  },
+  expression: {
+    cate: 'U0540001',
+    art: 'U0540000'
   },
   knowledge: {
     art: 'U0600000',
@@ -338,6 +353,7 @@ const codings: any = {
     cate: 'U0550000',
     art: 'U0550001'
   },
+  goldcoin: "U0560000",
   vote: {
     cate: 'U0580000',
     art: 'U0580001',
@@ -349,6 +365,7 @@ const codings: any = {
     cate: 'U0620031',
     system: 'U0620037'
   },
+  medal: 'U0620045',
   collection: {
     cate: 'U0630000',
     art: 'U0630001',
@@ -374,6 +391,8 @@ const codings: any = {
     cate: 'U0680006',
     contact: 'U0680007',
     feedback: 'U0680008',
+    feedback_comment: "U0680028",
+    feedback_praise: 'U0680029',
     knowledge: {
       cate: 'U0680010',
       art: 'U0680009'
@@ -385,7 +404,8 @@ const codings: any = {
     message: 'U0680013',
     reader: 'U0680014',
     job: 'U0590000',
-    resume: 'U0590001'
+    resume: 'U0590001',
+    history: 'U0530001',
   },
   setting: 'U0680015',
   setting_type: 'U0680016',
@@ -394,6 +414,8 @@ const codings: any = {
     art: 'U0680018'
   },
   spread: 'U0680019',
+  sign: 'U0680026',
+  sign_sentence: 'U0680027',
   statistics: {
     list: 'U0680020',
     domain: 'U0680021',
@@ -419,6 +441,7 @@ const codings: any = {
     hobby: 'U0700007',
     info: 'U0700008',
     integration: 'U0700009',
+    goldcoin: "U0700035",
     level: 'U0700010',
     log: 'U0700011',
     login_time: 'U0700012',
@@ -426,18 +449,27 @@ const codings: any = {
     manager_log: 'U0700014',
     message: 'U0700015',
     mood: 'U0700016',
+    medal: 'U0700036',
     private_letter: 'U0700017',
     role: 'U0700018',
     security: 'U0700019',
     sign: 'U0700020',
     cycle: 'U0700021',
     sign_love: 'U0700027',
+    theme_cate: 'U0700037',
     theme: 'U0700022',
     effects: 'U0700023',
     pendant: 'U0700024',
+    theme_background: 'U0700034',
     cursor: 'U0700025',
     setting: 'U0700028',
-    setting_type: 'U0700029'
+    setting_type: 'U0700029',
+    verified: 'U0700031',
+    schedule: {
+      cate: 'U0700032',
+      list: 'U0700033'
+    }
+
   }
 };
 

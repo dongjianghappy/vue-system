@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="true">
   <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增模块" :style="{width: 520, height: index==='2' ? 450 : 300}" @submit="submit">
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增模块" :style="{width: 520, height: index==='2' ? 450 : 400}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -10,12 +10,20 @@
         <input type="text" v-model="detail.name" placeholder="请输入模块" class="input-sm input-full" />
       </li>
       <li class="li">
-        <span class="label">字段</span>
+        <span class="label">类型</span>
+        <v-radiobutton name="type" v-model:checked="detail.type" :enums="[{label: '路由', value: '0'}, {label: '链接', value: '1'}]"  />
+      </li>
+      <li class="li">
+        <span class="label">{{detail.type === '0' ? '字段' : 'URL地址'}}</span>
         <input type="text" v-model="detail.value" placeholder="请输入字段" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">icon图标</span>
         <input type="text" v-model="detail.icon" placeholder="请输入icon图标" class="input-sm input-full" />
+      </li>
+      <li class="li">
+        <span class="label">颜色</span>
+        <input type="text" v-model="detail.color" placeholder="请输入颜色值" class="input-sm input-full" />
       </li>
       <li class="li" v-if="index === '2'">
         <span class="label">可禁言</span>
@@ -80,8 +88,10 @@ export default defineComponent({
       const {
         name,
         value,
+        type,
         is_write,
         icon,
+        color,
         sort,
         tips,
         remark
@@ -90,9 +100,11 @@ export default defineComponent({
       const param: any = {
         name,
         value,
+        type,
         is_write,
         sort,
         icon,
+        color,
         tips,
         remark
       }

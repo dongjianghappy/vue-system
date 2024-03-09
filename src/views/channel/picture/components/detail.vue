@@ -61,7 +61,7 @@
             <span class="label">背景音乐</span>
             <span>
               {{detail.music_name}}
-              <v-choose title="选择音乐" :data="{ item: detail, field: 'singer' }" coding="E0000" @choose="choose" type="radio" api="articleList" />
+              <v-choose title="选择音乐" :data="{ item: detail, field: 'singer', coding: 'U0040000' }" @choose="choose" type="radio" api="articleList" />
             </span>
           </li>
           <li class="li">

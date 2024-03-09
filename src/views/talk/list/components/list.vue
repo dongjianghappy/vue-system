@@ -22,7 +22,13 @@
           {{item.nickname}}
         </td>
         <td>
-          {{item.summary}}
+          <span v-html="item.summary"></span>
+          <span v-if="item.type === 'img'">
+            <v-thumbnail :data="item" :coding="coding.art" icon="img" :hasInfo="false" />
+          </span>
+          <span v-if="item.type === 'video'">
+            <v-thumbnail :data="item" :coding="coding.art" icon="video" type="Video" />
+          </span>
         </td>
         <td>{{item.collect}}</td>
         <td>{{item.forwarding}}</td>
@@ -54,7 +60,8 @@ import {
   defineComponent,
   ref,
   computed,
-  useStore
+  useStore,
+  codings
 } from '@/utils'
 export default defineComponent({
   name: 'HomeViewdd',
@@ -75,6 +82,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const store = useStore();
+    const coding = codings.talk
     const dataList = computed(() => {
       return store.getters['talk/talkList1']|| []
     });
@@ -82,6 +90,7 @@ export default defineComponent({
     const checkedList: any = ref([])
 
     return {
+      coding,
       dataList,
       checkedList
     }

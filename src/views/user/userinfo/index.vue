@@ -5,6 +5,9 @@
       <List :render="init" :data={coding} :dataList="dataList" />
     </template>
     <template v-slot:content2>
+      <Verified />
+    </template>
+    <template v-slot:content3>
       <Manage :render="init" :data={coding} :dataList="dataList" />
     </template>
   </v-tabs>
@@ -27,11 +30,13 @@ import {
 import Detail from './components/detail.vue'
 import List from './components/list.vue'
 import Manage from './components/manage.vue'
+import Verified from './components/verified.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
     List,
     Manage,
+    Verified,
     Detail
   },
   setup(props, context) {

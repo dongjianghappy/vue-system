@@ -23,7 +23,7 @@
           {{item.name}}
         </td>
         <td>
-          {{item.datetime}}
+          {{item.times}}
         </td>
         <td>
           <v-space>
