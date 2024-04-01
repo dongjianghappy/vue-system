@@ -1,5 +1,7 @@
 <template>
 <Album title="主题风格" :render="render" type="theme" />
+<!-- <v-slider @onClick="handleclick"
+                        :dataList="cateList" title="主题风格" :render="render" type="theme" /> -->
 <div class="module-wrap">
   <div class="module-content p15">
     <div class="mb15 font14">

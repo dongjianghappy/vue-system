@@ -174,6 +174,7 @@ import Template from '../views/template/index.vue'
 // // 话题
 import Talk from '../views/talk/index.vue'
 import TalkList from '../views/talk/list/index.vue'
+import TalkCate from '../views/talk/cate/index.vue'
 import Activity from '../views/talk/activity/index.vue'
 
 import TalkCollect from '../views/talk/collect/index.vue'
@@ -347,6 +348,7 @@ const arrss: any = {
   Template,
   Talk,
   TalkList,
+  TalkCate,
   Activity,
   TalkCollect,
   TalkComment,

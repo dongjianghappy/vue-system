@@ -111,6 +111,7 @@ const codings: any = {
       praise: 'U0620005',
       visit: 'U0620006'
     },
+    barrage: 'U0620046',
     photos: {
       list: 'U0620002',
       comment: 'U0620003',
@@ -146,12 +147,14 @@ const codings: any = {
       ip_lib: 'U0620026'
     },
     activity: "U0620027",
+    activity_collect: "U0620047",
     config: 'U0620009',
     visit: "U0620029",
     video_group: "U0620028",
     article_group: "U0620007",
     blog_group: "U0620008",
     picture_group: "U0620019",
+    type: 'U0620048'
   },
   questions: {
     name: "questions",

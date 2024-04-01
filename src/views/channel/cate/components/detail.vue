@@ -37,6 +37,14 @@
             <span class="label">分类路径</span>
             <input v-model="detail.dir_file" type="text" class="input-sm input-full" />
           </li>
+          <li class="li">
+            <span class="label">图标</span>
+            <input v-model="detail.icon" type="text" placeholder="请输入图标" class="input-sm input-150 mr15" />
+          </li>
+          <li class="li">
+            <span class="label">颜色</span>
+            <input v-model="detail.color" type="text" placeholder="请输入颜色" class="input-sm input-150 mr15" />
+          </li>
           <li class="li" style="overflow: auto;">
             <span class="label">预览图</span>
             <SpaceModal v-model:image="detail.image">
