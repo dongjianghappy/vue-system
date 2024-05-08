@@ -1,5 +1,5 @@
 <template>
-<div class="mask" @click="handleClick"></div>
+<div class="mask" @click.stop="handleClick"></div>
 </template>
 
 <script lang="ts">

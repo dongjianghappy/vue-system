@@ -1,10 +1,13 @@
 <template>
 <div class="module-wrap m0">
   <div class="module-content basic-info">
-    <div class="info-module">
+    <div class="info-module" :class="{'cancel-module': !isEdit}">
       <span class="name">{{title}}</span>
       <div class="line"></div>
-      <span class="update-info editbtn" @click="Edit">{{!isEdit ? "保存" : "编辑"}}</span>
+      <v-space>
+        <span v-show="!isEdit" class="update-info cancelbtn" @click="handelCancel">取消</span>
+        <span class="update-info editbtn" @click="Edit">{{!isEdit ? "保存" : "编辑"}}</span>
+      </v-space>
     </div>
     <ul class="info">
       <li class="pl100" v-for="(item, index) in dataList" :key="index">
@@ -79,6 +82,7 @@ export default defineComponent({
   },
   setup(props, context) {
     let isEdit = ref(true)
+
     function Edit() {
       isEdit.value = !isEdit.value
       if (isEdit.value) {
@@ -86,9 +90,15 @@ export default defineComponent({
       }
     }
 
+    // 取消
+    function handelCancel() {
+      isEdit.value = !isEdit.value
+    }
+
     return {
       isEdit,
-      Edit
+      Edit,
+      handelCancel
     }
   }
 })

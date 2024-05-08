@@ -445,6 +445,10 @@ const api:any =  {
   knowledgeList(params: any) {
     return http.request('vue', 'knowledgeList', 'post', params)
   },
+  // 系统消息发布
+  sendSystemMessage(params: any) {
+    return http.request('vue', 'sendSystemMessage', 'post', params)
+  },  
   // 系统消息
   systemMessage(params: any) {
     return http.request('vue', 'systemMessage', 'post', params)
@@ -608,6 +612,11 @@ close (params: any) {
   // 系统设置
   systemSetting (params: any) {
     return http.request('vue', 'systemSetting', 'post', params)
+  },  
+
+  // 消息设置
+  messageSetting (params: any) {
+    return http.request('vue', 'messageSetting', 'post', params)
   },  
 
   // 站点搜索关键词库管理

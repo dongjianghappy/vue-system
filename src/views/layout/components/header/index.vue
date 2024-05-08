@@ -28,8 +28,9 @@
           </v-popover>
           <v-avatar :data="userInfo" style="margin-top: 16px;" />
         </li>
-        <li class="mr15" style="width: 50px;">
-          <span @click="handleRouter('service/message/unread', 'service')">消息<span class="badge"><sup class="number">0</sup></span></span>
+        <li class="mr15 relative" style="width: 50px;">
+          <Message :router="handleRouter" />
+          <!-- <span @click="handleRouter('message', 'message')">消息<span class="badge"><sup class="number">0</sup></span></span>
           <video ref="video_visit" class="hide">
             <source src="@/assets/video/visit.mp3" type="audio/mp3">
           </video>
@@ -38,7 +39,7 @@
           </video>
           <video ref="video_register" class="hide">
             <source src="@/assets/video/register.mp3" type="audio/mp3">
-          </video>
+          </video> -->
         </li>
         <li style="width: 50px;">风格</li>
         <li style="width: 50px;"><a href="http://www.yunxi10.com" target="_blank">首页</a></li>
@@ -68,10 +69,12 @@ import {
   information
 } from '@/assets/const'
 import Search from './Search.vue'
+import Message from './Message.vue'
 export default defineComponent({
   name: 'v-Header',
   components: {
     Search,
+    Message
   },
   emits: ['setRoute', 'update:collapse'],
   props: {
@@ -115,20 +118,20 @@ export default defineComponent({
     })
 
     // 监听语音播报设置
-    watch(setting, (newVal, oldVal) => {
-      clearTimeout(time.value)
-      jsspeak.value = false
-      for (let key in newVal) {
-        if (newVal[key] === "1") {
-          jsspeak.value = true
-          break
-        }
-      }
-      jsspeak.value && speaking()
-    }, {
-      immediate: true,
-      deep: true
-    });
+    // watch(setting, (newVal, oldVal) => {
+    //   clearTimeout(time.value)
+    //   jsspeak.value = false
+    //   for (let key in newVal) {
+    //     if (newVal[key] === "1") {
+    //       jsspeak.value = true
+    //       break
+    //     }
+    //   }
+    //   jsspeak.value && speaking()
+    // }, {
+    //   immediate: true,
+    //   deep: true
+    // });
 
     function handleRouter(param: any, module: any) {
       context.emit('setRoute', {

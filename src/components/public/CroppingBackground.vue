@@ -6,7 +6,7 @@
   <template v-slot:content>
     <v-tabs :tabs="[{name: '本地上传',value: 'photos'}]" :isEmit="true">
       <template v-slot:content1>
-        <v-listsss ref="aaaaaaaaa" :kind="kind" :image="img" :size="size" :mask="kind === 'head_background' ? { w: 550, h: 350, tb: 50, lr: 50 } : { w: 1050, h: 330, tb: 70, lr: 50 }" />
+        <v-listsss ref="aaaaaaaaa" :kind="kind" :image="img" :size="size" :mask="kind === 'head_background' ? { w: size.width || 550, h: size.height+50 || 350, tb: 50, lr: 50 } : { w: 1050, h: 330, tb: 70, lr: 50 }" />
       </template>
     </v-tabs>
 

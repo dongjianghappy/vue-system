@@ -1,15 +1,16 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont icon-shezhi pointer"></i>
+  设置
 </v-button>
-<v-drawer v-model:show="isShow" title="系统设置" :style="{width: '400'}" :hasfooter="false" :auth="auth">
+<v-drawer v-model:show="isShow" title="用户设置" :style="{width: '400'}" :hasfooter="false" :auth="auth">
   <template v-slot:extra>
-    <SettingType action="add" :data="{coding: data.coding.setting_type}" />
+    <SettingType action="add" :data="{coding: data.coding.setting_type}" :render="init" />
   </template>
   <template v-slot:content>
     <v-collapse :title="item.name" v-for="(item, index) in dataList" :key="index">
       <template v-slot:extra>
-        <AddSetting action="add" :data="{fid: item.id, coding: data.coding.setting}" />
+        <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" :render="init" />
+        <AddSetting action="add" :data="{fid: item.id, coding: data.coding.setting}" :render="init" />
       </template>
       <ul class="form-wrap-box">
         <li class="li mb15" v-for="(item, i) in item.list" :key="i">
@@ -76,7 +77,10 @@ export default defineComponent({
 
     function init() {
       store.dispatch('common/Fetch', {
-        api: "systemSetting"
+        api: "systemSetting",
+        data: {
+          type: 'user'
+        }
       }).then(res => {
         dataList.value = res.result
       })

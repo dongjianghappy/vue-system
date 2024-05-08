@@ -2,7 +2,7 @@
 <span @click.stop="handleClick" class="pointer" :class="{'set-gray': !disabled}" v-if="buttonType === 'text'">
   <slot>按钮</slot>
 </span>
-<button @click="handleClick" :disabled="!disabled" class="btn btn-default" :class="{'set-gray': !disabled}" :style="style" v-else>
+<button @click.stop="handleClick" :disabled="!disabled" class="btn btn-default" :class="{'set-gray': !disabled}" :style="style" v-else>
   <slot>按钮</slot>
 </button>
 </template>

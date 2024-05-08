@@ -1,8 +1,8 @@
 <template>
 <v-button v-model:show="isShow" :disabled="true">
-  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'add' ? '设置类型' : ''}}
+  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'add' ? '消息类型' : ''}}
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" :title="action === 'add' ? '新增设置类型' : '编辑设置类型'" :style="{width: '520', height: '400'}" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" :title="action === 'add' ? '新增消息类型' : '编辑消息类型'" :style="{width: '520', height: '300'}" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -12,14 +12,6 @@
       <li class="li">
         <span class="label">字段</span>
         <input type="text" v-model="detail.value" placeholder="请输入页面字段" class="input-sm input-full" />
-      </li>
-      <li class="li">
-        <span class="label">类型</span>
-        <v-select :enums="tabsSetting" v-model:value="detail.type" :defaultValue="detail.type = detail.type ? detail.type : 'switch'" />
-      </li>
-      <li class="li">
-        <span class="label">附属</span>
-        <v-select :enums="[{value: 'basic', name: '基本'}, {value: 'message', name: '消息'}, {value: 'privacy', name: '隐私'}]" v-model:value="detail.sub" :defaultValue="detail.sub = detail.sub ? detail.sub : 'message'" />
       </li>
     </ul>
   </template>
@@ -78,7 +70,6 @@ export default defineComponent({
         value,
         sort,
         remark,
-        sub,
         type
       } = detail.value
 
@@ -87,7 +78,6 @@ export default defineComponent({
         value,
         sort,
         remark,
-        sub,
         type
       }
 

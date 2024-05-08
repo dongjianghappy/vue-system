@@ -11,11 +11,20 @@
       <Background :render="init" :data="{coding: coding.theme_background}" :type='tabsIndex' :dataList="dataList" />
     </template>
     <template v-slot:content4>
-      <Pendant :render="init" :data="{coding: coding.pendant}" :type='tabsIndex' :dataList="dataList" />
+      <AvatarPendant :render="init" :data="{coding: coding.avatar_pendant}" :type='tabsIndex' :dataList="dataList" />
     </template>
     <template v-slot:content5>
+      <Pendant :render="init" :data="{coding: coding.pendant}" :type='tabsIndex' :dataList="dataList" />
+    </template>
+    <template v-slot:content6>
+      <MouseEffects :render="init" :data="{coding: coding.mouse_effects}" :type='tabsIndex' :dataList="dataList" />
+    </template>
+    <template v-slot:content7>
       <Cursor :render="init" :data="{coding: coding.cursor}" :type='tabsIndex' :dataList="dataList" />
-    </template>    
+    </template>
+    <template v-slot:content8>
+      <RelatedBackground :render="init" :data="{coding: coding.related_background}" :type='tabsIndex' :dataList="dataList" />
+    </template>
   </v-tabs>
 </div>
 </template>
@@ -37,9 +46,11 @@ import {
 import Theme from './theme/index.vue'
 import Effects from './effects/index.vue'
 import Background from './background/index.vue'
+import AvatarPendant from './avatarPendant/index.vue'
 import Pendant from './pendant/index.vue'
+import MouseEffects from './mouseEffects/index.vue'
 import Cursor from './cursor/index.vue'
-
+import RelatedBackground from './related_background/index.vue'
 
 export default defineComponent({
   name: 'IndexView',
@@ -47,8 +58,11 @@ export default defineComponent({
     Theme,
     Effects,
     Background,
+    AvatarPendant,
     Pendant,
-    Cursor
+    MouseEffects,
+    Cursor,
+    RelatedBackground
   },
   setup(props, context) {
     const {
@@ -77,11 +91,17 @@ export default defineComponent({
       } else if (tabsIndex.value === '2') {
         code = coding.theme_background
       } else if (tabsIndex.value === '3') {
+        code = coding.avatar_pendant
+      } else if (tabsIndex.value === '4') {
         code = coding.pendant
-      }
-       else if (tabsIndex.value === '4') {
+      } else if (tabsIndex.value === '5') {
+        code = coding.mouse_effects
+      } else if (tabsIndex.value === '6') {
         code = coding.cursor
+      } else if (tabsIndex.value === '7') {
+        code = coding.related_background
       }
+
       
 
       store.dispatch('common/Fetch', {
@@ -109,7 +129,7 @@ export default defineComponent({
 </script>
 
 <style lang="less">
-.tabs-content{
+.tabs-content {
   background: none !important;
 }
 </style>

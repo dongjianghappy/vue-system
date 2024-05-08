@@ -24,48 +24,68 @@
         <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
       </li>
       <li class="li">
-        <span class="label">固定</span>
-        <v-radiobutton name="isfixed" v-model:checked="detail.isfixed" :enums="[{label: '是', value: '1'}, {label: '否', value: '0'}]" />
-      </li>
-      <li class="li">
-        <span class="label">颜色</span>
-        <div class="p15 mb5" style="background: #f8f8fa;">
-          <div style="overflow: hidden;">
-            <div class="col-md-6 mb10 flex">
-              <div class="w100">背景色: </div>
-              <div style="flex: 1"><input v-model="detail.background_color" type="text" placeholder="请输入背景颜色" class="input-sm input-150" />
+          <span class="label">背景图{{detail.intelligent}}</span>
+          <div class="flex">
+            <div class="mt10" style="background: #33343f;">
+              <div class="mr25" style="width: 245px">
+                <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: data.coding}" :dataList="detail.img" uploadtype="theme" @imgList="image" maxLength="1" :style="'width: 200px; height: 150px'" />
               </div>
-            </div>
-            <div class="col-md-6 mb10 flex">
-              <div class="w100">模块背景: </div>
-              <div style="flex: 1">
-                <input v-model="detail.module_background" type="text" placeholder="请输入模块背景" class="input-sm" />
-              </div>
-            </div>
-            <div class="col-md-6 flex">
-              <div class="w100">主色: </div>
-              <div style="flex: 1">
-                <input v-model="detail.primary_color" type="text" placeholder="请输入主题颜色" class="input-sm" /></div>
-            </div>
-            <div class="col-md-6 flex">
-              <div class="w100">字体色: </div>
-              <div style="flex: 1">
-                <input v-model="detail.font_color" type="text" placeholder="请输入字体颜色" class="input-sm" />
-              </div>
-            </div>
-            <div class="col-md-6 flex">
-              <div class="w100">表单色: </div>
-              <div style="flex: 1">
-                <input v-model="detail.input_color" type="text" placeholder="请输入字体颜色" class="input-sm" />
+              <div class="p10" style="flex: 1">
+                <span class="block m5 relative left" :class="{current: item == transparentIndex }" style="width: 40px; height: 43px" :style="`background: url(${thumbnail}) no-repeat; background-size: cover; filter: brightness(${1-item})`" v-for="(item, index) in transparent" :key="index" @click="handleTransparent(item)">
+                </span>
               </div>
             </div>
           </div>
+          <div class="font12">点击以下色卡可自定义背景色</div>
+          <div class="flex">
+            <div class="mr10" style="width: 32px;">
+              <input v-model="detail.background_color" type="color" class="p0" style="width: 35px; height: 32px;" />
+            </div>
+            <div style="flex: 1"><input v-model="detail.background_color" type="text" placeholder="请输入主题背景色" class="input-sm input-150" /></div>
+            <div class="mr10" style="width: 70px;">背景图固定</div>
+            <div style="width: 120px;">
+              <v-radio label="是" name="isfixed" value="1" v-model:checked="detail.isfixed" />
+              <v-radio label="否" name="isfixed" value="0" v-model:checked="detail.isfixed" />
+            </div>
+          </div>
+        </li>
+      <li class="li">
+        <span class="label">模块背景</span>
+        <div style="overflow: auto; margin-left: -5px;">
+          <span class="block m5 left" style="width: 28px; height: 20px" :style="`background: ${item}`" v-for="(item, index) in color" :key="index" @click="()=>detail.module_background=item"></span>
+        </div>
+        <div class="font12">点击以下色卡可自定义主色调</div>
+        <div class="flex">
+          <div class="mr10" style="width: 32px;">
+            <input v-model="detail.module_background" type="color" class="p0" style="width: 35px; height: 32px;" />
+          </div>
+          <div style="flex: 1"> <input v-model="detail.module_background" type="text" placeholder="请输入主题主色调" class="input-sm input-150" /></div>
+          <div class="mr10" style="width: 60px;">智能主题</div>
+          <div style="width: 120px;">
+            <v-radio label="是" name="intelligent" value="1" v-model:checked="detail.intelligent" />
+            <v-radio label="否" name="intelligent" value="0" v-model:checked="detail.intelligent" />
+          </div>
         </div>
       </li>
-      <li class="li">
-        <span class="label">预览图</span>
-        <div style="overflow: hidden;">
-          <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: data.coding}" :dataList="detail.img" uploadtype="theme" @imgList="image" :style="'width: 135px'" />
+      <li class="li" style="overflow: auto;">
+        <span class="label">其他色调</span>
+        <div class="col-md-6">
+          <div class="font12">主色</div>
+          <div class="flex">
+            <div class="mr10" style="width: 32px;">
+              <input v-model="detail.primary_color" type="color" class="p0" :disabled="detail.intelligent == '1'" style="width: 35px; height: 32px;" />
+            </div>
+            <input v-model="detail.primary_color" type="text" placeholder="请输入主题主色调" :disabled="detail.intelligent == '1'" class="input-sm input-150" />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="font12">字体色</div>
+          <div class="flex">
+            <div class="mr10" style="width: 32px;">
+              <input v-model="detail.font_color" type="color" class="p0" style="width: 35px; height: 32px;" />
+            </div>
+            <input v-model="detail.font_color" type="text" placeholder="请输入主题主色调" class="input-sm input-150" />
+          </div>
         </div>
       </li>
       <li class="li">
@@ -84,7 +104,9 @@ import {
   useStore,
   watch,
 } from '@/utils'
-
+import {
+  color
+} from '@/assets/const'
 export default defineComponent({
   name: 'v-Detail',
   props: {
@@ -112,11 +134,18 @@ export default defineComponent({
     const upload: any = ref(null);
     const detail: any = ref({})
     const img = ref("")
+    const thumbnail = ref("")
+    const transparentIndex: any = ref(1)
+    const transparent = ref([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
         detail.value = await drawer.value.init()
+        transparentIndex.value = detail.value.background_transparent
+        if (detail.value.image) {
+          thumbnail.value = detail.value.img
+        }
       }
     })
 
@@ -174,17 +203,31 @@ export default defineComponent({
     // 监听图片上传
     function image(a: any) {
       img.value = a
+      thumbnail.value = (process.env.NODE_ENV === 'development' ? 'http://127.0.0.1/uploadfile/temporary/theme/' : 'http://www.dongblog.com/uploadfile/temporary/theme/') + a.slice(1, -1)
     }
 
-    function choose(param: any){
-      const {field, data} = param
+    function choose(param: any) {
+      const {
+        field,
+        data
+      } = param
       detail.value.fid = data.id
       detail.value.parent = data.name
+    }
+
+    function handleTransparent(param: any) {
+      transparentIndex.value = param
+      detail.value.background_transparent = param
     }
 
     return {
       isShow,
       drawer,
+      color,
+      thumbnail,
+      transparent,
+      transparentIndex,
+      handleTransparent,
       upload,
       detail,
       image,
@@ -195,3 +238,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="less" scoped>
+.current{
+  border: 3px solid #fff;
+}
+</style>

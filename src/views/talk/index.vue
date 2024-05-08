@@ -84,7 +84,7 @@ import {
 import {
   ChartLine
 } from '@/components/packages/chart/index'
-import UserSetting from '@/components/packages/setting/userSetting.vue'
+import UserSetting from '@/components/packages/setting/userSetting1.vue'
 import HighQualityUser from '@/components/packages/setting/highQualityUser.vue'
 export default defineComponent({
   name: 'v-Search',

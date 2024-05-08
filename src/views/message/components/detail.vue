@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="true">
   <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" title="设置" :style="{width: '350'}" :data="data" :param="detail" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '新增消息' : '编辑消息' " :data="data" :param="detail" :submit="submit">
   <template v-slot:content v-if="isShow">
     <audio ref="show_video" :src="fileInfo.fileUrl || detail.file" type="video/mp4">
     </audio>
@@ -19,6 +19,10 @@
         <input type="text" v-model="detail.name" placeholder="请输入页面字段" class="input-sm input-full" />
       </li>
       <li class="li">
+        <span class="label">消息类型</span>
+        <v-select :enums="[{value: 'select', name: '下拉框'}, {value: 'switch', name: '开关'}]" v-model:value="detail.text_type" :defaultValue="detail.text_type = detail.text_type ? detail.text_type : 'select'" />
+      </li>
+      <li class="li">
         <span class="label">设置类型</span>
         <v-select :enums="[{value: 'select', name: '下拉框'}, {value: 'switch', name: '开关'}]" v-model:value="detail.text_type" :defaultValue="detail.text_type = detail.text_type ? detail.text_type : 'select'" />
       </li>
@@ -29,14 +33,12 @@
       <li class="li">
         <span class="label">语音</span>
         <div style="display: flex">
-          <div style="flex: 1;">音频
+          <div style="flex: 1;">文件名: {{fileInfo.name || detail.audio}}
             <span class="ml10" @click="onPlay">
               <i class="iconfont" :class="`icon-${isplay ? 'stop' : 'play1'}`" />
             </span>
           </div>
-          <div class="cl-red pointer" style=" width: 60px; text-align: right" @click="upload.handleclick()">
-            {{action == 'add' ? '上传' : '重新上传'}}
-          </div>
+          <div class="cl-red pointer" style=" width: 60px; text-align: right" @click="upload.handleclick()">重新上传</div>
         </div>
       </li>
       <li style="padding-left: 100px">
@@ -127,7 +129,7 @@ export default defineComponent({
       }
     }
 
-    function handleChange(e: any, param: any) {
+    function handleChange(e: any, param: any){
       param.broadcast = e.currentTarget.checked ? '1' : '0'
     }
 

@@ -23,11 +23,15 @@
         </td>
         <td>
           <v-space>
+            <span>
+              <v-confirm name="审核" :data="{id: item.id, management_checked: 1, coding }" type="text" api="checkContent" :render="init" operating="check" :auth="true" v-if="item.management_checked !== '1'" />
+              <span v-else>已审核</span>
+            </span>
             <span @click="handleClick(item)">
               查看
             </span>
             <span>
-              <v-confirm name="删除" :data="{id: item.id, coding }" type="text" api="delete" :render="render" operating="delete"></v-confirm>
+              <v-confirm name="删除" :data="{id: item.id, coding }" type="text" api="delete" :render="init" operating="delete"></v-confirm>
             </span>
           </v-space>
         </td>
@@ -77,7 +81,8 @@ export default defineComponent({
     return {
       coding,
       dataList,
-      handleClick
+      handleClick,
+      init
     }
   }
 })

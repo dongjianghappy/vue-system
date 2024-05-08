@@ -129,13 +129,16 @@ import History from '../views/service/history/index.vue'
 // import Email from '../views/email'
 import Job from '../views/service/job/index.vue'
 import Resume from '../views/service/job/resum/index.vue'
-import Message from '../views/service/message/index.vue'
-import MessageDetail from '../views/service/message/components/detail.vue'
 import ServiceKnowledgeCate from '../views/service/knowledge/cate/index.vue'
 import ServiceKnowledgeList from '../views/service/knowledge/list/index.vue'
 import KnowledgeArticle from '../views/service/knowledge/list/article.vue'
 import Spread from '../views/spread/index.vue'
 import Space from '../views/space/index.vue'
+
+// 消息中心
+import Message from '../views/message/index.vue'
+import MessageSystem from '../views/message/system/index.vue'
+import MessageList from '../views/message/list/index.vue'
 
 import codeDefault from '../views/code/index.vue'
 import codeCate from '../views/code/cate/index.vue'
@@ -315,7 +318,8 @@ const arrss: any = {
   Job,
   Resume,
   Message,
-  MessageDetail,
+  MessageSystem,
+  MessageList,
   ServiceKnowledgeCate,
   ServiceKnowledgeList,
   KnowledgeArticle,

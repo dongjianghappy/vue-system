@@ -191,11 +191,14 @@ export const week:any = {
 }
 
 export const information:any = {
-	system: "系统消息",
-	talk: "微博消息",
-	letter: "私信消息",
-	question: "问答消息",
-	other: "其他消息"
+	register: "用户注册",
+	login: "用户登录",
+	visit: "访客提醒",
+	download: "资源下载",
+	message_board: "留言提醒",
+	feedback: "意见反馈",
+	blog: "博客收录",
+	links: "友联申请"
 }
 
 export const article: any =[
@@ -581,11 +584,23 @@ export const tabsTalkTheme = [
 		value: "appstore3"
 	},
 	{
+		name: "头像挂件",
+		value: "appstore3"
+	},
+	{
 		name: "挂件装饰",
 		value: "appstore3"
 	},
 	{
 		name: "鼠标特效",
+		value: "appstore3"
+	},
+	{
+		name: "鼠标样式",
+		value: "appstore3"
+	},
+	{
+		name: "相关背景",
 		value: "appstore3"
 	}
 ]
@@ -670,6 +685,10 @@ export const tabsSetting = [
 	{
 		name: "管理设置",
 		value: 'manage',
+	},
+	{
+		name: "系统设置",
+		value: 'system',
 	},
 	{
 		name: "用户设置",

@@ -1,16 +1,12 @@
 <template>
-<v-button v-model:show="isShow" :disabled="auth">
-  设置
-</v-button>
-<v-drawer v-model:show="isShow" title="用户设置" :style="{width: '400'}" :hasfooter="false" :auth="auth">
-  <template v-slot:extra>
-    <SettingType action="add" :data="{coding: data.coding.setting_type}" :render="init" />
-  </template>
-  <template v-slot:content>
-    <v-collapse :title="item.name" v-for="(item, index) in dataList" :key="index">
+<v-tabs :tabs="[{name: '基本设置',value: 'basic'}, {name: '消息设置',value: 'photos'}, {name: '隐私设置',value: 'background'}]" :isEmit="true">
+  <template v-slot:content1>
+    <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.sub == 'basic')" :key="index">
+      <template v-slot:extra_left>
+        <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" />
+      </template>
       <template v-slot:extra>
-        <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" :render="init" />
-        <AddSetting action="add" :data="{fid: item.id, coding: data.coding.setting}" :render="init" />
+        <AddSetting action="add" :data="{fid: item.id, coding: data.coding.setting}" />
       </template>
       <ul class="form-wrap-box">
         <li class="li mb15" v-for="(item, i) in item.list" :key="i">
@@ -23,7 +19,45 @@
       </ul>
     </v-collapse>
   </template>
-</v-drawer>
+  <template v-slot:content2>
+    <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.sub == 'message')" :key="index">
+      <template v-slot:extra_left>
+        <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" />
+      </template>
+      <template v-slot:extra>
+        <AddSetting action="add" :data="{fid: item.id, coding: data.coding.setting}" />
+      </template>
+      <ul class="form-wrap-box">
+        <li class="li mb15" v-for="(item, i) in item.list" :key="i">
+          <span class="label">
+            {{item.remark}}
+            <AddSetting :data="{id: item.id, coding: data.coding.setting}" :render="init" action="edit" />
+          </span>
+          <v-switch :data="{ item, field: 'value', coding: data.coding.setting }" @toggle="getValue" className="right" :auth="true" />
+        </li>
+      </ul>
+    </v-collapse>
+  </template>
+  <template v-slot:content3>
+    <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.sub == 'privacy')" :key="index">
+      <template v-slot:extra_left>
+        <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" />
+      </template>
+      <template v-slot:extra>
+        <AddSetting action="add" :data="{fid: item.id, coding: data.coding.setting}" />
+      </template>
+      <ul class="form-wrap-box">
+        <li class="li mb15" v-for="(item, i) in item.list" :key="i">
+          <span class="label">
+            {{item.remark}}
+            <AddSetting :data="{id: item.id, coding: data.coding.setting}" :render="init" action="edit" />
+          </span>
+          <v-switch :data="{ item, field: 'value', coding: data.coding.setting }" @toggle="getValue" className="right" :auth="true" />
+        </li>
+      </ul>
+    </v-collapse>
+  </template>
+</v-tabs>
 </template>
 
 <script lang="ts">
@@ -37,6 +71,9 @@ import {
   watch,
   computed
 } from '@/utils'
+import {
+  tabsSetting
+} from '@/assets/const'
 import SettingType from './settingType.vue'
 import AddSetting from './addSetting.vue'
 export default defineComponent({
@@ -52,6 +89,11 @@ export default defineComponent({
         return {}
       }
     },
+    dataList: {
+      type: Array,
+      default: []
+    },
+
     auth: {
       type: Boolean,
       default: false
@@ -65,40 +107,19 @@ export default defineComponent({
     const store = useStore()
 
     const isShow: any = ref(false)
-    const dataList: any = ref([])
+    const currentValue: any = ref("manage")
     const setting = computed(() => store.getters['user/setting']);
-
-    // 监听
-    watch([isShow], async (newValues, prevValues) => {
-      if (isShow.value) {
-        init()
-      }
+    const form: any = ref({
+      pagesize: ''
     })
-
-    function init() {
-      store.dispatch('common/Fetch', {
-        api: "systemSetting",
-        data: {
-          type: 'user'
-        }
-      }).then(res => {
-        dataList.value = res.result
-      })
-    }
-
-    function getValue(param: any) {
-      store.commit('user/setSettingValue', {
-        ...param
-      })
-    }
 
     return {
       isShow,
-      dataList,
+      currentValue,
       setting,
       module,
-      init,
-      getValue
+      tabsSetting,
+      form
     }
   }
 })

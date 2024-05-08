@@ -1,8 +1,8 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont icon-anonymous-iconfont" />自定义
+  <i class="iconfont icon-anonymous-iconfont" />信息配置
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" title="自定义字段" :data="data" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" title="信息配置" :data="data" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -25,6 +25,16 @@
         <span class="label">说明</span>
         <textarea placeholder="请输入字段说明" v-model="detail.explanation" class="w-full"></textarea>
       </li>
+      <li class="li">
+        <span class="label">可删除</span>
+        <v-radio label="是" name="isdelete" value="0" v-model:checked="detail.isdelete" />
+        <v-radio label="否" name="isdelete" value="1" v-model:checked="detail.isdelete" />
+      </li>
+      <li class="li">
+        <span class="label">展示站点</span>
+        <span class="mr15">{{detail.website_name}}</span>
+        <v-choose :data="{item: detail, coding: coding.site.list, condition: {status: 1}}" v-model:checked="detail.website" type="radio" @choose="choose" />
+      </li>
     </ul>
   </template>
 </v-drawer>
@@ -32,6 +42,7 @@
 
 <script lang="ts">
 import {
+  codings,
   defineComponent,
   getCurrentInstance,
   ref,
@@ -61,6 +72,7 @@ export default defineComponent({
     const {
       proxy
     }: any = getCurrentInstance();
+    const coding = codings
     const store = useStore();
     const isShow: any = ref(false)
     const detail: any = ref({})
@@ -71,7 +83,9 @@ export default defineComponent({
         name,
         value,
         text_type,
-        explanation
+        explanation,
+        isdelete,
+        website
       } = detail.value
 
       store.dispatch('common/Fetch', {
@@ -82,7 +96,9 @@ export default defineComponent({
           name,
           value,
           text_type,
-          explanation
+          explanation,
+          isdelete,
+          website
         }
       }).then(res => {
         props.render()
@@ -93,11 +109,21 @@ export default defineComponent({
       })
     }
 
+    function choose(param: any) {
+      const {
+        data
+      } = param
+      detail.value.website = data.id
+      detail.value.website_name = data.name
+    }
+
     return {
+      coding,
       TEXT_TYPE,
       isShow,
       detail,
-      submit
+      submit,
+      choose
     }
   }
 })

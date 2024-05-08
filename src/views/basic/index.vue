@@ -1,6 +1,6 @@
 <template>
 <div class="module-wrap">
-  <div class="module-head">
+  <!-- <div class="module-head">
     <v-optionsbar title="站点信息">
       <template v-slot:extraright v-if="auth.checked('add')">
         <v-space>
@@ -9,11 +9,25 @@
         </v-space>
       </template>
     </v-optionsbar>
-  </div>
+  </div> -->
   <div class="module-content plr15">
-    <v-basicinfo v-model:dataList="dataList.baisc" :edit="edit" title="基本信息" :auth="auth" />
-    <v-basicinfo v-model:dataList="dataList.logo" :edit="edit" title="网站LOGO" :auth="auth" />
-    <v-basicinfo v-model:dataList="dataList.custom" :edit="edit" title="自定义管理" :isDelete="true" :render="init" :data="{coding: coding.config}" :auth="auth" />
+    <v-tabs :tabs="website" :isEmit="true">
+      <template v-slot:extra v-if="auth.checked('add')">
+        <v-space>
+          <Detail :data="{ coding: coding.config }" :render="init" />
+          <v-setting :data="{channel_id: 0, coding: coding.channel_config}" :auth="auth.checked('display')" />
+        </v-space>
+      </template>
+      <template v-slot:content1>
+        <List :data="{id: website[0] && website[0].value}" />
+      </template>
+      <template v-slot:content2>
+        <List :data="{id: website[0] && website[1].value}" />
+      </template>
+      <template v-slot:content3>
+        <List :data="{id: website[0] && website[2].value}" />
+      </template>
+    </v-tabs>
   </div>
 </div>
 </template>
@@ -25,12 +39,15 @@ import {
   onMounted,
   computed,
   useStore,
-  codings
+  codings,
+  ref
 } from '@/utils'
 import Detail from './components/detail.vue'
+import List from './list.vue'
 export default defineComponent({
   name: 'Baisc',
   components: {
+    List,
     Detail
   },
   setup(props, context) {
@@ -39,51 +56,35 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const coding: any = codings;
     const store = useStore();
-
-    const dataList = computed(() => {
-      const list = store.getters['website/webinfo']
-      const baisc = list.filter((item: any) => item.isdelete === '1' && item.name !== 'logo')
-      const logo = list.filter((item: any) => item.isdelete === '1' && item.name === 'logo')
-      const custom = list.filter((item: any) => item.isdelete === '0')
-      return {
-        baisc,
-        logo,
-        custom
-      }
-    });
+    const website: any = ref([])
 
     function init() {
-      store.dispatch('website/BasicInfo', {
-        coding: coding.config
-      })
-    }
-
-    function edit(param: any) {
-      let params: any = {}
-      param.map((item: any) => {
-        params[item.name] = item.value
-      })
-
       store.dispatch('common/Fetch', {
-        api: "updateInfo",
         data: {
-          coding: coding.config,
-          ...params
+          coding: 'U0520007'
         }
-      }).then(res => {
-        proxy.$hlj.message({
-          msg: "编辑成功"
+      }).then((res: any) => {
+        website.value = []
+        res.result.reverse();
+        res.result.map((item: any) => {
+          if(item.domain === 'localhost'){
+            return
+          }
+          website.value.push({
+            name: item.name,
+            value: item.id
+          })
         })
       })
     }
+
 
     onMounted(init)
 
     return {
       coding,
-      dataList,
       init,
-      edit,
+      website,
       auth: proxy.$auth.init('basic')
     }
   }

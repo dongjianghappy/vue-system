@@ -13,6 +13,9 @@
       </template>
       <template v-slot:content1>
         <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == currentValue)" :key="index">
+          <template v-slot:extra_left>
+            <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" />
+          </template>
           <template v-slot:extra>
             <AddSetting action="add" :data="{fid: item.id, coding: data.coding.setting}" />
           </template>
@@ -29,6 +32,40 @@
       </template>
       <template v-slot:content2>
         <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == currentValue)" :key="index">
+          <template v-slot:extra_left>
+            <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" />
+          </template>
+          <template v-slot:extra>
+            <AddSetting action="add" :data="{fid: item.id, coding: data.coding.setting}" />
+          </template>
+          <ul class="form-wrap-box">
+            <template v-for="(list, i) in item.list" :key="i">
+              <li class="li" v-if="list.text_type != 'switch'">
+                <div class="label">
+                  {{list.remark}}
+                  <AddSetting :data="{id: list.id, coding: data.coding.setting}" :render="init" action="edit" />
+                </div>
+                <input type="text" v-model="form[list.name]" class="input-sm input-full" @blur="save($event, list.name)" v-if="list.text_type === 'input'">
+                <v-checkboxgroup :tagList="menus[list.name]" :checked="form[list.name]" @save="save($event, list.name)" :isEmit="true" v-else-if="list.text_type === 'checkbox'" />
+                <v-select :enums="menus[list.name]" v-model:value="form[list.name]" :defaultValue="form[list.name] = form[list.name] ? form[list.name] : 'all'" v-else-if="list.text_type === 'select'" />
+              </li>
+              <li class="li mb15" v-else>
+                <span class="label">
+                  {{list.remark}}
+                  <AddSetting :data="{id: list.id, coding: data.coding.setting}" :render="init" action="edit" />
+                </span>
+                <v-switch :data="{ item: list, field: 'value', coding: data.coding.setting }" @toggle="getValue" className="right" :auth="true" />
+              </li>
+            </template>
+          </ul>
+        </v-collapse>
+      </template>
+      <template v-slot:content3>
+        <UserSetting :data="{coding: data.coding}" :dataList="dataList.filter(item => item.type == currentValue)" />
+        <!-- <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == currentValue)" :key="index">
+          <template v-slot:extra_left>
+            <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" />
+          </template>
           <template v-slot:extra>
             <AddSetting action="add" :data="{fid: item.id, coding: data.coding.setting}" />
           </template>
@@ -41,10 +78,13 @@
               <v-switch :data="{ item, field: 'value', coding: data.coding.setting }" @toggle="getValue" className="right" :auth="true" />
             </li>
           </ul>
-        </v-collapse>
+        </v-collapse> -->
       </template>
-      <template v-slot:content3>
+      <template v-slot:content4>
         <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == currentValue)" :key="index">
+          <template v-slot:extra_left>
+            <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" />
+          </template>
           <template v-slot:extra>
             <AddSetting action="add" :data="{fid: item.id, coding: data.coding.setting}" />
           </template>
@@ -69,8 +109,11 @@
         </v-collapse>
       </template>
 
-      <template v-slot:content4>
+      <template v-slot:content5>
         <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == currentValue)" :key="index">
+          <template v-slot:extra_left>
+            <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" />
+          </template>
           <template v-slot:extra>
             <AddSetting action="add" :data="{fid: item.id, coding: data.coding.setting}" />
           </template>
@@ -81,7 +124,7 @@
                 {{item.remark}}
                 <AddSetting :data="{id: item.id, coding: data.coding.setting}" :render="init" action="edit" />
               </span>
-              <v-switch :data="{ item, field: 'value', coding: data.coding.setting }" @toggle="getValue" className="right" :auth="true" />
+              <v-switch :data="{ item, field: 'status', coding: data.coding.setting }" @toggle="getValue" className="right" :auth="true" />
             </li>
           </ul>
         </v-collapse>
@@ -107,11 +150,13 @@ import {
 } from '@/assets/const'
 import SettingType from './settingType.vue'
 import AddSetting from './addSetting.vue'
+import UserSetting from './userSetting.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
     SettingType,
-    AddSetting
+    AddSetting,
+    UserSetting
   },
   props: {
     data: {
@@ -241,14 +286,20 @@ export default defineComponent({
     }
 
     function save(param: any, name: any) {
-      let value: any = []
-      menus.value[name].forEach((item: any) => {
-        if (param.indexOf(item.name) > -1) {
-          value.push(item.name)
-        }
-      })
       const params: any = {}
-      params[name] = value.join(',')
+      if (menus.value[name] === undefined) {
+        params[name] = param.currentTarget.value
+        debugger
+      } else {
+        let value: any = []
+        menus.value[name].forEach((item: any) => {
+          if (param.indexOf(item.name) > -1) {
+            value.push(item.name)
+          }
+        })
+
+        params[name] = value.join(',')
+      }
 
       store.dispatch('common/Fetch', {
         api: 'updateInfo',
