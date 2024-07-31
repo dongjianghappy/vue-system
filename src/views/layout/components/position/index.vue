@@ -1,10 +1,14 @@
 <template>
 <div class="position-wrap p0">
-  <div class="position-dir pl20" style="display: block; width: 763px;">
+  <div class="position-dir pl20" style="display: block; width: 850px;">
     <div><v-scrolltext :dataList="messageList" /></div>
   </div>
   <ul class="position-nav align_center" style="padding: 12px;">
     <li class="ant-col ant-col-2 pointer"><i class="iconfont icon-more font18" @click="handleRouter('appstore', 'setting')"></i></li>
+    <li class="ant-col ant-col-2 pointer"><i class="iconfont icon-vote font18" @click="handleRouter('appstore', 'setting')"></i></li>
+    <li class="ant-col ant-col-2 relative pl10" style="margin-top: -12px; height: 45px;">
+      <More :router="handleRouter" />
+    </li>
     <li class="ant-col ant-col-2">
       <SystemSetting :auth="true" :data={coding} />
     </li>
@@ -52,6 +56,7 @@ import {
   ref
 } from '@/utils'
 import SystemSetting from '@/components/packages/setting/systemSetting.vue'
+import More from './more.vue'
 
 import {
   MODUDLE
@@ -59,7 +64,8 @@ import {
 export default defineComponent({
   name: 'v-Position',
   components: {
-    SystemSetting
+    SystemSetting,
+    More
   },
   props: {
     setRoute: {

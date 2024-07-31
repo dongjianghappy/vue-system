@@ -6,6 +6,97 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "4138403",
+      "name": "history",
+      "font_class": "history",
+      "unicode": "e6ae",
+      "unicode_decimal": 59054
+    },
+    {
+      "icon_id": "34604239",
+      "name": "collect",
+      "font_class": "collect",
+      "unicode": "e6ac",
+      "unicode_decimal": 59052
+    },
+    {
+      "icon_id": "3824780",
+      "name": "shortcut",
+      "font_class": "shortcut",
+      "unicode": "e6ab",
+      "unicode_decimal": 59051
+    },
+    {
+      "icon_id": "5199945",
+      "name": "personal_info",
+      "font_class": "personal_info",
+      "unicode": "e6ca",
+      "unicode_decimal": 59082
+    },
+    {
+      "icon_id": "38850984",
+      "name": "birthday",
+      "font_class": "birthday",
+      "unicode": "e6d7",
+      "unicode_decimal": 59095
+    },
+    {
+      "icon_id": "12339033",
+      "name": "topic",
+      "font_class": "topic",
+      "unicode": "e6aa",
+      "unicode_decimal": 59050
+    },
+    {
+      "icon_id": "22547308",
+      "name": "template",
+      "font_class": "template",
+      "unicode": "e6a9",
+      "unicode_decimal": 59049
+    },
+    {
+      "icon_id": "3262276",
+      "name": "guide",
+      "font_class": "guide",
+      "unicode": "e6a3",
+      "unicode_decimal": 59043
+    },
+    {
+      "icon_id": "36914963",
+      "name": "blog-1",
+      "font_class": "blog-1",
+      "unicode": "e6a2",
+      "unicode_decimal": 59042
+    },
+    {
+      "icon_id": "19189766",
+      "name": "barrage-2",
+      "font_class": "barrage-2",
+      "unicode": "e6a5",
+      "unicode_decimal": 59045
+    },
+    {
+      "icon_id": "19189807",
+      "name": "barrage-1",
+      "font_class": "barrage-1",
+      "unicode": "e6a7",
+      "unicode_decimal": 59047
+    },
+    {
+      "icon_id": "35219685",
+      "name": "barrage",
+      "font_class": "barrage",
+      "unicode": "e6a4",
+      "unicode_decimal": 59044
+    },
+    {
+      "icon_id": "3905956",
+      "name": "音符",
+      "font_class": "yinfu",
+      "unicode": "e6a1",
+      "unicode_decimal": 59041
+    },
+    {
       "icon_id": "37442422",
       "name": "background-music-2",
       "font_class": "background-music-2",
@@ -1771,8 +1862,8 @@
     },
     {
       "icon_id": "1697872",
-      "name": "topic",
-      "font_class": "topic",
+      "name": "topic-2",
+      "font_class": "topic-2",
       "unicode": "e66f",
       "unicode_decimal": 58991
     }

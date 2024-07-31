@@ -20,7 +20,7 @@
       </li>
       <li class="li">
         <span class="label">设置类型</span>
-        <v-select :enums="[{value: 'select', name: '下拉框'}, {value: 'switch', name: '开关'}]" v-model:value="detail.text_type" :defaultValue="detail.text_type = detail.text_type ? detail.text_type : 'select'" />
+        <v-select :enums="[{value: 'input', name: '文本框'}, {value: 'select', name: '下拉框'}, {value: 'switch', name: '开关'}]" v-model:value="detail.text_type" :defaultValue="detail.text_type = detail.text_type ? detail.text_type : 'select'" />
       </li>
       <li class="li">
         <span class="label">消息描述</span>

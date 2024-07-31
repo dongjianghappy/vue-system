@@ -5,9 +5,9 @@
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-1">用户</td>
-        <td class="col-md-7">内容</td>
+        <td class="col-md-6">内容</td>
         <td class="col-md-2">发布时间</td>
-        <td class="col-md-1">操作</td>
+        <td class="col-md-2">操作</td>
       </tr>
       <tr v-for="(item, index) in dataList.list" :key="index">
         <td>
@@ -38,6 +38,9 @@
               <v-confirm name="审核" :data="{id: item.id, management_checked: 1, ...data }" type="text" api="checkContent" :render="render" operating="check" :auth="true"></v-confirm>
             </span>
             <span>
+              <ReturnDialog :data="{id: item.id, uid: item.uid, management_checked: -1, ...data }" :render="render" :auth="true" />
+            </span>
+            <span>
               <v-confirm name="删除" :data="{id: item.id, ...data }" type="text" api="delete" :render="render" operating="delete"></v-confirm>
             </span>
           </v-space>
@@ -60,10 +63,11 @@ import {
   useStore,
   codings
 } from '@/utils'
+import ReturnDialog from "../../../channel/article/components/returnDialog.vue"
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-
+    ReturnDialog
   },
   props: {
     data: {

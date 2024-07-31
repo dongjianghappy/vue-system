@@ -630,6 +630,10 @@ export const TEMPLATES = [
     value: 'singlepage.htm',
     name: '单页模板',
   },  
+  {
+    value: 'demo_article.htm',
+    name: '代码演示模板',
+  }, 
 ]
 
 export const enumSort = {

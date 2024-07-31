@@ -19,6 +19,9 @@
           <span>【{{item.image && item.image.length || 0}}张】</span>
           <Detail action="edit" :data="{id: item.id, ...data}" :param="param" :render="render" />
           <span class="right" style="width: 20px; height: 20px;" :style="{background: item.background_color}"></span>
+          <span class="right mr10" @click="handleDefault(item)">
+            <i class="iconfont icon-dot bold" :class="{'cl-red': item.isdefault == '1'}" />
+          </span>
         </div>
       </div>
     </div>
@@ -67,19 +70,33 @@ export default defineComponent({
 
     function handleChoose(param: any) {
       store.dispatch('common/Fetch', {
-        api: 'chooseStyle',
+        api: 'updateStatus',
         data: {
           coding: props.data.coding,
           id: param.id,
-          system: param.system
+          status: "system"
         }
       }).then(res => {
         props.render()
       })
     }
 
+    function handleDefault(param: any) {
+      store.dispatch('common/Fetch', {
+        api: 'chooseStyle',
+        data: {
+          coding: props.data.coding,
+          id: param.id,
+          isdefault: param.isdefault
+        }
+      }).then(res => {
+        props.render()
+      })
+    }    
+
     return {
       handleChoose,
+      handleDefault,
       defaultTheme
     }
   }

@@ -1,7 +1,7 @@
 <template>
 <div class="module-wrap">
   <div class="module-head">
-    <v-optionsbar title="代码种类">
+    <v-optionsbar title="分类管理">
       <template v-slot:extraright>
         <space>
           <Detail action='add' :data="{ coding }" :render="init" />
@@ -82,8 +82,11 @@ import {
   getCurrentInstance,
   onMounted,
   computed,
+  watch,
   ref,
-  codings
+  module,
+  codings,
+  useRoute
 } from '@/utils'
 import {
   useStore
@@ -98,15 +101,24 @@ export default defineComponent({
   },
   setup(props, context) {
     const store = useStore();
-    const coding: any = codings['code'].cate;
+    const route = useRoute()
+    const coding: any = ref(codings.module[module()].cate);
     const dataList: any = ref([])
     const checkedList: any = ref([])
+
+    // 监听路由
+    watch(route, (newValues, prevValues) => {
+      if(module()){
+        coding.value = codings.module[module()].cate;
+        init()
+      }
+    })
 
     function init() {
       store.dispatch('common/Fetch', {
         api: "cateList",
         data: {
-          coding: coding
+          coding: coding.value
         }
       }).then(res => {
         dataList.value = res.result

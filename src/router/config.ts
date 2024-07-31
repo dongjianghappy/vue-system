@@ -77,12 +77,15 @@ import UserGroup from '../views/user/group/index.vue'
 import UserSign from '../views/user/sign/index.vue'
 import UserGoldcoin from '../views/user/goldcoin/index.vue'
 import UserMedal from '../views/user/medal/index.vue'
+import CardHolder from '../views/user/cardholder/index.vue'
+import UserEnergy from '../views/user/energy/index.vue'
 import UserAudit from '../views/user/audit/index.vue'
 import UserBanuser from '../views/user/banuser/index.vue'
 import UserRecommend from '../views/user/recommend/index.vue'
 import UserSecurity from '../views/user/security/index.vue'
 import UserSetting from '../views/user/setting.vue'
 import UserVerified from '../views/user/verified/index.vue'
+import UserPrivilege from '../views/user/privilege/index.vue'
 
 
 // 个人信息
@@ -102,6 +105,7 @@ import Visit from '../views/statistics/visit/index.vue'
 import Domain from '../views/statistics/domain/index.vue'
 import Engine from '../views/statistics/engine/index.vue'
 import Ip from '../views/statistics/ip/index.vue'
+import StatisticsData from '../views/statistics/data/index.vue'
 import UserOnline from '../views/statistics/user/index.vue'
 import ManagerLoginLog from '../views/log/index.vue'
 import UserLoginLog from '../views/log/userLog.vue'
@@ -140,20 +144,28 @@ import Message from '../views/message/index.vue'
 import MessageSystem from '../views/message/system/index.vue'
 import MessageList from '../views/message/list/index.vue'
 
-import codeDefault from '../views/code/index.vue'
-import codeCate from '../views/code/cate/index.vue'
-import codeList from '../views/code/list/index.vue'
+import moduleCate from '../views/module/cate/index.vue'
+import codeList from '../views/module/code/index.vue'
+import toolList from '../views/module/tool/index.vue'
+import fileList from '../views/module/file/index.vue'
+import thirdBlogList from '../views/module/thirdBlog/index.vue'
+import officicalWebsiteList from '../views/module/officicalWebsite/index.vue'
+import tougaoList from '../views/module/tougao/index.vue'
+import modelList from '../views/module/model/index.vue'
+import questionBankList from '../views/module/questionBank/index.vue'
 
 import KnowledgeDefault from '../views/knowledge/index.vue'
 import CommonSenseCate from '../views/commonSense/cate/index.vue'
 import CommonSenseList from '../views/commonSense/list/index.vue'
 
+import Huodong from '../views/activity/index.vue'
+
 
 import Customize from '../views/customize/index.vue'
 import CustomizeList from '../views/customize/list.vue'
 
-import Vote from '../views/vote/index.vue'
-import VoteList from '../views/vote/list/index.vue'
+import Vote from '../views/module/vote/index.vue'
+import VoteList from '../views/module/vote/list/index.vue'
 
 import Robot from '../views/robot/robot/index.vue'
 import RobotVersion from '../views/robot/robot/version/index.vue'
@@ -257,6 +269,7 @@ const arrss: any = {
   Domain,
   Engine,
   Ip,
+  StatisticsData,
   UserOnline,
   // User,
   UserBasic,
@@ -270,6 +283,8 @@ const arrss: any = {
   UserSign,
   UserGoldcoin,
   UserMedal,
+  CardHolder,
+  UserEnergy,
   UserAudit,
   UserBanuser,
   UserRecommend,
@@ -290,6 +305,7 @@ const arrss: any = {
   SearchUser,
   UserSetting,
   UserVerified,
+  UserPrivilege,
   Personal,
   PersonalDefault,
   PersonalBasic,
@@ -329,10 +345,17 @@ const arrss: any = {
   UserLoginLog,
 //   Operating,
   Space,
-  codeDefault,
-  codeCate,
+  moduleCate,
   codeList,
+  toolList,
+  fileList,
+  thirdBlogList,
+  officicalWebsiteList,
+  tougaoList,
+  modelList,
+  questionBankList,
   CommonSenseCate,
+  Huodong,
   CommonSenseList,
 //   SettingChannel,
   Vote,

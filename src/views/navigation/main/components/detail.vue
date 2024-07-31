@@ -75,6 +75,14 @@
             <v-radio label="是" name="more_navigation" value="1" v-model:checked="detail.more_navigation" />
           </li>
           <li class="li">
+            <span class="label">icon图标</span>
+            <input type="text" v-model="detail.icon" placeholder="请输入icon图标" class="input-sm input-full" />
+          </li>
+          <li class="li">
+            <span class="label">颜色</span>
+            <input type="text" v-model="detail.color" placeholder="请输入颜色值" class="input-sm input-full" />
+          </li>
+          <li class="li">
             <span class="label">聚合标签</span>
             {{detail.flags}}
             <v-checkboxgroup :tagList="checkboxList" :checked="detail.flags" />
@@ -111,7 +119,9 @@ import {
   useStore,
   computed
 } from '@/utils'
-import {tabsNav} from '@/assets/const'
+import {
+  tabsNav
+} from '@/assets/const'
 import {
   NAV_TYPE,
 } from '@/assets/enum'

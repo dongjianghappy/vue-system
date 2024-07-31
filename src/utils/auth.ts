@@ -94,6 +94,23 @@ export const channels = () => {
 };
 
  // 将urlquery参数转换成对象形式
+export const module = () => {
+
+  const module: any = ['vote', 'thirdBlog', 'officicalWebsite', 'code', 'tool', 'file', 'tougao', 'model', 'questionBank']
+  debugger
+  const path_arr = window.location.pathname.split("/");
+  debugger
+  let item = ""
+  for(let i = 0; i < module.length; i++){
+    if(path_arr.indexOf(module[i]) > -1){
+      item = module[i]
+      break
+    }
+  }
+  return item;
+};
+
+ // 将urlquery参数转换成对象形式
  export const channelssss = () => {
   const module = window.location.pathname.split("/")[3] || "";
   const aaa: any = sessionStorage.getItem("channel");

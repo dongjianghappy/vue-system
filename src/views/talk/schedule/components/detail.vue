@@ -14,9 +14,24 @@
         <input v-model="detail.value" type="text" placeholder="请输入字段" class="input-sm input-full" />
       </li>
       <li class="li">
+        <span class="label">预览图</span>
+        <div style="overflow: hidden;">
+          <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: data.coding}" :dataList="detail.img" uploadtype="schedule" @imgList="image" :style="'width: 135px'" />
+        </div>
+      </li>
+      <li class="li">
         <span class="label">描述</span>
         <textarea v-model="detail.description" placeholder="请输描述" class="w-full"></textarea>
       </li>
+      <li class="li">
+        <span class="label">同步到动态</span>
+        <v-radiobutton name="method" v-model:checked="detail.sync" :enums="[{label: '是', value: '1'}, {label: '否', value: '0'}]" />
+      </li>
+      <li class="li">
+        <span class="label">能量绑定</span>
+        <span class="mr15">{{detail.energy_name}}</span>
+        <v-choose :data="{item: detail, coding: coding.energy}" v-model:checked="detail.energy_id" type="radio" @choose="choose" />
+      </li>      
     </ul>
   </template>
 </v-drawer>
@@ -24,6 +39,7 @@
 
 <script lang="ts">
 import {
+  codings,
   defineComponent,
   ref,
   useStore,
@@ -52,6 +68,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const store: any = useStore()
+    const coding: any = codings
     const isShow: any = ref(false)
     const drawer: any = ref(null)
     const upload: any = ref(null);
@@ -74,12 +91,20 @@ export default defineComponent({
       const {
         id,
         name,
-        value
+        value,
+        energy_id,
+        description,
+        sync
       } = detail.value
 
       const param: any = {
         name,
         value,
+        img: img.value,
+        energy_id,
+        description,
+        sync,
+        system: '1',
         coding: props.data.coding
       }
       if (props.action === 'edit') {
@@ -103,14 +128,24 @@ export default defineComponent({
       img.value = a
     }
 
+    function choose(param: any) {
+      const {
+        data
+      } = param
+      detail.value.energy_id = data.id
+      detail.value.energy_name = data.name
+    }      
+
     return {
+      coding,
       isShow,
       drawer,
       upload,
       detail,
       image,
       chooseColor,
-      submit
+      submit,
+      choose
     }
   }
 })

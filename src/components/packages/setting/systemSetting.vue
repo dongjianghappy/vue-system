@@ -263,9 +263,10 @@ export default defineComponent({
         dataList.value = res.result
 
         dataList.value.map((item: any) => {
-          item.list.map((list: any) => {
+          item.list && item.list.map((list: any) => {
 
             if (list.text_type != 'switch') {
+              debugger
               if (list.text_type === 'checkbox') {
                 let arr = list.value.split(',')
                 form.value[list.name] = list.value ? arr : []

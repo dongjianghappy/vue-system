@@ -15,7 +15,7 @@
       <template v-slot:extra v-if="auth.checked('add')">
         <v-space>
           <Detail :data="{ coding: coding.config }" :render="init" />
-          <v-setting :data="{channel_id: 0, coding: coding.channel_config}" :auth="auth.checked('display')" />
+          <v-setting :data="{website, coding: coding.channel_config}" />
         </v-space>
       </template>
       <template v-slot:content1>

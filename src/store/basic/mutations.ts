@@ -17,14 +17,14 @@ const mutations = {
   },
   setSearchDefault: (state: any, params: any) => {
     const result = [];
-    debugger
     for(let i=0,len=params.hot.length;i<len;i+=5){
       result.push(params.hot.slice(i,i+5));
     }  
-    debugger
     params.find = result
-debugger
     state.searchDefault = params
+  },
+  setDataStatistics: (state: any, params: any) => {
+    state.dataStatistics = params
   },
   // 友情链接
   setLink: (state: any, params: any) => {

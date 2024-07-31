@@ -1,38 +1,16 @@
 <template>
-<div class="module-wrap">
-  <div class="module-head">
-    <v-optionsbar title="日程">
-      <template v-slot:extraright>
-        <Detail :data="{ coding }" :render="init" />
-      </template>
-    </v-optionsbar>
-  </div>
-  <div class="module-content plr15">
-    <table class="table-striped table-hover col-left-23">
-      <tr class="th">
-        <td class="col-md-1">名称</td>
-        <td class="col-md-8">描述</td>
-        <td class="col-md-1">状态</td>
-        <td class="col-md-2">操作</td>
-      </tr>
-      <tr v-for="(item, index) in dataList" :key="index" :index="index">
-        <td>
-          {{item.name}}
-        </td>
-        <td>
-          {{item.description}}
-        </td>
-        <td>
-          {{item.name}}
-        </td>
-        <td>
-          <Detail action="edit" :data="{ id: item.id, coding }" :render="init" />
-        </td>
-
-      </tr>
-    </table>
-    <v-nodata :data="dataList" />
-  </div>
+<div class="bg-white">
+  <v-tabs :tabs="tabsSchedule">
+    <template v-slot:extra>
+      <Detail :data="{ coding }" :render="init" />
+    </template>
+    <template v-slot:content1>
+      <List :render="init" :data="{ coding }" :dataList="dataList" :tabsIndex='tabsIndex' />
+    </template>
+    <template v-slot:content2>
+      <List2 :render="init" :data="{ coding }" :dataList="dataList" :tabsIndex='tabsIndex' />
+    </template>
+  </v-tabs>
 </div>
 </template>
 
@@ -48,13 +26,17 @@ import {
   codings
 } from '@/utils'
 import {
-  tabsSign
+  tabsSchedule
 } from '@/assets/const'
+import List from './components/list.vue'
+import List2 from './components/list2.vue'
 import Detail from './components/detail.vue'
 
 export default defineComponent({
   name: 'IndexView',
   components: {
+    List,
+    List2,
     Detail
   },
   setup(props, context) {
@@ -69,7 +51,7 @@ export default defineComponent({
 
     // 监听路由
     watch(route, (newValues, prevValues) => {
-      if (route.path === '/admin/talk/sign') {
+      if (route.path === '/admin/talk/schedule') {
         tabsIndex.value = route.query.type
         init()
       }
@@ -80,7 +62,8 @@ export default defineComponent({
 
       store.dispatch('common/Fetch', {
         data: {
-          coding: coding
+          coding: coding,
+          system: tabsIndex.value === "1" ? 0 : 1
         }
       }).then(res => {
         dataList.value = res.result
@@ -90,7 +73,7 @@ export default defineComponent({
     onMounted(init)
 
     return {
-      tabsSign,
+      tabsSchedule,
       coding,
       tabsIndex,
       init,

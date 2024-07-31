@@ -1,21 +1,21 @@
 <template>
-<v-button v-model:show="isShow" :disabled="true">
-  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />
+<v-button v-model:show="isShow">
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增选项"}}
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增系统设置" :style="{width: '520', height: '300'}" @submit="submit">
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑选项' : '新增选项'" :data="data" :style="{width: '520', height: '320'}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">名称</span>
-        <input type="text" v-model="detail.remark" placeholder="请输入页面名称" class="input-sm input-full" />
+        <input v-model="detail.name" type="text" placeholder="请输入名称" class="input-sm input-full" />
       </li>
       <li class="li">
-        <span class="label">字段</span>
-        <input type="text" v-model="detail.name" placeholder="请输入页面名称" class="input-sm input-full" />
+        <span class="label">能量值</span>
+        <input v-model="detail.value" type="text" placeholder="请输入能量值" class="input-sm input-100" />
       </li>
       <li class="li">
-        <span class="label">文本类型</span>
-        <v-select :enums="textType" v-model:value="detail.text_type" :defaultValue="detail.text_type = detail.text_type ? detail.text_type : 'switch'" />
+        <span class="label">能量说明</span>
+        <textarea v-model="detail.description" placeholder="请输入能量说明" class="w-full"></textarea>
       </li>
     </ul>
   </template>
@@ -29,15 +29,9 @@ import {
   useStore,
   watch,
 } from '@/utils'
-import {
-  TEXT_TYPE,
-} from '@/assets/enum'
 
 export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
+  name: 'v-Detail',
   props: {
     action: {
       type: String,
@@ -57,11 +51,10 @@ export default defineComponent({
     }
   },
   setup(props, context) {
-    const store = useStore()
+    const store: any = useStore()
     const isShow: any = ref(false)
     const dialog: any = ref(null)
     const detail: any = ref({})
-    const textType = TEXT_TYPE
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
@@ -70,35 +63,29 @@ export default defineComponent({
       }
     })
 
-    function submit(cancel: any) {
+    function submit(params: any) {
 
       const {
-        fid,
+        id,
         name,
         value,
-        sort,
-        text_type,
-        remark
+        description
       } = detail.value
 
       const param: any = {
-        fid: fid || props.data.fid,
         name,
         value,
-        sort,
-        text_type,
-        remark
+        description,
+        coding: props.data.coding
       }
-
-      if (props.action !== "add") { //  && props.param
-        param.id = detail.value.id
+      if (props.action === 'edit') {
+        param.id = id
       }
 
       store.dispatch('common/Fetch', {
-        api: props.action !== "add" ? 'update' : "insert",
+        api: props.action !== 'add' ? 'update' : 'insert',
         data: {
-          coding: props.data.coding,
-          ...param
+          ...param,
         }
       }).then(() => {
         props.render()
@@ -107,10 +94,9 @@ export default defineComponent({
     }
 
     return {
-      dialog,
       isShow,
+      dialog,
       detail,
-      textType,
       submit
     }
   }

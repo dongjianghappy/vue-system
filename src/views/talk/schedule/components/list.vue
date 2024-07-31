@@ -1,33 +1,36 @@
 <template>
-<div class="module-wrap">
-  <div class="module-head">
-    <v-optionsbar title="用户签到">
+<div>
+  <table class="table-striped table-hover col-left-23">
+    <tr class="th">
+      <td class="col-md-1">名称</td>
+      <td class="col-md-4">描述</td>
+      <td class="col-md-2">能量</td>
+      <td class="col-md-2">同步到动态</td>
+      <td class="col-md-1">状态</td>
+      <td class="col-md-2">操作</td>
+    </tr>
+    <tr v-for="(item, index) in dataList" :key="index" :index="index">
+      <td>
+        {{item.name}}
+      </td>
+      <td>
+        {{item.description}}
+      </td>
+      <td>
+        {{item.energy_name || '-'}}
+      </td>
+      <td>
+        {{item.sync === '1' ? '是' : '否'}}
+      </td>
+      <td>
+        <v-switch :data="{ item, field: 'status', coding: data.coding }" :auth="true" />
+      </td>
+      <td>
+        <Detail action="edit" :data="{ id: item.id, coding: data.coding }" :render="init" />
+      </td>
 
-    </v-optionsbar>
-  </div>
-  <div class="module-content p15">
-    <table class="table-striped table-hover col-left-1">
-      <tr class="th">
-        <td class="col-md-8">用户</td>
-        <td class="col-md-2">签到时间</td>
-        <td class="col-md-2">操作</td>
-      </tr>
-      <tr v-for="(item, index) in dataList" :key="index" :index="index">
-        <td>
-          {{item.name}}
-        </td>
-        <td>
-          {{item.times}}
-        </td>
-        <td>
-          <v-space>
-           
-          </v-space>
-        </td>
-      </tr>
-    </table>
-    <v-nodata :data="dataList" />
-  </div>
+    </tr>
+  </table>
 </div>
 </template>
 
@@ -35,8 +38,12 @@
 import {
   defineComponent,
 } from '@/utils'
+import Detail from './detail.vue'
 export default defineComponent({
   name: 'ListView',
+  components: {
+    Detail
+  },
   props: {
     dataList: {
       type: Object,

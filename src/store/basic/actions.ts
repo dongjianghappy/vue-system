@@ -52,7 +52,16 @@ const actions = {
 
     context.commit("setSearchDefault" , result.result);
     return result
-  },  
+  }, 
+  dataStatistics: async (context: { commit: Commit; state: any}, params: any = {}) => {
+    const data = params.data || {}
+    const { result }:any = await api.dataStatistics({
+      ...data
+    })
+
+    context.commit("setDataStatistics" , result.result);
+    return result
+  },
 
   // 友情链接
   linkAction: async (context: { commit: Commit; state: any}, params: any = {}) => {

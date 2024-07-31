@@ -61,7 +61,7 @@
         </v-popover>
         <!-- <v-condition name="颜色" icon="font-colors" field="color" :enums="colorList" :render="init" v-if="channelData.module ==='picture'" /> -->
         <v-toggledisplay v-model:toggle="toggleDisplay" />
-        <v-button @onClick="handleClick('add')" :disabled="auth.checked('add')" v-if="channelData.module !=='picture' && channelData.module !=='video' && channelData.module !=='source' && channelData.module !=='design' && channelData.module !=='office' && channelData.module !=='website' && channelData.module !=='words' && channelData.module !=='digital'">
+        <v-button @onClick="handleClick('add')" :disabled="auth.checked('add')" v-if="channelData.module !=='picture' && channelData.module !=='video' && channelData.module !=='source' && channelData.module !=='design' && channelData.module !=='office' && channelData.module !=='website' && channelData.module !=='words' && channelData.module !=='digital' && channelData.module !=='funny'">
           <i class="iconfont icon-anonymous-iconfont" />新增文档
         </v-button>
         <PictureDetail :coding="coding" :render="init" v-else-if="channelData.module ==='picture'" />
@@ -71,6 +71,7 @@
         <WebsiteDetail :coding="coding" :render="init" v-else-if="channelData.module ==='website'" />
         <WordsDetail :coding="coding" :render="init" v-else-if="channelData.module ==='words'" />
         <DigitalDetail :coding="coding" :render="init" v-else-if="channelData.module ==='digital'" />
+        <FunnyDetail :coding="coding" :render="init" v-else-if="channelData.module ==='funny'" />
         
         <uploadVideo :coding="coding" v-else />
       </v-space>
@@ -128,6 +129,7 @@ import WebsiteDetail from '../website/components/detail.vue'
 import WordsDetail from '../words/components/detail.vue'
 import DigitalList from '../digital/index.vue'
 import DigitalDetail from '../digital/components/detail.vue'
+import FunnyDetail from '../funny/components/detail.vue'
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
@@ -144,7 +146,8 @@ export default defineComponent({
     WebsiteDetail,
     WordsDetail,
     DigitalList,
-    DigitalDetail
+    DigitalDetail,
+    FunnyDetail
   },
   props: {
     type: {

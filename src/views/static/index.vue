@@ -3,11 +3,14 @@
   <div class="module-head">
     <v-optionsbar title="静态生成">
       <template v-slot:extraright v-if="auth.checked('server')">
-        <v-popover :content="`服务器:${enumServer[serve]}`" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`">
-          <ul class="font14" style="display: block">
-            <li v-for="(item, index) in enumServer" :key="index" style="height: 32px" @click="handleSelectServer(index)">{{item}}</li>
-          </ul>
-        </v-popover>
+        <space>
+          <Detail :data="{serve, dataList: currentKind}" />
+          <v-popover :content="`服务器:${enumServer[serve]}`" arrow="tb" offset="right" :move="-20" :keys="`static_${index}`">
+            <ul class="font14" style="display: block">
+              <li v-for="(item, index) in enumServer" :key="index" style="height: 32px" @click="handleSelectServer(index)">{{item}}</li>
+            </ul>
+          </v-popover>
+        </space>
       </template>
     </v-optionsbar>
   </div>
@@ -54,11 +57,15 @@ import {
 } from '@/utils'
 import Progress from './components/progress.vue';
 import Card from './components/card.vue';
+import Detail from './components/detail.vue';
+import Space from '@/components/public/Space.vue';
 export default defineComponent({
   name: 'Static',
   components: {
     Progress,
-    Card
+    Card,
+    Detail,
+    Space
   },
   setup(props, context) {
     const {
@@ -71,6 +78,7 @@ export default defineComponent({
       'none': '请选择'
     }
     const serve: any = ref("none")
+    const currentKind: any = ref([])
 
     function init() {
       store.dispatch('basic/Fetch', {
@@ -86,6 +94,20 @@ export default defineComponent({
 
       store.dispatch('common/Channel', {
         api: 'static'
+      }).then((res: any) => {
+        // 素材种类初始化
+        res.result.map((item: any) => {
+          if (item.model === 'source') {
+           currentKind.value = item.list.map((item: any) => {
+              return {
+                ...item,
+                limitStart: '1',
+                limitEnd: item.num,
+                sort: 'desc'
+              }
+            })
+          }
+        })
       })
     }
 
@@ -100,6 +122,7 @@ export default defineComponent({
       enumServer,
       channel,
       handleSelectServer,
+      currentKind,
       auth: proxy.$auth.init('statics')
     }
   }

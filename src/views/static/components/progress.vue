@@ -101,8 +101,8 @@ export default defineComponent({
                 method,
                 total: res.result.total
               }
-            if(res.result.type){
-              param.type = res.result.type
+            if(res.result.isChannel){
+              param.isChannel = res.result.isChannel
             }
 
             run({

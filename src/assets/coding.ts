@@ -321,16 +321,14 @@ const codings: any = {
     praise: "U0290004",
     collect: "U0290005",
   },  
+  activity: 'U0500003',
   advertisement: "U0500000",
   advertisement_position: "U0500001",
   appstore: 'U0500002',
+  cardholder: 'U0520014',
   config: 'U0520004',
   channel: 'U0520000',
   channel_config: 'U0520001',
-  code: {
-    art: 'U0520002',
-    cate: 'U0520003'
-  },
   common_sense: {
     art: "U0520012",
     cate: "U0520013"
@@ -342,7 +340,7 @@ const codings: any = {
   knowledge: {
     art: 'U0600000',
     cate: 'U0600001'
-  },
+  }, 
   message: {
     system: 'U0620051',
     list: 'U0620049',
@@ -363,16 +361,51 @@ const codings: any = {
     art: 'U0550001'
   },
   goldcoin: "U0560000",
-  vote: {
-    cate: 'U0580000',
-    art: 'U0580001',
-    details: 'U0580002'
-  },
   links: 'U0610001',
   mood: {
     list: 'U0620030',
     cate: 'U0620031',
     system: 'U0620037'
+  },
+  module: {
+    vote: {
+      art: 'U0580000',
+      cate: 'U0580001',
+      details: 'U0580003'
+    },
+    thirdBlog: {
+      art: 'U0690007',
+      cate: 'U0690008'
+    },
+    officicalWebsite: {
+      art: 'U0640000',
+      cate: 'U0640001'
+    },
+    code: {
+      art: 'U0520002',
+      cate: 'U0520003'
+    },
+    tougao: {
+      art: 'U0690005',
+      cate: 'U0690006'
+    },
+    file: {
+      art: 'U0550002',
+      cate: 'U0550003',
+      download: 'U0550004'
+    },
+    tool: {
+      art: 'U0690003',
+      cate: 'U0690004'
+    },
+    model: {
+      art: 'U0620053',
+      cate: 'U0620054'
+    },
+    questionBank: {
+      art: 'U0660002',
+      cate: 'U0660003'
+    } 
   },
   medal: 'U0620045',
   collection: {
@@ -437,11 +470,13 @@ const codings: any = {
   tag: 'U0690000',
   theme: 'U0690001',
   effects: 'U0690002',
+  energy: 'U0540002',
   user: {
     list: 'U0700000',
     banuser: 'U0700001',
     blog: 'U0700002',
     blog_extend: 'U0700026',
+    cardholder: 'U0700042',
     concern: 'U0700003',
     config: "U0620009",
     grade: 'U0700004',
@@ -480,8 +515,9 @@ const codings: any = {
     schedule: {
       cate: 'U0700032',
       list: 'U0700033'
-    }
-
+    },
+    privilege: 'U0700043',
+    energy: 'U0700045'
   }
 };
 

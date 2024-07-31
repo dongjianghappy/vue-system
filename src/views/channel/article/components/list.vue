@@ -47,6 +47,7 @@
         <DesignDetail action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'design'" />
         <OfficeDetail action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'office'" />
         <WordsDetail action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'words'" />
+        <FunnyDetail action="edit" :data="{id: item.id}" :coding="data.coding" :param="param" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'funny'" />
         <v-button @click="handleClick(item)" :disabled="auth.checked('edit')" v-else >
           编辑
         </v-button>
@@ -130,6 +131,7 @@ import SourceDetail from '../../source/components/detail.vue'
 import DesignDetail from '../../design/components/detail.vue'
 import OfficeDetail from '../../office/components/detail.vue'
 import WordsDetail from '../../words/components/detail.vue'
+import FunnyDetail from '../../funny/components/detail.vue'
 
 export default defineComponent({
   name: 'v-Search',
@@ -138,7 +140,8 @@ export default defineComponent({
     SourceDetail,
     DesignDetail,
     OfficeDetail,
-    WordsDetail
+    WordsDetail,
+    FunnyDetail
   },
   props: {
     data: {

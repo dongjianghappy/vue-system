@@ -29,6 +29,11 @@ const api:any =  {
     return http.request('vue', 'defaultStatistics', 'post', params)
   },
 
+  // 数据统计
+  dataStatistics(params: any) {
+    return http.request('vue', 'dataStatistics', 'post', params)
+  },
+
   // 默认数据
   talkDefaultStatistics(params: any) {
     return http.request('vue', 'talkDefaultStatistics', 'post', params)
@@ -297,6 +302,12 @@ const api:any =  {
   appstore(params: any) {
     return http.request('vue', 'appstore', 'post', params)
   },
+
+  // 获取功能模块
+  getAppstore(params: any) {
+    return http.request('vue', 'getAppstore', 'post', params)
+  },
+
   // 静态生成列表
   static(params: any) {
     return http.request('vue', 'staticList', 'post', params)
@@ -794,6 +805,10 @@ close (params: any) {
   // 导入表情
   importEmoticons (params: any) {
     return http.request('vue', 'importEmoticons', 'post', params)
+  } ,   
+
+  channelSetting (params: any) {
+    return http.request('vue', 'channelSetting', 'post', params)
   } ,   
   
   

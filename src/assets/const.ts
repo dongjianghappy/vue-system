@@ -354,19 +354,80 @@ export const MODUDLE = [
     icon: 'robot',
   },
 	{
-    module: 'code',
-    value: 'code',
-    name: '代码库',
-    type: 'plate',
-    icon: 'robot',
-  },
-	{
     module: 'commonSense',
     value: 'commonSense',
     name: '常识',
     type: 'plate',
     icon: 'robot',
   },
+	{
+    module: 'activity',
+    value: 'activity',
+    name: '活动',
+    type: 'plate',
+    icon: 'robot',
+  },
+	
+]
+
+// 模块
+export const MODUDLE2 = [
+	{
+    module: 'thirdBlog',
+    value: 'thirdBlog',
+    name: '博客收录',
+    type: 'plate',
+    icon: 'blog-1',
+  },
+	{
+    module: 'officicalWebsite',
+    value: 'officicalWebsite',
+    name: '官网',
+    type: 'plate',
+    icon: 'website',
+  },
+	{
+    module: 'code',
+    value: 'code',
+    name: '基础知识',
+    type: 'plate',
+    icon: 'robot',
+  },
+	{
+    module: 'tool',
+    value: 'tool',
+    name: '在线工具',
+    type: 'plate',
+    icon: 'tool',
+  },
+	{
+    module: 'file',
+    value: 'file',
+    name: '文件',
+    type: 'plate',
+    icon: 'robot',
+  },
+	{
+    module: 'model',
+    value: 'model',
+    name: '大模型',
+    type: 'plate',
+    icon: 'robot',
+  },
+	{
+    module: 'tougao',
+    value: 'tougao',
+    name: '投稿',
+    type: 'plate',
+    icon: 'mail',
+  },
+	{
+    module: 'questionBank',
+    value: 'questionBank',
+    name: '题库',
+    type: 'plate',
+    icon: 'knowledge',
+  }		
 ]
 
 // 导航编辑
@@ -516,6 +577,18 @@ export const tabsTalk = [
 	},
 	{
 		name: "正在审核",
+		value: "advertisement2"
+	}
+]
+
+// 日程管理
+export const tabsSchedule = [
+	{
+		name: "系统日程",
+		value: "advertisement1"
+	},
+	{
+		name: "用户日程",
 		value: "advertisement2"
 	}
 ]

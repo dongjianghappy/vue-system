@@ -1,7 +1,7 @@
 <template>
 <div class="module-wrap">
   <div class="module-head">
-    <v-optionsbar title="代码管理">
+    <v-optionsbar title="工具管理">
       <template v-slot:extraright>
         <Detail :coding="coding" :render="init" />
       </template>
@@ -47,7 +47,9 @@
       </tr>
     </table>
     <v-nodata :data="dataList.list || []" />
-    <v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="init" :auth="auth" />
+    <div class="mt15 align_right">
+      <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="init" />
+    </div>
   </div>
 </div>
 </template>
@@ -73,7 +75,7 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
     const dataList = computed(() => store.getters['basic/partner']);
-    const coding: any = codings['code'];
+    const coding: any = codings.module['tool'];
     const checkedList: any = ref([])
     const pagesize: any = 10
 

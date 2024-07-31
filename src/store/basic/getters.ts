@@ -4,6 +4,7 @@ const getters = {
   channelDefault:  (state: any) => state.channelDefault || {},
   userDefault: (state: any) => state.userDefault || {},
   searchDefault: (state: any) => state.searchDefault || {},
+  dataStatistics: (state: any) => state.dataStatistics || {},
   links: (state: any) => state.links || {},
   link1: (state: any) => state.links.link1 || {},
   link2: (state: any) => state.links.link2 || {},

@@ -19,7 +19,7 @@
         <td>{{item.name}}</td>
         <td>{{item.vote}}</td>
         <td>
-          <v-switch :data="{ item, field: 'status', coding }" :auth="true" />
+          <v-switch :data="{ item, field: 'checked', coding }" :auth="true" />
         </td>
         <td>
           <v-space>
@@ -32,6 +32,9 @@
             </span>
             <span>
               <v-confirm name="删除" :data="{id: item.id, coding }" type="text" api="delete" :render="init" operating="delete"></v-confirm>
+            </span>
+            <span>
+              <v-confirm icon="top" :className="item.istop === '1' ? 'cl-red' : ''" :data="{id: item.id, field: 'istop', value: item.istop === '1' ? '0' : '1', coding }" type="text" api="changeData" :render="init" operating="setTop" :auth="true"></v-confirm>
             </span>
           </v-space>
         </td>
@@ -59,7 +62,7 @@ export default defineComponent({
     Detail
   },
   setup(props, context) {
-    const coding: any = codings['vote'].cate;
+    const coding: any = codings.module['vote'].art;
     const store = useStore();
     const router: any = useRouter();
     const dataList: any = ref([])

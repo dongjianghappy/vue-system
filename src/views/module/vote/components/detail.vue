@@ -13,6 +13,11 @@
         <input v-model="detail.name" type="text" placeholder="请输入投票名称" class="input-sm input-full" />
       </li>
       <li class="li">
+        <span class="label">所属分类</span>
+        {{detail.parent}}
+        <v-category name="选择分类" :data="{item: detail, coding: codings.module.vote.cate}" :isMore="true" type="text"></v-category>
+      </li>
+      <li class="li">
         <span class="label">话题绑定</span>
         <span class="mr15">{{detail.talk_name}}</span>
         <v-choose title="选择话题" :data="{ item: detail, field: 'talk_id', coding: codings.talk.activity }" v-model:checked="detail.talk_id" @choose="choose" type="radio" />
@@ -151,6 +156,7 @@ export default defineComponent({
     function submit(params: any) {
       const {
         id,
+        fid,
         name,
         talk_id,
         start_time,
@@ -174,6 +180,7 @@ export default defineComponent({
 
       const param: any = {
         name,
+        fid,
         talk_id,
         start_time,
         last_time,

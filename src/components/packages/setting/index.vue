@@ -2,41 +2,20 @@
 <v-button v-model:show="isShow" :disabled="auth">
   站点设置
 </v-button>
-<v-drawer v-model:show="isShow" title="展示设置" :style="{width: data.channel_id === 0 ? '350' : '500'}" :hasfooter="false">
+<v-drawer v-model:show="isShow" title="站点设置" :style="{width: '600'}" :hasfooter="false" :auth="auth">
   <template v-slot:extra>
-    <AddModule :data="data" :render="init" />
+    <SettingType action="add" :data="{coding: data.coding.setting_type}" :website="data.website" />
   </template>
   <template v-slot:content>
-    <!-- 网站首页设置 -->
-    <div class="channel-box" v-if="data.channel_id === 0">
-      <ul class="form-wrap-box">
-        <li class="li mb15" v-for="(item, index) in dataList" :key="index">
-          <span class="label">
-            {{item.name}}
-            <AddModule :data="{id: item.id, ...data}" :render="init" action="edit" />
-          </span>
-          <v-switch :data="{ item, field: 'index_page', ...data }" className="right" :auth="true" />
-        </li>
-      </ul>
-    </div>
-    <!-- 网站频道设置 -->
-    <table class="table-striped table-hover col-left-1" v-else>
-      <tr class="th">
-        <td class="col-md-4">名称</td>
-        <td class="col-md-2">首页 </td>
-        <td class="col-md-2">栏目页</td>
-        <td class="col-md-2">详情页</td>
-      </tr>
-      <tr v-for="(item, index) in dataList" :key="index">
-        <td>
-          {{item.name}}
-          <AddModule :data="{id: item.id, ...data}" :render="init" action="edit" />
-        </td>
-        <td><v-switch :data="{ item, field: 'index_page', ...data }" className="right" :auth="true" /></td>
-        <td><v-switch :data="{ item, field: 'list_page', ...data }" className="right" :auth="true" /></td>
-        <td><v-switch :data="{ item, field: 'detail_page', ...data }" className="right" :auth="true" /></td>
-      </tr>
-    </table>
+    <v-tabs :tabs="data.website" v-model:value="currentValue" :isEmit="true">
+      <template v-slot:extra>
+
+      </template>
+      <template v-slot:[`content${index+1}`] v-for="(item, index) in data.website" :key="index">
+        <ModleSetting :data="{coding: data.coding}" :dataList="dataList.filter(item => item.website_id == index+1)" :website="data.website" />  
+      </template>
+    
+    </v-tabs>
   </template>
 </v-drawer>
 </template>
@@ -49,31 +28,27 @@ import {
   defineComponent,
   getCurrentInstance,
   ref,
-  watch
-} from 'vue'
-import AddModule from './addModule.vue'
+  watch,
+  computed
+} from '@/utils'
+import {
+  tabsSetting
+} from '@/assets/const'
+import SettingType from './addSiteModule.vue'
+import AddSetting from './addSetting.vue'
+import ModleSetting from './modleSetting.vue'
 export default defineComponent({
   name: 'v-Search',
   components: {
-    AddModule
+    SettingType,
+    AddSetting,
+    ModleSetting
   },
   props: {
     data: {
       type: Object,
       default: () => {
         return {}
-      }
-    },
-    dataList: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    setRoute: {
-      type: Function,
-      default: () => {
-        return
       }
     },
     auth: {
@@ -89,7 +64,76 @@ export default defineComponent({
     const store = useStore()
 
     const isShow: any = ref(false)
+    const currentValue: any = ref("manage")
     const dataList: any = ref([])
+    const setting = computed(() => store.getters['user/setting']);
+    const form: any = ref({
+      pagesize: ''
+    })
+    const menus: any = computed(() => {
+
+      const ssss: any = {
+        field: [{
+            name: 'title',
+            value: '标题',
+            tag: 'title'
+          },
+          {
+            name: 'description',
+            value: '描述',
+            tag: 'description'
+          },
+          {
+            name: 'content',
+            value: '内容',
+            tag: 'content'
+          }
+        ],
+        condition: [{
+          name: 'source',
+          value: '审核通过',
+          tag: 'checked'
+        }],
+        time: [{
+            value: 'all',
+            name: '全部时间',
+          },
+          {
+            value: 'day',
+            name: '最近一天',
+          },
+          {
+            value: 'week',
+            name: '最近一周',
+          },
+          {
+            value: 'month',
+            name: '最近一月',
+          },
+          {
+            value: 'year',
+            name: '最近一年',
+          }
+        ],
+      }
+
+      let aaa = store.getters['user/channel']
+      let arr: any = [{
+        name: 'member_talk',
+        value: '朋友圈',
+        tag: 'member_talk'
+      }]
+      aaa.forEach((item: any) => {
+        debugger
+        arr.push({
+          name: item.module,
+          value: item.name,
+          tag: item.module
+        })
+      })
+      ssss.channel = arr
+      return ssss
+    });
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
@@ -100,22 +144,72 @@ export default defineComponent({
 
     function init() {
       store.dispatch('common/Fetch', {
+        api: "channelSetting"
+      }).then(res => {
+        dataList.value = res.result
+
+        dataList.value.map((item: any) => {
+          item.list.map((list: any) => {
+
+            if (list.text_type != 'switch') {
+              if (list.text_type === 'checkbox') {
+                let arr = list.value.split(',')
+                form.value[list.name] = list.value ? arr : []
+              } else {
+                form.value[list.name] = list.value
+              }
+            }
+          })
+
+        })
+      })
+    }
+
+    function getValue(param: any) {
+      store.commit('user/setSettingValue', {
+        ...param
+      })
+    }
+
+    function save(param: any, name: any) {
+      const params: any = {}
+      if (menus.value[name] === undefined) {
+        params[name] = param.currentTarget.value
+        debugger
+      } else {
+        let value: any = []
+        menus.value[name].forEach((item: any) => {
+          if (param.indexOf(item.name) > -1) {
+            value.push(item.name)
+          }
+        })
+
+        params[name] = value.join(',')
+      }
+
+      store.dispatch('common/Fetch', {
+        api: 'updateInfo',
         data: {
-          page: 1,
-          pagesize: 30,
-          sorter: 'sort asc',
-          ...props.data
+          coding: "U0680015",
+          ...params
         }
       }).then(res => {
-        dataList.value = res.result.list
+        debugger
       })
     }
 
     return {
       isShow,
+      currentValue,
       dataList,
+      setting,
       module,
       init,
+      getValue,
+      tabsSetting,
+      form,
+      menus,
+      save
     }
   }
 })

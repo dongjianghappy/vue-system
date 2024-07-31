@@ -58,6 +58,12 @@
             <li @click="handelClick({type: 'code', value: 2})">
               JavaScript
             </li>
+            <li @click="handelClick({type: 'code', value: 3})">
+              PHP
+            </li>
+            <li @click="handelClick({type: 'code', value: 4})">
+              Mysql
+            </li>            
           </ul>
         </v-popover>
 
@@ -180,6 +186,18 @@ ${'```'}`
       {
         name: 'javaScript',
               value: `${'```javaScript'}
+
+${'```'}`
+      },
+      {
+        name: 'php',
+              value: `${'```php'}
+
+${'```'}`
+      },
+      {
+        name: 'mysql',
+              value: `${'```mysql'}
 
 ${'```'}`
       }

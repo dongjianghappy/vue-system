@@ -31,7 +31,7 @@
                   <v-tag v-model:tags="detail.tag" />
                 </div>
               </li>
-                            <li class="vertical">
+              <li class="vertical">
                 <div class="label">描述</div>
                 <div>
                   <textarea placeholder="请输入单页描述" v-model="detail.description" class="w-full"></textarea>
@@ -116,6 +116,13 @@
             <div>
               <input type="text" v-model="detail.source" placeholder="请输入来源名称" class="input-sm input-full mb10" />
               <input type="text" v-model="detail.source_url" placeholder="请输入来源地址" class="input-sm input-full" />
+            </div>
+          </li>
+          <li class="vertical">
+            <div class="label">锚点</div>
+            <div>
+            <v-radio label="是" name="anchor" value="1" v-model:checked="detail.anchor" />
+            <v-radio label="否" name="anchor" value="0" v-model:checked="detail.anchor" />
             </div>
           </li>
         </ul>
@@ -279,6 +286,7 @@ export default defineComponent({
         tag,
         color,
         flags,
+        anchor,
         style
       } = detail.value
 
@@ -307,6 +315,7 @@ export default defineComponent({
           content: markdown ? marked.parse(markdown) : "",
           markdown,
           tag: tag ? tag.join(',') : "",
+          anchor,
           flags: flags ? `|${flags.join("|")}|` : "",
           color: color ? `|${color.join("|")}|` : "",
           style: JSON.stringify(style),

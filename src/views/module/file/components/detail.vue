@@ -4,6 +4,9 @@
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑内容' : '新增内容' " :data="{...data, coding: coding.art}" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
+    <div class="pt50 hide" style="text-align: center;">
+      <v-upload ref="upload" @imgList="image" v-model:haschoose="file" :show="false" file="file" v-model:file="fileInfo" uploadtype="file" format=".js" />
+    </div>
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">标题</span>
@@ -11,12 +14,7 @@
           <div style="flex: 1">
             <input v-model="detail.title" type="text" placeholder="请输入标题" class="input-sm input-full" :style="[detail.style]" />
           </div>
-          <v-titleattribute :style="detail.style || {}" :setStyle="(param) => detail.style = param" />
         </div>
-      </li>
-      <li class="li">
-        <span class="label">文件名称</span>
-        <input v-model="detail.html" type="text" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">显示</span>
@@ -24,22 +22,24 @@
         <v-radio label="否" name="checked" value="0" v-model:checked="detail.checked" />
       </li>
       <li class="li">
-        <span class="label">tag标签</span>
-        <v-tag v-model:tags="detail.tag" />
-      </li>
-      <li class="li">
         <span class="label">所属分类</span>
         {{detail.parent}}
-        <v-category name="选择分类" :data="{item: detail, coding: coding.cate}" :isCurrent="true" type="text"></v-category>
-
+        <v-category name="选择分类" :data="{item: detail, coding: coding.cate}" :isMore="true" type="text"></v-category>
       </li>
       <li class="li">
         <span class="label">描述</span>
         <textarea placeholder="请输入单页摘要" v-model="detail.summary" class="w-full"></textarea>
       </li>
       <li class="li">
-        <span class="label">内容</span>
-        <textarea placeholder="请输入内容" v-model="detail.content" class="w-full h350"></textarea>
+        <span class="label">文件</span>
+        <div style="display: flex">
+          <div style="flex: 1;">
+            {{detail.file}}
+          </div>
+          <div class="cl-red pointer" style=" width: 60px; text-align: right" @click="upload.handleclick()">
+            {{action == 'add' ? '上传' : '重新上传'}}
+          </div>
+        </div>
       </li>
     </ul>
   </template>
@@ -88,6 +88,8 @@ export default defineComponent({
     const store = useStore()
     const isShow: any = ref(false)
     const drawer: any = ref(null)
+    const upload: any = ref(null);
+    const fileInfo: any = ref({})
     const detail: any = ref({})
     // 监听
     watch([isShow], async (newValues, prevValues) => {
@@ -102,6 +104,15 @@ export default defineComponent({
       }
     })
 
+    // 监听
+    watch([() => fileInfo.value.fileUrl], async (newValues: any, prevValues) => {
+      debugger
+      setTimeout(() => {
+        
+        detail.value.title = fileInfo.value.name.substring(0, fileInfo.value.name.lastIndexOf("."))
+      }, 10)
+    })
+
     function submit(params: any) {
       const {
         id,
@@ -109,6 +120,7 @@ export default defineComponent({
         title,
         html,
         summary,
+        import_files,
         content,
         tag,
         flags,
@@ -120,6 +132,7 @@ export default defineComponent({
         title,
         html,
         summary,
+        import_files,
         content,
         tag: tag ? tag.join(',') : "",
         flags: flags ? `|${flags.join("|")}|` : "",
@@ -147,7 +160,9 @@ export default defineComponent({
       isShow,
       detail,
       drawer,
-      submit
+      submit,
+      upload,
+      fileInfo
     }
   }
 })
