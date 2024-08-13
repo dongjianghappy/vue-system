@@ -24,6 +24,8 @@
           <span v-if="type==='manage'">
             <i class="iconfont icon-right" v-if="list.is_default === '1'" @click="handleDefault(list)" />
             <i class="iconfont icon-error" v-else @click="handleDefault(list)" />
+            <span class="cl-red" v-if="list.flag === 'new'">新</span>
+            <span class="cl-red" v-else-if="list.flag === 'hot'">热</span>
           </span>
         </span>
         <span class="right">

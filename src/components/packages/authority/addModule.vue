@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="true">
   <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增模块" :style="{width: 520, height: index==='2' ? 450 : 400}" @submit="submit">
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增模块" :style="{width: 520, height: index==='2' ? 5000 : 450}" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -25,6 +25,10 @@
         <span class="label">颜色</span>
         <input type="text" v-model="detail.color" placeholder="请输入颜色值" class="input-sm input-full" />
       </li>
+      <li class="li">
+        <span class="label">标记</span>
+        <v-radiobutton name="method" v-model:checked="detail.flag" :enums="[{label: '无', value: ''}, {label: '新', value: 'new'}, {label: '热', value: 'hot'}]" />
+      </li>      
       <li class="li" v-if="index === '2'">
         <span class="label">可禁言</span>
         <v-radio label="否" name="is_write" value="0" v-model:checked="detail.is_write" />
@@ -92,6 +96,7 @@ export default defineComponent({
         is_write,
         icon,
         color,
+        flag,
         sort,
         tips,
         remark
@@ -105,6 +110,7 @@ export default defineComponent({
         sort,
         icon,
         color,
+        flag,
         tips,
         remark
       }
