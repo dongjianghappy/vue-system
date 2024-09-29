@@ -2,37 +2,24 @@
 <v-button v-model:show="isShow" :disabled="auth">
   <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增内容"}}
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑内容' : '新增内容' " :data="{...data, coding: coding.art}" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑内容' : '新增内容' " :data="{...data, coding: data.coding.art}" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <div class="pt50 hide" style="text-align: center;">
       <v-upload ref="upload" @imgList="image" v-model:haschoose="file" :show="false" file="file" v-model:file="fileInfo" uploadtype="file" format=".js" />
     </div>
     <ul class="form-wrap-box">
       <li class="li">
-        <span class="label">标题</span>
-        <div style="display: flex">
-          <div style="flex: 1">
-            <input v-model="detail.title" type="text" placeholder="请输入标题" class="input-sm input-full" :style="[detail.style]" />
-          </div>
-        </div>
-      </li>
-      <li class="li">
-        <span class="label">地址</span>
-        <input v-model="detail.url" type="text" class="input-sm input-full" />
+        <span class="label">名称</span>
+        <input v-model="detail.name" type="text" placeholder="请输入标题" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">显示</span>
-        <v-radio label="是" name="checked" value="1" v-model:checked="detail.checked" />
-        <v-radio label="否" name="checked" value="0" v-model:checked="detail.checked" />
-      </li>
-      <li class="li">
-        <span class="label">所属分类</span>
-        {{detail.parent}}
-        <v-category name="选择分类" :data="{item: detail, coding: coding.cate}" :isMore="true" type="text"></v-category>
+        <v-radio label="是" name="status" value="1" v-model:checked="detail.status" />
+        <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
       </li>
       <li class="li">
         <span class="label">描述</span>
-        <textarea placeholder="请输入说明" v-model="detail.description" class="w-full" ></textarea>
+        <textarea placeholder="请输入单页摘要" v-model="detail.description" class="w-full"></textarea>
       </li>
     </ul>
   </template>
@@ -55,12 +42,6 @@ export default defineComponent({
       default: "add"
     },
     data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    coding: {
       type: Object,
       default: () => {
         return {}
@@ -109,18 +90,14 @@ export default defineComponent({
     function submit(params: any) {
       const {
         id,
-        fid,
-        title,
-        url,
-        description,
-        checked
+        name,
+        status,
+        description
       } = detail.value
       const param: any = {
-        fid,
-        title,
-        url,
-        description,
-        checked
+        name,
+        status,
+        description
       }
       if (props.action === 'edit') {
         param.id = id
@@ -129,7 +106,7 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
         api: props.action !== 'add' ? 'update' : 'insert',
         data: {
-          coding: props.coding.art,
+          coding: props.data.coding.art,
           ...param
         }
       }).then(() => {

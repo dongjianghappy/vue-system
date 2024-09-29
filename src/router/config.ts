@@ -153,6 +153,7 @@ import officicalWebsiteList from '../views/module/officicalWebsite/index.vue'
 import tougaoList from '../views/module/tougao/index.vue'
 import modelList from '../views/module/model/index.vue'
 import questionBankList from '../views/module/questionBank/index.vue'
+import trackMapList from '../views/module/trackMap/index.vue'
 
 import KnowledgeDefault from '../views/knowledge/index.vue'
 import CommonSenseCate from '../views/commonSense/cate/index.vue'
@@ -354,6 +355,7 @@ const arrss: any = {
   tougaoList,
   modelList,
   questionBankList,
+  trackMapList,
   CommonSenseCate,
   Huodong,
   CommonSenseList,

@@ -427,7 +427,14 @@ export const MODUDLE2 = [
     name: '题库',
     type: 'plate',
     icon: 'knowledge',
-  }		
+  },
+	{
+    module: 'trackMap',
+    value: 'trackMap',
+    name: '轨道示意图',
+    type: 'plate',
+    icon: 'blog-1',
+  },		
 ]
 
 // 导航编辑

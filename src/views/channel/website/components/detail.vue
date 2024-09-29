@@ -27,10 +27,19 @@
               </div>
               <v-titleattribute :style="detail.style || {}" :setStyle="(param) => detail.style = param" />
             </div>
+            {{websiteInfo.title}}
           </li>
           <li class="li">
             <span class="label">网站地址</span>
+            <div style="display: flex">
+              <div style="flex: 1">
             <input v-model="detail.url" type="text" placeholder="请输入地址" class="input-sm input-full" />
+              </div>
+              <div class="w80 pl15">
+                <span class="mr10" @click="handleGetSiteInfo">检索</span>
+                <span @click="handleGetClear">清空</span>
+              </div>
+            </div>
           </li>
           <li class="li">
             <span class="label">显示</span>
@@ -40,20 +49,21 @@
           <li class="li">
             <span class="label">网站标签</span>
             <v-tag v-model:tags="detail.tag" />
+            {{websiteInfo.keywords}}
           </li>
           <li class="li">
             <span class="label">所属分类</span>
             <span class="mr10">{{detail.parent}}</span>
             <v-category name="选择分类" :data="{item: detail, coding: coding.cate}" :isMore="true" type="text"></v-category>
-
           </li>
           <li class="li">
             <span class="label">摘要</span>
             <textarea placeholder="请输入单页摘要" v-model="detail.summary" class="w-full"></textarea>
+            {{websiteInfo.description}}
           </li>
           <li class="li" style="overflow: auto;">
             <span class="label">图片</span>
-            <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding:coding.art}" :dataList="detail.img || []" uploadtype="picture" @imgList="image" :style="'width: 135px'" />
+            <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding:coding.art}" :dataList="detail.img || []" uploadtype="website" @imgList="image" :style="'width: 135px'" />
           </li>
           <li class="li">
             <span class="label">聚合标签</span>
@@ -140,6 +150,7 @@ export default defineComponent({
     const columns: any = ref([])
     const detailSSS: any = ref({})
     const channelData: any = channels();
+    const websiteInfo: any = ref({})
 
     const page = computed(() => store.getters['common/page']);
 
@@ -158,6 +169,21 @@ export default defineComponent({
         }
       }
     })
+
+    function handleGetSiteInfo(){
+      store.dispatch('common/Fetch', {
+        api: "getWebsiteInfo",
+        data: {
+          url: detail.value.url
+        }
+      }).then(res => {
+        websiteInfo.value = res.result
+      })
+    }
+
+    function handleGetClear(){
+      websiteInfo.value = {}
+    }
 
     // 添加好站
     function uploadImg() {
@@ -266,7 +292,10 @@ export default defineComponent({
       colorList,
       page,
       choose,
-      columns
+      columns,
+      handleGetSiteInfo,
+      handleGetClear,
+      websiteInfo
     }
   }
 })

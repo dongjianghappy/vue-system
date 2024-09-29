@@ -809,8 +809,17 @@ close (params: any) {
 
   channelSetting (params: any) {
     return http.request('vue', 'channelSetting', 'post', params)
-  } ,   
+  } ,  
   
+  // 获取网站信息
+  getWebsiteInfo (params: any) {
+    return http.request('common', 'getWebsiteInfo','post', params)
+  },  
+
+  // 轨迹详情
+  footprintDetail (params: any) {
+    return http.request('common', 'footprintDetail','post', params)
+  },  
   
 }
 

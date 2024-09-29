@@ -469,6 +469,10 @@ const codings: any = {
   label: 'U0610000',
   tag: 'U0690000',
   theme: 'U0690001',
+  track: {
+    art: 'U0690009',
+    list: 'U0690010'
+  },
   effects: 'U0690002',
   energy: 'U0540002',
   user: {

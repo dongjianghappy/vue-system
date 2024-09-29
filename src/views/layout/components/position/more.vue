@@ -64,7 +64,7 @@ export default defineComponent({
 
   .more-wrap {
     width: 350px;
-    height: 200px;
+    height: 300px;
     padding: 25px;
     display: none;
     transition: 0.3s;
