@@ -76,7 +76,7 @@ export default defineComponent({
     const detail: any = ref({})
     const drawer: any = ref(null)
     const upload: any = ref(null);
-    const img = ref("")
+    const img: any = ref("")
     const sourceType: any = LINK_TYPE
     const tune = [{
       label: 'C调',

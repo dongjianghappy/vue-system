@@ -40,7 +40,7 @@ export default defineComponent({
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
-    const dataList = ref([]);
+    const dataList: any = ref([]);
 
     function init() {
       store.dispatch('common/Fetch', {

@@ -57,7 +57,7 @@ export default defineComponent({
     const path: any = ref(route.path)
 
     // 监听路由
-    watch(route, (newValues, prevValues) => {
+    watch(route, (newValues: any, prevValues) => {
       path.value = newValues.path
     })
 

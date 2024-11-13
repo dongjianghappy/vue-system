@@ -145,7 +145,7 @@ export default defineComponent({
     const upload: any = ref(null);
     const detail: any = ref({})
     const aaa: any = ref([])
-    const img = ref("")
+    const img: any = ref("")
     const colorList = COLOR
     const columns: any = ref([])
     const detailSSS: any = ref({})

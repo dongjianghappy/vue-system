@@ -61,7 +61,7 @@ export default defineComponent({
     const isShow: any = ref(false)
     const dialog: any = ref(null)
     const detail: any = ref({})
-    const img = ref("")
+    const img: any = ref("")
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {

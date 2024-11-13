@@ -42,7 +42,7 @@ export default defineComponent({
   },
   emits: ['onClick'],
   setup(props, context) {
-    let isEdit = ref(true)
+    let isEdit: any = ref(true)
     const dataList: any = ref(props.data)
 
     function Edit() {

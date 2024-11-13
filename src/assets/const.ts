@@ -367,7 +367,13 @@ export const MODUDLE = [
     type: 'plate',
     icon: 'robot',
   },
-	
+  {
+    module: 'three',
+    value: 'three',
+    name: '立体空间',
+    type: 'plate',
+    icon: 'robot',
+  },
 ]
 
 // 模块
@@ -821,5 +827,17 @@ export const imgFormat = [
 	{
 		name: "png格式",
 		value: "png"
+	}
+]
+
+// 系统设置
+export const tabsThree = [
+	{
+		name: "基本设置",
+		value: 'basic',
+	},
+	{
+		name: "路线设置",
+		value: 'system',
 	}
 ]

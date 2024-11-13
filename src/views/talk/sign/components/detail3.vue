@@ -71,7 +71,7 @@ export default defineComponent({
     const drawer: any = ref(null)
     const upload: any = ref(null);
     const detail: any = ref({})
-    const img = ref("")
+    const img: any = ref("")
     const fileList: any = ref([])
 
     // 监听

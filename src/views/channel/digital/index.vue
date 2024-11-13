@@ -3,7 +3,7 @@
   <!-- {{dataList}} -->
   <!-- <Three :data="dataList[1]" style="background: white; width: 100%; height: 460px;box-shadow: rgb(32 33 36 / 28%) 0px 0px 1px 0px;"></Three> -->
   <div class="col-md-2 p10" v-for="(item, index) in dataList" :key="index">
-    <Three :data="item" style="background: white; width: 100%; height: 250px;box-shadow: rgb(32 33 36 / 28%) 0px 0px 1px 0px;"></Three>
+    <!-- <Three :data="item" style="background: white; width: 100%; height: 250px;box-shadow: rgb(32 33 36 / 28%) 0px 0px 1px 0px;"></Three> -->
     <!-- <div class="thumbnail p10 relative" style="background: var(--card-background); overflow: hidden;"> -->
       <!-- {{dataList}} -->
       <!-- <Three :data="dataList[1]" style="background: white; width: 100%; height: 460px;box-shadow: rgb(32 33 36 / 28%) 0px 0px 1px 0px;"></Three> -->
@@ -31,12 +31,12 @@ import {
   channels
 } from '@/utils'
 import Detail from './components/detail.vue'
-import Three from './components/three.vue'
+// import Three from './components/three.vue'
 export default defineComponent({
   name: 'PartnerView',
   components: {
     Detail,
-    Three
+    // Three
   },
   props: {
     data: {

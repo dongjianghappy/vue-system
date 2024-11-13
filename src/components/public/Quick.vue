@@ -43,7 +43,7 @@ export default defineComponent({
     const dataList: any = ref(props.data)
     const namesss: any = ref(props.data)
     const store = useStore();
-    let isEdit = ref(false)
+    let isEdit: any = ref(false)
     let isInput: any = ref(props.type)
 
     function getFocus(e: any) {

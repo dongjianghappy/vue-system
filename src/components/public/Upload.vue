@@ -88,7 +88,7 @@ export default defineComponent({
     const store = useStore();
     const FileUpload: any = ref(null) // 选择文件id
     let imgList: any = ref([]) // 文件内容
-    const dragging = ref(null) // 拖拽状态
+    const dragging: any = ref(null) // 拖拽状态
     const box: any = ref(0)
     const cover: any = ref("")
 

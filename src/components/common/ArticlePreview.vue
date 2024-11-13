@@ -64,8 +64,8 @@ export default defineComponent({
     const {
       ctx
     }: any = getCurrentInstance();
-    const currentImg = ref(props.img)
-    const currentIndex = ref({
+    const currentImg: any = ref(props.img)
+    const currentIndex: any = ref({
       total: props.data.image.length - 1,
       num: props.data.image.indexOf(props.img)
     })

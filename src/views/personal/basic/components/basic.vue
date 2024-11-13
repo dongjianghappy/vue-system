@@ -128,7 +128,7 @@ export default defineComponent({
 emits: ['update:user'],
 setup(props,context) {
   const {ctx}:any = getCurrentInstance();
-  let isEdit = ref(true)
+  let isEdit: any = ref(true)
   const cityData: any = reactive(citys)
   const userInfo: any = ref(props.user)
  

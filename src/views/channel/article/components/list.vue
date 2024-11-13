@@ -181,9 +181,9 @@ export default defineComponent({
     const route = useRoute();
     const router: any = useRouter();
     const checkedList: any = ref([])
-    const showFlag = ref(false)
-    const currentData = ref({})
-    const showGraph = ref({
+    const showFlag: any = ref(false)
+    const currentData: any = ref({})
+    const showGraph: any = ref({
       view: false,
       data: {}
     })

@@ -52,9 +52,9 @@ export default defineComponent({
       ctx
     }: any = getCurrentInstance();
     const store = useStore();
-    const filElem = ref("filElem")
+    const filElem: any = ref("filElem")
     let imgList: any = ref([])
-    const dragging = ref(null)
+    const dragging: any = ref(null)
     const box: any = ref(0)
 
     function getFile() {

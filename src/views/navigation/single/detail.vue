@@ -152,7 +152,7 @@ export default defineComponent({
     const columns: any = ref([])
     const detailSSS: any = ref({})
     const upload: any = ref(null);
-    const img = ref("")
+    const img: any = ref("")
     const action: any = route.path
     const templates: any = TEMPLATES
     let menu: any = ref([{

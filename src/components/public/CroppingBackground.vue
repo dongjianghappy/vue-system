@@ -67,7 +67,7 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore();
     const aaaaaaaaa: any = ref(null)
-    const isShow = ref(false)
+    const isShow: any = ref(false)
     const cover: any = ref(null)
     const pic: any = ref(null)
     let offX: any = 0 // 图片默认x坐标

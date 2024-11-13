@@ -108,7 +108,7 @@ export default defineComponent({
     }: any = getCurrentInstance();
     const store = useStore()
     const router = useRouter();
-    const showFlag = ref(false)
+    const showFlag: any = ref(false)
 
     function showImg() {
       showFlag.value = !showFlag.value

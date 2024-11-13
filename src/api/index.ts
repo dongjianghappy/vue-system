@@ -820,6 +820,16 @@ close (params: any) {
   footprintDetail (params: any) {
     return http.request('common', 'footprintDetail','post', params)
   },  
+
+  // 3D立体空间配置
+  threeSetting (params: any) {
+    return http.request('vue', 'threeSetting','post', params)
+  },  
+
+  // 养鱼记录
+  seaFishList (params: any) {
+    return http.request('vue', 'seaFishList','post', params)
+  },  
   
 }
 

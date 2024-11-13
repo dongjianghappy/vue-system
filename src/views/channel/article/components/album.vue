@@ -96,7 +96,7 @@ export default defineComponent({
     const router = useRouter()
     const coding: any = channels().coding.art;
     const checkedList: any = ref([])
-    const showFlag = ref(false)
+    const showFlag: any = ref(false)
     const index: any = ref(0)
     const currentData: any = ref({})
     const currentImg: any = ref()

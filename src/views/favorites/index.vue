@@ -79,7 +79,7 @@ export default defineComponent({
     const store = useStore();
     const router: any = useRouter();
     const dataList: any = ref([])
-    const favorites = ref([])
+    const favorites: any = ref([])
 
     function init(params: any) {
       store.dispatch('common/Fetch', {

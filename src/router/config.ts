@@ -204,6 +204,8 @@ import TalkTheme from '../views/talk/theme/index.vue'
 import Mood from '../views/talk/mood/index.vue'
 import TalkSign from '../views/talk/sign/index.vue'
 import TalkSchedule from '../views/talk/schedule/index.vue'
+import TalkFishList from '../views/talk/fish/list.vue'
+import TalkFish from '../views/talk/fish/index.vue'
 import Group from '../views/talk/group/index.vue'
 import Bookmark from '../views/talk/bookmark/index.vue'
 import Blog from '../views/talk/blog/index.vue'
@@ -213,6 +215,11 @@ import TalkStatistics from '../views/talk/statistics/index.vue'
 import TalkSearch from '../views/talk/search/index.vue'
 import Expression from '../views/talk/expression/index.vue'
 
+import Three from '../views/three/index.vue'
+import ThreeScene from '../views/three/scene/index.vue'
+import ThreeCate from '../views/three/cate/index.vue'
+import ThreeModel from '../views/three/model/index.vue'
+import ThreeItem from '../views/three/item/index.vue'
 
 const arrss: any = {
   Default,
@@ -295,6 +302,8 @@ const arrss: any = {
   Mood,
   TalkSign,
   TalkSchedule,
+  TalkFish,
+  TalkFishList,
   Group,
   Bookmark,
   Blog,
@@ -384,7 +393,12 @@ const arrss: any = {
   TalkPraise,
   TalkAlbum,
   PhotosAlbum,
-  CustomAlbum
+  CustomAlbum,
+  Three,
+  ThreeScene,
+  ThreeCate,
+  ThreeModel,
+  ThreeItem
 }
 
 

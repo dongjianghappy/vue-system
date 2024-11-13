@@ -77,9 +77,9 @@ export default defineComponent({
   emits: ['close'],
   setup(props, context) {
     const store = useStore()
-    const colorList = ref(color)
-    const currentColor = ref("#fff")
-    let info = ref("")
+    const colorList: any = ref(color)
+    const currentColor: any = ref("#fff")
+    let info: any = ref("")
     let currentNodeId: any = ref("")
     const App: any = ref({})
 
@@ -94,7 +94,7 @@ export default defineComponent({
         name: "机器人"
       },
     ]
-    const graphType = ref(0)
+    const graphType: any = ref(0)
 
     watch([props], (old: any, news: any) => {
       props.data && App.value.updateGraph(props.data.graph)

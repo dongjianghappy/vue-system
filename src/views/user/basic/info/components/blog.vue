@@ -58,7 +58,7 @@ export default defineComponent({
     const {
       ctx
     }: any = getCurrentInstance();
-    let isEdit = ref(true)
+    let isEdit: any = ref(true)
     const userInfo: any = ref(props.user)
 
     function Edit() {

@@ -145,7 +145,7 @@ export default defineComponent({
     const serverName: any = SERVER_NAME
     const positionChecked: any = ref([])
     const store = useStore()
-    const positionList = ref([])
+    const positionList: any = ref([])
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {

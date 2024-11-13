@@ -127,7 +127,7 @@ export default defineComponent({
   emits: ['update:index', 'update:value'],
   setup(props, context) {
     const router = useRouter();
-    let currentIndex = ref(0)
+    let currentIndex: any = ref(0)
 
     function handleClick(param: any, index: any) {
       if (props.isEmit === true) {

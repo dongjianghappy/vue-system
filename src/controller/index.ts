@@ -1,5 +1,3 @@
-import common from 'vue-common/src' // 引入公共组件并注册公共组件
-alert(JSON.stringify(common))
 const component = require.context(
   // 其组件目录的相对路径
   '../components/common',

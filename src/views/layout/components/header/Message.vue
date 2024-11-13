@@ -45,25 +45,26 @@ export default defineComponent({
         api: 'voiceBroadcast',
       }).then((res: any) => {
         messgeData.value = res.result
+        if(messgeData.value.message){
+          for (let i = 0; i < messgeData.value.message.length; i++) {
+            // 开启语音播报且有新的消息
+            if (messgeData.value.message[i].broadcast) {
+              audio.value.src = messgeData.value.message[i].audio
+              audio.value.load()
+              audio.value.play()
+              setTimeout(() => {
+                speakMsg.text = messgeData.value.message[i].speech; //文字内容
+                speakMsg.lang = "zh-CN"; //使用的语言:中文
+                speakMsg.volume = 1;
+                //声音音量:0-1
+                speakMsg.rate = 1.5;
+                //语速:0-10
+                speakMsg.pitch = 10;
+                //音高:0-1
+                window.speechSynthesis.speak(speakMsg)
 
-        for (let i = 0; i < messgeData.value.message.length; i++) {
-          // 开启语音播报且有新的消息
-          if (messgeData.value.message[i].broadcast) {
-            audio.value.src = messgeData.value.message[i].audio
-            audio.value.load()
-            audio.value.play()
-            setTimeout(() => {
-              speakMsg.text = messgeData.value.message[i].speech; //文字内容
-              speakMsg.lang = "zh-CN"; //使用的语言:中文
-              speakMsg.volume = 1;
-              //声音音量:0-1
-              speakMsg.rate = 1.5;
-              //语速:0-10
-              speakMsg.pitch = 10;
-              //音高:0-1
-              window.speechSynthesis.speak(speakMsg)
-
-            }, 2000)
+              }, 2000)
+            }
           }
         }
       })

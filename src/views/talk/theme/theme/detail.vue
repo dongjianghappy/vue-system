@@ -133,8 +133,8 @@ export default defineComponent({
     const drawer: any = ref(null)
     const upload: any = ref(null);
     const detail: any = ref({})
-    const img = ref("")
-    const thumbnail = ref("")
+    const img: any = ref("")
+    const thumbnail: any = ref("")
     const transparentIndex: any = ref(1)
     const transparent = ref([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
 

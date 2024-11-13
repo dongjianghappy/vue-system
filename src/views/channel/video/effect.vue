@@ -96,11 +96,11 @@ export default defineComponent({
     const router = useRouter()
     const coding: any = "K10006";
     const checkedList: any = ref([])
-    const showFlag = ref(false)
-    const currentData = ref({})
-    const currentImg = ref()
+    const showFlag: any = ref(false)
+    const currentData: any = ref({})
+    const currentImg: any = ref()
 
-    const dataList = ref({})
+    const dataList: any = ref({})
 
     function init() {
       store.dispatch('channel/musicLrcAction', {

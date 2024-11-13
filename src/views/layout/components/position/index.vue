@@ -6,14 +6,16 @@
   <ul class="position-nav align_center" style="padding: 12px;">
     <li class="ant-col ant-col-2 pointer"><i class="iconfont icon-more font18" @click="handleRouter('appstore', 'setting')"></i></li>
     <li class="ant-col ant-col-2 pointer"><i class="iconfont icon-vote font18" @click="handleRouter('appstore', 'setting')"></i></li>
-    <li class="ant-col ant-col-2 relative pl10" style="margin-top: -12px; height: 45px;">
-      <More :router="handleRouter" />
+    <li class="ant-col ant-col-2 relative">
+      <Module :router="handleRouter" />
     </li>
     <li class="ant-col ant-col-2">
       <SystemSetting :auth="true" :data={coding} />
     </li>
-    <li class="ant-col ant-col-2" v-if="channel.length>0">
-      <v-drawershow name='<i class="iconfont icon-app pointer"></i>' icon="add" type="text" :style="{width: '800'}" :data="1" initialValues="initialValues" :renderList="getData">
+    <li class="ant-col ant-col-2">
+      <!-- v-if="channel.length>0" -->
+      <Channel :router="handleRouter" />
+      <!-- <v-drawershow name='<i class="iconfont icon-app pointer"></i>' icon="add" type="text" :style="{width: '800'}" :data="1" initialValues="initialValues" :renderList="getData">
         <template v-slot:content>
           <ul>
             <li class="col-md-3 p5" v-for="(item, index) in channel" :key="index" draggable="true" @mouseover="hover(item)" @mouseleave="leave(item)" @click="handleRouter(item.module)" @dragend="handleDragEnd($event, item)" @dragstart="handleDragStart($event, item)" @dragenter="handleDragEnter($event, item)" @dragover.prevent="handleDragOver($event, item)">
@@ -27,7 +29,7 @@
             </li>
           </ul>
         </template>
-      </v-drawershow>
+      </v-drawershow> -->
     </li>
     <li class="ant-col ant-col-2">
       <v-drawershow name='<i class="iconfont icon-navicon pointer"></i>' :style="{width: '200'}">
@@ -57,6 +59,8 @@ import {
 } from '@/utils'
 import SystemSetting from '@/components/packages/setting/systemSetting.vue'
 import More from './more.vue'
+import Channel from '../../../channel/components/channel.vue'
+import Module from '../../../module/components/module.vue'
 
 import {
   MODUDLE
@@ -65,7 +69,9 @@ export default defineComponent({
   name: 'v-Position',
   components: {
     SystemSetting,
-    More
+    More,
+    Channel,
+    Module
   },
   props: {
     setRoute: {

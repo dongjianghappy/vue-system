@@ -77,7 +77,7 @@ export default defineComponent({
     const drawer: any = ref(null)
     const detail: any = ref({})
     const dataList: any = ref([])
-    const userMoodList = ref([])
+    const userMoodList: any = ref([])
     const index: any = ref(0)
 
     // 监听

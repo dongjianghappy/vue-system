@@ -69,11 +69,11 @@ export default defineComponent({
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
-    const filElem = ref("filElem")
+    const filElem: any = ref("filElem")
     let imgList: any = ref([])
-    const dragging = ref(null)
+    const dragging: any = ref(null)
     const box: any = ref(0)
-    const isShowCopy = ref(false)
+    const isShowCopy: any = ref(false)
     const cover: any = ref("")
     const basic = reactive({
       currentImg: ""

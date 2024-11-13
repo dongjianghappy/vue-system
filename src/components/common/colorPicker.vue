@@ -55,8 +55,8 @@ export default defineComponent({
     const {
       ctx
     }: any = getCurrentInstance();
-    const colorList = ref(color)
-    const currentColor = ref("#fff")
+    const colorList: any = ref(color)
+    const currentColor: any = ref("#fff")
 
     function choose(color: any) {
       currentColor.value = color

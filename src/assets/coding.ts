@@ -337,6 +337,10 @@ const codings: any = {
     cate: 'U0540001',
     art: 'U0540000'
   },
+  fish: {
+    kind: 'U0680031',
+    record: 'U0680032'
+  },
   knowledge: {
     art: 'U0600000',
     cate: 'U0600001'
@@ -407,6 +411,7 @@ const codings: any = {
       cate: 'U0660003'
     } 
   },
+  modules: 'U0620057',
   medal: 'U0620045',
   collection: {
     cate: 'U0630000',
@@ -469,6 +474,15 @@ const codings: any = {
   label: 'U0610000',
   tag: 'U0690000',
   theme: 'U0690001',
+  three: {
+    scene: 'U0690011',
+    config: 'U0690012',
+    config_type: 'U0690013',
+    cate: 'U0690015',
+    model: 'U0690014',
+    road_line: 'U0690016',
+    item: 'U0690017',
+  },
   track: {
     art: 'U0690009',
     list: 'U0690010'

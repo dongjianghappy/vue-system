@@ -81,7 +81,7 @@ export default defineComponent({
     },
   },
   setup(props, context) {
-    let isEdit = ref(true)
+    let isEdit: any = ref(true)
 
     function Edit() {
       isEdit.value = !isEdit.value

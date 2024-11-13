@@ -73,7 +73,7 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter()
     const checkedList: any = ref([])
-    const showFlag = ref(false)
+    const showFlag: any = ref(false)
     const index: any = ref(0)
     const currentData: any = ref({})
     const currentImg: any = ref()

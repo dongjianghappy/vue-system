@@ -111,7 +111,7 @@ export default defineComponent({
       proxy
     }: any = getCurrentInstance();
     const store = useStore()
-    let currentIndex = ref(0)
+    let currentIndex: any = ref(0)
     const isShow: any = ref(false)
     const channelMenu: any = ref([])
     const channelList: any = ref([])

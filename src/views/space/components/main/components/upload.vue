@@ -38,7 +38,7 @@ export default defineComponent({
     const detail: any = ref({})
     const drawer: any = ref(null)
     const upload: any = ref(null);
-    const img = ref("")
+    const img: any = ref("")
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {

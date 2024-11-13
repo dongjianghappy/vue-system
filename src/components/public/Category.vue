@@ -204,7 +204,7 @@ export default defineComponent({
           })
 
           // 二级分类查询
-          let second: any = res.result[i].list
+          let second: any = res.result[i].list || []
           if (second.length > 0) {
             for (let j = 0; j < second.length; j++) {
               aaa.map((item: any) => {
@@ -215,7 +215,7 @@ export default defineComponent({
               })
 
               // 二级分类查询
-              let third: any = res.result[i].list[j].list
+              let third: any = res.result[i].list[j].list || []
               if (third.length > 0) {
                 for (let k = 0; k < third.length; k++) {
                   aaa.map((item: any) => {

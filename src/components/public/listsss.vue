@@ -83,8 +83,8 @@ export default defineComponent({
   },
   emits: ['value'],
   setup(props, context) {
-    const filElem = ref("filElem")
-    const isShow = ref(false)
+    const filElem: any = ref("filElem")
+    const isShow: any = ref(false)
     const proportion: any = ref('1')
     let img: any = ref("")
     const cover: any = ref(null)

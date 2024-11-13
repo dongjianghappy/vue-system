@@ -57,7 +57,7 @@ export default defineComponent({
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
-    const dataList = ref([]);
+    const dataList: any = ref([]);
     const coding: any = proxy.$coding['user'].mood;
     const checkedList: any = ref([])
 

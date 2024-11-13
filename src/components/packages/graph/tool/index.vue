@@ -84,8 +84,8 @@ export default defineComponent({
   },
   setup(props, context) {
     const store = useStore()
-    const colorList = ref(color)
-    const currentColor = ref("#fff")
+    const colorList: any = ref(color)
+    const currentColor: any = ref("#fff")
     const App: any = ref({})
     
     

@@ -56,7 +56,7 @@ export default defineComponent({
 
     const store = useStore()
     const dataList: any = ref([])
-    const currentIndex = ref("")
+    const currentIndex: any = ref("")
 
     function init() {
       dataList.value = []

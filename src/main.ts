@@ -38,6 +38,9 @@ VueMarkdownEditor.use(vuepressTheme, {
 
 
 const Vue = createApp(App)
+Vue.config.errorHandler = (err: any) => {
+  
+}
 // Vue.use(ElementUI)
 views(Vue)
 publics(Vue)

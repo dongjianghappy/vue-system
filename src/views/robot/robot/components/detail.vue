@@ -73,7 +73,7 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
     const isShow: any = ref(false)
-    const showGraph = ref(false)
+    const showGraph: any = ref(false)
     const detail: any = ref({})
     const drawer: any = ref(null)
     const sourceType: any = LINK_TYPE
