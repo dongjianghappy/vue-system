@@ -220,6 +220,7 @@ import ThreeScene from '../views/three/scene/index.vue'
 import ThreeCate from '../views/three/cate/index.vue'
 import ThreeModel from '../views/three/model/index.vue'
 import ThreeItem from '../views/three/item/index.vue'
+import ThreeList from '../views/three/list/index.vue'
 
 const arrss: any = {
   Default,
@@ -398,7 +399,8 @@ const arrss: any = {
   ThreeScene,
   ThreeCate,
   ThreeModel,
-  ThreeItem
+  ThreeItem,
+  ThreeList
 }
 
 

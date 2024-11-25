@@ -1,25 +1,13 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增场景"}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增物品"}}
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑场景' : '新增场景' " :data="data" :param="detail" :render="render">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑物品' : '新增物品' " :data="{...data, coding: data.coding}" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
-        <span class="label">场景名称</span>
-        <input v-model="detail.name" type="text" placeholder="请输入场景名称" class="input-sm input-full" />
-      </li>
-      <li class="li">
-        <span class="label">字段</span>
-        <input v-model="detail.value" type="text" placeholder="请输入字段" class="input-sm input-full" />
-      </li>
-      <li class="li">
-        <span class="label">字体色</span>
-        <input v-model="detail.color" type="text" placeholder="请输入字体色" class="input-sm input-150" />
-      </li>
-      <li class="li">
-        <span class="label">背景色</span>
-        <input v-model="detail.background_color" type="text" placeholder="请输入背景色" class="input-sm input-150" />
+        <span class="label">物品名称</span>
+        <input v-model="detail.name" type="text" placeholder="请输入物品名称" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">顺序</span>
@@ -31,8 +19,12 @@
         <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
       </li>
       <li class="li">
-        <span class="label">场景描述</span>
-        <textarea placeholder="请输入场景描述" v-model="detail.description" class="w-full" ></textarea>
+        <span class="label">类型</span>
+        <v-radiobutton name="type" v-model:checked="detail.type" :enums="[{label: '元素', value: '0'}, {label: '几何', value: '1'}]" />
+      </li>
+      <li class="li">
+        <span class="label">物体方法</span>
+        <input v-model="detail.value" type="text" placeholder="请输入颜色" class="input-sm input-full" />
       </li>
     </ul>
   </template>

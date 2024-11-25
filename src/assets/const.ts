@@ -841,3 +841,15 @@ export const tabsThree = [
 		value: 'system',
 	}
 ]
+
+// 微博内容
+export const tabsThreeItem = [
+	{
+		name: "元素",
+		value: ""
+	},
+	{
+		name: "几何",
+		value: ""
+	}
+]
