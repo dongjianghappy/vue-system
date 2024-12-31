@@ -50,13 +50,10 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   computed,
-  ref,
   useStore
 } from '@/utils'
 import {
@@ -64,26 +61,7 @@ import {
   ChartPie
 } from '@/components/packages/chart/index'
 import Card from "./components/card.vue"
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    Card,
-    ChartLine,
-    ChartPie
-  },
-  props: {
-    style: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
+
     const store = useStore();
 
     const visit: any = computed(() => store.getters['talk/defaultStatistics'].visit || {});
@@ -96,19 +74,9 @@ export default defineComponent({
             [...(aaa.value && aaa.value.today_visit) || []],
             [...(aaa.value && aaa.value.yestday_visit) || []],
             [...(aaa.value && aaa.value.user_online) || []],
-            
-            // [...(aaa.value && aaa.value.yestday_online) || []],
-            // [...(aaa.value && aaa.value.yestday_visit) || []]
           ]
-          // "series": [
-          //   [0, 23, 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0],
-          //   [0, 0, 0, 45, 0, 0, 0, 0, 0, 34, 2, 0, 0, 0],
-          //   [0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          //   [0, 12, 0, 0, 0, 0, 0, 54, 0, 0, 0, 98, 0, 0]
-          // ]
         },
         options: {
-          // title: ["今日浏览量", "今日在线", "昨日浏览量", "昨日在线"],
           title: ["今日浏览量", "昨日浏览量", "用户在线"],
           height: 400
         }
@@ -121,8 +89,8 @@ export default defineComponent({
       let aaa = store.getters['talk/defaultStatistics'].engine || {}
       return {
         data: {
-          labels: aaa.labels, //['谷歌', '百度', '搜狗', "360", "必应", "头条"],
-          series: aaa.series // [20, 15, 40, 12, 232, 32]
+          labels: aaa.labels,
+          series: aaa.series
         },
         options: {
           background: "#5ab25e",
@@ -159,12 +127,6 @@ export default defineComponent({
             [...(aaa.value && aaa.value.visit) || []],
             [...(aaa.value && aaa.value.online) || []],
           ]
-          // "series": [
-          //   [0, 23, 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0],
-          //   [0, 0, 0, 45, 0, 0, 0, 0, 0, 34, 2, 0, 0, 0],
-          //   [0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          //   [0, 12, 0, 0, 0, 0, 0, 54, 0, 0, 0, 98, 0, 0]
-          // ]
         },
         options: {
           title: ["7天浏览量", "在线用户"],
@@ -185,12 +147,6 @@ export default defineComponent({
             [...(aaa.value && aaa.value.visit) || []],
             [...(aaa.value && aaa.value.online) || []]
           ]
-          // "series": [
-          //   [0, 23, 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0],
-          //   [0, 0, 0, 45, 0, 0, 0, 0, 0, 34, 2, 0, 0, 0],
-          //   [0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          //   [0, 12, 0, 0, 0, 0, 0, 54, 0, 0, 0, 98, 0, 0]
-          // ]
         },
         options: {
           title: ["本月浏览量", "在线用户"],
@@ -203,22 +159,6 @@ export default defineComponent({
     function init() {
       store.dispatch('talk/DefaultStatistics')
     }
-
-    function handleclick() {
-      context.emit('onClick')
-    }
-
+    
     onMounted(init)
-    return {
-      visit,
-      // order,
-      hours,
-      engine,
-      register,
-      weekVisit,
-      weekIp,
-      handleclick
-    }
-  }
-})
 </script>

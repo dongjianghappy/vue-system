@@ -42,27 +42,16 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   computed,
   ref,
+  useStore,
   codings
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Detail from './components/detail.vue'
 import Content from './components/content.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail,
-    Content
-  },
-  setup(props, context) {
     const store = useStore();
     const dataList = computed(() => store.getters['basic/partner']);
     const coding: any = codings.track;
@@ -92,13 +81,4 @@ const params: any = {
         page: 1
       })
     })
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init
-    }
-  }
-})
 </script>

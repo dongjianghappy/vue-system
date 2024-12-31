@@ -51,10 +51,9 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
+  defineProps,
   ref,
   watch,
   codings,
@@ -62,12 +61,7 @@ import {
 } from '@/utils'
 import Setting from './setting.vue'
 
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    Setting
-  },
-  props: {
+  const props: any = defineProps({
       router: {
       type: Function,
       default: () => {
@@ -78,16 +72,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
+  })
     const store = useStore()
     const coding = codings.modules
     const isShow: any = ref(false)
-    const currentValue: any = ref("manage")
     const dataList: any = ref([])
 
     // 监听
@@ -110,16 +98,4 @@ export default defineComponent({
     function handleRouter(param: any) {
       props.router(param.value)
     }
-    
-    return {
-      isShow,
-      coding,
-      currentValue,
-      dataList,
-      module,
-      init,
-      handleRouter
-    }
-  }
-})
 </script>

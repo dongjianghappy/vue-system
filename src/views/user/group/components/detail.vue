@@ -24,19 +24,14 @@
 </v-dialog>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    
-  },
-  props: {
+  const props: any = defineProps({
     attrs: {
       type: Object,
       default: () => {
@@ -59,8 +54,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const isShow: any = ref(false)
     const detail: any = ref({})
     const drawer: any = ref(null)
@@ -75,13 +69,4 @@ export default defineComponent({
     function handleclick(param: any) {
       isShow.value = !isShow.value
     }
-
-    return {
-      isShow,
-      handleclick,
-      detail,
-      drawer
-    }
-  }
-})
 </script>

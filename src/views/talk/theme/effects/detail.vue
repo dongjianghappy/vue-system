@@ -3,6 +3,9 @@
   <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'edit'? "": "新增特效"}}
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑特效' : '新增特效' " :data="data" :param="detail" :render="render" :submit="submit">
+  <template v-slot:extra>
+    <v-checked :data="detail" attr="status" />
+  </template>     
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -13,11 +16,6 @@
         <span class="label">分类</span>
         <span class="mr15">{{detail.parent}}</span>
         <v-choose title="选择分类" :data="{ item: detail, field: 'fid', condition: {type: 'effects'}, coding: 'U0700037' }" v-model:checked="detail.fid" @choose="choose" type="radio" />
-      </li>
-      <li class="li">
-        <span class="label">显示</span>
-        <v-radio label="是" name="status" value="1" v-model:checked="detail.status" />
-        <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
       </li>
       <li class="li">
         <span class="label">DOM元素</span>
@@ -54,17 +52,15 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Detail1',
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -81,8 +77,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const store: any = useStore()
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -120,15 +115,4 @@ export default defineComponent({
       detail.value.fid = data.id
       detail.value.parent = data.name
     }
-
-    return {
-      isShow,
-      drawer,
-      detail,
-      image,
-      submit,
-      choose
-    }
-  }
-})
 </script>

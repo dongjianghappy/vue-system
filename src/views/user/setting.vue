@@ -17,34 +17,15 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
   ref,
-  watch,
   useRoute,
   codings
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Recommend from './recommend/index.vue'
 import Banuser from './banuser/index.vue'
 import Audit from './audit/index.vue'
-// import Recommend from './recommend/index.vue'
-// import Banuser from './banuser/index.vue'
-// import Audit from './audit/index.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Recommend,
-    Banuser,
-    Audit
-  },
-  setup(props, context) {
-    const store = useStore();
     const route = useRoute();
     const coding: any = codings['user'];
     const dataList: any = ref([])
@@ -74,36 +55,4 @@ export default defineComponent({
         value: "appstore3"
       }
     ])
-
-    // // 监听路由
-    // watch(route, (newValues, prevValues) => {
-    //   if (route.path === '/admin/user/list') {
-    //     tabsIndex.value = route.query.type
-    //     init()
-    //   }
-    // })
-
-    // // 初始化
-    // function init() {
-    //   store.dispatch('common/Fetch', {
-    //     api: 'userList',
-    //     data: {
-    //       level: tabsIndex.value,
-    //       page: 1,
-    //       pagesize: 10
-    //     }
-    //   }).then(res => {
-    //     dataList.value = res.result || {}
-    //   })
-    // }
-
-    // onMounted(init)
-
-    return {
-      menu,
-      dataList,
-      coding
-    }
-  }
-})
 </script>

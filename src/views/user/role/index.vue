@@ -45,30 +45,17 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   ref,
+  useStore,
   useRouter,
   codings
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
+
 import Detail from './components/detail.vue'
 import ViewUser from './components/viewUser.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail,
-    ViewUser
-  },
-  setup(props, context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const router = useRouter();
     const dataList: any = ref([]);
@@ -91,14 +78,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init,
-      handleClick
-    }
-  }
-})
 </script>

@@ -43,9 +43,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   ref,
@@ -55,13 +54,6 @@ import {
 } from '@/utils'
 import Detail from './components/detail.vue'
 import Detail1 from './components/detail1.vue'
-export default defineComponent({
-  name: 'VollectionViewdd',
-  components: {
-    Detail,
-    Detail1,
-  },
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -69,6 +61,7 @@ export default defineComponent({
     const router = useRouter();
     const coding: any = codings['collection'].cate;
     const dataList: any = ref([])
+    const auth: any = proxy.$auth.init('collection/cate')
 
     function init() {
       store.dispatch('common/Fetch', {
@@ -83,14 +76,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      handleSelectServer,
-      init,
-      auth: proxy.$auth.init('collection/cate')
-    }
-  }
-})
 </script>

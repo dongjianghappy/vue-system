@@ -101,26 +101,17 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   ref,
+  useStore,
   codings
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
+
 import Detail from './components/detail.vue'
 import ButtonDetail from './button/index.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail,
-    ButtonDetail
-  },
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -181,14 +172,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      edit,
-      isMove,
-      init
-    }
-  }
-})
 </script>

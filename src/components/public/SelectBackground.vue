@@ -1,12 +1,12 @@
 <template>
 <v-button v-model:show="isShow">
-  <div class="settings"><i class="iconfont icon-zhejiao" /></div>
+  <div class="zhejiao"><i class="iconfont icon-zhejiao" /></div>
 </v-button>
 <v-dialog ref="dialog" v-model:show="isShow" :style="style" :data="data" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content>
     <v-tabs :tabs="[{name: '本地上传',value: 'photos'},{name: '相册',value: 'background'}]" :isEmit="true">
       <template v-slot:content1>
-        <v-listsss ref="aaaaaaaaa" :kind="kind" :image="img" :size="size" :mask="kind === 'head_background' ? { w: 550, h: 350, tb: 50, lr: 50 } : { w: 1050, h: 350, tb: 50, lr: 50 }" />
+        <v-listsss ref="aaaaaaaaa" :kind="kind" :image="img" :size="size" :mask="mask" />
       </template>
       <template v-slot:content2>
         <List :kind="kind" />
@@ -17,91 +17,85 @@
 </v-dialog>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
+  defineProps,
   useStore,
   ref,
 } from '@/utils'
 // import List from '@/views/index/album/components/list.vue'
 
-export default defineComponent({
-  name: 'HomeViewh',
-  components: {
-    // List
+const props: any = defineProps({
+  data: {
+    type: Object,
+    default: () => {
+      return {}
+    }
   },
-  props: {
-    kind: {
-      type: String,
-      default: 'head_background'
-    },
-    size: {
-      type: Object,
-      default: () => {
-        return {
-          width: 500,
-          height: 300
-        }
-      }
-    },
-    style: {
-      type: Object,
-      default: () => {
-        return {
-          width: 670,
-          height: 570
-        }
-      }
-    },
-    img: {
-      type: Object,
-      default: () => {
-        return {
-          width: 800
-        }
+  kind: {
+    type: String,
+    default: 'head_background'
+  },
+  mask: {
+    type: Object,
+    default: {
+      w: 1050,
+      h: 350,
+      tb: 50,
+      lr: 50
+    }
+  },
+  size: {
+    type: Object,
+    default: () => {
+      return {
+        width: 500,
+        height: 300
       }
     }
   },
-  setup(props, context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
-    const store = useStore();
-    const aaaaaaaaa: any = ref(null)
-    const isShow: any = ref(false)
-    const cover: any = ref(null)
-    const pic: any = ref(null)
-    let offX: any = 0 // 图片默认x坐标
-    let offY: any = 0 // 图片默认y坐标
-
-
-    function submit() {
-      let src = aaaaaaaaa.value.cutPicture() 
-      store.dispatch('common/Fetch', {
-        api: "UploadPhotos",
-        data: {
-          uploadType: props.kind,
-          type: 0,
-          root: 1,
-          img: src,
-        }
-      }).then(res => {
-        isShow.value = false
-        store.dispatch('user/Detect')
-      })
+  style: {
+    type: Object,
+    default: () => {
+      return {
+        width: 670,
+        height: 570
+      }
     }
-
-    return {
-      isShow,
-      cover,
-      pic,
-      submit,
-      aaaaaaaaa,
-      onmousedown
+  },
+  img: {
+    type: Object,
+    default: () => {
+      return {
+        width: 800
+      }
     }
   }
 })
+const store = useStore();
+const aaaaaaaaa: any = ref(null)
+const isShow = ref(false)
+const cover: any = ref(null)
+const pic: any = ref(null)
+let offX: any = 0 // 图片默认x坐标
+let offY: any = 0 // 图片默认y坐标
+
+function submit() {
+  let src = aaaaaaaaa.value.cutPicture()
+  store.dispatch('common/Fetch', {
+    api: "UploadPhotos",
+    data: {
+      uploadType: props.kind,
+      type: 0,
+      root: 1,
+      img: src,
+      ...props.data
+    }
+  }).then(res => {
+    isShow.value = false
+    store.dispatch('user/Detect')
+  })
+}
 </script>
 
 <style lang="less" scoped>

@@ -2,21 +2,20 @@
 <div class="module-wrap nobg">
   <v-tabs :tabs="tabsLink" type="vertical">
     <template v-slot:content1>
-      <List1 :data="{coding}" :loading="loading" :siteEnum="siteEnum" :render="init" :auth="auth" />
+      <List1 :data="{coding, loading}" :render="init" :auth="auth" />
     </template>
     <template v-slot:content2>
-      <List2 :data="{coding}" :loading="loading" :siteEnum="siteEnum" :render="init" :auth="auth" />
+      <List2 :data="{coding, loading}" :render="init" :auth="auth" />
     </template>
     <template v-slot:content3>
-      <List3 :data="{coding}" :loading="loading" :render="init" :auth="auth" />
+      <List3 :data="{coding, loading}" :render="init" :auth="auth" />
     </template>
   </v-tabs>
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   watch,
@@ -32,23 +31,14 @@ import List3 from './components/list3.vue'
 import {
   tabsLink
 } from '@/assets/const'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    List1,
-    List2,
-    List3,
-  },
-  setup(props, context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
+    const { proxy }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
     const coding: any = codings
     const loading: any = ref(false)
-    const siteEnum: any = ref([])
     const tabsIndex: any = ref(route.query.type || 0)
+    const auth: any = proxy.$auth.init("link");
+
 
     // 监听路由
     watch(route, (newValues, prevValues) => {
@@ -80,37 +70,7 @@ export default defineComponent({
         loading.value = true
       })
     }
-
-    function getSite() {
-      // 获取站点信息
-      store.dispatch('basic/Fetch', {
-        data: {
-          coding: coding.site,
-          status: '1'
-        }
-      }).then(res => {
-        res.result.map((item: any) => {
-          siteEnum.value.push({
-            value: item.id,
-            name: item.name
-          })
-        })
-      })
-    }
-
     onMounted(() => {
       init()
-      getSite()
     })
-
-    return {
-      tabsLink,
-      coding: coding,
-      init,
-      loading,
-      siteEnum,
-      auth: proxy.$auth.init('link')
-    }
-  }
-})
 </script>

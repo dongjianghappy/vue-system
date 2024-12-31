@@ -4,12 +4,12 @@
     <div v-if="title" class="aside-list align_center" style="border-bottom: 1px solid #eee; height: 63px; line-height: 63px;">
       <h3>{{title}}</h3>
     </div>
-    <div class="aside-list pointer" :class="[{plr15: title}, {current: currentIndex === index}]" v-for="(item, index) in tabs" :key="index" @click="handleClick(item, index)">
+    <div class="aside-list pointer" :class="[{plr15: title}, {current: currentIndex === index}]" v-for="(item, index) in tabs" :key="index" @click="handleClick(index)">
       <i class="iconfont" :class="`icon-${icon}`" v-if="icon" />
       {{item.name}}
     </div>
   </div>
-  <div class="aside-content" :class="className.con">
+  <div class="aside-content">
     <div v-if="currentIndex === 0">
       <slot name="content1"></slot>
     </div>
@@ -41,14 +41,14 @@
 </div>
 <div class="tabs" v-else>
   <div class="nav-tabs" :class="className.nav">
-    <div class="tabs-list pointer" :class="[{current: currentIndex === index}]" v-for="(item, index) in tabs" :key="index" @click="handleClick(item, index)">{{item.name}}</div>
+    <div class="tabs-list pointer" :class="[{current: currentIndex === index}]" v-for="(item, index) in tabs" :key="index" @click="handleClick(index)">{{item.name}}</div>
     <div v-if="extra" class="pr15" style="flex: 1; text-align: right;">
       <slot name="extra"></slot>
     </div>
   </div>
 
   <div class="tab-content" :class="className.con">
-    <div class="tabsbox plr15" style="display: block; line-height: 30px;">
+    <div class="tabsbox" :class="className.box || 'plr15'" style="display: block; line-height: 30px;">
       <div v-if="currentIndex === 0">
         <slot name="content1"></slot>
       </div>
@@ -64,95 +64,92 @@
       <div v-if="currentIndex === 4">
         <slot name="content5"></slot>
       </div>
+      <div v-if="currentIndex === 5">
+        <slot name="content6"></slot>
+      </div>
     </div>
   </div>
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
+  defineEmits,
   ref,
   useRouter,
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Tabs',
-  props: {
-    className: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    title: {
-      type: String,
-      default: ""
-    },
-    tabs: {
-      type: Array,
-      default: []
-    },
-    icon: {
-      type: String,
-      default: ""
-    },
-    type: {
-      type: String,
-      default: "level"
-    },
-    aaa: {
-      type: Boolean,
-      default: false
-    },
-    query: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    method: {
-      type: String,
-      default: "route"
-    },
-    isEmit: {
-      type: Boolean,
-      default: false
-    },
-    extra: {
-      type: Boolean,
-      default: true
-    },
-  },
-  emits: ['update:index', 'update:value'],
-  setup(props, context) {
-    const router = useRouter();
-    let currentIndex: any = ref(0)
-
-    function handleClick(param: any, index: any) {
-      if (props.isEmit === true) {
-        currentIndex.value = index
-        context.emit('update:index', index)
-        context.emit('update:value', param.value)
-      } else {
-        if (props.method === 'click') {
-          currentIndex.value = index
-        } else {
-          currentIndex.value = index
-          router.push(props.aaa ? `?${props.query.url}&${props.query.name}=${index}` : `?type=${index}`)
-        }
-      }
+const props: any = defineProps({
+  className: {
+    type: Object,
+    default: () => {
+      return {}
     }
-    return {
-      handleClick,
-      currentIndex
+  },
+  title: {
+    type: String,
+    default: ""
+  },
+  tabs: {
+    type: Array,
+    default: []
+  },
+  icon: {
+    type: String,
+    default: ""
+  },
+  type: {
+    type: String,
+    default: "level"
+  },
+  aaa: {
+    type: Boolean,
+    default: false
+  },
+  query: {
+    type: Object,
+    default: () => {
+      return {}
+    }
+  },
+  method: {
+    type: String,
+    default: "route"
+  },
+  isEmit: {
+    type: Boolean,
+    default: false
+  },
+  extra: {
+    type: Boolean,
+    default: true
+  },
+})
+defineExpose({
+  handleClick
+})
+const emit: any = defineEmits(['update:index'])
+const router = useRouter();
+let currentIndex = ref(0)
+
+function handleClick(index: any) {
+  if (props.isEmit === true) {
+    currentIndex.value = index
+    emit('update:index', index)
+  } else {
+    if (props.method === 'click') {
+      currentIndex.value = index
+    } else {
+      currentIndex.value = index
+      router.push(props.aaa ? `?${props.query.url}&${props.query.name}=${index}` : `?type=${index}`)
     }
   }
-})
+}
 </script>
 
 <style scoped>
 .current {
-  color: #40a9ff !important;
+  color: var(--color-primary) !important;
 }
 </style>

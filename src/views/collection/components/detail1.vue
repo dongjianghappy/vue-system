@@ -1,8 +1,9 @@
-<template>
+ <template>
 <v-button v-model:show="isShow" :disabled="auth">
   开始采集
 </v-button>
-<v-dialog v-model:show="isShow" title="开始采集" :style="{width: '650', height: '750'}" @submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" title="开始采集" @submit="submit">
+<!-- <v-dialog v-model:show="isShow" title="开始采集" :style="{width: '650', height: '750'}" @submit="submit"> -->
   <template v-slot:content v-if="isShow">
     <h3 class="mb25">节点名称</h3>
     <div class="alert-description ptb10 plr15 font12">
@@ -34,43 +35,21 @@
       </li>
     </ul>
   </template>
-</v-dialog>
+</v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Detail1',
-  props: {
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    },
+  const props: any = defineProps({
     auth: {
       type: Boolean,
       default: false
     },
-  },
-  setup(props, context) {
+  })
     const isShow: any = ref(false)
     const detail: any = ref({})
-
-    return {
-      isShow,
-      detail
-    }
-  }
-})
 </script>

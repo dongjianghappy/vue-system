@@ -18,60 +18,21 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
+  useProps
 } from '@/utils'
-import SpaceModal from '../../../../space/components/modalSpace.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    SpaceModal
-  },
-  props: {
-    action: {
-      type: String,
-      default: "add"
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
+const props: any = defineProps(useProps)
+  const isShow: any = ref(false)
+  const detail: any = ref({})
+  const drawer: any = ref(null)
+  // 监听
+  watch([isShow], async (newValues, prevValues) => {
+    if (isShow.value) {
+      detail.value = await drawer.value.init()
     }
-  },
-  setup(props, context) {
-    const isShow: any = ref(false)
-    const detail: any = ref({})
-    const drawer: any = ref(null)
-    const upload: any = ref(null);
-    // 监听
-    watch([isShow], async (newValues, prevValues) => {
-      if (isShow.value) {
-        detail.value = await drawer.value.init()
-      }
-    })
-
-    // 上传图片
-    function uploadImg() {
-      upload.value.handleclick()
-    }
-
-    return {
-      isShow,
-      detail,
-      drawer,
-      uploadImg,
-      upload,
-    }
-  }
-})
+  })
 </script>

@@ -66,30 +66,30 @@
     <div class="module-wrap">
       <div class="module-head">
         设置
-        <v-switch :data="{ item: dataList, field: 'status', coding: coding.channel }" className="right" :auth="auth" />
+        <!-- <v-switch :data="{ item: dataList, field: 'status', coding: coding.channel }" className="right" :auth="auth" /> -->
       </div>
       <div class="module-content plr15" style="height: 545px">
         <ul class="form-wrap-box">
-          <li class="li mb10"><span class="label">频道信息</span>
+          <!-- <li class="li mb10"><span class="label">频道信息</span>
             <span class="right">
               <Info action="edit" :data="{id: channel.id, coding: coding.channel}" :render="renderChannel" :auth="auth.checked('info')" />
             </span>
-          </li>
-          <li class="li mb10"><span class="label">展示设置</span>
+          </li> -->
+          <!-- <li class="li mb10"><span class="label">展示设置</span>
             <span class="right">
               <v-setting :data="{channel_id: channel.id ,coding: coding.channel_config}" :auth="auth.checked('display')" />
             </span>
-          </li>
+          </li> -->
           <li class="li mb10"><span class="label">聚合标签</span>
             <span class="right">
               <Tag action="edit" :render="renderChannel" :data="{channel_id: channel.id, coding: coding.label}" :auth="auth.checked('tag')" />
             </span>
           </li>
-          <li class="li mb10"><span class="label">内容来源</span>
+          <!-- <li class="li mb10"><span class="label">内容来源</span>
             <span class="right">
               <Source action="edit" :render="renderChannel" :data="{channel_id: channel.id, coding: coding.content_source}" :auth="auth.checked('tag')" />
             </span>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
@@ -98,9 +98,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   computed,
@@ -114,27 +113,20 @@ import {
 import {
   ChartLine
 } from '@/components/packages/chart/index'
-import Info from './setting/index.vue'
+// import Info from './setting/index.vue'
 import Tag from './setting/tag/index.vue'
-import Source from './setting/source/index.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    Info,
-    Tag,
-    Source,
-    ChartLine
-  },
-  setup(props, context) {
+// import Source from './setting/source/index.vue'
     const {
       proxy
     }: any = getCurrentInstance();
     let channel: any = ref(channels());
     const store = useStore();
     const router = useRouter()
+    const coding = codings
     const dataList: any = ref({})
     const data: any = computed(() => store.getters['basic/channelDefault'] || {});
     const arrChannel = ['source', 'article', 'tech', 'picture', 'website', 'funny', 'notes', 'music']
+    const auth: any = proxy.$auth.init(`channel/${channel.module}`)
 
     // 监听路由
     watch(router.currentRoute, (newValues, prevValues) => {
@@ -186,16 +178,5 @@ export default defineComponent({
     }
 
     onMounted(init)
-    return {
-      coding: codings,
-      channel,
-      dataList,
-      data,
-      hours,
-      article,
-      renderChannel,
-      auth: proxy.$auth.init(`channel/${channel.module}`)
-    }
-  }
-})
+    
 </script>

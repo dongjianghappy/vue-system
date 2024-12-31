@@ -1,48 +1,70 @@
 <template>
-<v-popover content="<i class='iconfont icon-face'></i>" arrow="tb" offset="right" :move="-10" :type="click" keys="popover-face">
-  <div style="width: 410px; height: 250px">
-    <div class="facebox p10">
-      <ul>
-        <li v-for="(item, index) in expressionList" :key="index" @click="ChooseEmoji(item.name)"><img :src="require(`../../assets/expression/normal/${item.id}.gif`)"></li>
-      </ul>
-    </div>
+<v-popover content="<i class='iconfont icon-face'>ฑํว้</i>" arrow="tb" offset="right" :move="move" :type="click" keys="popover-face" @onClick="handleClick">
+  <div class="expression-wrap">
+    <template v-if="dataList.length">
+      <div class="expression-cate">
+        <span class="expression-tabs" :class="{current: currentIndex == index}" v-for="(item, index) in dataList" :key="index" @click="handleCate(item, index)">
+          <i :class="`iconfont icon-${item.icon}`" :title="item.name" v-if="item.icon" />
+          <span :title="item.name" v-else>{{item.name}}</span>
+        </span>
+      </div>
+      <div class="expression-box">
+        <template v-for="(item, index) in currentCate" :key="index">
+          <div class="col-md-2" v-if="item.isCollect" @click="ChooseEmoji(item.name)">
+            <div class="p5">
+              <img :src="item.value" :title="item.name" style="width: 100%; height: 100%;" />
+            </div>
+          </div>
+          <div class="expression-gif left" @click="ChooseEmoji(item.name)" v-else>
+            <img :src="item.value" :title="item.name" style="width: 24px; height: 24px;" />
+          </div>
+        </template>
+      </div>
+    </template>
+    <v-loding v-else />
   </div>
 </v-popover>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-} from 'vue'
-import {
-  expression
-} from '@/assets/const'
-export default defineComponent({
-  name: 'v-Expression',
-  emits: ['onEmoji'],
-  setup(props, context) {
-    const expressionList: any = expression;
+  defineProps,
+  defineEmits,
+  ref,
+  useStore,
+} from '@/utils'
 
-    function ChooseEmoji(data: any) {
-      context.emit('onEmoji', `[${data}]`)
-    }
-    return {
-      ChooseEmoji,
-      expressionList
-    }
+const props: any = defineProps({
+  move: {
+    type: String,
+    default: -10
   }
 })
-</script>
+const emit: any = defineEmits(['onEmoji'])
+const store = useStore()
+const currentCate = ref([])
+const dataList = ref([])
+const currentIndex: any = ref('0')
 
-<style lang="less" scoped>
-.facebox {
-  li {
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
-    float: left;
-    text-align: center;
+function handleClick(param: any) {
+  currentIndex.value = "0"
+  if (!param) {
+    return
   }
+  store.dispatch('common/Fetch', {
+    api: 'expression'
+  }).then(res => {
+    dataList.value = res.result
+    currentCate.value = res.result.length > 0 ? res.result[0].list : []
+  })
 }
-</style>
+
+function handleCate(param: any, index: any) {
+  currentCate.value = param.list || []
+  currentIndex.value = index
+}
+
+function ChooseEmoji(data: any) {
+  emit('onEmoji', `[${data}]`)
+}
+</script>

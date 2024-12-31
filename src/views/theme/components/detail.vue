@@ -31,17 +31,15 @@
 </v-dialog>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Detail',
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -58,8 +56,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const store: any = useStore()
     const isShow: any = ref(false)
     const dialog: any = ref(null)
@@ -111,19 +108,6 @@ export default defineComponent({
 
     // 监听图片上传
     function image(a: any) {
-      debugger
       img.value = a
     }
-
-    return {
-      isShow,
-      dialog,
-      upload,
-      detail,
-      image,
-      chooseColor,
-      submit
-    }
-  }
-})
 </script>

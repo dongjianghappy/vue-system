@@ -48,9 +48,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   ref,
@@ -58,12 +57,6 @@ import {
   codings,
 } from '@/utils'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'SpreadViewdd',
-  components: {
-    Detail
-  },
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -121,12 +114,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      dataList,
-      coding,
-      isMove
-    }
-  }
-})
 </script>

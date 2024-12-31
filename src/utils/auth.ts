@@ -68,6 +68,7 @@ export const chooseCate = (param: any, coding: any) => {
 
  // 将urlquery参数转换成对象形式
 export const channels = () => {
+  debugger
   let module: any = ""
   module = window.location.pathname.split("/")[2] || "";
   if(module === 'admin'){
@@ -86,6 +87,7 @@ export const channels = () => {
   }
   if(module === 'talk'){
     model.name = "微博"
+    model.coding = codings.talk
   }
   if(module === 'user'){
     model.name = "用户"

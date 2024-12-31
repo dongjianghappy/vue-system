@@ -30,7 +30,7 @@
     <td>
       <v-space class="relative">
         <span>
-              <Detail action="edit" :data="{id: item.id, ...data.coding }" :render="render" :auth="auth.checked('edit')" />
+              <Detail action="edit" :data="{id: item.id, coding: data.coding }" :render="render" :auth="auth.checked('edit')" />
             </span>
         <span>
           <v-confirm name="删除" :data="{id: item.id, coding: data.coding.art, operating: 'remove' }" type="text" api="removeAndRestore" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
@@ -79,11 +79,10 @@
 <v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding: data.coding.art }" :pagination="{total: dataList.pages, page: dataList.page ||  1, pagesize: 25}" :sorceData="dataList" :render="render" :auth="auth" />
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   getCurrentInstance,
-  onMounted,
   useStore,
   useRoute,
   useRouter,
@@ -91,16 +90,8 @@ import {
   computed,
   jsonParse
 } from '@/utils'
-import {
-  PRIOVINCE
-} from '@/assets/const'
-import Detail from './detail.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    Detail
-  },
-  props: {
+import Detail from '../../detail/haositeDetail.vue'
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -123,18 +114,14 @@ export default defineComponent({
         return 'Default function'
       }
     },
-  },
-  emits: ['onClick'],
-  setup(props, context) {
+  })
     const {
-      ctx,
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
     const router: any = useRouter();
     const checkedList: any = ref([])
-    const provinceType: any = PRIOVINCE
 
     const dataList = computed(() => {
       return store.getters[`channel/${props.data.module}`]['articleList']
@@ -148,7 +135,6 @@ export default defineComponent({
     }
 
     function handleUpdate(param: any) {
-      // proxy.$loading.loading()
       store.dispatch('common/Fetch', {
         api: "updateStatic",
         data: {
@@ -163,15 +149,4 @@ export default defineComponent({
         })
       })
     }
-
-    return {
-      handleClick,
-      checkedList,
-      jsonParse,
-      dataList,
-      handleUpdate,
-      provinceType
-    }
-  }
-})
 </script>

@@ -3,7 +3,10 @@
   <div class="module-head">
     <v-optionsbar title="申请友链">
       <template v-slot:extraright>
+      <v-space>
+        <Instructions module="link" />
         <Detail action='add' :data="data" :render="init" :auth="auth.checked('add')" />
+      </v-space>
       </template>
     </v-optionsbar>
   </div>
@@ -15,8 +18,8 @@
         <td class="col-md-3">链接地址</td>
         <td class="col-md-1">站长</td>
         <td class="col-md-2">联系方式</td>
-        <td class="col-md-1">申请时间</td>
-        <td class="col-md-2">操作</td>
+        <td class="col-md-2">申请时间</td>
+        <td class="col-md-1">操作</td>
       </tr>
       <tr v-for="(item, index) in dataList.list" :key="index">
         <td>
@@ -45,32 +48,26 @@
         </td>
       </tr>
     </table>
-    <v-loading :loading="loading" :dataList="dataList.list" />
+    <v-loading :loading="data.loading" :dataList="dataList.list" />
   </div>
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   computed,
   useStore
 } from '@/utils'
+import Instructions from './instructions.vue'
 import Detail from './detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  props: {
+  const props: any =defineProps({
     data: {
-      type: String,
-      default: ""
-    },
-    loading: {
-      type: Boolean,
-      default: false
+      type: Object,
+      default: () => {
+        return {}
+      }
     },
     render: {
       type: Function,
@@ -84,18 +81,8 @@ export default defineComponent({
         return {}
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore();
-    const dataList = computed(() => {
-      return store.getters['basic/links']['link3']
-    });
+    const dataList = computed(() => store.getters['basic/links']['link3']);
     const checkedList: any = ref([])
-
-    return {
-      dataList,
-      checkedList
-    }
-  }
-})
 </script>

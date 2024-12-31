@@ -36,20 +36,16 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
 } from '@/utils'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    Detail
-  },
-  props: {
+
+  const props: any = defineProps({
     name: {
       type: String,
       default: ""
@@ -71,8 +67,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore()
     const isShow: any = ref(false)
     const detail: any = ref({})
@@ -96,12 +91,5 @@ export default defineComponent({
         detail.value = res.result
       })
     }
-    return {
-      isShow,
-      init,
-      detail,
-      drawer
-    }
-  }
-})
+    
 </script>

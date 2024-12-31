@@ -97,10 +97,6 @@ const api:any =  {
   cateList(params: any) {
     return http.request('common', 'systemCate', 'post', params)
   },
-   // 文章相关功能如评论、点赞、收藏
-   articleRelated(params: any) {
-    return http.request('channel', 'articleRelated', 'post', params)
-  },  
   // 简单分类
   simpleCategory (params: any) {
     return http.request('common', 'simpleCategory', 'post', params)
@@ -368,13 +364,10 @@ const api:any =  {
   messageBoard(params: any) {
     return http.request('vue', 'messageBoard', 'post', params)
   },
+
   // 查看留言
   viewMessageBoard(params: any) {
     return http.request('vue', 'view_messageBoard', 'post', params)
-  },
-  // 回复留言
-  replyMessageBoard(params: any) {
-    return http.request('vue', 'reply_messageBoard', 'post', params)
   },
   // 意见反馈
   feedback(params: any) {
@@ -495,6 +488,10 @@ const api:any =  {
   // 心情
   mood(params: any) {
     return http.request('vue', 'mood', 'post', params)
+  },
+  // 心情列表
+  moodList(params: any) {
+    return http.request('user', 'moodList', 'post', params)
   },
   // 话题收藏
   TalkCollect (params: any) {
@@ -752,11 +749,6 @@ close (params: any) {
     return http.request('user', 'photoList', 'post', params)
   },
 
-  // 日志
-  journal (params: any) {
-    return http.request('user', 'journal', 'post', params)
-  },
-
   // 获取挂件文件
   getPendantFile (params: any) {
     return http.request('user', 'getPendantFile', 'post', params)
@@ -799,6 +791,9 @@ close (params: any) {
   emoticonsList (params: any) {
     return http.request('vue', 'emoticonsList', 'post', params)
   } , 
+  userExpression (params: any) {
+    return http.request('user', 'userExpression', 'post', params)
+  } , 
   getEmoticons (params: any) {
     return http.request('vue', 'getEmoticons', 'post', params)
   } , 
@@ -816,6 +811,11 @@ close (params: any) {
     return http.request('common', 'getWebsiteInfo','post', params)
   },  
 
+  // 网站内容提取
+  getWebsiteContent (params: any) {
+    return http.request('common', 'getWebsiteContent','post', params)
+  },  
+
   // 轨迹详情
   footprintDetail (params: any) {
     return http.request('common', 'footprintDetail','post', params)
@@ -830,7 +830,92 @@ close (params: any) {
   seaFishList (params: any) {
     return http.request('vue', 'seaFishList','post', params)
   },  
-  
+  // 相关说明
+  getInstructions (params: any) {
+    return http.request('vue', 'getInstructions','post', params)
+  },  
+  // 更新相关说明
+  updateInstructions (params: any) {
+    return http.request('vue', 'updateInstructions','post', params)
+  },  
+  // 检测
+  detection (params: any) {
+    return http.request('vue', 'detection','post', params)
+  },  
+  // 更改检测
+  updateDetection (params: any) {
+    return http.request('vue', 'updateDetection','post', params)
+  }, 
+  // 订单列表
+  orderList (params: any) {
+    return http.request('vue', 'orderList','post', params)
+  }, 
+  // 订单检测
+  orderDetection (params: any) {
+    return http.request('vue', 'orderDetection','post', params)
+  }, 
+  // 生成订单
+  updateOrderDetection (params: any) {
+    return http.request('vue', 'updateOrderDetection','post', params)
+  }, 
+  // 确认订单
+  confirmOrder (params: any) {
+    return http.request('vue', 'confirmOrder','post', params)
+  }, 
+  // 订单数据统计
+  orderDataStatistics (params: any) {
+    return http.request('vue', 'orderDataStatistics','post', params)
+  }, 
+  // 评论用户
+  commentUser (params: any) {
+    return http.request('vue', 'commentUser','post', params)
+  },
+  // 书签
+  bookmark (params: any) {
+    return http.request('vue', 'bookmark','post', params)
+  },
+  // 活动贡献
+  contribution(params: any) {
+    return http.request('common', 'contribution','post', params)
+  },
 }
 
-export default api
+const features_api:any =  {
+  // 用户留言
+  userMessageBoard (params: any) {
+    return http.request('vue_features', 'userMessageBoard', 'post', params)
+  }, 
+  // 用户留言回复
+  userMessageBoardReply (params: any) {
+    return http.request('vue_features', 'userMessageBoardReply', 'post', params)
+  }, 
+  // 留言回复列表
+  messageBoardReply(params: any) {
+    return http.request('vue_features', 'messageBoardReply', 'post', params)
+  },
+  // 回复留言
+  replyMessageBoard(params: any) {
+    return http.request('vue', 'reply_messageBoard', 'post', params)
+  },
+   // 内容相关功能如评论、点赞、收藏
+  articleRelated(params: any) {
+    return http.request('vue_features', 'articleRelated', 'post', params)
+  },  
+  // 点赞用户
+  articleRelatedUser (params: any) {
+    return http.request('vue_features', 'articleRelatedUser','post', params)
+  }, 
+  // 评论回复
+  commentReplyList(params: any) {
+    return http.request('vue_features', 'commentReplyList', 'post', params)
+  },
+  // 日志
+  journal (params: any) {
+    return http.request('vue_features', 'journal', 'post', params)
+  },
+}
+
+export default {
+  ...api,
+  ...features_api
+}

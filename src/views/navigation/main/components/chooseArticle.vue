@@ -31,9 +31,10 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
+  defineEmits,
   getCurrentInstance,
   ref,
   useStore,
@@ -41,9 +42,7 @@ import {
   watch,
   codings
 } from '@/utils'
-export default defineComponent({
-  name: 'v-ChooseSite',
-  props: {
+  const props: any = defineProps({
     disabled: {
       type: Boolean,
       default: false
@@ -78,9 +77,8 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  emits: ['getArticle'],
-  setup(props, context) {
+  })
+  const emit: any = defineEmits(['getArticle'])
     const {
       proxy
     }: any = getCurrentInstance();
@@ -144,23 +142,10 @@ export default defineComponent({
 
     function handleChange(param: any) {
       let arr = dataList.value.list.filter((item: any) => item.id === param.id)
-        context.emit("getArticle", arr[0])
+        emit("getArticle", arr[0])
     }
 
     function handleDelete(index: any){
       props.articleList.splice(index, 1)
     }
-
-    return {
-      isShow,
-      drawer,
-      handleChoose,
-      handleChange,
-      handleDelete,
-      dataList,
-      checkedList,
-      init
-    }
-  }
-})
 </script>

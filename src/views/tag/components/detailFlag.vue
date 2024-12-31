@@ -16,30 +16,21 @@
 </v-dialog>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-DetailFlag',
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
         return {}
       }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
     }
-  },
-  setup(props, context) {
+  })
     const isShow: any = ref(false)
     const drawer: any = ref(null)
     const detail: any = ref({})
@@ -54,13 +45,4 @@ export default defineComponent({
     function handleclick(param: any) {
       isShow.value = !isShow.value
     }
-
-    return {
-      isShow,
-      handleclick,
-      detail,
-      drawer
-    }
-  }
-})
 </script>

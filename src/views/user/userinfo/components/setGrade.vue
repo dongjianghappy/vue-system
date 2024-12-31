@@ -17,20 +17,14 @@
 </v-dialog>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
-  useStore,
-  watch,
+  useStore
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
-  props: {
+  const props: any = defineProps({
     attrs: {
       type: Object,
       default: () => {
@@ -53,8 +47,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore()
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -84,13 +77,4 @@ export default defineComponent({
         isShow.value = false
       })
     }
-
-    return {
-      isShow,
-      detail,
-      drawer,
-      submit
-    }
-  }
-})
 </script>

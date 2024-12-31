@@ -50,9 +50,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   ref,
   useStore,
@@ -62,19 +61,6 @@ import {
 import Favorites from './components/favorites.vue'
 import Detail from './components/detail.vue'
 
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Favorites,
-    Detail
-  },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
     const coding: any = codings['favorites'];
     const store = useStore();
     const router: any = useRouter();
@@ -112,13 +98,4 @@ export default defineComponent({
       init({})
       getFavorites()
     })
-
-    return {
-      init,
-      coding,
-      dataList,
-      favorites
-    }
-  }
-})
 </script>

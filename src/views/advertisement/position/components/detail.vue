@@ -51,18 +51,17 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   getCurrentInstance,
   ref,
   useStore,
   watch,
   codings
 } from '@/utils'
-export default defineComponent({
-  name: 'v-Search',
-  props: {
+
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -79,8 +78,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const {
       proxy
     }: any = getCurrentInstance();
@@ -117,7 +115,6 @@ export default defineComponent({
     }
 
     function choose(param: any) {
-      debugger
       const {
         data
       } = param
@@ -150,17 +147,4 @@ export default defineComponent({
         params.cancel()
       })
     }
-
-    return {
-      codings,
-      isShow,
-      detail,
-      drawer,
-      submit,
-      site,
-      choose,
-      checkedList
-    }
-  }
-})
 </script>

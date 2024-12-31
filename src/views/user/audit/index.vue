@@ -11,10 +11,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   computed,
   ref,
   watch,
@@ -26,23 +24,6 @@ import {
 } from '@/assets/const'
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    List,
-    List2
-  },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
     const dataList = computed(() => store.getters['website/webinfo']);
@@ -55,11 +36,4 @@ export default defineComponent({
       type.value = qq.type
 
     })
-
-    return {
-      tabsUserAudit,
-      dataList
-    }
-  }
-})
 </script>

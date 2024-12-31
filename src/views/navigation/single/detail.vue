@@ -99,12 +99,12 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   marked
 } from 'marked';
 import {
-  defineComponent,
+  defineProps,
   getCurrentInstance,
   onMounted,
   computed,
@@ -120,23 +120,13 @@ import {
 import {
   TEMPLATES,
 } from '@/assets/enum'
-// import Source from '../../setting/source.vue'
-// import Editor from '@/components/packages/editor/index.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    // Source,
-    // Editor
-  },
-  props: {
+  const props: any = defineProps({
     type: {
       type: String,
       defult: "index"
     }
-  },
-  setup(props, context) {
+  })
     const {
-      ctx,
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
@@ -198,7 +188,6 @@ export default defineComponent({
 
     // 保存
     function save() {
-      debugger
       for (let key in detailSSS.value) {
         detailSSS.value[key] = detail.value[key]
       }
@@ -298,28 +287,4 @@ export default defineComponent({
         })
       })
     }
-
-    return {
-      coding,
-      channelData,
-      menu,
-      status,
-      detail,
-      checkedList,
-      init,
-      save,
-      dataList,
-      aaa,
-      handleClick,
-      columns,
-      detailSSS,
-      getSource,
-      upload,
-      image,
-      action,
-      handleUpdate,
-      templates
-    }
-  }
-})
 </script>

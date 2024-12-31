@@ -69,24 +69,24 @@ import {
   channelssss
 } from '@/utils'
 import Detail from './components/detail.vue'
-import List from '../../channel/article/components/list.vue'
-import List2 from '../../channel/article/components/list2.vue'
-import List3 from '../../channel/article/components/list3.vue'
-import Collect from '../../channel/collect/index.vue'
-import Comment from '../../channel/comment/index.vue'
-import Praise from '../../channel/praise/index.vue'
-import Download from '../../channel/download/index.vue'
+// import List from '../../channel/article/components/list.vue'
+// import List2 from '../../channel/article/components/list2.vue'
+// import List3 from '../../channel/article/components/list3.vue'
+// import Collect from '../../channel/collect/index.vue'
+// import Comment from '../../channel/comment/index.vue'
+// import Praise from '../../channel/praise/index.vue'
+// import Download from '../../channel/download/index.vue'
 
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
-    List,
-    List2,
-    List3,
-    Collect,
-    Comment,
-    Praise,
-    Download,
+    // List,
+    // List2,
+    // List3,
+    // Collect,
+    // Comment,
+    // Praise,
+    // Download,
     Detail
   },
   setup(props, context) {

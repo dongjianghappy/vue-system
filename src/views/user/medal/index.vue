@@ -50,22 +50,14 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
-  computed,
   useStore,
   ref,
   codings
 } from '@/utils'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  setup(props, context) {
     const store = useStore();
     const dataList: any = ref([])
     const coding: any = codings.medal;
@@ -82,12 +74,5 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      init
-    }
-  }
-})
+    
 </script>

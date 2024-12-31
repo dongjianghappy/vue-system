@@ -31,12 +31,9 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
   useStore,
   useRouter,
@@ -44,23 +41,8 @@ import {
   useRoute
 } from '@/utils'
 
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    
-  },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
     const coding: any = "Q0016";
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
+    
     const store = useStore();
     const router: any = useRouter();
     const route: any = useRoute()
@@ -77,20 +59,7 @@ export default defineComponent({
         dataList.value = res.result
       })
     }
-
-    function handleClick(param: any) {
-      router.push(`/admin/robot/speech/list?id=${param.id}`)
-    }
-
+    
     onMounted(init)
-
-    return {
-      coding,
-      init,
-      dataList,
-      handleClick
-
-    }
-  }
-})
+    
 </script>

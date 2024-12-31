@@ -45,7 +45,7 @@
       </li>
       <li class="li">
         <span class="label">服务器</span>
-        <v-select :enums="serverName" v-model:value="detail.server" :defaultValue="detail.server = detail.server ? detail.server : 'localhost'" />
+        <v-select :enums="SERVER_NAME" v-model:value="detail.server" :defaultValue="detail.server = detail.server ? detail.server : 'localhost'" />
       </li>
       <li class="li">
         <span class="label">是否显示</span>
@@ -78,9 +78,9 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   getCurrentInstance,
   ref,
   watch,
@@ -89,9 +89,7 @@ import {
 import {
   SERVER_NAME
 } from '@/assets/enum'
-export default defineComponent({
-  name: 'v-Search',
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -108,15 +106,13 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-  },
-  setup(props, context) {
+  })
     const {
       proxy
     }: any = getCurrentInstance();
     const isShow: any = ref(false)
     const detail: any = ref({})
     const drawer: any = ref(null)
-    const serverName: any = SERVER_NAME
     const store = useStore();
 
     // 监听
@@ -170,15 +166,4 @@ export default defineComponent({
         isShow.value = false
       })
     }
-
-    return {
-      isShow,
-      detail,
-      submit,
-      drawer,
-      serverName,
-      chooseColor
-    }
-  }
-})
 </script>

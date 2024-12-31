@@ -33,7 +33,7 @@
       <div class="p10" style=" overflow: auto;">
         <div class="col-md-3">
           <SpaceModal v-model:image="item.image">
-            <img :src="item.image" width="265" height="105">
+            <img :src="item.image" onerror="this.src='/images/slideshow.png'" width="265" height="105">
           </SpaceModal>
         </div>
         <div class="col-md-5">
@@ -66,9 +66,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   ref,
@@ -79,14 +78,6 @@ import {
 } from '@/utils'
 import Detail from './components/detail.vue'
 import SpaceModal from '../../space/components/modalSpace.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail,
-    SpaceModal
-  },
-  props: {},
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -97,6 +88,7 @@ export default defineComponent({
     const slideshow: any = route.query.name
     const dataList: any = ref([])
     const isMove: any = ref(false)
+    const auth: any = proxy.$auth.init('slideshow/list')
 
     function init() {
       const {
@@ -167,19 +159,7 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      slideshow,
-      dataList,
-      handleClick,
-      handleSave,
-      isMove,
-      init,
-      auth: proxy.$auth.init('slideshow/list')
-    }
-  }
-})
+    
 </script>
 
 <style lang="less" scoped>

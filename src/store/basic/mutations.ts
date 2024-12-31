@@ -30,6 +30,33 @@ const mutations = {
   setLink: (state: any, params: any) => {
     state.links[params.state] = params.data || {}
   },
+  setWebsite: (state: any, params: any) => {
+
+    let siteArr: any = []
+    params.map((item: any) => {
+      if (item.domain === "localhost") {
+        return;
+      }
+      siteArr.push({
+        name: item.name,
+        value: item.id,
+      });
+    });
+
+    let siteObj: any = {
+      none: "请选择",
+    };
+    params.map((item: any) => {
+      siteObj[item.domain] = item.name;
+    });
+    state.site.list = params || []
+    state.site.tabs = siteArr || []
+    state.site.popover = siteObj
+  },
+  setMessageBoard: (state: any, params: any) => {
+    debugger
+    state.messageBoard[params.state] = params.data
+  },  
 }
 
 export default mutations

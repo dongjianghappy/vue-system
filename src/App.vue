@@ -5,6 +5,8 @@
 <style lang="less">
 @import "./assets/less/vue.less";
 @import "./assets/iconfont/iconfont.css";
+@import "./components/public/less/common.less";
+@import "./components/public/less/index.less";
 
 // @import "http://www.yunxi10.com/source/public/vue/css/admincms.css";
 // @import "http://yunxi10.com/source/public/vue/css/login.css";

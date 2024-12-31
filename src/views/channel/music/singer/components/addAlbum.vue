@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="true">
   <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'edit'? "": "新增专辑"}}
 </v-button>
-<v-dialog v-model:show="isShow" ref="dialog" :action="action" title="新增专辑" :style="{width: '500', height: '480'}" :data="{...data}" :confirm="true" :cancel="true" @submit="submit">
+<v-drawer v-model:show="isShow" ref="drawer" :action="action" title="新增专辑" :style="{width: '450'}" :data="{...data}" :confirm="true" :cancel="true" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -19,54 +19,26 @@
       </li>
       <li class="li">
         <span class="label">专辑描述</span>
-        <textarea placeholder="请输入单页摘要" v-model="detail.description" class="w-full"></textarea>
+        <textarea placeholder="请输入专辑描述" v-model="detail.description" class="w-full"></textarea>
       </li>
     </ul>
   </template>
-</v-dialog>
+</v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
+  useProps
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
-  props: {
-    attrs: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    action: {
-      type: String,
-      default: "add"
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    }
-  },
-  setup(props, context) {
+  const props: any = defineProps(useProps)
     const store = useStore()
     const isShow: any = ref(false)
-    const dialog: any = ref(null)
+    const drawer: any = ref(null)
     const detail: any = ref({
       name: "",
       sort: "",
@@ -77,9 +49,8 @@ export default defineComponent({
 
    // 监听
     watch([isShow], async (newValues, prevValues) => {
-      debugger
       if (isShow.value) {
-        detail.value = await dialog.value.init()
+        detail.value = await drawer.value.init()
       }
     })
 
@@ -117,18 +88,6 @@ export default defineComponent({
 
     // 监听图片上传
     function image(a: any) {
-      debugger
       img.value = a
     }
-
-    return {
-      isShow,
-      detail,
-      dialog,
-      submit,
-      upload,
-      image
-    }
-  }
-})
 </script>

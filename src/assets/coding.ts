@@ -322,8 +322,10 @@ const codings: any = {
     collect: "U0290005",
   },  
   activity: 'U0500003',
-  advertisement: "U0500000",
-  advertisement_position: "U0500001",
+  advertisement: {
+    list:  "U0500000",
+    position: "U0500001"
+  },
   appstore: 'U0500002',
   cardholder: 'U0520014',
   config: 'U0520004',
@@ -341,6 +343,7 @@ const codings: any = {
     kind: 'U0680031',
     record: 'U0680032'
   },
+  instructions: 'U0580004',
   knowledge: {
     art: 'U0600000',
     cate: 'U0600001'
@@ -426,6 +429,7 @@ const codings: any = {
     speech: 'U0670003'
   },
   authority: 'U0670004',
+  order: 'U0640002',
   search: {
     list: 'U0680000',
     setting: 'U0680001',
@@ -437,16 +441,19 @@ const codings: any = {
     announcement: 'U0680005',
     cate: 'U0680006',
     contact: 'U0680007',
-    feedback: 'U0680008',
-    feedback_comment: "U0680028",
-    feedback_praise: 'U0680029',
+    feedback: {
+      list: 'U0680008',
+      comment: "U0680028",
+      praise: 'U0680029'
+    },
     knowledge: {
       cate: 'U0680010',
       art: 'U0680009'
     },
     message_board: {
       list: 'U0680011',
-      reply: 'U0680012'
+      reply: 'U0680012',
+      praise: 'U0680033'
     },
     message: 'U0680013',
     reader: 'U0680014',
@@ -483,7 +490,8 @@ const codings: any = {
     road_line: 'U0690016',
     item: 'U0690017',
     item_group: 'U0690018',
-    scene_item: 'U0690019'
+    scene_item: 'U0690019',
+    tool: 'U0690020'
   },
   track: {
     art: 'U0690009',

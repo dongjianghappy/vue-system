@@ -22,45 +22,13 @@
 <v-nodata :data="dataList || []" />
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   computed,
-  useStore,
-  useRoute
-
+  useStore
 } from '@/utils'
-
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
-  props: {
-    style: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
-
-
     const store = useStore();
-    const route = useRoute();
-
     const dataList = computed(() => {
       return store.getters['setting/engine2'].list || []
     });
-    return {
-      dataList
-    }
-  }
-})
 </script>

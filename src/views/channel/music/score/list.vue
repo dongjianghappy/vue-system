@@ -35,44 +35,27 @@
     </table>
     <v-nodata :data="dataList.list || []" />
     <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, coding }" :sorceData="dataList.list" :render="init" v-if="dataList.list && dataList.list.length > 0" />
-  </div></template>
+  </div>
+</template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
-  computed,
+  defineProps,
   ref,
+  useStore,
   channels
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  props: {
+
+  const props: any = defineProps({
     dataList: {
       type: Object,
       default: () => {
         return {}
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const coding: any = channels().coding.score;
     const checkedList: any = ref([])
-
-
-    return {
-      coding,
-      checkedList
-    }
-  }
-})
 </script>

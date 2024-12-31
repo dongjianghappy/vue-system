@@ -17,9 +17,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   ref,
   watch,
@@ -33,13 +32,6 @@ import {
 } from '@/assets/const'
 import List from "./components/list.vue"
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'GradeView',
-  components: {
-    List,
-    Detail
-  },
-  setup(props, context) {
     const store = useStore();
     const route = useRoute();
     const coding: any = codings.user.grade
@@ -67,13 +59,4 @@ export default defineComponent({
       })
     }
     onMounted(init)
-    return {
-      tabsUserGrade,
-      coding,
-      dataList,
-      init,
-      page
-    }
-  }
-})
 </script>

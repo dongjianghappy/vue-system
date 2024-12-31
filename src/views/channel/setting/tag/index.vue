@@ -2,10 +2,9 @@
 <v-button v-model:show="isShow" :disabled="auth">
   <i class="iconfont icon-write"></i>
 </v-button>
-
 <v-drawer ref="drawer" v-model:show="isShow" action="edit" title="聚合标签" :width="1000" api="getFlag" :data="data" :hasfooter="false" :param="detail" :render="render">
   <template v-slot:content v-if="isShow">
-    <v-tabs :tabs="menu" v-model:index="index" :isEmit="true">
+    <v-tabs :tabs="tabsTag" v-model:index="index" :isEmit="true">
       <template v-slot:extra>
         <Detail :data="data" :render="init" />
       </template>
@@ -23,55 +22,23 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
+  useProps
 } from '@/utils'
+import { tabsTag } from '@/assets/const/index'
 import List from "./components/list.vue"
 import Detail from "./components/detail.vue"
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    List,
-    Detail
-  },
-  props: {
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    auth: {
-      type: Boolean,
-      default: false
-    },
-  },
-  setup(props, context) {
+  const props: any = defineProps(useProps)
     const isShow: any = ref(false)
     const drawer: any = ref(null)
     const dataList: any = ref([])
     const index: any = ref("0")
     const detail: any = ref({})
 
-    let menu: any = ref([{
-        name: "公共标签",
-        value: "appstore1"
-      }, {
-        name: "导航标签",
-        value: "appstore1"
-      },
-      {
-        name: "分类标签",
-        value: "appstore2"
-      },
-      {
-        name: "文档标签",
-        value: "appstore2"
-      }
-    ])
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
@@ -88,15 +55,4 @@ export default defineComponent({
         type: index.value === 0 ? '' : index.value === 1 ? "nav" : index.value === 2 ? "cat" : "art" // 公共标签类型为空
       })
     })
-
-    return {
-      isShow,
-      index,
-      detail,
-      dataList,
-      drawer,
-      menu,
-    }
-  }
-})
 </script>

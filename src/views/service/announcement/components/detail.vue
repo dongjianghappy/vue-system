@@ -24,7 +24,7 @@
       </li>
       <li class="li">
         <span class="label">类型</span>
-        <v-select :enums="sourceType" v-model:value="detail.type" :defaultValue="detail.type = detail.type ? detail.type : '1'" />
+        <v-select :enums="ANNOUNCEMENT_TYPE" v-model:value="detail.type" :defaultValue="detail.type = detail.type ? detail.type : '1'" />
       </li>
     </ul>
     <div class="edit-article">
@@ -34,18 +34,16 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
 } from '@/utils'
 import {
   ANNOUNCEMENT_TYPE,
 } from '@/assets/enum'
-export default defineComponent({
-  name: 'v-Search',
-  props: {
+  const props: any =  defineProps({
     action: {
       type: String,
       default: "add"
@@ -66,10 +64,8 @@ export default defineComponent({
       type: Boolean,
       default: false
     }
-  },
-  setup(props, context) {
+  })
     const isShow: any = ref(false)
-    const sourceType: any = ANNOUNCEMENT_TYPE
     const drawer: any = ref(null)
     const detail: any = ref({})
     // 监听
@@ -78,13 +74,4 @@ export default defineComponent({
         detail.value = await drawer.value.init()
       }
     })
-
-    return {
-      isShow,
-      sourceType,
-      detail,
-      drawer
-    }
-  }
-})
 </script>

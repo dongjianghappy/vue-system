@@ -1,0 +1,224 @@
+.mask{
+  position:fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; background: rgba(0,0,0,.45);
+  z-index: 101;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  /* 设置滚动条的宽度 */
+  background-color: #fff;
+  /* 设置滚动条的背景颜色 */
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  /* 设置滚动条滑块的圆角 */
+  background-color: #ccc;
+  /* 设置滚动条滑块的颜色 */
+}
+
+.markdown{
+  a {
+    color: #3eaf7c;
+  }
+  table {
+    overflow-x: auto;
+    border-collapse: collapse;
+    th {
+      background: #ddd;
+      border: 1px solid #fff;
+      padding: 10px;
+    }
+    td {
+      border: 1px solid #dfe2e5;
+      padding: 10px;
+    }
+  }
+}
+
+.progress_bar {
+  background: #aaa;
+  position: relative;
+  top: 8px;
+  width: 360px;
+  height: 4px;
+  cursor: pointer;
+  .time_bar {
+    background: #0277bd;
+    width: 0%;
+    height: 4px;
+    cursor: pointer;
+  }
+  .box {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #0277bd;
+    top: -4px;
+    cursor: pointer;
+  }
+}
+
+.sound_bar {
+  background: #aaa;
+  position: relative;
+  top: 8px;
+  width: 120px;
+  height: 4px;
+  cursor: pointer;
+  .sound_innbar {
+    background: #0277bd;
+    width: 0%;
+    height: 4px;
+    cursor: pointer;
+  }
+  .sound_box {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #0277bd;
+    top: -4px;
+    cursor: pointer;
+  }
+}
+
+.span-icon{
+  border-radius: 30px;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
+  &:hover{
+    background: #fff3db;
+    .icon-btn{
+      color: #f00 !important;
+    }
+  }
+}
+
+
+.drawer-wrap{
+  z-index: 102;
+  position: fixed;
+  right: 0;
+  height: 100%;
+  transition: right .5s ease;
+  &.drawer-open{
+    width: 100%;
+    transition: transform .3s cubic-bezier(.7,.3,.1,1),-webkit-transform .3s cubic-bezier(.7,.3,.1,1);
+  }
+  .drawer{
+    background: #fff;
+    z-index: 102;
+    top: 0;
+    position: absolute;
+    height: 100%;
+    transition: right .5s ease;
+  
+  }
+}
+
+.buttom-switch{
+  margin: 0;
+  padding: 0;
+  color: #000000d9;
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: "tnum";
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  min-width: 44px;
+  height: 22px;
+  line-height: 22px;
+  vertical-align: middle;
+  background-color: #00000040;
+  border: 0;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all .2s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  &.switch-checked {
+    background-color: #1890ff;
+  }
+  .switch-handle{
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    transition: all .2s ease-in-out;
+    &::before {
+      position: absolute;
+      inset: 0;
+      background-color: #fff;
+      border-radius: 9px;
+      box-shadow: 0 2px 4px #00230b33;
+      transition: all .2s ease-in-out;
+      content: "";
+    }
+  }
+  .switch-inner {
+    display: block;
+    margin: 0 7px 0 25px;
+    color: #fff;
+    font-size: 12px;
+    transition: margin .2s;
+  }
+}
+
+.number{
+  background: rgba(0, 0, 0, 0.25);
+  top: 10px;
+  right: 10px;
+  border-radius: 50px;
+  padding: 5px;
+  width: 50px;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  line-height: normal;
+}
+.condition-wrap{
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.calendar-graph-day {
+  width: 10px;
+  height: 10px;
+  background-color: #e9ecef;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, .0625);
+}
+
+.calendar-graph-day-1 {
+  background: #9be9a8 !important;
+}
+
+.calendar-graph-day-2 {
+  background: #40c463 !important;
+}
+
+.calendar-graph-day-3 {
+  background: #30a14e !important;
+}
+
+.calendar-graph-day-4 {
+  background: #216e39 !important;
+}

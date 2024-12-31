@@ -114,32 +114,19 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   computed,
   ref,
   useStore,
-  useRoute,
-  codings
+  useRoute
 } from '@/utils'
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
 import {
   ChartLine
 } from '@/components/packages/chart/index'
-import Authority from '@/components/packages/authority/index.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    ChartLine,
-    Authority,
-    List,
-    List2
-  },
-  setup(props, context) {
-    const coding: any = codings
     const store = useStore();
     const route = useRoute();
     const menu: any = ref([{
@@ -162,7 +149,6 @@ export default defineComponent({
     let current: any = ref(0)
 
     function refresh() {
-      debugger
       if (current.value === 4 || current.value === data.value.find.length - 1) {
         current.value = 0
       } else {
@@ -180,14 +166,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      data,
-      menu,
-      refresh,
-      findList,
-      current
-    }
-  }
-})
 </script>

@@ -37,18 +37,16 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  codings,
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
+  codings
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Detail',
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -65,8 +63,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const store: any = useStore()
     const coding: any = codings
     const isShow: any = ref(false)
@@ -134,19 +131,5 @@ export default defineComponent({
       } = param
       detail.value.energy_id = data.id
       detail.value.energy_name = data.name
-    }      
-
-    return {
-      coding,
-      isShow,
-      drawer,
-      upload,
-      detail,
-      image,
-      chooseColor,
-      submit,
-      choose
     }
-  }
-})
 </script>

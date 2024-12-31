@@ -2,9 +2,10 @@
 <Graph :data="detail" :save="save" @close="handleClose" />
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
+  defineEmits,
   getCurrentInstance,
   onMounted,
   ref,
@@ -16,12 +17,7 @@ import {
 } from '@/utils'
 import Graph from '@/plugin/joint/index.vue'
 
-export default defineComponent({
-  name: 'ArticleView',
-  components: {
-    Graph
-  },
-  props: {
+  const props: any = defineProps({
     channel: {
       type: String,
       default: ""
@@ -36,9 +32,8 @@ export default defineComponent({
         return {}
       }
     }
-  },
-  emits: ['update:show'],
-  setup(props, context) {
+  })
+  const emit: any = defineEmits(['update:show'])
     const {
       proxy
     }: any = getCurrentInstance();
@@ -125,13 +120,4 @@ export default defineComponent({
     onMounted(() => {
       init()
     })
-    return {
-      handleClose,
-      detail,
-      handleclick,
-      loading,
-      save
-    }
-  }
-})
 </script>

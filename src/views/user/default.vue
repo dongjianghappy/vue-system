@@ -44,36 +44,15 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   computed,
-  ref,
   useStore
 } from '@/utils'
 import {
   ChartLine
 } from '@/components/packages/chart/index'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    ChartLine
-  },
-  props: {
-    style: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
     const store = useStore();
 
     const user: any = computed(() => store.getters['basic/userDefault'].user || {});
@@ -116,19 +95,5 @@ export default defineComponent({
     function init() {
       store.dispatch('basic/UserDefault')
     }
-
-    function handleclick() {
-      context.emit('onClick')
-    }
-
     onMounted(init)
-    return {
-      user,
-      // order,
-      hours,
-      register,
-      handleclick
-    }
-  }
-})
 </script>

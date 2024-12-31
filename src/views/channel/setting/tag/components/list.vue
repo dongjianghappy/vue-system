@@ -1,18 +1,14 @@
 <template>
 <table class="table-striped table-hover col-left-3">
   <tr class="th">
-    <td class="col-md-1">顺序</td>
     <td class="col-md-4">标签名称</td>
     <td class="col-md-2">标签值</td>
     <td class="col-md-1">tag</td>
-    <td class="col-md-3">icon标签</td>
+    <td class="col-md-4">icon标签</td>
     <td class="col-md-1">状态</td>
   </tr>
   <tr v-for="(item, index) in dataList" :key="index">
-    <td>
-      <v-quick :value="item.sort" :data="{ id: item.id, field: 'sort', ...data }" :auth="true" />
-    </td>
-    <td>{{item.name}}</td>
+    <td>{{item.value}}</td>
     <td>
       <v-quick :value="item.value" :data="{ id: item.id, field: 'value', ...data }" :auth="true" />
     </td>
@@ -31,14 +27,11 @@
 </table>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
 } from '@/utils'
-
-export default defineComponent({
-  name: 'v-Search',
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -51,6 +44,5 @@ export default defineComponent({
         return {}
       }
     }
-  }
-})
+  })
 </script>

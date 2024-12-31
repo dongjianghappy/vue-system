@@ -8,19 +8,16 @@
 <v-nodata :data="history || []" />
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   useStore,
   ref,
   getUid,
   onMounted,
   computed
 } from '@/utils'
-
-export default defineComponent({
-  name: 'v-Button',
-  props: {
+  const props: any = defineProps({
     type: {
       type: String,
       default: "album"
@@ -33,8 +30,7 @@ export default defineComponent({
       type: String,
       default: "col-md-3"
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const history: any = ref([])
     const loginuser = computed(() => store.getters['user/loginuser']);
@@ -62,7 +58,6 @@ export default defineComponent({
     }
 
     function handleChoose(param: any) {
-      debugger
       store.dispatch('common/Fetch', {
         api: 'choosePhotos',
         data: {
@@ -75,12 +70,4 @@ export default defineComponent({
     }
 
     onMounted(getHistory)
-
-    return {
-      loginuser,
-      history,
-      handleChoose
-    }
-  }
-})
 </script>

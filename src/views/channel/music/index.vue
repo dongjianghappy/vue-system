@@ -17,45 +17,29 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
+  defineProps,
   onMounted,
-  computed,
   ref,
   watch,
+  useStore,
   useRoute,
   useRouter,
   channels
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import {
   visitPage
 } from '@/assets/const'
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
 import List3 from "./components/list3.vue"
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    List,
-    List2,
-    List3
-  },
-  props: {
+  const props: any = defineProps({
     type: {
       type: String,
       defult: "index"
     }
-  },
-  setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
+  })
     const store = useStore();
     const route = useRoute();
     const router: any = useRouter();
@@ -131,17 +115,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      channelData,
-      page,
-      menu,
-      type,
-      handleClick,
-      aaa
-    }
-  }
-})
 </script>

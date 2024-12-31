@@ -27,15 +27,14 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
 } from '@/utils'
-export default defineComponent({
-  name: 'v-Search',
-  props: {
+
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -56,8 +55,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     }
-  },
-  setup(props, context) {
+  })
     const isShow: any = ref(false)
     const drawer: any = ref(null)
     const detail: any = ref({})
@@ -67,12 +65,4 @@ export default defineComponent({
         detail.value = await drawer.value.init()
       }
     })
-
-    return {
-      isShow,
-      detail,
-      drawer
-    }
-  }
-})
 </script>

@@ -12,23 +12,16 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  onMounted,
+  defineProps,
   ref,
   useStore,
   watch,
 } from '@/utils'
 import List from './list.vue'
 import Detail from './detail2.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    List,
-    Detail
-  },
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -49,8 +42,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore()
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -74,15 +66,4 @@ export default defineComponent({
         detail.value = res.result
       })
     }
-
-    return {
-      isShow,
-      detail,
-      drawer,
-      upload,
-      fileInfo,
-      init
-    }
-  }
-})
 </script>

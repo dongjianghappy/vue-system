@@ -29,30 +29,13 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
-  computed,
-  ref,
-  useStore,
   codings
 } from '@/utils'
 import List from './components/list.vue'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'PartnerView',
-  components: {
-    List,
-    Detail
-  },
-  setup(props, context) {
-    const coding: any = codings.user.privilege;
 
-    return {
-      coding
-    }
-  }
-})
+    const coding: any = codings.user.privilege;
+    
 </script>

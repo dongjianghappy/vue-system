@@ -23,18 +23,16 @@
 </v-dialog>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
   computed,
   useStore
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Detail',
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -44,15 +42,9 @@ export default defineComponent({
       default: () => {
         return {}
       }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
     }
-  },
-  setup(props, context) {
+  })
+  
     const store = useStore();
     const isShow: any = ref(false)
     const dialog: any = ref(null)
@@ -69,7 +61,6 @@ export default defineComponent({
     })
 
     function init() {
-      debugger
       channel.value.map((item: any) => {
         channelMenu.value.push({
           value: item.id,
@@ -94,19 +85,7 @@ export default defineComponent({
           ...props.data
         }
       }).then(() => {
-        // props.render()
         isShow.value = false
       })
     }
-
-    return {
-      isShow,
-      detail,
-      dialog,
-      channelMenu,
-      submit
-
-    }
-  }
-})
 </script>

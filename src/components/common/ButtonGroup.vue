@@ -74,13 +74,14 @@ export default defineComponent({
   setup(props, context) {
 
     function handleclick(param: any) {
-
-      if (props.disabled) {
-        return
-      }
+debugger
+      // if (props.disabled) {
+      //   return
+      // }
 
       // 全选
       if (param === 'all') {
+        
         if (props.checkedList.length !== props.sorceData.length) {
           props.sorceData.map((item: any) => {
             if (props.checkedList.indexOf(item.id) === -1) {

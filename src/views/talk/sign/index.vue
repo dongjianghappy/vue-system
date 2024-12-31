@@ -1,89 +1,73 @@
 <template>
-<div class="module-wrap nobg">
-  <v-tabs :tabs="tabsSign" type="vertical">
-    <template v-slot:content1>
-      <List :render="init" :data="{coding: coding.sign}" :type='tabsIndex' :dataList="dataList" />
-    </template>
-    <template v-slot:content2>
-      <CursorList :type='tabsIndex' />
-    </template>    
-    <template v-slot:content3>
-      <ContentList :type='tabsIndex' />
-    </template>   
-  </v-tabs>
+<div class="module-wrap">
+  <div class="module-head">
+    <v-optionsbar title="签到">
+      <template v-slot:extraright>
+        <Detail />
+      </template>
+    </v-optionsbar>
+  </div>
+  <div class="module-content plr15">
+    <table class="table-striped table-hover col-left-123">
+      <tr class="th">
+        <td class="col-md-2">用户</td>
+        <td class="col-md-8">签到内容</td>
+        <td class="col-md-2">日期</td>
+      </tr>
+      <tr v-for="(item, index) in dataList" :key="index" :index="index">
+        <td>
+          <UserBookmark :data="{...item, coding: coding}" />
+        </td>
+        <td>
+          {{item.name}}
+        </td>
+        <td>
+          {{item.times}}
+        </td>
+      </tr>
+    </table>
+    <v-nodata :data="dataList" />
+  </div>
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
+  computed,
   ref,
-  watch,
-  useRoute,
   useStore,
   codings
 } from '@/utils'
 import {
-  tabsSign
+  visibles
 } from '@/assets/const'
-import List from './components/list.vue'
-import CursorList from './components/cursorList.vue'
-import ContentList from './components/contentList.vue'
+import UserBookmark from './components/list.vue'
+import Detail from './setting/index.vue'
 
-
-export default defineComponent({
-  name: 'IndexView',
-  components: {
-    List,
-    CursorList,
-    ContentList
-  },
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
-    const route = useRoute();
-    const coding: any = codings.user
-    const dataList: any = ref([])
-    const tabsIndex: any = ref(route.query.type || 0)
+    const dataList = ref({});
+    const coding: any = codings.user.mood
+    const checkedList: any = ref([])
+    const auth: any = proxy.$auth.init('partner')
 
-    // 监听路由
-    watch(route, (newValues, prevValues) => {
-      if (route.path === '/admin/talk/sign') {
-        tabsIndex.value = route.query.type
-        init()
-      }
-    })
-
-    // 初始化
     function init() {
-      let code = coding.sign
-      if (tabsIndex.value === '1') {
-        code = coding.sign_love
-      }
-      
-
-      store.dispatch('common/Fetch', {
+      store.dispatch('basic/Fetch', {
+        api: 'moodList',
         data: {
-          coding: code
+          page: 1,
+          pagesize: 10
         }
-      }).then(res => {
+      }).then((res: any) => {
         dataList.value = res.result
       })
     }
 
-    onMounted(init)
-
-    return {
-      tabsSign,
-      coding,
-      tabsIndex,
-      init,
-      dataList
-    }
-  }
-})
+    onMounted(() => {
+      init()
+    })
 </script>

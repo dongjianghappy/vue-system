@@ -12,8 +12,8 @@
 
     <table class="table-striped table-hover col-left-12">
       <tr class="th">
-        <td class="col-md-2">话题</td>
-        <td class="col-md-4">说明</td>
+        <td class="col-md-3">话题</td>
+        <td class="col-md-3">说明</td>
         <td class="col-md-1">参与人次</td>
         <td class="col-md-1">投票开启</td>
         <td class="col-md-2">创建时间</td>
@@ -22,7 +22,8 @@
       </tr>
       <tr v-for="(item, index) in dataList.list" :key="index">
         <td>
-          {{item.name}}
+          <img :src="item.image" onerror="this.src='/images/slideshow.png'" class="radius-4" width="120" height="80">
+          <i class="iconfont icon-topic" />{{item.name}}
         </td>
         <td>
           {{item.summary}}
@@ -51,18 +52,17 @@
       </tr>
     </table>
     <v-nodata :data="dataList.list || []" />
+    <div class="mt15 align_right">
+      <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="render" />
+    </div>
   </div>
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
-  watch,
   useRoute,
   useRouter,
   codings,
@@ -70,22 +70,7 @@ import {
 } from '@/utils'
 
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
+
     const store = useStore();
     const dataList: any = ref([])
     const coding: any = codings.talk.activity;
@@ -95,12 +80,13 @@ export default defineComponent({
     function init(param: any = {}) {
       const params: any = {
         page: 1,
-        pagesize: 25
+        pagesize: 10
       }
 
       Object.assign(params, param)
       
       store.dispatch('common/Fetch', {
+        api: 'activity',
         data: {
           coding,
           ...params
@@ -119,13 +105,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      handleClick,
-      init
-    }
-  }
-})
 </script>

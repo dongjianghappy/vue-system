@@ -38,19 +38,13 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
-  ref
-} from 'vue'
-import {
+  ref,
   useStore
-} from 'vuex'
-export default defineComponent({
-  name: 'RecommendView',
-  setup(props, context) {
+} from '@/utils'
     const {
       proxy
     }: any = getCurrentInstance();
@@ -68,13 +62,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init
-    }
-  }
-})
 </script>

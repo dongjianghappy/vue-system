@@ -20,33 +20,24 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   getCurrentInstance,
-  onMounted,
-  computed,
   ref,
   useStore,
   channels
 } from '@/utils'
 import Detail from './components/detail.vue'
-// import Three from './components/three.vue'
-export default defineComponent({
-  name: 'PartnerView',
-  components: {
-    Detail,
-    // Three
-  },
-  props: {
+
+  const props: any = defineProps ({
     data: {
       type: Object,
       default: () => {
         return {}
       }
     }
-  },
-  setup(props, context) {
+  })
     const {
       proxy
     }: any = getCurrentInstance();
@@ -107,18 +98,8 @@ export default defineComponent({
           "controlsTargetSset": [0, 0, 0]
         },
       ]
-    // const dataList: any = computed(() => {
-    //   return store.getters[`channel/${props.data.module}`]['articleList']
-    // });
+      
     const coding: any = channels().coding;
     const checkedList: any = ref([])
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      auth: proxy.$auth.init('partner')
-    }
-  }
-})
+    const auth: any = proxy.$auth.init('partner')
 </script>

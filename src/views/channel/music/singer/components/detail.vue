@@ -22,95 +22,60 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
-  useStore
+  useStore,
+  useProps
 } from '@/utils'
-import SpaceModal from '../../../../space/components/modalSpace.vue'
-export default defineComponent({
-      name: 'v-Search',
-      components: {
-        SpaceModal
-      },
-      props: {
-        action: {
-          type: String,
-          default: "add"
-        },
-        data: {
-          type: Object,
-          default: () => {
-            return {}
-          }
-        },
-        render: {
-          type: Function,
-          default: () => {
-            return 'Default function'
-          }
-        }
-      },
-      setup(props, context) {
-        const store = useStore()
-        const isShow: any = ref(false)
-        const drawer: any = ref(null)
-        const upload: any = ref(null);
-        const detail: any = ref({})
-        const img: any = ref("")
+const props: any = defineProps(useProps)
+const store = useStore()
+const isShow: any = ref(false)
+const drawer: any = ref(null)
+const upload: any = ref(null);
+const detail: any = ref({})
+const img: any = ref("")
 
-        // 监听
-        watch([isShow], async (newValues, prevValues) => {
-          if (isShow.value) {
-            detail.value = await drawer.value.init()
-          }
-        })
+// 监听
+watch([isShow], async (newValues, prevValues) => {
+  if (isShow.value) {
+    detail.value = await drawer.value.init()
+  }
+})
 
-        // 监听图片上传
-        function image(a: any) {
-          debugger
-          img.value = a
-        }
+// 监听图片上传
+function image(a: any) {
+  img.value = a
+}
 
-        function submit(cancel: any) {
-          const {
-            id,
-            name,
-            introduction,
-          } = detail.value
+function submit(cancel: any) {
+  const {
+    id,
+    name,
+    introduction,
+  } = detail.value
 
-          const param: any = {
-            name,
-            introduction,
-            img: img.value
-          }
-          if (props.action === 'edit') {
-            param.id = id
-          }
+  const param: any = {
+    name,
+    introduction,
+    img: img.value
+  }
+  if (props.action === 'edit') {
+    param.id = id
+  }
 
-          store.dispatch('common/Fetch', {
-            api: props.action !== 'add' ? 'update' : 'insert',
-            data: {
-              coding: props.data.coding,
-              ...param
+  store.dispatch('common/Fetch', {
+    api: props.action !== 'add' ? 'update' : 'insert',
+    data: {
+      coding: props.data.coding,
+      ...param
 
-            }
-          }).then(() => {
-            props.render()
-            isShow.value = false
-          })
-        }
-
-          return {
-            isShow,
-            detail,
-            drawer,
-            upload,
-            submit,
-            image
-          }
-        }
-      })
+    }
+  }).then(() => {
+    props.render()
+    isShow.value = false
+  })
+}
 </script>

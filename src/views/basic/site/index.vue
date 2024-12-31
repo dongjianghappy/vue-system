@@ -16,7 +16,7 @@
         <td class="col-md-1">状态</td>
         <td class="col-md-2">操作</td>
       </tr>
-      <tr v-for="(item, index) in dataList.list" :key="index">
+      <tr v-for="(item, index) in dataList" :key="index">
         <td>
           {{item.name}}
         </td>
@@ -42,17 +42,13 @@
         </td>
       </tr>
     </table>
-    <v-nodata :data="dataList.list || []" />
-    <div class="mt15 align_right">
-      <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="init" />
-    </div>
+    <v-nodata :data="dataList || []" />
   </div>
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   computed,
@@ -61,19 +57,14 @@ import {
 } from '@/utils'
 import Detail from './components/detail.vue'
 import Channel from './channel/index.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail,
-    Channel
-  },
-  setup(props, context) {
+
     const {
       proxy
     }: any = getCurrentInstance();
     const coding: any = codings.site;
     const store = useStore();
-    const dataList = computed(() => store.getters['basic/announcement']);
+    const dataList = computed(() => store.getters['basic/site'].list);
+    const auth: any = proxy.$auth.init('website')
 
     function init(param: any = {}) {
       const params: any = {
@@ -82,23 +73,13 @@ export default defineComponent({
       }
       Object.assign(params, param)
 
-      store.dispatch('basic/Fetch', {
-        state: 'announcement',
+      store.dispatch('basic/getWebsite', {
         data: {
           coding: coding.list,
-          ...params
         }
       })
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      init,
-      auth: proxy.$auth.init('announcement')
-    }
-  }
-})
+    
 </script>

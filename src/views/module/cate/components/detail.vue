@@ -82,27 +82,21 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   getCurrentInstance,
-  onMounted,
   ref,
   watch,
   useStore,
-  channels,
-  jsonParse
+  channels
 } from '@/utils'
 import {
   TEMPLATES,
 } from '@/assets/enum'
 import SpaceModal from '../../../space/components/modalSpace.vue'
-export default defineComponent({
-  name: 'v-Detail',
-  components: {
-    SpaceModal
-  },
-  props: {
+
+  const props: any = defineProps({
     attrs: {
       type: Object,
       default: () => {
@@ -134,8 +128,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-  },
-  setup(props, context) {
+  })
     const {
       proxy
     }: any = getCurrentInstance();
@@ -145,7 +138,6 @@ export default defineComponent({
     const channelData: any = channels();
     const templates: any = TEMPLATES
     const store = useStore();
-    const aaa: any = ref([])
 
     let menu: any = ref([{
         name: "分类信息",
@@ -210,18 +202,4 @@ export default defineComponent({
         })
       })
     }
-
-    return {
-      isShow,
-      detail,
-      drawer,
-      menu,
-      templates,
-      aaa,
-      submit,
-      jsonParse,
-      handleUpdate
-    }
-  }
-})
 </script>

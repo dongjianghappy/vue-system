@@ -3,9 +3,12 @@
   <div class="module-head">
     <v-optionsbar title="广告管理">
       <template v-slot:extraright>
+        <v-space>
+        <Order :data="{coding: coding.list, type: 'ad'}" title="广告订单列表" :render="render" />
         <span class="mr10" @click="handleCreateJson">导出数据</span>
         <v-condition name="站点" icon="select" field="website" :enums="siteEnum" :render="init" />
         <Detail action='add' :data="{coding}" :render="init" />
+        </v-space>
       </template>
     </v-optionsbar>
   </div>
@@ -74,23 +77,17 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   ref,
   useStore,
   codings
 } from '@/utils'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  setup(props, context) {
+import Order from '../order/components/detail.vue'
     const store = useStore();
-    const coding: any = codings;
+    const coding: any = codings.advertisement;
     const siteEnum: any = ref([])
     const dataList: any = ref({})
 
@@ -118,37 +115,27 @@ export default defineComponent({
       })
     }
 
-    function getSite() {
-      store.dispatch('basic/Fetch', {
-        state: 'announcement',
-        data: {
-          coding: coding.site.list,
-          page: 1,
-          pagesize: 10,
-          status: '1'
-        }
-      }).then(res => {
-        res.result.list.map((item: any) => {
-          siteEnum.value.push({
-            value: item.id,
-            name: item.name
-          })
-        })
-      })
-    }
+    // function getSite() {
+    //   store.dispatch('basic/Fetch', {
+    //     state: 'announcement',
+    //     data: {
+    //       coding: coding.site.list,
+    //       page: 1,
+    //       pagesize: 10,
+    //       status: '1'
+    //     }
+    //   }).then(res => {
+    //     res.result.list.map((item: any) => {
+    //       siteEnum.value.push({
+    //         value: item.id,
+    //         name: item.name
+    //       })
+    //     })
+    //   })
+    // }
 
     onMounted(() => {
       init()
-      getSite()
+      // getSite()
     })
-
-    return {
-      coding: coding.advertisement,
-      init,
-      dataList,
-      handleCreateJson,
-      siteEnum,
-    }
-  }
-})
 </script>

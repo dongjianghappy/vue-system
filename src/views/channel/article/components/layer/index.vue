@@ -44,32 +44,23 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   getCurrentInstance,
   ref,
   useRouter,
   getUid
 } from '@/utils'
-// import TalkItembar from './TalkItembar.vue'
 
-
-export default defineComponent({
-  name: 'TalkItemView',
-  components: {
-    // TalkItembar,
-    Comment
-  },
-  props: {
+  const props: any = defineProps({
     data: {
       type: Array,
       default: () => {
         return []
       }
     }
-  },
-  setup(props, context) {
+  })
     const {
       proxy
     }: any = getCurrentInstance();
@@ -87,13 +78,5 @@ export default defineComponent({
       } else {
         router.push(`${proxy.const.u}${uid}/home`)
       }
-    }    
-
-    return {
-      showImg,
-      showFlag,
-      handleclick
     }
-  }
-})
 </script>

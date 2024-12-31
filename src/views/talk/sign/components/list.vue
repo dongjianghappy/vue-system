@@ -1,79 +1,74 @@
 <template>
-<div class="module-wrap">
-  <div class="module-head">
-    <v-optionsbar title="用户签到">
-
-    </v-optionsbar>
-  </div>
-  <div class="module-content p15">
-    <table class="table-striped table-hover col-left-1">
-      <tr class="th">
-        <td class="col-md-8">用户</td>
-        <td class="col-md-2">签到时间</td>
-        <td class="col-md-2">操作</td>
-      </tr>
-      <tr v-for="(item, index) in dataList" :key="index" :index="index">
-        <td>
+<v-button v-model:show="isShow" :disabled="true">
+  <v-avatar :data="data" />{{data.nickname}}
+</v-button>
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="`${data.nickname}的签到记录`" :style="{width: '800'}" :hasfooter="false">
+  <template v-slot:extra>
+    
+  </template>
+  <template v-slot:content v-if="isShow">
+    <div style="height: 461px">
+      <table class="table-striped table-hover col-left-1">
+        <tr class="th">
+          <td class="col-md-10">心情</td>
+          <td class="col-md-2">日期</td>
+        </tr>
+        <tr v-for="(item, index) in dataList" :key="index">
+          <td>
           {{item.name}}
-        </td>
-        <td>
-          {{item.times}}
-        </td>
-        <td>
-          <v-space>
-           
-          </v-space>
-        </td>
-      </tr>
-    </table>
-    <v-nodata :data="dataList" />
-  </div>
-</div>
+          </td>
+        <td>{{item.times}}</td>
+        </tr>
+      </table>
+      <v-nodata :data="dataList" />
+    </div>
+  </template>
+</v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
+  ref,
+  useStore,
+  watch,
 } from '@/utils'
-export default defineComponent({
-  name: 'ListView',
-  props: {
-    dataList: {
-      type: Object,
-      default: () => {
-        return {}
-      }
+import {
+  visibles
+} from '@/assets/const'
+
+  const props: any = defineProps({
+    name: {
+      type: String,
+      default: '评论'
     },
     data: {
       type: Object,
       default: () => {
         return {}
       }
-    },
-    type: {
-      type: String,
-      default: 0
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return
+    }
+  })
+    const store = useStore()
+    const isShow: any = ref(false)
+    const dataList: any = ref({})
+
+    // 监听
+    watch([isShow], async (newValues, prevValues) => {
+      if (isShow.value) {
+        dataList.value = []
+        init()
       }
-    }
-  },
-  setup(props, context) {
-    const param = {
-      name: "",
-      url: "",
-      apply_checked: 1
-    }
+    })
 
-    const defaultTheme = "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-
-    return {
-      param,
-      defaultTheme
+    function init() {
+      store.dispatch('basic/Fetch', {
+        data: {
+          coding: props.data.coding,
+          uid: props.data.uid
+        }
+      }).then((res: any) => {
+        dataList.value = res.result
+      })
     }
-  }
-})
 </script>

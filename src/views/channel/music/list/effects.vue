@@ -100,101 +100,23 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   computed,
   ref,
+  useStore,
   channels,
   durationTrans
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
+import { durationList } from '@/assets/const/enum'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  setup(props, context) {
     const store = useStore();
     const dataList = computed(() => store.getters['channel/musicList']);
     const coding: any = channels().coding;
     const checkedList: any = ref([])
-    const durationList: any = [{
-        value: '',
-        name: '所有'
-      }, {
-        value: '00:00',
-        name: '00:00'
-      },
-      {
-        value: '00:01',
-        name: '00:01'
-      },
-      {
-        value: '00:02',
-        name: '00:02'
-      },
-      {
-        value: '00:03',
-        name: '00:03'
-      },
-      {
-        value: '00:04',
-        name: '00:04'
-      },
-      {
-        value: '00:05',
-        name: '00:05'
-      },
-      {
-        value: '00:06',
-        name: '00:06'
-      },
-      {
-        value: '00:07',
-        name: '00:07'
-      },
-      {
-        value: '00:08',
-        name: '00:08'
-      },
-      {
-        value: '00:09',
-        name: '00:09'
-      },
-      {
-        value: '00:10',
-        name: '00:10'
-      },
-      {
-        value: '00:11',
-        name: '00:11'
-      },
-      {
-        value: '00:12',
-        name: '00:12'
-      },
-      {
-        value: '00:13',
-        name: '00:13'
-      },
-      {
-        value: '00:14',
-        name: '00:14'
-      },
-      {
-        value: '00:15',
-        name: '00:15'
-      }
-    ]
 
     function init(param: any = {}) {
-
       const params: any = {
         page: 1,
         pagesize: 10
@@ -217,16 +139,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init,
-      durationTrans,
-      durationList,
-      handleDuration
-    }
-  }
-})
 </script>

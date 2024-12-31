@@ -56,19 +56,15 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   useStore,
   useRoute,
   ref,
   codings,
   onMounted
 } from '@/utils'
-export default defineComponent({
-  name: 'v-Search',
-  setup(props, context) {
+
     const coding: any = codings
     const store = useStore();
     const route = useRoute();
@@ -106,13 +102,6 @@ export default defineComponent({
     }
 
     onMounted(init)
-    return {
-      dataList,
-      init,
-      isWebsite
-    }
-  }
-})
 </script>
 
 <style scoped>

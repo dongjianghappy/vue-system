@@ -46,21 +46,14 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   ref,
   useStore,
   codings
 } from '@/utils'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-
-  },
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -68,6 +61,7 @@ export default defineComponent({
     const dataList: any = ref([]);
     const coding: any = codings['collection'].art;
     const checkedList: any = ref([])
+    const auth: any = proxy.$auth.init('collection/art')
 
     function init() {
       store.dispatch('common/Fetch', {
@@ -83,14 +77,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init,
-      auth: proxy.$auth.init('collection/art')
-    }
-  }
-})
 </script>

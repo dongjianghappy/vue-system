@@ -1,104 +1,74 @@
 <template>
-<div class="module-wrap">
-  <div class="module-head">
-    <v-optionsbar title="日志管理">
-      <template v-slot:extraright>
-        <v-space>
-          <Stationery :data="{ coding }" :render="init" :auth="auth.checked('add')" />
-          <Template :data="{ coding }" :render="init" :auth="auth.checked('add')" />          
-        </v-space>
-      </template>
-    </v-optionsbar>
-  </div>
-  <div class="module-content plr15">
-
-    <table class="table-striped table-hover col-left-1">
-      <tr class="th">
-        <td class="col-md-7">日志 </td>
-        <td class="col-md-2">时间</td>
-        <td class="col-md-1">状态</td>
-        <td class="col-md-2">操作</td>
-      </tr>
-      <tr v-for="(item, index) in dataList.list" :key="index">
-        <td>
-          {{item.title}}
-        </td>
-        <td>
-          {{item.times}}
-        </td>
-        <td>
-          <v-switch :data="{ item, field: 'checked', coding }" :auth="auth.checked('edit')" />
-        </td>
-        <td>
-          <v-space>
-            <span>
-              <v-confirm name="删除" :data="{id: item.id, coding}" api="delete" :render="init" operating="delete" :auth="auth.checked('del')"></v-confirm>
-            </span>
-            <span>
-              <v-confirm icon="top" :className="item.istop === '1' ? 'cl-red' : ''" :data="{id: item.id, field: 'istop', value: item.istop === '1' ? '0' : '1', coding }" type="text" api="changeData" :render="init" operating="setTop" :auth="true"></v-confirm>
-            </span>
-          </v-space>
-        </td>
-      </tr>
-    </table>
-    <v-nodata :data="dataList.list || []" />
-    <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="init" />
-  </div>
+<div class="ptb5" style="background: #fff">
+  <v-tabs :tabs="tabsJournal">
+    <template v-slot:extra>
+      <v-space>
+        <span class="mt10"><v-search field="content" placeholder="内容查找" :render="init" /></span>
+        <Group :data="{coding: coding.cate}" />
+      </v-space>
+    </template>
+    <template v-slot:content1>
+      <List :data="{ coding }" :dataList="dataList" :render="init" />
+    </template>
+    <template v-slot:content2>
+      <List2 :data="{ coding }" :dataList="dataList" :render="init" />
+    </template>
+  </v-tabs>
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
-  codings
+  watch,
+  useStore,
+  useRoute,
+  codings,
 } from '@/utils'
 import {
-  useStore
-} from 'vuex'
-import Template from './components/template.vue'
-import Stationery from './stationery/index.vue'
-// import Editor from '@/components/packages/editor/index.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Template,
-    Stationery
-    // Editor
-  },
-  setup(props, context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
-    const store = useStore();
-    const dataList: any = ref({})
-    const coding: any = codings.talk.journal.art;
-    const checkedList: any = ref([])
+  tabsJournal
+} from '@/assets/const'
+import Group from '../group/detail.vue'
+import List from './components/list.vue'
+import List2 from './components/list2.vue'
+const store = useStore();
+const route = useRoute();
+const coding: any = codings.talk.journal;
+const tabsIndex: any = ref(route.query.type || 0) // tbs索引
+const dataList: any = ref([])
 
-    function init() {
-      store.dispatch('basic/Fetch', {
-        api: 'journal',
-        data: {
-          page: 1,
-          pagesize: 25
-        }
-      }).then((res: any) => {
-        dataList.value = res.result
-      })
-    }
-
-    onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init,
-      auth: proxy.$auth.init('announcement')
-    }
+// 监听路由
+watch(route, (newValues, prevValues) => {
+  if (route.path === '/admin/talk/messageBoard') {
+    tabsIndex.value = route.query.type
+    init()
   }
 })
+
+// 初始化
+function init(param: any = {}) {
+  const params: any = {
+    page: 1,
+    pagesize: 25
+  }
+
+  Object.assign(params, param)
+
+  if(tabsIndex.value === '1'){
+    return
+  }
+  
+  store.dispatch('common/Fetch', {
+    api: 'journal',
+    tabsIndex: tabsIndex.value,
+    data: {
+      management_checked: tabsIndex.value === '2' ? 0 : 1, // 是否审核,
+      ...params
+    }
+  }).then((res: any) => {
+    dataList.value = res.result
+  })
+}
+onMounted(init)
 </script>

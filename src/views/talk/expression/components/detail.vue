@@ -28,21 +28,15 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  marked
-} from 'marked';
-import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
   useStore
 } from '@/utils'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-  },
-  props: {
+
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -63,8 +57,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -82,13 +75,4 @@ export default defineComponent({
       detail.value.fid = data.id
       detail.value.parent = data.name
     }
-
-    return {
-      isShow,
-      detail,
-      drawer,
-      choose
-    }
-  }
-})
 </script>

@@ -8,28 +8,14 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
-  computed
-} from 'vue'
-import {
+  computed,
   useStore
-} from 'vuex'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {},
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
+} from '@/utils'
     const {
-      ctx,
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
@@ -68,7 +54,6 @@ export default defineComponent({
           ...data
         }
       }).then(res => {
-        alert("fffdd")
         proxy.$hlj.message({
           msg: "编辑成功"
         })
@@ -76,12 +61,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      dataList,
-      edit
-
-    }
-  }
-})
 </script>

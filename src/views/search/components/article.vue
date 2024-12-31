@@ -58,15 +58,13 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Keyword',
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -77,13 +75,7 @@ export default defineComponent({
       type: Array,
       default: []
     }
-  },
-  setup(props, context) {
+  })
     let current: any = ref(0)
-
-    return {
-      current
-    }
-  }
-})
+    
 </script>

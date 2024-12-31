@@ -1,5 +1,5 @@
 <template>
-<div class="ptb5" style="background: #fff">
+<div class="bg-white ptb5">
   <v-tabs :tabs="tabsApp">
     <template v-slot:extra>
       <Detail action='add' :data="{ coding }" :render="init" :auth="auth.checked('add')" />
@@ -17,9 +17,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   ref,
@@ -33,13 +32,6 @@ import {
 } from '@/assets/const'
 import Detail from './components/detail.vue'
 import List from './components/list.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    List,
-    Detail
-  },
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -48,6 +40,7 @@ export default defineComponent({
     const coding: any = codings['appstore'];
     const tabsIndex: any = ref(route.query.type || 0) // tbs索引
     const dataList: any = ref([])
+    const auth: any = proxy.$auth.init('appstore')
 
     // 监听路由
     watch(route, (newValues, prevValues) => {
@@ -70,15 +63,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      tabsApp,
-      coding,
-      tabsIndex,
-      init,
-      dataList,
-      auth: proxy.$auth.init('appstore')
-    }
-  }
-})
 </script>

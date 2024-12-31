@@ -5,6 +5,7 @@ export interface State {
   userDefault: any;
   searchDefault: any;
   dataStatistics: any;
+  site: any;
   links: any;
   partner: any;
   announcement: any
@@ -24,6 +25,11 @@ const initState: State = {
   userDefault: {},
   searchDefault: {},
   dataStatistics: {},
+  site: {
+    list: [],
+    tabs: [],
+    popover: {}
+  },
   links: {
     link1: {},
     link2: {},
@@ -36,7 +42,8 @@ const initState: State = {
     list: []
   },
   messageBoard: {
-    list: []
+    articleList: {},
+    auditList: {},
   },
   feedback: {
     list: []

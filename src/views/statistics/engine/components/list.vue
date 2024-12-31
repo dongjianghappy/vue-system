@@ -49,33 +49,12 @@
 </table>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   computed,
   useStore,
   useRoute
 } from '@/utils'
-
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
-  props: {
-    style: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
 
     const store = useStore();
     const route = useRoute();
@@ -87,11 +66,5 @@ export default defineComponent({
     const all = computed(() => {
       return store.getters['setting/engine1'].all || {}
     });
-
-    return {
-      today,
-      all
-    }
-  }
-})
+    
 </script>

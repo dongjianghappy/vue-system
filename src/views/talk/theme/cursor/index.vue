@@ -3,7 +3,7 @@
   <div class="module-head">
     <v-optionsbar title="鼠标特效">
       <template v-slot:extraright>
-        <Detail action='add' :data="data" :render="render" />
+        <Detail action='add' :data="data" :render="init" />
       </template>
     </v-optionsbar>
   </div>
@@ -12,7 +12,7 @@
       <div style="border: 1px solid #f0f0f0;">
         <div class="bg-f7f8fa align_center" style="height: 80px; line-height: 80px;" @click="handleClick(item)"><img :src="item.file" v-if="item.file"></div>
         <div class="ptb10 plr5">{{item.name}}
-        <Detail action="edit" :data="{id: item.id, ...data}" :param="param" :render="render" />
+        <Detail action="edit" :data="{id: item.id, ...data}" :param="param" :render="init" />
         </div>
       </div>
     </div>
@@ -21,53 +21,33 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
+  ref,
+  onMounted,
+  useStore,
+  codings
 } from '@/utils'
 import Detail from './detail.vue'
-export default defineComponent({
-  name: 'ListView',
-  components: {
-    Detail
-  },
-  props: {
-    dataList: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    type: {
-      type: String,
-      default: 0
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return
-      }
-    }
-  },
-  setup(props, context) {
-    const param = {
-      name: "",
-      url: "",
-      apply_checked: 1
-    }
 
+    const store = useStore()
+    const coding: any = codings.user.cursor
     const defaultTheme = "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+    const dataList: any = ref([])
 
-    return {
-      param,
-      defaultTheme
+    // 初始化
+    function init(param: any = {}) {
+      store.dispatch('common/Fetch', {
+        api: 'theme',
+        data: {
+          coding,
+          ...param
+        }
+      }).then(res => {
+        dataList.value = res.result
+      })
     }
-  }
-})
+
+    onMounted(init)
 </script>

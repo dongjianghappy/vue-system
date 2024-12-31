@@ -45,9 +45,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   ref,
   useStore,
@@ -55,13 +54,6 @@ import {
   codings
 } from '@/utils'
 import Detail from './components/detail.vue'
-
-export default defineComponent({
-  name: 'Vote',
-  components: {
-    Detail
-  },
-  setup(props, context) {
     const coding: any = codings.module['vote'].art;
     const store = useStore();
     const router: any = useRouter();
@@ -80,13 +72,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      handleClick,
-      init
-    }
-  }
-})
 </script>

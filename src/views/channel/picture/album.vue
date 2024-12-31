@@ -8,7 +8,7 @@
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <div class="col-sm-6 col-md-2 p10" v-for="(item, index) in dataList" :key="index">
+    <div class="col-sm-6 col-md-3 p10" v-for="(item, index) in dataList" :key="index">
       <div class="thumbnail p10 relative" style="box-shadow: 0 1px 3px rgba(27, 95, 160, 0.1); overflow: hidden;">
         <div class="cover hide" style="position:absolute;top:0;left:0;bottom:0;width:100%;z-index:10;">
           <i class="iconfont icon-checkbox"><input name="checkbox" type="checkbox" value="2" style="display:none;"></i></div>
@@ -23,24 +23,13 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
+  useStore,
   channels
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-
-  },
-  setup(props, context) {
     const store = useStore();
     const dataList: any = ref([]);
     const coding: any = channels().coding.lrc;
@@ -60,13 +49,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init
-    }
-  }
-})
 </script>

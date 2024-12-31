@@ -28,9 +28,10 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
+  defineEmits,
   getCurrentInstance,
   ref,
   useStore,
@@ -38,9 +39,7 @@ import {
   watch,
   codings
 } from '@/utils'
-export default defineComponent({
-  name: 'v-ChooseSite',
-  props: {
+  const props: any = defineProps({
     disabled: {
       type: Boolean,
       default: false
@@ -75,9 +74,8 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  emits: ['getCate'],
-  setup(props, context) {
+  })
+  const emit: any = defineEmits(['getCate'])
     const {
       proxy
     }: any = getCurrentInstance();
@@ -118,20 +116,9 @@ export default defineComponent({
     }
 
     function handleClick(param: any) {
-        context.emit("getCate", param)
+        emit("getCate", param)
     }
     function handleDelete(index: any){
       props.cateList.splice(index, 1)
     }
-
-    return {
-      isShow,
-      drawer,
-      handleClick,
-      handleChoose,
-      dataList,
-      handleDelete
-    }
-  }
-})
 </script>

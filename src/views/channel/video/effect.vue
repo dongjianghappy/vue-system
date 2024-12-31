@@ -52,28 +52,18 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
+  defineProps,
   onMounted,
-  computed,
   ref,
+  useStore,
   channels,
   useRouter
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Video from '@/components/packages/play/videos.vue'
 import EffectDetail from './components/effectDetail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Video,
-    EffectDetail
-  },
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -90,8 +80,7 @@ export default defineComponent({
         return 'Default function'
       }
     },
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const router = useRouter()
     const coding: any = "K10006";
@@ -131,17 +120,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      checkedList,
-      dataList,
-      showFlag,
-      currentImg,
-      currentData,
-      showImg,
-      handleClick
-    }
-  }
-})
 </script>

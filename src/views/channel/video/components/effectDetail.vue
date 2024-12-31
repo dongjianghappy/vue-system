@@ -22,19 +22,14 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
 } from '@/utils'
-// import SpaceModal from '../../../../space/components/modalSpace.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    // SpaceModal
-  },
-  props: {
+
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -51,8 +46,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const isShow: any = ref(false)
     const detail: any = ref({})
     const drawer: any = ref(null)
@@ -68,14 +62,4 @@ export default defineComponent({
     function uploadImg() {
       upload.value.handleclick()
     }
-
-    return {
-      isShow,
-      detail,
-      drawer,
-      uploadImg,
-      upload,
-    }
-  }
-})
 </script>

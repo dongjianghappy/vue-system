@@ -8,7 +8,6 @@
     </div>
     <div style="overflow: auto;">
   <div class="col-sm-6 col-md-3 p10" v-for="(item, index) in detail" :key="index">
-
     <div class="thumbnail p10 relative" style="background: rgb(255, 255, 255); overflow: hidden;">
       <v-thumbnail :data="item" :coding="data.coding.art" :type="type" :getNeighbor="getNeighbor" />
       <div class="caption relative" style="padding: 10px 0px; height: 40px;">
@@ -26,47 +25,16 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
+  useProps
 } from '@/utils'
 import AddAlbum from './addAlbum.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    AddAlbum
-  },
-  props: {
-    name: {
-      type: String,
-      default: ""
-    },
-    action: {
-      type: String,
-      default: "add"
-    },
-    // 是否展示
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    }
-  },
-  setup(props, context) {
+  const props: any = defineProps(useProps)
     const store = useStore()
     const isShow: any = ref(false)
     const detail: any = ref({})
@@ -81,7 +49,6 @@ export default defineComponent({
 
     // 初始化
     function init() {
-
       store.dispatch('common/Fetch', {
         data: {
           coding: props.data.coding,
@@ -97,14 +64,4 @@ export default defineComponent({
     function handleclick(param: any) {
       isShow.value = !isShow.value
     }
-
-    return {
-      isShow,
-      handleclick,
-      init,
-      detail,
-      drawer
-    }
-  }
-})
 </script>

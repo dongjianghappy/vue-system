@@ -33,25 +33,16 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
+  defineProps,
   computed,
   ref,
+  useStore,
   channels,
   useRouter
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
-import {
-  setDevtoolsHook
-} from '@vue/runtime-core';
-export default defineComponent({
-  name: 'HomeViewdd',
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -72,8 +63,7 @@ export default defineComponent({
         return 'Default function'
       }
     },
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const router = useRouter()
     const coding: any = channels().coding.art;
@@ -90,7 +80,6 @@ export default defineComponent({
     function showImg(param: any, i: any) {
       index.value = i
       currentData.value = param
-      debugger
       currentImg.value = param.image[0]
       showFlag.value = !showFlag.value
     }
@@ -126,24 +115,7 @@ export default defineComponent({
           id: props.data.id
         }
       }).then(res => {
-        debugger
-        // detail.value = res.result
+        
       })
     }
-
-    return {
-      coding,
-      checkedList,
-      dataList,
-      showFlag,
-      index,
-      currentImg,
-      currentData,
-      showImg,
-      handleClick,
-      prevOrNext,
-      getNeighbor
-    }
-  }
-})
 </script>

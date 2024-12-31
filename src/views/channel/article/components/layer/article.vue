@@ -65,24 +65,16 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   getCurrentInstance,
   ref,
   useStore,
   useRouter,
   getUid
 } from '@/utils'
-// import TalkItembar from './TalkItembar.vue'
-
-export default defineComponent({
-  name: 'TalkItemView',
-  components: {
-    // TalkItembar,
-    Comment
-  },
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -101,8 +93,7 @@ export default defineComponent({
         return 'Default function'
       }
     },
-  },
-  setup(props, context) {
+  })
     const {
       proxy
     }: any = getCurrentInstance();
@@ -149,17 +140,6 @@ export default defineComponent({
           props.render()
         })
     }
-
-    return {
-      showImg,
-      showFlag,
-      handleclick,
-      textBlur,
-      handleDelete,
-      saveWord
-    }
-  }
-})
 </script>
 
 <style scoped>

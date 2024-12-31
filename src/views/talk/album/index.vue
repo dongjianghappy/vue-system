@@ -3,7 +3,7 @@
   <div class="module-head">
     <v-optionsbar title="话题">
       <template v-slot:extraright>
-
+        <v-search field="content" placeholder="用户账号查询" :render="init" />
       </template>
     </v-optionsbar>
   </div>
@@ -22,9 +22,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   computed,
@@ -32,12 +31,6 @@ import {
   ref
 } from '@/utils'
 import List from './components/list.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    List
-  },
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -59,14 +52,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      albumList,
-      init
-    }
-  }
-})
 </script>

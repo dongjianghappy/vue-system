@@ -11,9 +11,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   ref,
@@ -26,14 +25,6 @@ import {
 } from '@/assets/const'
 import Info from './info/index.vue'
 import Password from './components/password.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    // List,
-    Info,
-    Password
-  },
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -62,13 +53,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      tabsUserInfo,
-      coding,
-      init,
-      dataList
-    }
-  }
-})
 </script>

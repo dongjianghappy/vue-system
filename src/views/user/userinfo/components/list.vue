@@ -31,13 +31,14 @@
             <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
           </td>
           <td style="display: flex">
-            <v-avatar :data="item" :condition="{tag: item.role !== '0', value: '员'}"></v-avatar>
+            <BasicInfo :data="item" />
+            <!-- <v-avatar :data="item" :condition="{tag: item.role !== '0', value: '员'}"></v-avatar>
             <div class="pl5" style="flex: 1; height: 32px; line-height: 32px; display: inline-block;">
               {{item.nickname}}
               <span>
                 <i class="iconfont icon-spread" :class="item.active === '1' ? 'cl-5bc0de' : ''" @click="handleClick(item)" />
               </span>
-            </div>
+            </div> -->
           </td>
           <td>
             {{item.account}}
@@ -100,23 +101,19 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   computed,
   useStore,
 } from '@/utils'
+import BasicInfo from './basicInfo.vue'
 import Detail from './detail.vue'
 import {
   BANNED_TYPE,
 } from '@/assets/enum'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -129,8 +126,7 @@ export default defineComponent({
         return
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore()
     const checkedList: any = ref([])
     const bannedType: any = BANNED_TYPE
@@ -186,18 +182,4 @@ export default defineComponent({
         props.render()
       })
     }
-
-    return {
-      checkedList,
-      dataList,
-      calendarData,
-      bannedType,
-      gradeEnum,
-      view,
-      handleShow,
-      changeMonth,
-      handleClick
-    }
-  }
-})
 </script>

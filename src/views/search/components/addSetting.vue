@@ -11,7 +11,7 @@
       </li>
       <li class="li">
         <span class="label">文本类型</span>
-        <v-select :enums="textType" v-model:value="detail.text_type" :defaultValue="detail.text_type = detail.text_type ? detail.text_type : 'switch'" @onChange="handleChange" />
+        <v-select :enums="TEXT_TYPE" v-model:value="detail.text_type" :defaultValue="detail.text_type = detail.text_type ? detail.text_type : 'switch'" @onChange="handleChange" />
       </li>
       <li class="li" v-if="!isCheckbox">
         <span class="label">字段</span>
@@ -26,9 +26,9 @@
 </v-dialog>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
@@ -36,12 +36,8 @@ import {
 import {
   TEXT_TYPE,
 } from '@/assets/enum'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
 
-  },
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -52,23 +48,17 @@ export default defineComponent({
         return {}
       }
     },
-    menu: {
-      type: Array,
-      default: []
-    },
     render: {
       type: Function,
       default: () => {
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore()
     const isShow: any = ref(false)
     const dialog: any = ref(null)
     const detail: any = ref({})
-    const textType = TEXT_TYPE
     const isCheckbox: any = ref(false)
 
     // 监听
@@ -120,16 +110,4 @@ export default defineComponent({
         isShow.value = false
       })
     }
-
-    return {
-      isShow,
-      detail,
-      textType,
-      submit,
-      dialog,
-      handleChange,
-      isCheckbox
-    }
-  }
-})
 </script>

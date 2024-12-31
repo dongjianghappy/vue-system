@@ -24,11 +24,11 @@
       </li>
       <li class="li">
         <span class="label">类型</span>
-        <v-select :enums="spreadType" v-model:value="detail.type" :defaultValue="detail.type = detail.type ? detail.type : '0'" />
+        <v-select :enums="SPREAD_TYPE" v-model:value="detail.type" :defaultValue="detail.type = detail.type ? detail.type : '0'" />
       </li>
       <li class="li">
         <span class="label">区域</span>
-        <v-select :enums="spreadArea" v-model:value="detail.area" :defaultValue="detail.area = detail.area ? detail.area : '0'" />
+        <v-select :enums="SPREAD_AREA" v-model:value="detail.area" :defaultValue="detail.area = detail.area ? detail.area : '0'" />
       </li>
       <li class="li">
         <span class="label">预览图</span>
@@ -48,9 +48,9 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch
 } from '@/utils'
@@ -59,12 +59,7 @@ import {
   SPREAD_AREA
 } from '@/assets/enum'
 import SpaceModal from '../../space/components/modalSpace.vue'
-export default defineComponent({
-  name: 'v-Detail',
-  components: {
-    SpaceModal
-  },
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -86,12 +81,9 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const isShow: any = ref(false)
     const drawer: any = ref(null)
-    const spreadType: any = SPREAD_TYPE
-    const spreadArea: any = SPREAD_AREA
     const detail: any = ref({})
 
     // 监听
@@ -100,14 +92,4 @@ export default defineComponent({
         detail.value = await drawer.value.init()
       }
     })
-
-    return {
-      isShow,
-      detail,
-      drawer,
-      spreadType,
-      spreadArea
-    }
-  }
-})
 </script>

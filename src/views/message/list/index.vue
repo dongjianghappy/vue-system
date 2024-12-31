@@ -28,41 +28,20 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
+  onMounted,
+  ref,
+  watch,
+  useStore,
   useRoute,
-  useRouter
+  useRouter,
+  codings
 } from '@/utils';
 import {
   message,
 } from '@/assets/const'
-import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
-  computed,
-  ref,
-  watch,
-  codings
-} from '@/utils'
-import {
-  useStore
-} from 'vuex'
 
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {},
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute()
     const router = useRouter()
@@ -99,24 +78,9 @@ export default defineComponent({
       })
     }
 
-    function edit(param: any) {
-
-    }
-
     function handleClick(param: any) {
       router.push(`/admin/service/message/detail?type=${type}&id=${param.id}`)
     }
 
     onMounted(init)
-
-    return {
-      dataList,
-      edit,
-      handleClick,
-      messageType,
-      pages,
-      currentPage
-    }
-  }
-})
 </script>

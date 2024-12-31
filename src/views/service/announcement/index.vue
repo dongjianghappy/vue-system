@@ -3,7 +3,10 @@
   <div class="module-head">
     <v-optionsbar title="公告通知">
       <template v-slot:extraright>
-        <Detail :data="{ coding }" :render="init" :auth="auth.checked('add')" />
+        <v-space>
+          <v-condition name="位置" field="display_location" :enums="[{name: '网站', value: '0'}, {name: '微博', value: '1'}]" :render="init" />
+          <Detail :data="{ coding }" :render="init" :auth="auth.checked('add')" />
+        </v-space>
       </template>
     </v-optionsbar>
   </div>
@@ -13,7 +16,7 @@
       <tr class="th">
         <td class="col-md-1">选择</td>
         <td class="col-md-6">公告通知 </td>
-        <td class="col-md-2">时间</td>
+        <td class="col-md-2">发布时间</td>
         <td class="col-md-1">状态</td>
         <td class="col-md-2">操作</td>
       </tr>
@@ -37,7 +40,7 @@
         <td>
           <v-space>
             <span>
-              <Detail action="edit" :data="{id: item.id, coding}" :param="param" :render="init" :auth="auth.checked('edit')" />
+              <Detail action="edit" :data="{id: item.id, coding}" :render="init" :auth="auth.checked('edit')" />
             </span>
             <span>
               <v-confirm name="删除" :data="{id: item.id, coding}" api="delete" :render="init" operating="delete" :auth="auth.checked('del')"></v-confirm>
@@ -55,7 +58,7 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   defineComponent,
   getCurrentInstance,
@@ -68,14 +71,6 @@ import {
   useStore
 } from 'vuex'
 import Detail from './components/detail.vue'
-// import Editor from '@/components/packages/editor/index.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail,
-    // Editor
-  },
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -83,27 +78,22 @@ export default defineComponent({
     const dataList = computed(() => store.getters['basic/announcement']);
     const coding: any = codings['service'].announcement;
     const checkedList: any = ref([])
+    const auth: any = proxy.$auth.init('announcement')
 
-    function init() {
+    function init(param: any = {}) {
+      const params: any = {
+        page: 1,
+        pagesize: 25
+      }
+      Object.assign(params, param)
       store.dispatch('basic/Fetch', {
         state: 'announcement',
         data: {
           coding,
-          page: 1,
-          pagesize: 10
+          ...params
         }
       })
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init,
-      auth: proxy.$auth.init('announcement')
-    }
-  }
-})
 </script>

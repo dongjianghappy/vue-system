@@ -18,20 +18,14 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
+  defineProps,
+  defineEmits,
   useRouter
 } from '@/utils'
 
-import Detail from '../components/detail.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    Detail
-  },
-  props: {
+  const props: any = defineProps({
     name: {
       type: String,
       default: ""
@@ -56,12 +50,8 @@ export default defineComponent({
       type: String,
       default: "version"
     }
-  },
-  emits: ['update:graph'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
+  })
+  const emit: any = defineEmits(['update:graph'])
     const router: any = useRouter();
 
     function handleClick(item: any) {
@@ -75,15 +65,9 @@ export default defineComponent({
     }
 
     function handleView(param: any) {
-      context.emit('update:graph', {
+      emit('update:graph', {
         view: true,
         data: param
       })
     }
-    return {
-      handleClick,
-      handleView
-    }
-  }
-})
 </script>

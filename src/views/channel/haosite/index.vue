@@ -3,28 +3,32 @@
   <v-tabs :tabs="menu">
     <template v-slot:extra>
       <v-space>
-        <v-search :render="init" />
+        <span class="pt10">
+          <v-search :render="init" />
+        </span>
+        {{channelData.module}}
+        <v-timepicker :data="detail" attr="start_time" @changeDay="changeDay" />
+        <v-catepicker :data="{coding, module: channelData.module}" @choose="chooseCate" />
+        <v-condition name="排序" icon="sort-desc" field="sorter" :enums="[{value: 'id desc', name: '递减'}, {value: 'id asc', name: '递增'}]" :render="init" />
+        <v-colorpicker2 @choose="chooseColor" />
         <v-toggledisplay v-model:toggle="toggleDisplay" />
-        <v-condition name="排序" icon="sort" field="sorter" :enums="[{value: 'id desc', name: '递减'}, {value: 'id asc', name: '递增'}]" :render="init" />
-        <Detail action='add' :data="channelData.coding" :render="init" :auth="true" />
+        <Detail :data="{coding: channelData.coding}" :render="init" :auth="true" />
       </v-space>
     </template>
     <template v-slot:content1>
-      <List :type='page.value' :data="{...channelData, coding, aaa}" :render="init" v-if="toggleDisplay === 'list'" :auth="auth" />
+      <List :type='page.value' :data="{...channelData, coding: channelData.coding, aaa}" :render="init" v-if="toggleDisplay === 'list'" :auth="auth" />
     </template>
     <template v-slot:content2>
-      <List2 :type='page.value' :data="{...channelData}" :render="init" :auth="auth" />
+      <List2 :type='page.value' :data="{...channelData, coding: channelData.coding}" :render="init" :auth="auth" />
     </template>
   </v-tabs>
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
-  computed,
   ref,
   watch,
   useRoute,
@@ -38,24 +42,9 @@ import {
   visitPage
 } from '@/assets/const'
 import List from "./components/list.vue"
-import List2 from "./components/list2.vue"
-import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    List,
-    List2,
-    Detail
-  },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
+import List2 from "../list/components/list2.vue"
+import Detail from '../detail/haositeDetail.vue'
     const {
-      ctx,
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
@@ -65,6 +54,7 @@ export default defineComponent({
     const coding: any = channels().coding;
     const aaa: any = ref([])
     const toggleDisplay: any = ref("list")
+    const auth: any = proxy.$auth.init(`channel/${channelData.module}/art`)
 
     let menu: any = ref([{
         name: "网站管理",
@@ -152,19 +142,4 @@ export default defineComponent({
         pagesize: 30
       })
     })
-
-    return {
-      coding,
-      init,
-      channelData,
-      page,
-      menu,
-      type,
-      handleClick,
-      aaa,
-      toggleDisplay,
-      auth: proxy.$auth.init(`channel/${channelData.module}/art`)
-    }
-  }
-})
 </script>

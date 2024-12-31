@@ -1,5 +1,7 @@
 <template>
-<span @click="handleclick">{{data.singer}}</span>
+<v-button v-model:show="isShow">
+  {{data.singer}}
+</v-button>
 <v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" action="add" title="" :width="800" :hasfooter="false">
   <template v-slot:content v-if="isShow">
     <div class="user-info-wrap">
@@ -16,132 +18,47 @@
       </div>
     </div>
     <div class="mt25">
-      <table class="table-striped table-hover col-left-1">
-      <tr class="th">
-        <td class="col-md-2">歌曲</td>
-        <td class="col-md-1">风格</td>
-        <td class="col-md-1">试听</td>
-        <td class="col-md-1">时长</td>
-        <td class="col-md-1">大小</td>
-        <td class="col-md-1">格式</td>
-      </tr>
-        <tr v-for="(item, index) in dataList.list" :key="index">
-          <td>{{item.title}}</td>
-          <td>{{item.parent}}</td>
-          <td><v-audio :data="{...item, index, number: dataList.list.length}" /></td>
-        <td> {{durationTrans(item.duration)}}</td>
-        <td> {{`${(item.size / 1024 / 1024).toFixed(2)}MB`}}</td>
-        <td> {{item.format}}</td>
-        </tr>
-    </table>
+      <List :data="data" />
     </div>
   </template>
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
-  durationTrans
+  durationTrans,
+  useProps
 } from '@/utils'
-export default defineComponent({
-  name: 'v-Search',
-  props: {
-    name: {
-      type: String,
-      default: ""
-    },
-    action: {
-      type: String,
-      default: "add"
-    },
-    // 是否展示
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    }
-  },
-  setup(props, context) {
-    const store = useStore()
-    const isShow: any = ref(false)
-    const detail: any = ref({})
-    const drawer: any = ref(null)
-    const dataList: any = ref([])
+import List from './list.vue'
+const props: any = defineProps(useProps)
+  const store = useStore()
+  const isShow: any = ref(false)
+  const detail: any = ref({})
+  const drawer: any = ref(null)
+  const dataList: any = ref([])
 
-    // 监听
-    watch([isShow], async (newValues, prevValues) => {
-      if (isShow.value) {
-        init()
-        musicList()
+  // 监听
+  watch([isShow], async (newValues, prevValues) => {
+    if (isShow.value) {
+      init()
+    }
+  })
+
+  // 初始化
+  function init() {
+    store.dispatch('common/Fetch', {
+      api: 'viewSinger',
+      data: {
+        id: props.data.singer_id
       }
+    }).then((res: any) => {
+      detail.value = res.result
     })
-
-    // 初始化
-    function init() {
-
-      store.dispatch('common/Fetch', {
-        api: 'viewSinger',
-        data: {
-          id: props.data.singer_id
-        }
-      }).then((res: any) => {
-        detail.value = res.result
-      })
-    }
-
-    function musicList(param: any = {}) {
-
-      const params: any = {
-        page: 1,
-        pagesize: 10
-      }
-
-      Object.assign(params, param)
-      debugger
-      store.dispatch('channel/musicListAction', {
-        isStore: true,
-        data: {
-          coding: 'E0000',
-          kind: 'music',
-          singer_id: props.data.singer_id,
-          ...params
-        }
-      }).then((res: any) => {
-        dataList.value = res.result
-      })
-    }
-
-
-    function handleclick(param: any) {
-      isShow.value = !isShow.value
-    }
-
-    return {
-      isShow,
-      handleclick,
-      init,
-      detail,
-      dataList,
-      drawer,
-      durationTrans
-    }
   }
-})
 </script>
 
 <style lang="less">

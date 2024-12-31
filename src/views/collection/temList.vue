@@ -33,9 +33,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   ref,
   codings,
@@ -43,9 +42,6 @@ import {
   useRoute
 } from '@/utils'
 
-export default defineComponent({
-  name: 'TemListView',
-  setup(props, context) {
     const coding: any = codings['collection'].artTem;
     const store = useStore();
     const route = useRoute();
@@ -72,11 +68,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList
-    }
-  }
-})
 </script>

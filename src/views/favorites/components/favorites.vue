@@ -18,20 +18,16 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
 } from '@/utils'
 import Created from './created.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    Created
-  },
-  props: {
+
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -42,8 +38,7 @@ export default defineComponent({
         return {}
       }
     },
-  },
-  setup(props, context) {
+  })
     const store = useStore()
     const isShow: any = ref(false)
     const detail: any = ref({})
@@ -71,14 +66,4 @@ export default defineComponent({
     function handleclick(param: any) {
       isShow.value = !isShow.value
     }
-
-    return {
-      isShow,
-      handleclick,
-      init,
-      detail,
-      drawer
-    }
-  }
-})
 </script>

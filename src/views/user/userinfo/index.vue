@@ -14,9 +14,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   ref,
   watch,
@@ -31,15 +30,7 @@ import Detail from './components/detail.vue'
 import List from './components/list.vue'
 import Manage from './components/manage.vue'
 import Verified from './components/verified.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    List,
-    Manage,
-    Verified,
-    Detail
-  },
-  setup(props, context) {
+
     const store = useStore();
     const route = useRoute();
     const coding: any = codings['user'];
@@ -74,13 +65,4 @@ export default defineComponent({
     onMounted(() => {
       init()
     })
-
-    return {
-      tabsUser,
-      init,
-      dataList,
-      coding
-    }
-  }
-})
 </script>

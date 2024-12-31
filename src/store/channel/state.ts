@@ -2,6 +2,7 @@ export interface State {
   article: any;
   source: any;
   tech: any;
+  topic: any;
   picture: any;
   website: any;
   funny: any;
@@ -40,6 +41,12 @@ const initState: State = {
     imageList: {}
   },
   tech: {
+    cateList: [],
+    articleList: {},
+    auditList: {},
+    returnList: {},
+  },
+  topic: {
     cateList: [],
     articleList: {},
     auditList: {},

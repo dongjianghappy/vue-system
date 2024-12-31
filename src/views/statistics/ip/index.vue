@@ -11,9 +11,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   ref,
 } from '@/utils'
 import {
@@ -22,14 +21,7 @@ import {
 import List from "./components/list.vue"
 import Calendar from "./components/calendar.vue"
 import List3 from "./components/list3.vue"
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    List,
-    Calendar,
-    List3
-  },
-  setup(props, context) {
+
     let menu: any = ref([{
         name: "每日IP",
         value: "appstore1"
@@ -39,10 +31,4 @@ export default defineComponent({
         value: "appstore3"
       }
     ])
-
-    return {
-      menu
-    }
-  }
-})
 </script>

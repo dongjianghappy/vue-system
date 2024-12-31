@@ -35,31 +35,24 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   getCurrentInstance,
   onMounted,
-  computed,
   codings,
   ref,
   useStore,
   useRoute,
-  
 } from '@/utils'
 
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {},
-  props: {
+  const props: any = defineProps({
     type: {
       type: String,
       defult: "index"
     }
-  },
-  setup(props, context) {
+  })
     const {
-      ctx,
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
@@ -147,7 +140,6 @@ export default defineComponent({
     }
 
     function handelClick() {
-      // proxy.$hlj.loading()
       store.dispatch('common/Fetch', {
         api: "update",
         data: {
@@ -162,13 +154,4 @@ export default defineComponent({
       })
     }
     onMounted(init)
-
-    return {
-      pageList,
-      buttonList,
-      checkedKeys,
-      handelClick
-    }
-  }
-})
 </script>

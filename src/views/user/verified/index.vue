@@ -45,23 +45,15 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
-  computed,
   ref,
   useStore,
   codings
 } from '@/utils'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'PartnerView',
-  components: {
-    Detail
-  },
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -69,6 +61,7 @@ export default defineComponent({
     const dataList: any = ref([]);
     const coding: any = codings.user.verified;
     const checkedList: any = ref([])
+    const auth: any = proxy.$auth.init('partner')
 
     function init() {
       store.dispatch('common/Fetch', {
@@ -85,14 +78,4 @@ export default defineComponent({
     onMounted(() => {
       init()
     })
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init,
-      auth: proxy.$auth.init('partner')
-    }
-  }
-})
 </script>

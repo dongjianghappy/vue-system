@@ -41,9 +41,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   ref,
   watch,
@@ -52,9 +51,6 @@ import {
   useRouter,
   useRoute
 } from '@/utils'
-export default defineComponent({
-  name: 'Template',
-  setup(props, context) {
     const store = useStore();
     const dataList: any = ref([])
     const router = useRouter();
@@ -141,16 +137,4 @@ export default defineComponent({
           })
       }
     })
-
-    return {
-      dataList,
-      module,
-      sorter,
-      handleClicksss,
-      handleClick,
-      handelReturn,
-      isEdit
-    }
-  }
-})
 </script>

@@ -16,46 +16,22 @@
 <v-nodata :data="dataList || []" />
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
+  defineEmits,
   computed,
   useStore,
   useRoute
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
-  props: {
-    style: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
-        const store = useStore();
+  const emit: any = defineEmits(['onClick'])
+  
+    const store = useStore();
     const route = useRoute();
     const dataList = computed(() => {
       return store.getters['setting/domain1'] || []
     });
     function handleclick() {
-      context.emit('onClick')
+      emit('onClick')
     }
-
-    return {
-      handleclick,
-      dataList
-    }
-  }
-})
 </script>

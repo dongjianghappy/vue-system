@@ -15,11 +15,7 @@
       </li>
       <li class="li">
         <span class="label">数据类型</span>
-        <v-radio label="文本保存HTML数据(TEXT)" name="dtype" value="TEXT" v-model:checked="detail.dtype" />
-        <v-radio label="字符串类型(VARCHAR)" name="dtype" value="VARCHAR" v-model:checked="detail.dtype" />
-        <v-radio label="整数类型(INT)" name="dtype" value="int" v-model:checked="detail.dtype" />
-        <v-radio label="小数类型(Float)" name="dtype" value="float" v-model:checked="detail.dtype" />
-        <v-radio label="时间类型(DATETIME)" name="dtype" value="datetime" v-model:checked="detail.dtype" />
+        <v-select :enums="DATE_TYPE" v-model:value="detail.dtype" :defaultValue="detail.dtype = detail.dtype ? detail.dtype : 'varchar'" />
       </li>
       <li class="li">
         <span class="label">显示类型</span>
@@ -38,19 +34,19 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
 } from '@/utils'
 import {
   TEXT_TYPE,
+  DATE_TYPE
 } from '@/assets/enum'
-export default defineComponent({
-  name: 'Detail',
-  props: {
+
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -71,8 +67,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore()
     const textType = TEXT_TYPE
     const isShow: any = ref(false)
@@ -87,12 +82,15 @@ export default defineComponent({
     })
 
     function submit(params: any) {
+
+      const {max_length } = detail.value
       store.dispatch('common/Fetch', {
         api: props.action !== 'add' ? 'update_anpassen' : 'add_anpassen',
         data: {
           coding: props.data.coding,
           channel_id: props.data.channel_id,
           ...detail.value,
+          max_length: max_length || 255,
         }
       }).then(() => {
         props.render()
@@ -100,14 +98,4 @@ export default defineComponent({
         params.cancel()
       })
     }
-
-    return {
-      textType,
-      isShow,
-      drawer,
-      detail,
-      submit
-    }
-  }
-})
 </script>

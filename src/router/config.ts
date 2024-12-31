@@ -15,15 +15,15 @@ import ModuleDefault from '../views/channel/index.vue'
 
 import Channel from '../views/channel/cate/index.vue'
 // import ChannelSetting from '../views/channel/setting/index.vue'
-import ArticleList from '../views/channel/article/index.vue'
+import ArticleList from '../views/channel/list/index.vue'
 import Recycle from '../views/channel/recycle/index.vue'
-import Article from '../views/channel/article/components/detail.vue'
+import Article from '../views/channel/article/components/detail11.vue'
 // import SettingChannel from '../views/channel/setting/index.vue'
 import Label from '../views/channel/label/index.vue'
-import Collect from '../views/channel/collect/index.vue'
-import Comment from '../views/channel/comment/index.vue'
-import Praise from '../views/channel/praise/index.vue'
-import Download from '../views/channel/download/index.vue'
+import Collect from '../views/features/collect/index.vue'
+import Comment from '../views/features/comment/index.vue'
+import Praise from '../views/features/praise/index.vue'
+import Download from '../views/features/download/index.vue'
 import MusicList from '../views/channel/music/list/index.vue'
 import MusicScore from '../views/channel/music/score/index.vue'
 import MusicSinger from '../views/channel/music/singer/index.vue'
@@ -193,19 +193,23 @@ import TalkList from '../views/talk/list/index.vue'
 import TalkCate from '../views/talk/cate/index.vue'
 import Activity from '../views/talk/activity/index.vue'
 
-import TalkCollect from '../views/talk/collect/index.vue'
-import TalkComment from '../views/talk/comment/index.vue'
-import TalkPraise from '../views/talk/praise/index.vue'
 import TalkAlbum from '../views/talk/album/index.vue'
 import PhotosAlbum from '../views/talk/album/photos.vue'
 import CustomAlbum from '../views/talk/album/custom.vue'
 import TalkJournal from '../views/talk/journal/index.vue'
-import TalkTheme from '../views/talk/theme/index.vue'
+import TalkMessageBoard from '../views/talk/messageBoard/index.vue'
+import TalkTheme from '../views/talk/theme/theme/index.vue'
+import TalkThemeEffects from '../views/talk/theme/effects/index.vue'
+import TalkThemePendant from '../views/talk/theme/pendant/index.vue'
+import TalkThemeAvatarPendant from '../views/talk/theme/avatarPendant/index.vue'
+import TalkThemeMouseEffects from '../views/talk/theme/mouseEffects/index.vue'
+import TalkThemeCursor from '../views/talk/theme/cursor/index.vue'
+import TalkThemeBackground from '../views/talk/theme/other/index.vue'
 import Mood from '../views/talk/mood/index.vue'
 import TalkSign from '../views/talk/sign/index.vue'
 import TalkSchedule from '../views/talk/schedule/index.vue'
-import TalkFishList from '../views/talk/fish/list.vue'
-import TalkFish from '../views/talk/fish/index.vue'
+import TalkFishList from '../views/talk/fish/index.vue'
+import TalkContribution from '../views/talk/contribution/index.vue'
 import Group from '../views/talk/group/index.vue'
 import Bookmark from '../views/talk/bookmark/index.vue'
 import Blog from '../views/talk/blog/index.vue'
@@ -219,6 +223,7 @@ import Three from '../views/three/index.vue'
 import ThreeScene from '../views/three/scene/index.vue'
 import ThreeCate from '../views/three/cate/index.vue'
 import ThreeModel from '../views/three/model/index.vue'
+import ThreeTool from '../views/three/tool/index.vue'
 import ThreeItem from '../views/three/item/index.vue'
 import ThreeList from '../views/three/list/index.vue'
 
@@ -299,11 +304,18 @@ const arrss: any = {
   UserRecommend,
   UserSecurity,
   TalkJournal,
+  TalkMessageBoard,
   TalkTheme,
+  TalkThemeEffects,
+  TalkThemePendant,
+  TalkThemeAvatarPendant,
+  TalkThemeMouseEffects,
+  TalkThemeCursor,
+  TalkThemeBackground,
   Mood,
   TalkSign,
   TalkSchedule,
-  TalkFish,
+  TalkContribution,
   TalkFishList,
   Group,
   Bookmark,
@@ -389,9 +401,6 @@ const arrss: any = {
   TalkList,
   TalkCate,
   Activity,
-  TalkCollect,
-  TalkComment,
-  TalkPraise,
   TalkAlbum,
   PhotosAlbum,
   CustomAlbum,
@@ -399,6 +408,7 @@ const arrss: any = {
   ThreeScene,
   ThreeCate,
   ThreeModel,
+  ThreeTool,
   ThreeItem,
   ThreeList
 }
@@ -408,6 +418,8 @@ const arrss: any = {
 const routes: Array<RouteRecordRaw> = [
   { path: '/test', component: () => import('../views/layout/test.vue')},
   { path: '/login', component: () => import('../views/login/index.vue')},
+  { path: '/app', component: () => import('../views/app/index.vue')},
+  { path: '/app/detail', component: () => import('../views/app/components/detail.vue')},
   {
     path: '/space',
     name: 'space',
@@ -433,9 +445,6 @@ export const asyncRoutes: any = [
 export const loop = (data: any) => {  
   return data.map((item: any) => {
     if (item.children) {
-      if(item.component == ""){
-        alert(item.name)
-      }
       const aaa = {
         id: item.id,
         module: item.module,

@@ -55,21 +55,17 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   computed,
   useStore,
   codings
 } from '@/utils'
-import ReturnDialog from "../../../channel/article/components/returnDialog.vue"
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    ReturnDialog
-  },
-  props: {
+import ReturnDialog from "../../../channel/list/components/returnDialog.vue"
+
+  const props: any = defineProps({
     data: {
       type: String,
       default: ""
@@ -80,8 +76,7 @@ export default defineComponent({
         return
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const coding = codings.talk
     const dataList = computed(() => {
@@ -89,12 +84,4 @@ export default defineComponent({
     });
 
     const checkedList: any = ref([])
-
-    return {
-      coding,
-      dataList,
-      checkedList
-    }
-  }
-})
 </script>

@@ -73,20 +73,16 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
+  defineProps,
+  defineEmits,
   reactive,
   ref,
   computed
 } from 'vue'
 import citys from '@/assets/cityData'
-
-export default defineComponent({
-  name: 'AsideView',
-  props: {
+  const props: any = defineProps({
     user: {
       type: Object,
       default: () => {
@@ -103,12 +99,8 @@ export default defineComponent({
       type: Boolean,
       default: false
     }
-  },
-  emits: ['update:user'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
+  })
+  const emit: any = defineEmits(['update:user'])
     let isEdit: any = ref(true)
     const cityData: any = reactive(citys)
     const userInfo: any = ref(props.user)
@@ -193,16 +185,4 @@ export default defineComponent({
       userInfo.value.city = param.city
       userInfo.value.area = param.area
     }
-
-    return {
-      isEdit,
-      Edit,
-      userInfo,
-      chooseBirthday,
-      chooseArea,
-      address
-    }
-  }
-
-})
 </script>

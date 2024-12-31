@@ -16,24 +16,16 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   ref,
   useStore,
-  useRouter,
-  codings
+  useRouter
 } from '@/utils'
 import Robot from '../components/robot.vue'
 import Graph from '../../graph/index.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Robot,
-    Graph
-  },
-  setup(props, context) {
+
     const store = useStore();
     const router: any = useRouter();
     const dataList: any = ref([])
@@ -50,19 +42,5 @@ export default defineComponent({
       })
     }
 
-    function handleClick(param: any) {
-      router.push(`/admin/vote/item?id=${param.id}`)
-    }
-
     onMounted(init)
-
-    return {
-      dataList,
-      showGraph,
-      init,
-      handleClick
-
-    }
-  }
-})
 </script>

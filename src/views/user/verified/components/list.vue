@@ -38,17 +38,12 @@
 <v-nodata :data="dataList" />
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
 } from '@/utils'
 import Detail from './detail.vue'
-export default defineComponent({
-  name: 'v-List',
-  components: {
-    Detail
-  },
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -71,6 +66,5 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  }
-})
+  })
 </script>

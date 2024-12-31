@@ -57,9 +57,9 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   getCurrentInstance,
   ref,
   watch,
@@ -68,9 +68,7 @@ import {
 import {
   SERVER_NAME
 } from '@/assets/enum'
-export default defineComponent({
-  name: 'v-Search',
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -91,8 +89,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-  },
-  setup(props, context) {
+  })
     const {
       proxy
     }: any = getCurrentInstance();
@@ -153,15 +150,4 @@ export default defineComponent({
         isShow.value = false
       })
     }
-
-    return {
-      isShow,
-      detail,
-      submit,
-      drawer,
-      serverName,
-      chooseColor
-    }
-  }
-})
 </script>

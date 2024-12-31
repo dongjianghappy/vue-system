@@ -25,9 +25,9 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
@@ -36,12 +36,7 @@ import SetBan from './setBan.vue'
 import {
   BANNED_TYPE,
 } from '@/assets/enum'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    SetBan
-  },
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -58,8 +53,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore()
     const isShow: any = ref(false)
     const bannedType: any = BANNED_TYPE
@@ -121,16 +115,4 @@ export default defineComponent({
         props.render()
       })
     }
-
-    return {
-      isShow,
-      handleclick,
-      detail,
-      drawer,
-      gradeList,
-      submit,
-      bannedType
-    }
-  }
-})
 </script>

@@ -9,20 +9,14 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
+  defineProps,
   ref,
   watch
 } from '@/utils'
-import {
-  LINK_TYPE,
-} from '@/assets/enum'
-export default defineComponent({
-  name: 'v-Search',
-  components: {},
-  props: {
+
+  const props: any = defineProps({
     title: {
       type: String,
       default: ""
@@ -32,21 +26,10 @@ export default defineComponent({
       default: () => {
         return {}
       }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
     }
-  },
-  setup(props, context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
+  })
     const isShow: any = ref(false)
     const drawer: any = ref(null)
-    const sourceType: any = LINK_TYPE
     const detail: any = ref({})
 
     // 监听
@@ -55,13 +38,4 @@ export default defineComponent({
         detail.value = await drawer.value.init()
       }
     })
-
-    return {
-      isShow,
-      detail,
-      drawer,
-      sourceType
-    }
-  }
-})
 </script>

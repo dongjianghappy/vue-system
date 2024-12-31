@@ -31,7 +31,7 @@
           {{item.nickname}}
         </td>
         <td>
-          {{bannedType[item.banuser_type]}}
+          {{BANNED_TYPE[item.banuser_type]}}
         </td>
         <td>
           {{item.banuser_day}}
@@ -52,9 +52,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   computed,
@@ -64,16 +63,12 @@ import {
 import {
   BANNED_TYPE,
 } from '@/assets/enum'
-export default defineComponent({
-  name: 'BanuserView',
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
     const coding: any = proxy.$coding['partner'];
     const checkedList: any = ref([])
-    const bannedType: any = BANNED_TYPE
 
     const dataList = computed(() => {
       return store.getters['user/banUser']
@@ -84,14 +79,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init,
-      bannedType
-    }
-  }
-})
 </script>

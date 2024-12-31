@@ -3,9 +3,12 @@
   <div class="module-head">
     <v-optionsbar title="交换友链">
       <template v-slot:extraright>
+      <v-space>
         <v-search :render="render" field="name" />
-        <v-condition name="网站" icon="select" field="website" :enums="siteEnum" :render="render" />
-        <Detail action='add' :data="data" :render="init" :auth="auth.checked('add')" />
+        <v-condition name="网站" icon="select" field="website" :enums="website" :render="render" />
+        <Instructions module="link" />
+        <Detail action='add' :data="data" :render="render" :auth="auth.checked('add')" />
+      </v-space>
       </template>
     </v-optionsbar>
   </div>
@@ -23,10 +26,12 @@
           <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
         </td>
         <td>
-          <v-quick :value="item.name" :data="{ id: item.id, field: 'name', coding }" :auth="auth.checked('edit')" />
+          {{item.name}}
+          <!-- <v-quick :value="item.name" :data="{ id: item.id, field: 'name', coding }" :auth="auth.checked('edit')" /> -->
         </td>
         <td>
-          <v-quick :value="item.url" :data="{ id: item.id, field: 'url', coding }" :auth="auth.checked('edit')" />
+          {{item.url}}
+          <!-- <v-quick :value="item.url" :data="{ id: item.id, field: 'url', coding }" :auth="auth.checked('edit')" /> -->
         </td>
         <td>
           <v-switch :data="{ item, field: 'status', coding }" :auth="auth.checked('edit')" />
@@ -61,48 +66,33 @@
         </td>
       </tr>
     </table>
-    <v-loading :loading="loading" :dataList="dataList.list"  />
+    <v-loading :loading="data.loading" :dataList="dataList.list"  />
     <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, ...data }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList.list" :render="render" v-if="dataList.list && dataList.list.length > 0" :auth="auth" />
   </div>
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   computed,
   useStore,
   codings
 } from '@/utils'
-import {
-  SERVER_NAME
-} from '@/assets/enum'
+import Instructions from './instructions.vue'
 import Detail from './detail.vue'
-export default defineComponent({
-  name: 'ListView',
-  components: {
-    Detail,
-  },
-  props: {
+  const props: any = defineProps({
     data: {
-      type: String,
-      default: ""
-    },
-    loading: {
-      type: Boolean,
-      default: false
+      type: Object,
+      default: () => {
+        return {}
+      }
     },
     render: {
       type: Function,
       default: () => {
         return
-      }
-    },
-    siteEnum: {
-      type: Object,
-      default: () => {
-        return {}
       }
     },
     auth: {
@@ -111,21 +101,11 @@ export default defineComponent({
         return {}
       }
     }
-  },
-  setup(props, context) {
+  })
     const coding: any = codings.links
     const store = useStore();
-    const dataList = computed(() => {
-      return store.getters['basic/links']['link1'] || []
-    });
+    const website = computed(() => store.getters['basic/site'].tabs);
+    const dataList = computed(() => store.getters['basic/links']['link1'] || []);
 
     const checkedList: any = ref([])
-
-    return {
-      coding,
-      dataList,
-      checkedList
-    }
-  }
-})
 </script>

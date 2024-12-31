@@ -1,4 +1,5 @@
 <template>
+<Album title="相册专辑" :render="init" type="effects" />
 <div class="module-wrap">
   <div class="module-head">
     <v-optionsbar title="自定义">
@@ -16,38 +17,35 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
-  computed,
-  ref
-} from 'vue'
-import {
+  ref,
   useStore
-} from 'vuex'
+} from '@/utils'
 import List from './components/list.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-List
-  },
-  setup(props, context) {
+import Album from './components/album.vue'
     const {
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
     const dataList: any = ref([]);
-    const coding: any = proxy.$coding['partner'];
     const checkedList: any = ref([])
     const albumList: any = ref([])
 
-    function init() {
+    // 初始化
+    function init(param: any = {}) {
+      const params: any = {
+        page: 1,
+        pagesize: 25
+      }
+
+      Object.assign(params, param)
       store.dispatch('common/Fetch', {
         api: 'photoList',
         data: {
-          uid: "110506372"
+          ...params
         }
       }).then((res: any) => {
         dataList.value = res.result
@@ -55,14 +53,4 @@ List
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      albumList,
-      init
-    }
-  }
-})
 </script>

@@ -59,7 +59,6 @@
             </td>
             <td>
               <v-space>
-
                 <span>
                   <Detail action="edit" :data="{id: data.id, coding}" :disabled="isMove" :param="param" :render="init" :checkboxList="aaa" :auth="auth.checked('edit')" />
                 </span>
@@ -101,28 +100,19 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   computed,
   ref,
+  useStore,
   channels,
   jsonParse
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 
 import Detail from './components/detail.vue'
 
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -133,6 +123,7 @@ export default defineComponent({
     const aaa: any = ref([])
     const isMove: any = ref(false)
     const loading: any = ref(false)
+    const auth: any = proxy.$auth.init(`channel/${channelData.module}/cate`)
 
     const dataList = computed(() => {
       return store.getters[`channel/${channelData.module}`]['cateList']
@@ -201,19 +192,4 @@ export default defineComponent({
       init()
       checkbox()
     })
-
-    return {
-      store,
-      loading,
-      coding,
-      dataList,
-      checkedList,
-      init,
-      aaa,
-      isMove,
-      jsonParse,
-      auth: proxy.$auth.init(`channel/${channelData.module}/cate`)
-    }
-  }
-})
 </script>

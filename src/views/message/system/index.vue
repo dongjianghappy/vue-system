@@ -33,7 +33,7 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   useRoute,
   useRouter
@@ -42,35 +42,15 @@ import {
   message,
 } from '@/assets/const'
 import {
-  defineComponent,
-  getCurrentInstance,
+  useStore,
   onMounted,
-  computed,
   ref,
   watch,
   codings
 } from '@/utils'
 import Detail from './components/detail.vue'
-import {
-  useStore,
-} from 'vuex'
 
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
+
     const store = useStore();
     const route = useRoute()
     const router = useRouter()
@@ -107,26 +87,9 @@ export default defineComponent({
       })
     }
 
-    function edit(param: any) {
-
-    }
-
     function handleClick(param: any) {
       router.push(`/admin/service/message/detail?type=${type}&id=${param.id}`)
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      edit,
-      handleClick,
-      messageType,
-      pages,
-      currentPage,
-      init
-    }
-  }
-})
 </script>

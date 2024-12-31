@@ -5,8 +5,11 @@
       <template v-slot:extraright>
         <v-space>
           <v-search :render="render" field="name" />
-          <v-condition name="网站" icon="select" field="website" :enums="siteEnum" :render="render" />
-          <v-condition name="平台" icon="select" field="source" :enums="sourceType" :render="render" />
+          <v-detection :data="{coding}" title="检测已过期的出售友情链接" :render="render" />
+          <Order :data="{coding, type: 'link'}" title="友情链接订单列表" :render="render" />
+          <v-condition name="网站" icon="select" field="website" :enums="website" :render="render" />
+          <v-condition name="平台" icon="select" field="source" :enums="LINK_TYPE" :render="render" />
+          <Instructions module="link" />
           <Detail action='add' :data="data" :render="render" :auth="auth.checked('add')" />
         </v-space>
       </template>
@@ -28,15 +31,17 @@
           <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
         </td>
         <td>
-          <v-quick :value="item.name" :data="{ id: item.id, field: 'name', ...data }" :auth="auth.checked('edit')" />
+          {{item.name}}
+          <!-- <v-quick :value="item.name" :data="{ id: item.id, field: 'name', ...data }" :auth="auth.checked('edit')" /> -->
         </td>
         <td>
-          <v-quick :value="item.url" :data="{ id: item.id, field: 'url', ...data }" :auth="auth.checked('edit')" />
+          {{item.url}}
+          <!-- <v-quick :value="item.url" :data="{ id: item.id, field: 'url', ...data }" :auth="auth.checked('edit')" /> -->
         </td>
         <td>{{item.price}}</td>
         <td>{{item.datetime}}</td>
         <td>
-          <v-switch :data="{ item, field: 'status', ...data }" :auth="auth.checked('edit')" />
+          <v-switch :data="{ item, field: 'status', coding }" :auth="auth.checked('edit')" />
         </td>
         <td>
           <v-space class="relative">
@@ -44,7 +49,7 @@
               <Detail action="edit" :data="{id: item.id, ...data }" :render="render" :auth="auth.checked('edit')" />
             </span>
             <span>
-              <v-confirm name="删除" :data="{id: item.id, ...data }" type="text" api="delete" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
+              <v-confirm name="删除" :data="{id: item.id, coding }" type="text" api="delete" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
             </span>
             <v-popover content="更多" arrow="tb" offset="right" :move="-500" :keys="`static_${index}`">
               <div class="font14" style="width: 550px;">
@@ -72,47 +77,37 @@
         </td>
       </tr>
     </table>
-    <v-loading :loading="loading" :dataList="dataList.list" />
-    <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, ...data }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList.list" :render="render" v-if="dataList.list && dataList.list.length > 0" :auth="auth" />
+    <v-loading :loading="data.loading" :dataList="dataList.list" />
+    <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, coding }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList.list" :render="render" v-if="dataList.list && dataList.list.length > 0" :auth="auth" />
   </div>
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   computed,
-  useStore
+  useStore,
+  codings
 } from '@/utils'
 import {
   LINK_TYPE
 } from '@/assets/enum'
+import Instructions from './instructions.vue'
+import Order from '../../order/components/detail.vue'
 import Detail from './detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail,
-  },
-  props: {
+  const props: any = defineProps({
     data: {
-      type: String,
-      default: ""
-    },
-    loading: {
-      type: Boolean,
-      default: false
+      type: Object,
+      default: () => {
+        return {}
+      }
     },
     render: {
       type: Function,
       default: () => {
         return
-      }
-    },
-    siteEnum: {
-      type: Object,
-      default: () => {
-        return {}
       }
     },
     auth: {
@@ -121,21 +116,11 @@ export default defineComponent({
         return {}
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore();
-    const sourceType: any = LINK_TYPE
-    const dataList = computed(() => {
-      return store.getters['basic/links']['link2'] || []
-    });
+    const coding: any = codings.links
+    const website = computed(() => store.getters['basic/site'].tabs);
+    const dataList = computed(() => store.getters['basic/links']['link2'] || []);
 
     const checkedList: any = ref([])
-
-    return {
-      sourceType,
-      dataList,
-      checkedList
-    }
-  }
-})
 </script>

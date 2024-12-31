@@ -4,7 +4,7 @@
     <v-optionsbar title="广告位置">
       <template v-slot:extraright>
         <v-condition name="网站" icon="select" field="website" :enums="siteEnum" :render="init" />
-        <Detail action='add' :data="{coding}" :render="init" />
+        <Detail action='add' :data="{coding: coding.advertisement_position}" :render="init" />
       </template>
     </v-optionsbar>
   </div>
@@ -37,15 +37,15 @@
           <span class="cl-999" v-else>未绑定</span>
         </td>
         <td>
-          <v-switch :data="{ item, field: 'status', coding }" />
+          <v-switch :data="{ item, field: 'status', coding: coding.advertisement_position }" />
         </td>
         <td>
           <v-space>
             <span>
-              <Detail action="edit" :data="{id: item.id, website: item.website, coding }" :render="init" />
+              <Detail action="edit" :data="{id: item.id, website: item.website, coding: coding.advertisement_position }" :render="init" />
             </span>
             <span>
-              <v-confirm name="删除" :data="{id: item.id, coding }" type="text" api="delete" :render="init" operating="delete"></v-confirm>
+              <v-confirm name="删除" :data="{id: item.id, coding: coding.advertisement_position }" type="text" api="delete" :render="init" operating="delete"></v-confirm>
             </span>
           </v-space>
         </td>
@@ -59,33 +59,14 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   ref,
   useStore,
   codings,
   onMounted
 } from '@/utils'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  props: {
-    data: {
-      type: String,
-      default: ""
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return
-      }
-    }
-  },
-  setup(props, context) {
     const store = useStore();
     const coding: any = codings;
     const dataList: any = ref([])
@@ -133,13 +114,4 @@ export default defineComponent({
       init()
       getSite()
     })
-
-    return {
-      coding: coding.advertisement_position,
-      init,
-      dataList,
-      siteEnum,
-    }
-  }
-})
 </script>

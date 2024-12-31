@@ -58,6 +58,19 @@
             <span class="label">价格</span>
             <input v-model="detail.price" type="text" placeholder="请输入价格" class="input-sm input-150" />
           </li>
+          <li class="li" v-if="detail.method === '1'">
+            <span class="label">日期</span>
+            <div class="flex">
+              <div style="flex: 1">
+                <input v-model="detail.start_time" type="text" placeholder="请输入开始时间" class="input-sm input-150" />
+                <v-timepicker :data="detail" attr="start_time" />
+              </div>
+              <div style="flex: 1">
+                <input v-model="detail.last_time" type="text" placeholder="请输入结束时间" class="input-sm input-150" />
+                <v-timepicker :data="detail" attr="last_time" />
+              </div>
+            </div>
+          </li>
         </ul>
       </li>
       <li class="li">
@@ -77,9 +90,9 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch
@@ -87,9 +100,7 @@ import {
 import {
   LINK_TYPE,
 } from '@/assets/enum'
-export default defineComponent({
-  name: 'v-Detail',
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -110,8 +121,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-  },
-  setup(props) {
+  })
     const store = useStore()
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -124,6 +134,10 @@ export default defineComponent({
         detail.value = await drawer.value.init()
       }
     })
+
+    function changeDay(data: any) {
+      
+    }
 
     function choose(param: any) {
       const {
@@ -160,15 +174,4 @@ export default defineComponent({
         params.cancel()
       })
     }
-
-    return {
-      isShow,
-      detail,
-      drawer,
-      sourceType,
-      choose,
-      submit,
-    }
-  }
-})
 </script>

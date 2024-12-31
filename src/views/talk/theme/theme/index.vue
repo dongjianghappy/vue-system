@@ -1,12 +1,11 @@
 <template>
-<Album title="主题风格" :render="render" type="theme" />
-<!-- <v-slider @onClick="handleclick"
-                        :dataList="cateList" title="主题风格" :render="render" type="theme" /> -->
+<Album title="主题背景" :render="init" type="theme" />
 <div class="module-wrap">
   <div class="module-content p15">
     <div class="mb15 font14">
       <span class="right">
-        <Detail action='add' :data="data" :render="render" />
+        <v-search field="uid" placeholder="用户账号查找" :render="init" v-if="currentCate.fid === 'custom'" />
+        <Detail action='add' :data="data" :render="init" v-else />
       </span>
     </div>
     <div class="col-md-3 p10" v-for="(item, index) in dataList" :key="index">
@@ -17,7 +16,7 @@
         </div>
         <div class="ptb15">{{item.name}}
           <span>【{{item.image && item.image.length || 0}}张】</span>
-          <Detail action="edit" :data="{id: item.id, ...data}" :param="param" :render="render" />
+          <Detail action="edit" :data="{id: item.id, ...data}" :param="param" :render="init" />
           <span class="right" style="width: 20px; height: 20px;" :style="{background: item.background_color}"></span>
           <span class="right mr10" @click="handleDefault(item)">
             <i class="iconfont icon-dot bold" :class="{'cl-red': item.isdefault == '1'}" />
@@ -30,20 +29,17 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  useStore
+  defineProps,
+  ref,
+  onMounted,
+  useStore,
+  codings
 } from '@/utils'
 import Detail from './detail.vue'
 import Album from '../components/album.vue'
-export default defineComponent({
-  name: 'ListView',
-  components: {
-    Detail,
-    Album
-  },
-  props: {
+  const props: any = defineProps ({
     dataList: {
       type: Object,
       default: () => {
@@ -55,29 +51,24 @@ export default defineComponent({
       default: () => {
         return {}
       }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return
-      }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore()
-
+    const coding: any = codings.user.theme
     const defaultTheme = "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+    const dataList: any = ref([])
+    const currentCate = ref({})
 
     function handleChoose(param: any) {
       store.dispatch('common/Fetch', {
         api: 'updateStatus',
         data: {
-          coding: props.data.coding,
+          coding: coding,
           id: param.id,
           status: "system"
         }
       }).then(res => {
-        props.render()
+        init()
       })
     }
 
@@ -90,15 +81,23 @@ export default defineComponent({
           isdefault: param.isdefault
         }
       }).then(res => {
-        props.render()
+        init()
       })
-    }    
-
-    return {
-      handleChoose,
-      handleDefault,
-      defaultTheme
     }
-  }
-})
+
+    // 初始化
+    function init(param: any = {}) {
+      currentCate.value = param
+      store.dispatch('common/Fetch', {
+        api: 'theme',
+        data: {
+          coding,
+          ...param
+        }
+      }).then(res => {
+        dataList.value = res.result
+      })
+    }
+
+    onMounted(init)
 </script>

@@ -18,9 +18,9 @@
 </v-dialog>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
@@ -28,12 +28,8 @@ import {
 import {
   tabsSetting
 } from '@/assets/const'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
 
-  },
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -50,8 +46,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore()
     const isShow: any = ref(false)
     const dialog: any = ref(null)
@@ -96,14 +91,4 @@ export default defineComponent({
         isShow.value = false
       })
     }
-
-    return {
-      isShow,
-      tabsSetting,
-      detail,
-      dialog,
-      submit
-    }
-  }
-})
 </script>

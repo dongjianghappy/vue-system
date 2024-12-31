@@ -21,18 +21,16 @@
 </v-dialog>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   getCurrentInstance,
   ref,
   watch,
   useStore
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-DetailFlag',
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -45,8 +43,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const {proxy}:any = getCurrentInstance();
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -106,14 +103,4 @@ export default defineComponent({
         isShow.value = false
       })
     }
-
-    return {
-      isShow,
-      handleclick,
-      detail,
-      drawer,
-      submit
-    }
-  }
-})
 </script>

@@ -12,10 +12,8 @@
 </v-calendar>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   useStore,
   useRoute,
@@ -23,21 +21,6 @@ import {
   codings
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Search',
-  props: {
-    render: {
-      type: Function,
-      default: () => {
-
-      }
-    }
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
     const coding: any = codings
     const store = useStore();
     const dataList: any = ref([]);
@@ -60,7 +43,6 @@ export default defineComponent({
         }
       }).then((res: any) => {
         dataList.value = res.result
-        debugger
       })
     }
 
@@ -71,14 +53,6 @@ export default defineComponent({
         month: date.getMonth() + 1
       })
     })
-
-    return {
-      dataList,
-      dateInit,
-      changeMonth
-    }
-  }
-})
 </script>
 
 <style scoped>

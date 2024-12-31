@@ -271,6 +271,34 @@ export const channel = {
 			del: 'b:tech:recycle:delete'
 		}
 	},
+	// 专题
+	topic: {
+		status: 'b:topic:status',
+		display: 'b:topic:display',
+		info: 'b:topic:info',
+		tag: 'b:topic:tag',
+		cate: {
+			add: 'b:topic:cate:add',
+			del: 'b:topic:cate:edit',
+			edit: 'b:topic:cate:delete'
+		},
+		art: {
+			add: 'b:topic:list:add',
+			del: 'b:topic:list:delete',
+			edit: 'b:topic:list:edit',
+			top: 'b:topic:list:top',
+			return: 'b:topic:list:return',
+			audit: 'b:topic:list:audit',			
+		},
+		comment: {
+			show: 'b:topic:comment:show',
+			del: 'b:topic:comment:delete'
+		},
+		recycle: {
+			reduction: 'b:topic:recycle:reduction',
+			del: 'b:topic:recycle:delete'
+		}
+	},
 	// 图集
 	picture: {
 		status: 'b:picture:status',

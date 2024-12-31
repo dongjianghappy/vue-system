@@ -60,20 +60,14 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
-  watch,
-  useStore
+  watch
 } from '@/utils'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    Detail
-  },
-  props: {
+  const props: any = defineProps({
     attrs: {
       type: Object,
       default: () => {
@@ -98,9 +92,8 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-  },
-  emits: ['getSource'],
-  setup(props, context) {
+  })
+  const emit: any = defineEmits(['getSource'])
     const isShow: any = ref(false)
     const detail: any = ref({})
     const drawer: any = ref(null)
@@ -133,24 +126,10 @@ export default defineComponent({
           pagesize: 25
         })
         dataList.value
-        debugger
       }
     })
 
     function submit() {
-      context.emit('getSource', currentValue.value)
+      emit('getSource', currentValue.value)
     }
-
-    return {
-      isShow,
-      index,
-      detail,
-      dataList,
-      drawer,
-      menu,
-      submit,
-      currentValue
-    }
-  }
-})
 </script>

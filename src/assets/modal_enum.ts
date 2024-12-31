@@ -61,6 +61,12 @@ const confirm: any = {
     },
     waring: '你暂时没有删除权限，请联系管理员!',
   },
+  confirmOrder: {
+    title: '你确定是否要接收该订单?',
+    content: '确认后不可退回哟！',
+    info: '确认成功',
+    waring: '你暂时没有删除权限，请联系管理员!',
+  },
   user: {
     recommend: {
       title: '是否要推送该会员?',

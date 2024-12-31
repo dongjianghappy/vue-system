@@ -14,10 +14,9 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
+  defineProps,
   ref,
   watch,
   useStore,
@@ -26,12 +25,7 @@ import {
 import {
   LINK_TYPE,
 } from '@/assets/enum'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -48,13 +42,9 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const route = useRoute()
-    const {
-      proxy
-    }: any = getCurrentInstance();
     const isShow: any = ref(false)
     const detail: any = ref({})
     const drawer: any = ref(null)
@@ -96,15 +86,4 @@ export default defineComponent({
         params.message()
       })
     }
-
-    return {
-      isShow,
-      List,
-      detail,
-      drawer,
-      sourceType,
-      submit
-    }
-  }
-})
 </script>

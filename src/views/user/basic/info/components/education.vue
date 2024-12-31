@@ -17,19 +17,13 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
-  reactive,
-  ref,
-  computed
+  defineProps,
+  defineEmits,
+  ref
 } from 'vue'
-
-export default defineComponent({
-  name: 'AsideView',
-  props: {
+  const props: any = defineProps({
     user: {
       type: Object,
       default: () => {
@@ -46,12 +40,8 @@ export default defineComponent({
       type: Boolean,
       default: false
     }
-  },
-  emits: ['update:user'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
+  })
+  const emit: any = defineEmits(['update:user'])
     let isEdit: any = ref(true)
     const userInfo: any = ref(props.user)
 
@@ -61,7 +51,7 @@ export default defineComponent({
       }
       isEdit.value = !isEdit.value
       userInfo.value = props.user
-      context.emit('update:user', userInfo.value)
+      emit('update:user', userInfo.value)
 
       if (isEdit.value) {
         const {
@@ -72,12 +62,4 @@ export default defineComponent({
         })
       }
     }
-
-    return {
-      isEdit,
-      Edit,
-      userInfo
-    }
-  }
-})
 </script>

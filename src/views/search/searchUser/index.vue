@@ -29,44 +29,17 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
-  watch,
-  useRoute,
+  useStore,
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
-import {
-  visitPage
-} from '@/assets/const'
+
 import List from "./components/list.vue"
 import Calendar from "./components/calendar.vue"
 
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    List,
-    Calendar
-  },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
-    const route = useRoute();
     const dataList: any = ref([]);
 
     function init(param: any={}) {
@@ -86,11 +59,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      dataList,
-      init
-    }
-  }
-})
 </script>

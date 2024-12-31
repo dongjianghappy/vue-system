@@ -71,11 +71,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
   computed,
   ref,
   useStore,
@@ -86,26 +83,7 @@ import {
 } from '@/components/packages/chart/index'
 import UserSetting from '@/components/packages/setting/userSetting1.vue'
 import HighQualityUser from '@/components/packages/setting/highQualityUser.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    ChartLine,
-    UserSetting,
-    HighQualityUser
-  },
-  props: {
-    style: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
+
     const store = useStore();
     const coding = codings
     const user: any = computed(() => store.getters['basic/userDefault'].user || {});
@@ -148,20 +126,5 @@ export default defineComponent({
     function init() {
       store.dispatch('basic/UserDefault')
     }
-
-    function handleclick() {
-      context.emit('onClick')
-    }
-
-    onMounted(init)
-    return {
-      coding,
-      user,
-      // order,
-      hours,
-      register,
-      handleclick
-    }
-  }
-})
+    
 </script>

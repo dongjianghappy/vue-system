@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow">
   <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? '编辑': '新增标签'}}
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增标签" :style="{width: '520', height: '500'}" @submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :data="data" title="新增标签" :style="{width: '450'}" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -15,7 +15,7 @@
       </li>
       <li class="li">
         <span class="label">类型</span>
-        <v-select :enums="sourceType" v-model:value="detail.type" :defaultValue="detail.type = detail.type ? detail.type : 'nav'" />
+        <v-select :enums="LABEL_TYPE" v-model:value="detail.type" :defaultValue="detail.type = detail.type ? detail.type : 'nav'" />
       </li>
       <li class="li">
         <span class="label">顺序</span>
@@ -54,22 +54,19 @@
       </li>
     </ul>
   </template>
-</v-dialog>
+</v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
+  defineProps,
   ref,
   watch
 } from '@/utils'
 import {
   LABEL_TYPE,
 } from '@/assets/enum'
-export default defineComponent({
-  name: 'v-Search',
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -86,29 +83,15 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
+  })
     const isShow: any = ref(false)
     const detail: any = ref({})
-    const dialog: any = ref(null)
-    const sourceType: any = LABEL_TYPE
+    const drawer: any = ref(null)
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
-        detail.value = await dialog.value.init()
+        detail.value = await drawer.value.init()
       }
     })
-
-    return {
-      isShow,
-      detail,
-      dialog,
-      sourceType
-    }
-  }
-})
 </script>

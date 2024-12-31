@@ -14,41 +14,20 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
   watch,
   useRoute,
-} from '@/utils'
-import {
   useStore
-} from 'vuex'
+} from '@/utils'
 import {
   visitPage
 } from '@/assets/const'
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    List,
-    List2
-  },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
+
     const store = useStore();
     const route = useRoute();
     let menu: any = ref([{
@@ -86,10 +65,5 @@ export default defineComponent({
       })
     }
     onMounted(init)
-    return {
-      menu,
-      tabsIndex
-    }
-  }
-})
+    
 </script>

@@ -9,7 +9,7 @@
       <tr class="th">
         <td class="col-md-2 pl25">频道名称</td>
         <td class="col-md-2">频道ID</td>
-        <td class="col-md-1">识别id</td>
+        <td class="col-md-1">频道模块</td>
         <td class="col-md-3">附加表</td>
         <td class="col-md-1">关联字段数</td>
         <td class="col-md-2">操作</td>
@@ -34,18 +34,14 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   ref,
   useStore,
   useRouter
 } from '@/utils'
 
-export default defineComponent({
-  name: 'IndexViewdd',
-  setup(props, context) {
     const store = useStore();
     const router: any = useRouter();
     const dataList: any = ref([])
@@ -63,11 +59,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      dataList,
-      handleclick
-    }
-  }
-})
 </script>

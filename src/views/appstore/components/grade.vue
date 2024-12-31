@@ -36,16 +36,14 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
   codings
 } from '@/utils'
-export default defineComponent({
-  name: 'v-Search',
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -62,8 +60,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-  },
-  setup(props, context) {
+  })
     const coding: any = codings['user'].grade;
     const isShow: any = ref(false)
     const detail: any = ref({})
@@ -75,13 +72,4 @@ export default defineComponent({
         detail.value = await drawer.value.init()
       }
     })
-
-    return {
-      coding,
-      isShow,
-      detail,
-      drawer
-    }
-  }
-})
 </script>

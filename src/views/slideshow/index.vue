@@ -3,6 +3,7 @@
   <div class="module-head">
     <v-optionsbar title="幻灯片管理">
       <template v-slot:extraright>
+        <v-condition name="展示频道" icon="select" field="channel_id" :enums="channel" :render="init" />
         <span class="mr10" @click="handleCreateJson">导出数据</span>
         <Detail :data="{ coding }" :render="init" :auth="auth.checked('add')" />
       </template>
@@ -11,11 +12,14 @@
   <div class="module-content plr15">
     <div class="col-md-3 p10" v-for="(item, index) in dataList" :key="index">
       <div class="p10" style="border: 1px solid #f0f0f0;">
-        <div><img @click="handleClick(item)" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" style="width: 100%"></div>
+        <div class="relative">
+          <div class="absolute number">{{item.num}}</div>
+          <img :src="item.image || '/images/slideshow.png'" onerror="this.src='/images/slideshow.png'" style="width: 100%" @click="handleClick(item)">
+        </div>
         <div class="ptb15">
           <span class="bold">{{item.channelname}}</span> - {{item.name}}
           <v-space class="right">
-            <Detail action="edit" :data="{id: item.id, coding }" :param="param" :render="init" :auth="auth.checked('edit')" />
+            <Detail action="edit" :data="{id: item.id, coding }" :render="init" :auth="auth.checked('edit')" />
             <v-switch :data="{ item, field: 'status', coding }" :auth="auth" />
           </v-space>
         </div>
@@ -26,9 +30,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   computed,
@@ -37,25 +40,39 @@ import {
   codings
 } from '@/utils'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  props: {},
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
     const router: any = useRouter();
     const dataList = computed(() => store.getters['basic/slideshow']);
+    const channel: any = computed(() => {
+      let channelArr: any = []
+      store.getters['user/channel'].map((item: any) => {
+        channelArr.push({
+          name: item.name,
+          value: item.id
+        })
+      })
+      channelArr.push({
+          name: "微博",
+          value: "1000"
+        })
+      return channelArr
+    });
     const coding: any = codings['slideshow'].cate;
+    const auth: any = proxy.$auth.init('slideshow/cate')
 
-    function init() {
+    function init(param: any = {}) {
+      const params: any = {}
+      Object.assign(params, param)
+
       store.dispatch('basic/Fetch', {
         api: "slideshow",
-        state: "slideshow"
+        state: "slideshow",
+        data: {
+          ...params
+        }
       })
     }
 
@@ -70,20 +87,12 @@ export default defineComponent({
           type: 'slideshow'
         }
       }).then((res: any) => {
-
+        proxy.$hlj.message({
+          msg: res.returnMessage
+        })
       })
 
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      handleClick,
-      handleCreateJson,
-      auth: proxy.$auth.init('slideshow/cate')
-    }
-  }
-})
 </script>

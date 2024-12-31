@@ -1,14 +1,10 @@
 <template>
 <div class="vueBox">
   <div class="marquee">
-    <!-- <div class="marquee_title">
-      <span>最新战报</span>
-    </div> -->
     <div class="marquee_box">
       <ul class="marquee_list" :class="{marquee_top: animate}">
         <li v-for="(item, index) in dataList" :key="index">
-          <span class="aaaa">{{item.title}}</span>
-
+          <span class="aaaa" @click="handleClick(item)">{{item.title}}</span>
         </li>
       </ul>
     </div>
@@ -16,51 +12,48 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   onMounted,
   ref,
-  reactive,
-  onBeforeUnmount
+  onBeforeUnmount,
 } from 'vue'
+import {
+  useRouter
+} from 'vue-router';
 
-export default defineComponent({
-  name: 'v-Button',
-  props: {
-    dataList: {
-      type: Array,
-      default: []
-    }
-  },
-  emits: ['update:show', 'onClick'],
-  setup(props, context) {
-    let timer: number = 0;
-    let animate: any = ref(false)
-
-    function showMarquee() {
-      animate.value = true;
-      setTimeout(() => {
-        props.dataList.push(props.dataList[0]);
-        props.dataList.shift();
-        animate.value = false;
-      }, 500)
-    }
-
-    onMounted(() => {
-      timer = setInterval(showMarquee, 5000)
-    })
-
-    onBeforeUnmount(() => {
-      clearInterval(timer); //清除定时器
-      timer = 0;
-    });
-
-    return {
-      animate
-    }
+const props: any = defineProps({
+  dataList: {
+    type: Array,
+    default: []
   }
 })
+const router = useRouter()
+let timer = 0;
+let animate: any = ref(false)
+
+function showMarquee() {
+  animate.value = true;
+  setTimeout(() => {
+    props.dataList.push(props.dataList[0]);
+    props.dataList.shift();
+    animate.value = false;
+  }, 500)
+}
+
+function handleClick(param: any) {
+  router.push(`/announcement?id=${param.id}`)
+}
+
+onMounted(() => {
+  timer = setInterval(showMarquee, 5000)
+})
+
+onBeforeUnmount(() => {
+  clearInterval(timer); //清除定时器
+  timer = 0;
+});
 </script>
 
 <style scoped>

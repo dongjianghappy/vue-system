@@ -41,19 +41,15 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   computed,
   useStore
 } from '@/utils'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
- 
-  },
-  props: {
+
+  const props: any = defineProps({
     data: {
       type: String,
       default: ""
@@ -64,19 +60,12 @@ export default defineComponent({
         return
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const dataList = computed(() => {
       return store.getters['talk/talkList2']|| []
     });
 
     const checkedList: any = ref([])
-
-    return {
-      dataList,
-      checkedList
-    }
-  }
-})
+    
 </script>

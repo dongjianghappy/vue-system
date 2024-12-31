@@ -1,16 +1,20 @@
 <template>
 <div class="module-wrap">
   <div class="module-head">
-    <v-optionsbar title="意见反馈"></v-optionsbar>
+    <v-optionsbar title="意见反馈">
+      <template v-slot:extraright>
+        <v-search field="content" placeholder="内容查找" :render="init" />
+      </template>
+    </v-optionsbar>
   </div>
   <div class="module-content plr15">
     <table class="table-striped table-hover col-left-12">
       <tr class="th">
         <td class="col-md-2">用户</td>
-        <td class="col-md-6">内容</td>
+        <td class="col-md-5">内容</td>
         <td class="col-md-2">日期</td>
         <td class="col-md-1">状态</td>
-        <td class="col-md-1">操作</td>
+        <td class="col-md-2">操作</td>
       </tr>
       <tr v-for="(item, index) in dataList.list" :key="index">
         <td style="line-height: 35px;">
@@ -18,12 +22,15 @@
         </td>
         <td>
           {{item.content}}
-          <v-thumbnail :data="item" :coding="coding" icon="img" :hasInfo="false" v-if="item.image.length > 0" />
+          <v-thumbnail :data="item" :coding="coding.list" icon="img" :hasInfo="false" v-if="item.image.length > 0" />
         </td>
         <td>{{item.times}}</td>
-        <td></td>
+        <td><v-switch :data="{ item, field: 'checked', coding: coding.list }" :auth="true" /></td>
         <td>
-          <span>删除</span>
+          <v-space>
+            <Praise :data="{...item, coding: coding.praise}" />
+            <Comment :data="{...item, coding: coding.comment}" />
+          </v-space>
         </td>
       </tr>
     </table>
@@ -35,22 +42,19 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   computed,
   useStore,
   codings
 } from '@/utils'
+import Praise from '../../features/praise/list.vue'
+import Comment from '../../features/comment/components/list111.vue'
 
-export default defineComponent({
-  name: 'FeedbackView',
-  props: {},
-  setup(props, context) {
     const store = useStore();
     const dataList = computed(() => store.getters['basic/feedback']);
-    const coding: any = codings['service'].feedback;
+    const coding: any = codings.service.feedback;
 
     function init(param: any = {}) {
       const params: any = {
@@ -60,21 +64,14 @@ export default defineComponent({
       Object.assign(params, param)
 
       store.dispatch('basic/Fetch', {
+        api: 'feedback',
         state: 'feedback',
         data: {
-          coding,
+          coding: coding.list,
           ...params
         }
       })
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      init
-    }
-  }
-})
 </script>

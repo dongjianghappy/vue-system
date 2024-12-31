@@ -12,22 +12,16 @@
 </v-dialog>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   getCurrentInstance,
-  onMounted,
   ref,
-  useStore,
-  watch
+  useStore
 } from '@/utils'
 import Graph from '../../../plugin/joint/index.vue'
-export default defineComponent({
-  name: 'v-Category',
-  components: {
-    Graph
-  },
-  props: {
+
+  const props: any = defineProps({
     title: {
       type: String,
       default: ""
@@ -69,9 +63,8 @@ export default defineComponent({
       type: String,
       default: ""
     },
-  },
-  emits: ['update:cate'],
-  setup(props, context) {
+  })
+  
     const isShow: any = ref(false)
     const {
       proxy
@@ -87,16 +80,6 @@ export default defineComponent({
     function choose(param: any) {
       current.value = param
     }
-
-    return {
-      isShow,
-      current,
-      handleclick,
-      choose,
-      dataList
-    }
-  }
-})
 </script>
 
 <style scoped>

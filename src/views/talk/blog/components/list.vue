@@ -41,19 +41,11 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  ref,
-  computed,
-  useStore
+  defineProps
 } from '@/utils'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-
-  },
-  props: {
+  const props: any = defineProps({
     data: {
       type: String,
       default: ""
@@ -70,9 +62,5 @@ export default defineComponent({
         return
       }
     }
-  },
-  setup(props, context) {
-    const store = useStore();
-  }
-})
+  })
 </script>

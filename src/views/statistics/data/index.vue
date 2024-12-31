@@ -58,10 +58,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   computed,
   ref,
@@ -73,26 +71,7 @@ import {
   ChartBar,
   
 } from '@/components/packages/chart/index'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    ChartLine,
-    ChartPie,
-    ChartBar
-  },
-  props: {
-    style: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
+
     const store = useStore();
 
     const total: any = computed(() => store.getters['basic/dataStatistics'].total || {});
@@ -110,7 +89,6 @@ export default defineComponent({
           height: 400
         }
       }
-
     });
 
 
@@ -128,25 +106,10 @@ export default defineComponent({
           height: 400
         }
       }
-
     });
 
     function init() {
       store.dispatch('basic/dataStatistics')
     }
-
-    function handleclick() {
-      context.emit('onClick')
-    }
-
     onMounted(init)
-    return {
-      total,
-      // order,
-      channel,
-      module,
-      handleclick
-    }
-  }
-})
 </script>

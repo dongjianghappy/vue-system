@@ -2,7 +2,13 @@
 <div class="ptb5" style="background: #fff">
   <v-tabs :tabs="tabsTalk">
     <template v-slot:extra>
-      <v-search field="uid" placeholder="用户账号查找" :render="init" />
+      <v-space>
+        <span class="pt10">
+          <v-search field="summary" placeholder="微博内容查找" :render="init" />
+        </span>
+        <v-condition name="类型" icon="sort-desc" field="type" :enums="[{value: 'sign', name: '签到'}, {value: 'schedule', name: '日程'}]" :render="init" />
+        <Cate />
+      </v-space>
     </template>
     <template v-slot:content1>
       <List :render="init" :data="{ coding }" :dataList="dataList" :tabsIndex='tabsIndex' />
@@ -15,9 +21,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   ref,
   watch,
@@ -30,14 +35,8 @@ import {
   tabsTalk
 } from '@/assets/const'
 import List from './components/list.vue'
+import Cate from './cate/index.vue'
 import List2 from './components/list2.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    List,
-    List2
-  },
-  setup(props, context) {
     const store = useStore();
     const route = useRoute();
     const router: any = useRouter();
@@ -58,7 +57,7 @@ export default defineComponent({
 
       const params: any = {
         page: 1,
-        pagesize: 25
+        pagesize: 10
       }
 
       Object.assign(params, param)
@@ -77,14 +76,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      tabsTalk,
-      coding,
-      tabsIndex,
-      init,
-      dataList
-    }
-  }
-})
 </script>

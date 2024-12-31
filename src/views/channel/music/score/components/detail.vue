@@ -7,7 +7,7 @@
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">名称</span>
-        <input v-model="detail.name" type="text" placeholder="请输入标题" class="input-sm input-full" />
+        <input v-model="detail.name" type="text" placeholder="请输入名称" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">种类</span>
@@ -15,7 +15,6 @@
       </li>
       <li class="li">
         <span class="label">音调</span>
-        <!-- <v-select :enums="sourceType" v-model:value="detail.tune" /> -->
         <v-radiobutton name="ssss" v-model:checked="detail.tune" :enums="tune" v-model:value="detail.tune" />
       </li>
       <li class="li">
@@ -36,48 +35,22 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
-  useStore
+  useStore,
+  useProps
 } from '@/utils'
-import SpaceModal from '../../../../space/components/modalSpace.vue'
-import {
-  LINK_TYPE,
-} from '@/assets/enum'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    SpaceModal
-  },
-  props: {
-    action: {
-      type: String,
-      default: "add"
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    }
-  },
-  setup(props, context) {
+
+  const props: any = defineProps(useProps)
     const store = useStore()
     const isShow: any = ref(false)
     const detail: any = ref({})
     const drawer: any = ref(null)
     const upload: any = ref(null);
     const img: any = ref("")
-    const sourceType: any = LINK_TYPE
     const tune = [{
       label: 'C调',
       value: 'C'
@@ -109,7 +82,6 @@ export default defineComponent({
 
     // 监听图片上传
     function image(a: any) {
-      debugger
       img.value = a
     }
 
@@ -140,24 +112,10 @@ export default defineComponent({
         data: {
           coding: props.data.coding,
           ...param
-
         }
       }).then(() => {
         props.render()
         isShow.value = false
       })
     }
-
-    return {
-      isShow,
-      detail,
-      drawer,
-      upload,
-      sourceType,
-      image,
-      tune,
-      submit
-    }
-  }
-})
 </script>

@@ -8,12 +8,8 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
-  computed,
   ref,
   watch,
   useRoute,
@@ -27,23 +23,8 @@ import {
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
 import List3 from "./components/list3.vue"
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {List, List2, List3},
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
-    const dataList = computed(() => store.getters['website/webinfo']);
     let menu: any = ref(visitPage)
     let page: any = ref(visitPage[0])
     let type: any = ref(1)
@@ -53,15 +34,5 @@ export default defineComponent({
       let qq: any = route.query
       type.value = qq.type
     })
-
-
-    return {
-      dataList,
-      page,
-      menu,
-      type
-    }
-  }
-})
 </script>
 

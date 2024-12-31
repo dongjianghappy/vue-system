@@ -28,20 +28,14 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   useStore
 } from '@/utils'
 import Detail from './detail.vue'
 import Detail1 from './detail1.vue'
-export default defineComponent({
-  name: 'ListView',
-  components: {
-    Detail,
-    Detail1
-  },
-  props: {
+  const props: any = defineProps({
     dataList: {
       type: Array,
       default: () => {
@@ -64,8 +58,7 @@ export default defineComponent({
         return
       }
     }
-  },
-  setup(props, context) {
+  })
     const param = {
       name: "",
       url: "",
@@ -102,15 +95,5 @@ export default defineComponent({
       }).then((res: any) => {
         
       })
-      
     }
-
-    return {
-      param,
-      defaultTheme,
-      handleChoose,
-      handleCreateJson
-    }
-  }
-})
 </script>

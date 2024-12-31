@@ -30,24 +30,13 @@
 <v-nodata :data="dataList" />
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import Exports from './export.vue'
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   useStore,
-  useRoute,
   ref
 } from '@/utils'
-
-export default defineComponent({
-  name: 'v-List',
-  emits: ['onClick'],
-  components: {
-    Exports
-  },
-  setup(props, context) {
     const store = useStore();
     const dataList: any = ref([])
 
@@ -63,10 +52,5 @@ export default defineComponent({
       context.emit('onClick')
     }
     onMounted(init)
-    return {
-      dataList,
-      handleclick
-    }
-  }
-})
+    
 </script>

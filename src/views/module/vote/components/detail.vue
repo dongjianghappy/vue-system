@@ -85,18 +85,16 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
   useStore,
   codings
 } from '@/utils'
-export default defineComponent({
-  name: 'v-Detail',
-  components: {},
-  props: {
+
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -113,8 +111,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -204,18 +201,4 @@ export default defineComponent({
         params.message()
       })
     }
-
-    return {
-      codings,
-      isShow,
-      List,
-      detail,
-      drawer,
-      clickAdd,
-      clickRemove,
-      submit,
-      choose
-    }
-  }
-})
 </script>

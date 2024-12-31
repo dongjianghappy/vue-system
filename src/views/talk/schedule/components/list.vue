@@ -34,17 +34,12 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
 } from '@/utils'
 import Detail from './detail.vue'
-export default defineComponent({
-  name: 'ListView',
-  components: {
-    Detail
-  },
-  props: {
+  const props: any = defineProps({
     dataList: {
       type: Object,
       default: () => {
@@ -67,20 +62,5 @@ export default defineComponent({
         return
       }
     }
-  },
-  setup(props, context) {
-    const param = {
-      name: "",
-      url: "",
-      apply_checked: 1
-    }
-
-    const defaultTheme = "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-
-    return {
-      param,
-      defaultTheme
-    }
-  }
-})
+  })
 </script>

@@ -14,23 +14,15 @@
 </v-dialog>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
   useStore
 } from '@/utils'
 
-import {
-  TEXT_TYPE,
-} from '@/assets/enum'
-export default defineComponent({
-  name: 'v-Created',
-  components: {
-
-  },
-  props: {
+  const props: any =defineProps({
     action: {
       type: String,
       default: "add"
@@ -46,18 +38,12 @@ export default defineComponent({
       default: () => {
         return 'Default function'
       }
-    },
-    auth: {
-      type: Boolean,
-      default: false
-    },
-  },
-  setup(props, context) {
+    }
+  })
     const store = useStore();
     const isShow: any = ref(false)
     const detail: any = ref({})
     const dialog: any = ref(null)
-    const textType = TEXT_TYPE
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
@@ -91,14 +77,4 @@ export default defineComponent({
         isShow.value = false
       })
     }
-
-    return {
-      textType,
-      isShow,
-      detail,
-      submit,
-      dialog
-    }
-  }
-})
 </script>

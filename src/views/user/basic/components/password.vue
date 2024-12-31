@@ -79,14 +79,11 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { defineComponent, getCurrentInstance, onMounted, ref } from 'vue'
 import { sha256 } from 'js-sha256'
 import {useStore} from 'vuex'
 
-export default defineComponent({
-  name: 'AsideView',
-  setup(props,context) {
     const {ctx, proxy}:any = getCurrentInstance();
     const store = useStore();
 
@@ -192,13 +189,6 @@ export default defineComponent({
       
     }
     onMounted(init)
-    return {
-      handleclick,
-      data
-    }
-  }  
-  
-})
 </script>
 
 <style scoped>

@@ -14,18 +14,15 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent
+  defineProps
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Keyword',
-  props: {
+  const props: any = defineProps({
     data: {
       type: Array,
       default: []
     }
-  }
-})
+  })
 </script>

@@ -594,6 +594,62 @@ export const tabsTalk = [
 	}
 ]
 
+// 微博内容
+export const tabsComment = [
+	{
+		name: "评论管理"
+	},
+	{
+		name: "回复管理"
+	},
+	{
+		name: "新评论"
+	}
+]
+
+// 日志管理
+export const tabsJournal = [
+	{
+		name: "日志管理"
+	},
+	{
+		name: "新日志"
+	}
+]
+
+// 微博内容
+export const tabsMessageBoard = [
+	{
+		name: "留言管理"
+	},
+	{
+		name: "回复管理"
+	},
+	{
+		name: "新留言"
+	}
+]
+
+// 主题其他背景
+export const tabsBackground = [
+	{
+		name: "头像背景"
+	},
+	{
+		name: "消息背景"
+	}
+]
+
+// 留言
+export const tabsUserMessageBoard = [
+	{
+		name: '给我留言的'
+	},
+	{
+		name: '我留言的'
+	}
+]
+
 // 日程管理
 export const tabsSchedule = [
 	{
@@ -853,3 +909,20 @@ export const tabsThreeItem = [
 		value: ""
 	}
 ]
+
+// 导航编辑
+export const tabsPartner = [
+	{
+		name: "基本信息"
+	},
+	{
+		name: "联系方式"
+	}
+]
+
+export const visibles = {
+	public: '公开',
+	fans: '粉丝',
+	friend: '好友',
+	privacy: '私密'
+}

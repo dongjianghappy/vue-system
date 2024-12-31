@@ -17,25 +17,16 @@
 <v-buttongroup disabled="false" :data="{id: checkedList, coding: data.coding.art }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="render" />
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
+  defineProps,
   computed,
   ref,
+  useStore,
   channels
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Video from '@/components/packages/play/videos.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Video
-  },
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -52,8 +43,7 @@ export default defineComponent({
         return 'Default function'
       }
     },
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const coding: any = channels().coding.art;
     const checkedList: any = ref([])
@@ -70,17 +60,7 @@ function getNeighbor() {
           id: props.data.id
         }
       }).then(res => {
-        debugger
-        // detail.value = res.result
+
       })
     }
-
-    return {
-      coding,
-      checkedList,
-      dataList,
-      getNeighbor
-    }
-  }
-})
 </script>

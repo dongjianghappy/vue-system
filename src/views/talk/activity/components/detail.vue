@@ -3,20 +3,25 @@
   <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "创建话题"}}
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑话题' : '创建话题' " :data="data" :submit="submit">
+  <template v-slot:extra>
+    <label class="relative mr15 mt10 mb5" style="display: inline-block; line-height: 17px;">
+      <input type="checkbox" v-model="data.status" :checked="data.status" class="mr5" style="float: left;"><span>显示</span>
+    </label>
+  </template>  
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">话题名称</span>
-        <input v-model="detail.name" type="text" placeholder="请输入话题名称" class="input-sm input-full" sty />
+        <div style="display: flex">
+          <div style="flex: 1">
+            <input v-model="detail.name" type="text" placeholder="请输入话题名称" class="input-sm input-full" :style="[detail.style]" />
+          </div>
+          <v-titleattribute :style="detail.style || {}" :setStyle="(param) => detail.style = param" />
+        </div>
       </li>
       <li class="li">
         <span class="label">话题类型</span>
         <v-select :enums="[{value: '1', name: '学生'}, {value: '2', name: '体育'}]" v-model:value="detail.type" :defaultValue="detail.type = detail.type ? detail.type : '2'" />
-      </li>
-      <li class="li">
-        <span class="label">显示</span>
-        <v-radio label="是" name="status" value="1" v-model:checked="detail.status" />
-        <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
       </li>
       <li class="li" style="overflow: auto">
         <span class="label">预览图</span>
@@ -31,19 +36,15 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
   useStore,
 } from '@/utils'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
 
-  },
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -64,8 +65,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore()
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -116,15 +116,4 @@ export default defineComponent({
         isShow.value = false
       })
     }
-
-    return {
-      isShow,
-      detail,
-      drawer,
-      upload,
-      submit,
-      image
-    }
-  }
-})
 </script>

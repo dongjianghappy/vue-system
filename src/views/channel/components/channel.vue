@@ -4,7 +4,10 @@
 </v-button>
 <v-drawer v-model:show="isShow" title="频道管理" :style="{width: '700'}" :hasfooter="false">
   <template v-slot:extra>
-    <Setting :data="{coding}" :render="init" />
+    <v-space>
+      <Instructions module="channel" />
+      <Setting :data="{coding}" :render="init" />
+    </v-space>
   </template>
   <template v-slot:content>
     <div class="clearfix">
@@ -30,23 +33,18 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
+  defineProps,
   ref,
   watch,
   codings,
   useStore
 } from '@/utils'
+import Instructions from '../../links/components/instructions.vue'
 import Setting from './setting.vue'
 
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    Setting
-  },
-  props: {
+  const props: any = defineProps({
       router: {
       type: Function,
       default: () => {
@@ -57,12 +55,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
+  })
     const store = useStore()
     const coding = codings.channel
     const isShow: any = ref(false)
@@ -89,16 +82,4 @@ export default defineComponent({
     function handleRouter(param: any) {
       props.router(param.module)
     }
-    
-    return {
-      isShow,
-      coding,
-      currentValue,
-      dataList,
-      module,
-      init,
-      handleRouter
-    }
-  }
-})
 </script>

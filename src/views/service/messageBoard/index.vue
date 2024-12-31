@@ -1,89 +1,70 @@
 <template>
-<div class="module-wrap">
-  <div class="module-head">
-    <v-optionsbar title="留言板"></v-optionsbar>
-  </div>
-  <div class="module-content plr15">
-    <table class="table-striped table-hover col-left-12">
-      <tr class="th">
-        <td class="col-md-2">用户</td>
-        <td class="col-md-6">内容</td>
-        <td class="col-md-2">日期</td>
-        <td class="col-md-1">状态</td>
-        <td class="col-md-1">回复</td>
-      </tr>
-      <tr v-for="(item, index) in dataList.list" :key="index">
-        <td style="line-height: 35px;">
-          <v-avatar :data="item" />{{item.nickname}}
-        </td>
-        <td>
-          {{item.name}}
-        </td>
-        <td>{{item.times}}</td>
-        <td>
-          <v-switch :data="{ item, field: 'checked', coding }" :auth="auth.checked('status')" />
-        </td>
-        <td>
-          <Reply :data="{...item, coding}" api="delete" :render="init" :auth="auth.checked('reply')"></Reply>
-        </td>
-      </tr>
-    </table>
-    <v-nodata :data="dataList.list || []" />
-    <div class="mt15 align_right">
-      <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="init" />
-    </div>
-  </div>
+<div class="ptb5" style="background: #fff">
+  <v-tabs :tabs="tabsMessageBoard">
+    <template v-slot:extra>
+      <v-search field="content" placeholder="内容查找" :render="init" />
+    </template>
+    <template v-slot:content1>
+      <List :render="init" :data="{ coding }" :dataList="dataList" />
+    </template>
+    <template v-slot:content2>
+      <List2 :render="init" :data="{ coding }" :dataList="dataList" />
+    </template>
+
+  </v-tabs>
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
-  codings
+  ref,
+  watch,
+  useStore,
+  useRoute,
+  useRouter,
+  codings,
 } from '@/utils'
 import {
-  useStore
-} from 'vuex'
-import Reply from './components/reply.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Reply
-  },
-  setup(props, context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
+  tabsMessageBoard
+} from '@/assets/const'
+import List from './components/list.vue'
+import List2 from './components/list2.vue'
     const store = useStore();
-    const dataList = computed(() => store.getters['basic/messageBoard']);
-    const coding: any = codings['service'].message_board.list
+    const route = useRoute();
+    const router: any = useRouter();
+    const coding: any = codings.service.message_board;
+    
+    const tabsIndex: any = ref(route.query.type || 0) // tbs索引
+    const dataList: any = ref([])
 
+    // 监听路由
+    watch(route, (newValues, prevValues) => {
+      if (route.path === '/admin/messageBoard') {
+        tabsIndex.value = route.query.type
+        init()
+      }
+    })
+
+    // 初始化
     function init(param: any = {}) {
+
       const params: any = {
         page: 1,
-        pagesize: 10
+        pagesize: 25
       }
+
       Object.assign(params, param)
-      store.dispatch('basic/Fetch', {
-        api: "messageBoard",
-        state: 'messageBoard',
+      
+      store.dispatch('basic/messageBoard', {
+        api: 'messageBoard',
+        tabsIndex: tabsIndex.value,
         data: {
+          management_checked: tabsIndex.value === '1' ? 0 : 1, // 是否审核,
           ...params
         }
       })
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      init,
-      auth: proxy.$auth.init('messageBoard')
-    }
-  }
-})
 </script>

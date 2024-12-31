@@ -11,10 +11,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  computed,
   ref,
   watch,
   useRoute,
@@ -25,16 +23,9 @@ import {
 } from '@/assets/const'
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
-export default defineComponent({
-  name: 'MysqlView',
-  components: {
-    List,
-    List2
-  },
-  setup(props, context) {
+
     const store = useStore();
     const route = useRoute();
-    const dataList = computed(() => store.getters['website/webinfo']);
 
     let type: any = ref(1)
 
@@ -44,11 +35,4 @@ export default defineComponent({
       type.value = qq.type
 
     })
-
-    return {
-      tabsMysql,
-      dataList
-    }
-  }
-})
 </script>

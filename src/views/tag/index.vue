@@ -51,10 +51,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   ref,
   watch,
@@ -65,13 +63,7 @@ import {
 } from '@/utils'
 import Detail from './components/detail.vue'
 import DetailFlag from './components/detailFlag.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail,
-    DetailFlag
-  },
-  setup(props, context) {
+
     const store = useStore();
     const dataList: any = ref([])
     const coding: any = codings['tag'];
@@ -116,7 +108,7 @@ export default defineComponent({
         }
       }).then(res => {
         dataList.value = res.result.list
-        debugger
+        
         dataList.value.map((item: any) => {
           let arr = channel.value.filter((list: any) => list.id === item.channel_id)
           item.channel = (arr && arr[0] && arr[0].name) || ""
@@ -139,15 +131,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      init,
-      channel,
-      channelMenu,
-      handleChannel
-    }
-  }
-})
 </script>

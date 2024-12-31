@@ -27,10 +27,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   ref,
   useStore,
@@ -38,16 +36,6 @@ import {
 } from '@/utils'
 import SettingType from "./components/settingType.vue"
 import Detail from "./components/detail.vue"
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    SettingType,
-    Detail
-  },
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
     const store = useStore();
     const coding: any = codings.message
     const dataList: any = ref([])
@@ -61,11 +49,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-    return {
-      coding,
-      dataList,
-      init
-    }
-  }
-})
 </script>

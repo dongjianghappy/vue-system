@@ -10,7 +10,11 @@
       <v-upload ref="upload" @imgList="image" v-model:haschoose="file" :show="false" file="music" v-model:file="fileInfo" :uploadtype="kind === 'music' ? 'music' : 'sound'" format=".mp3, .wav" />
     </div>
     <div v-if="action === 'edit' || file">
-     
+    <v-tabs :tabs="tabsDetail" method="click">
+      <template v-slot:extra>
+        <Extra :data="detail" />
+      </template>
+      <template v-slot:content1>
       <div class="mt25 mb25" style="border-bottom: 1px solid #eee; line-height: 25px;">
         <div style="display: flex">
           <div style="flex: 1;">文件名: {{fileInfo.name || detail.song_name}} <span class="ml5">{{fileInfo.size  || `${(detail.size / 1024 / 1024).toFixed(3)}MB`}}</span>
@@ -30,11 +34,6 @@
           <input v-model="detail.title" type="text" placeholder="请输入音频名称" class="input-sm input-full" />
         </li>
         <li class="li">
-          <span class="label">是否显示</span>
-          <v-radio label="是" name="checked" value="1" v-model:checked="detail.checked" />
-          <v-radio label="否" name="checked" value="0" v-model:checked="detail.checked" />
-        </li>
-        <li class="li">
           <span class="label">tag标签</span>
           <v-tag v-model:tags="detail.tag" />
         </li>
@@ -50,11 +49,7 @@
         <li class="li" v-if="kind === 'music'">
           <span class="label">乐器</span>
           <v-radiobutton name="musical_instrument" v-model:checked="detail.musical_instrument" :enums="[{label: '吉他', value: '0'}, {label: '架子鼓', value: '1'}, {label: '钢琴', value: '2'}]" />
-        </li>       
-        <!-- <li class="li">
-          <span class="label">类型</span>
-          <v-radiobutton name="kind" v-model:checked="kind" :enums="[{label: '歌曲', value: 'music'}, {label: '音效', value: 'effects'}]" />
-        </li> -->
+        </li>    
         <li style="padding-left: 100px" v-if="kind === 'music'">
           <ul class="plr15" style="background: #f8f8fa;">
             <li class="li">
@@ -83,55 +78,41 @@
           <span class="label">音频描述</span>
           <textarea placeholder="请输入单页摘要" v-model="detail.summary" class="w-full"></textarea>
         </li>
+        <li class="li">
+          <span class="label">聚合标签</span>
+          <div>
+            <v-checkboxgroup :tagList="flagList" :checked="detail.flags" />
+          </div>
+        </li>
       </ul>
+      </template>
+      <template v-slot:content2>
+        <Customize :data="detail" :dataList="columnsList" />
+      </template>
+    </v-tabs>
     </div>
   </template>
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
+  computed,
   watch,
-  durationTrans
+  durationTrans,
+  channels,
+  useProps
 } from '@/utils'
-import SpaceModal from '../../../../space/components/modalSpace.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    SpaceModal
-  },
-  props: {
-    action: {
-      type: String,
-      default: "add"
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    coding: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    kind: {
-      type: String,
-      default: "music"
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    }
-  },
-  setup(props, context) {
+import { customize11, checkbox, channleSubmit } from '@/utils/fn'
+import {
+  tabsDetail
+} from '@/assets/const/index'
+import Customize from '../../../components/customize.vue'
+import Extra from '../../../components/extra.vue'
+  const props: any = defineProps(useProps)
     const store = useStore()
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -144,6 +125,11 @@ export default defineComponent({
     const special: any = ref("")
     const lrc: any = ref("")
     const isplay: any = ref(false)
+    const flagList: any = ref([])
+    const customizeDetail: any = ref({})
+    const columnsList: any = ref([])
+    const channelData: any = channels();
+    const page = computed(() => store.getters['common/page']);
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
@@ -152,13 +138,21 @@ export default defineComponent({
         detail.value = await drawer.value.init()
         file.value = ""
         isplay.value = false
+
+        flagList.value = await checkbox({store}) // 获取聚合标签
+        // 自定义字段数据获取
+        const columns: any = await customize11({
+          store,
+          channel_id: channelData.id
+        })
+        customizeDetail.value = columns.customizeDetail
+        columnsList.value = columns.list
       }
     })
 
     // 监听
     watch([() => fileInfo.value.fileUrl], async (newValues: any, prevValues) => {
       setTimeout(() => {
-        debugger
         detail.value.title = fileInfo.value.name.substring(0, fileInfo.value.name.lastIndexOf("."))
         detail.value.format = fileInfo.value.format
         detail.value.duration = fileInfo.value.duration
@@ -210,75 +204,42 @@ export default defineComponent({
     }
 
     function submit(params: any) {
-      debugger
       const {
-        id,
-        fid,
         singer_id,
         album_id,
         lrc_id,
         score_id,
-        title,
         language,
         musical_instrument,
-        summary,
-        tag,
         format,
         duration,
         time,
-        size,
-        checked
+        size
       } = detail.value
-      const param: any = {
-        fid,
-        singer_id,
-        album_id,
-        lrc_id,
-        score_id,
-        title,
-        language: language || 'chinese',
-        musical_instrument: musical_instrument || '0',
-        summary,
-        tag: tag ? tag.join(',') : "",
-        format,
-        duration,
-        time,
-        size,
-        checked
-      }
-      if (props.action === 'edit') {
-        param.id = id
-      }
 
-      store.dispatch('common/Fetch', {
-        api: props.action !== 'add' ? 'updateArticle' : 'insertArticle',
+      channleSubmit({
+        store,
+        props,
+        detail: detail.value,
+        customizeDetail: customizeDetail.value,
         data: {
-          coding: props.data.coding.art,
-          ...param,
+          singer_id,
+          album_id,
+          lrc_id,
+          score_id,
+          language: language || 'chinese',
+          musical_instrument: musical_instrument || '0',
+          format,
+          duration,
+          time,
+          size
+        },
+        callback: () => {
+          props.render({
+            page: page.value
+          })
+          isShow.value = false
         }
-      }).then(() => {
-        props.render()
-        params.message()
-        params.cancel()
       })
     }
-
-    return {
-      isShow,
-      detail,
-      drawer,
-      upload,
-      file,
-      fileInfo,
-      show_video,
-      singer,
-      special,
-      lrc,
-      submit,
-      onPlay,
-      isplay,
-      chooseSinger
-    }
-  }
-})
 </script>

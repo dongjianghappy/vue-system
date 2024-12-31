@@ -45,27 +45,16 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
+  useStore,
   onMounted,
   computed,
   ref,
   channels
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Detail from './components/detail.vue'
 import AlbumList from './components/albumList.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail,
-    AlbumList
-  },
-  setup(props, context) {
     const store = useStore();
     const dataList = computed(() => store.getters['channel/musicSinger']);
     const coding: any = channels().coding;
@@ -80,15 +69,5 @@ export default defineComponent({
         }
       })
     }
-
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init
-    }
-  }
-})
 </script>

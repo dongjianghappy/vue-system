@@ -19,19 +19,14 @@
 <v-nodata :data="dataList" />
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
-  useStore,
-  useRoute
+  useStore
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-List2',
-  emits: ['onClick'],
-  setup(props, context) {
+  const emit: any = defineEmits(['onClick'])
+  
     const store = useStore();
 
     function init() {
@@ -47,12 +42,8 @@ export default defineComponent({
     }
 
     function handleclick() {
-      context.emit('onClick')
+      emit('onClick')
     }
     onMounted(init)
-    return {
-      handleclick
-    }
-  }
-})
+    
 </script>

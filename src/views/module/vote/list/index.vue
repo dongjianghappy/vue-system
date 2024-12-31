@@ -59,21 +59,14 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   ref,
   useStore,
   useRoute
 } from '@/utils'
 import Detail from '../components/detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  setup(props, context) {
     const store = useStore();
     const dataList: any = ref([])
     const detail: any = ref({})
@@ -91,12 +84,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      dataList,
-      detail,
-      init
-    }
-  }
-})
 </script>

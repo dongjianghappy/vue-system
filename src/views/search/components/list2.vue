@@ -54,38 +54,16 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   computed,
-  ref,
   useStore
 } from '@/utils'
 import {
   ChartLine,
   ChartPie
 } from '@/components/packages/chart/index'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    ChartLine,
-    ChartPie
-  },
-  props: {
-    style: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
     const store = useStore();
 
     const user: any = computed(() => store.getters['basic/defaultStatistics'].user || {});
@@ -100,12 +78,6 @@ export default defineComponent({
             [...(aaa.value && aaa.value.yestday_online) || []],
             [...(aaa.value && aaa.value.yestday_visit) || []]
           ]
-          // "series": [
-          //   [0, 23, 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0],
-          //   [0, 0, 0, 45, 0, 0, 0, 0, 0, 34, 2, 0, 0, 0],
-          //   [0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          //   [0, 12, 0, 0, 0, 0, 0, 54, 0, 0, 0, 98, 0, 0]
-          // ]
         },
         options: {
           title: ["今日浏览量", "今日在线", "昨日浏览量", "昨日在线"],
@@ -158,12 +130,6 @@ export default defineComponent({
             [...(aaa.value && aaa.value.visit) || []],
             [...(aaa.value && aaa.value.online) || []],
           ]
-          // "series": [
-          //   [0, 23, 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0],
-          //   [0, 0, 0, 45, 0, 0, 0, 0, 0, 34, 2, 0, 0, 0],
-          //   [0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          //   [0, 12, 0, 0, 0, 0, 0, 54, 0, 0, 0, 98, 0, 0]
-          // ]
         },
         options: {
           title: ["7天浏览量", "7天在线"],
@@ -184,12 +150,6 @@ export default defineComponent({
             [...(aaa.value && aaa.value.visit) || []],
             [...(aaa.value && aaa.value.ip) || []]
           ]
-          // "series": [
-          //   [0, 23, 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0],
-          //   [0, 0, 0, 45, 0, 0, 0, 0, 0, 34, 2, 0, 0, 0],
-          //   [0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          //   [0, 12, 0, 0, 0, 0, 0, 54, 0, 0, 0, 98, 0, 0]
-          // ]
         },
         options: {
           title: ["本月浏览量", "本月IP量"],
@@ -202,22 +162,5 @@ export default defineComponent({
     function init() {
       store.dispatch('basic/DefaultStatistics')
     }
-
-    function handleclick() {
-      context.emit('onClick')
-    }
-
     onMounted(init)
-    return {
-      user,
-      // order,
-      hours,
-      engine,
-      register,
-      weekVisit,
-      weekIp,
-      handleclick
-    }
-  }
-})
 </script>

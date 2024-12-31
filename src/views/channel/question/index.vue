@@ -38,23 +38,14 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   computed,
-  ref
-} from 'vue'
-import {
+  ref,
   useStore
-} from 'vuex'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-
-  },
-  setup(props, context) {
+} from '@/utils'
     const {
       proxy
     }: any = getCurrentInstance();
@@ -84,13 +75,4 @@ export default defineComponent({
         page: 1
       })
     })
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init
-    }
-  }
-})
 </script>

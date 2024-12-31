@@ -40,18 +40,18 @@ import {
 import Detail from './components/detail.vue'
 import activity from '../../talk/activity/index.vue'
 import Talk from '../../talk/list/index.vue'
-import Collect from '../../talk/collect/index.vue'
-import Comment from '../../talk/comment/index.vue'
-import Praise from '../../talk/praise/index.vue'
+// import Collect from '../../talk/collect/index.vue'
+// import Comment from '../../talk/comment/index.vue'
+// import Praise from '../../talk/praise/index.vue'
 
 export default defineComponent({
   name: 'HomeViewdd',
   components: {
     activity,
     Talk,
-    Collect,
-    Comment,
-    Praise,
+    // Collect,
+    // Comment,
+    // Praise,
     Detail
   },
   setup(props, context) {

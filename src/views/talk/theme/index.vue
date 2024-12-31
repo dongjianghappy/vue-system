@@ -29,10 +29,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   ref,
   watch,
@@ -52,22 +50,6 @@ import MouseEffects from './mouseEffects/index.vue'
 import Cursor from './cursor/index.vue'
 import RelatedBackground from './related_background/index.vue'
 
-export default defineComponent({
-  name: 'IndexView',
-  components: {
-    Theme,
-    Effects,
-    Background,
-    AvatarPendant,
-    Pendant,
-    MouseEffects,
-    Cursor,
-    RelatedBackground
-  },
-  setup(props, context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
     const coding: any = codings.user
@@ -116,16 +98,6 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      tabsTalkTheme,
-      coding,
-      tabsIndex,
-      init,
-      dataList
-    }
-  }
-})
 </script>
 
 <style lang="less">

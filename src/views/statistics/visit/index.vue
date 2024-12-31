@@ -19,67 +19,24 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
-  computed,
   ref,
-  watch,
   useRoute,
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import {
   visitPage
 } from '@/assets/const'
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
 import Calendar from "./components/calendar.vue"
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    List,
-    List2,
-    Calendar
-  },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
-    const store = useStore();
     const route = useRoute();
-    const dataList = computed(() => store.getters['website/webinfo']);
     let isWebsite: any = ref(route.path.indexOf("talk") === -1 ? true : false)
     let menu: any = ref(visitPage)
-    const pagesize: any = 10
-    const tabsIndex: any = ref(route.query.type || 0) // tbs索引
     const search: any = ref("")
     const refList: any = ref(null)
 
     function getData(parm: any){
-      debugger
       refList.value.init(parm)
     }
-
-    return {
-      dataList,
-      menu,
-      isWebsite,
-      tabsIndex,
-      search,
-      refList,
-      getData
-    }
-  }
-})
 </script>

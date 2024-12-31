@@ -14,36 +14,16 @@
 </table>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
-  useStore,
-  useRoute
+  defineProps
 } from '@/utils'
-
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
-  props: {
+  const props: any = defineProps({
     dataList: {
       type: Object,
       default: () => {
         return []
       }
     }
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
-    const store = useStore();
-
-    return {}
-  }
-})
+  })
 </script>

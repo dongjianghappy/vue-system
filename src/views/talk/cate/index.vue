@@ -44,42 +44,19 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
-  watch,
-  useRoute,
-  useRouter,
   codings,
   useStore
 } from '@/utils'
 
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
+
     const store = useStore();
     const dataList: any = ref([])
     const coding: any = codings.talk.cate;
-    const route = useRoute();
-    const router = useRouter();
 
     function init(param: any = {}) {
       const params: any = {
@@ -98,23 +75,5 @@ export default defineComponent({
         dataList.value = res.result
       })
     }
-
-    function handleClick(item: any) {
-      let url: any = `/admin/vote/item?talkid=${item.id}&name=${item.name}`
-      if (item.vote !== '0') {
-        url = `/admin/vote/item/list?id=${item.vote}`
-      }
-      router.push(url)
-    }
-
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      handleClick,
-      init
-    }
-  }
-})
 </script>

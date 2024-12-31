@@ -39,9 +39,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   ref,
@@ -50,9 +49,6 @@ import {
   useRoute,
   codings
 } from '@/utils'
-export default defineComponent({
-  name: 'HomeViewdd',
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -60,6 +56,7 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
     const dataList: any = ref([])
+    const auth: any = proxy.$auth.init('collection/art')
 
     // 监听路由
     watch(route, (newValues, prevValues) => {
@@ -87,12 +84,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      auth: proxy.$auth.init('collection/art')
-    }
-  }
-})
 </script>

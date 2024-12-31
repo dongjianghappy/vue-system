@@ -38,21 +38,16 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import AddSetting from "@/views/search/components/addSetting.vue"
 import {
-  defineComponent,
+  defineProps,
   useStore,
   watch,
   ref
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Keyword',
-  components: {
-    AddSetting
-  },
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -65,8 +60,7 @@ export default defineComponent({
         return
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const form: any = ref({
       pagesize: ''
@@ -179,12 +173,4 @@ export default defineComponent({
         props.render()
       })
     }
-
-    return {
-      menus,
-      form,
-      submit
-    }
-  }
-})
 </script>

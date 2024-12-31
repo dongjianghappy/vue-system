@@ -23,24 +23,13 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
-  computed,
   ref,
+  useStore,
   channels
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-
-  },
-  setup(props, context) {
     const store = useStore();
     const dataList: any = ref([]);
     const coding: any = channels().coding.lrc;
@@ -60,13 +49,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init
-    }
-  }
-})
 </script>

@@ -19,36 +19,15 @@
 <v-buttongroup disabled="false" :data="{id: checkedList, coding: data.coding }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="render" />
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
-  computed,
+  defineProps,
   ref,
-  channels,
-  useRouter
+  useProps
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Detail from './components/detail.vue'
-import {
-  setDevtoolsHook
-} from '@vue/runtime-core';
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail,
-  },
-  props: {
+  const props: any = defineProps({
     dataList: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    data: {
       type: Object,
       default: () => {
         return {}
@@ -58,44 +37,9 @@ export default defineComponent({
       type: String,
       default: "image"
     },
-    isPersonal: {
-      type: Boolean,
-      default: false
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    },
-  },
-  setup(props, context) {
-    const store = useStore();
-    const router = useRouter()
+    ...useProps
+  })
     const checkedList: any = ref([])
-    const showFlag: any = ref(false)
-    const index: any = ref(0)
-    const currentData: any = ref({})
-    const currentImg: any = ref()
-
-    function showImg(param: any, i: any) {
-      index.value = i
-      currentData.value = param
-      debugger
-      currentImg.value = param.image[0]
-      showFlag.value = !showFlag.value
-    }
-
-    return {
-      checkedList,
-      showFlag,
-      index,
-      currentImg,
-      currentData,
-      showImg
-    }
-  }
-})
 </script>
 
 <style lang="less" scoped>

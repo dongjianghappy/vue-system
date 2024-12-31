@@ -51,9 +51,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   ref,
@@ -62,9 +61,6 @@ import {
   useRoute,
   codings
 } from '@/utils'
-export default defineComponent({
-  name: 'SingleView',
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -74,6 +70,7 @@ export default defineComponent({
     const coding: any = codings.single;
     const dataList: any = ref([])
     const checkedList: any = ref([])
+    const auth: any = proxy.$auth.init('navigation/single')
 
     function init() {
       store.dispatch('common/Fetch', {
@@ -92,15 +89,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init,
-      handleClick,
-      auth: proxy.$auth.init('navigation/single')
-    }
-  }
-})
 </script>

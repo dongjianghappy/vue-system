@@ -41,18 +41,14 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   onMounted,
   computed,
   useStore,
   codings
 } from '@/utils'
 
-export default defineComponent({
-  name: 'ManageView',
-  setup(props, context) {
     const store = useStore();
     const coding: any = codings['user'].manager_log;
     const dataList = computed(() => store.getters['basic/manageLog']);
@@ -74,11 +70,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      dataList,
-      init
-    }
-  }
-})
 </script>

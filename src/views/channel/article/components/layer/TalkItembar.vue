@@ -17,21 +17,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, getCurrentInstance, reactive, ref } from 'vue'
-import {useStore} from 'vuex'
+<script setup lang="ts">
+import { defineProps, getCurrentInstance, reactive, ref, useStore } from '@/utils'
 
-export default defineComponent({
-  name: 'TalkItemBarView',
-  components: {
-  },
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: ()=>{return}
     }
-  },
-  setup(props,context) {
+  })
     const {ctx, proxy}:any = getCurrentInstance();
     const store = useStore();
     const { coding5, id:artid } = reactive(props.data)
@@ -58,12 +52,4 @@ export default defineComponent({
         api: 'praise'
       })
     }
-    return {
-      onClick,
-      isShow,
-      forwarding,
-      praise,
-    }
-  }
-})
 </script>

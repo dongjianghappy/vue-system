@@ -2,6 +2,7 @@ const getters = {
   article: (state: any) => state.article || {},
   source: (state: any) => state.source || {},
   tech: (state: any) => state.tech || {},
+  topic: (state: any) => state.topic || {},
   picture: (state: any) => state.picture || {},
   website: (state: any) => state.website || {},
   funny: (state: any) => state.funny || {},

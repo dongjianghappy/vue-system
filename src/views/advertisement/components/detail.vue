@@ -50,6 +50,19 @@
         <input v-model="detail.price" type="text" placeholder="请输入价格" class="input-sm input-150" />
       </li>
       <li class="li">
+        <span class="label">日期</span>
+        <div class="flex">
+          <div style="flex: 1">
+            <input v-model="detail.start_time" type="text" placeholder="请输入开始时间" class="input-sm input-150" />
+            <v-timepicker :data="detail" attr="start_time" />
+          </div>
+          <div style="flex: 1">
+            <input v-model="detail.last_time" type="text" placeholder="请输入结束时间" class="input-sm input-150" />
+            <v-timepicker :data="detail" attr="last_time" />
+          </div>
+        </div>
+      </li>
+      <li class="li">
         <span class="label">类型</span>
         <v-radiobutton name="ssss" v-model:checked="detail.type" :enums="[{label: '图片', value: 'img'}, {label: '文字', value: 'text'}, {label: '代码', value: 'code'}]" v-model:value="detail.area" />
       </li>
@@ -105,9 +118,9 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
@@ -117,9 +130,7 @@ import {
   LINK_TYPE,
   SERVER_NAME
 } from '@/assets/enum'
-export default defineComponent({
-  name: 'v-Search',
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -136,8 +147,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const isShow: any = ref(false)
     const detail: any = ref({})
     const drawer: any = ref(null)
@@ -192,7 +202,7 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
         api: props.action !== 'add' ? 'update' : 'insert',
         data: {
-          coding: props.data.coding,
+          coding: props.data.coding.list,
           callback: 'bindAd',
           ...detail.value,
           position: detail.value.position && detail.value.position.length > 0 ? detail.value.position.join(',') : "",
@@ -205,19 +215,4 @@ export default defineComponent({
         param.cancel()
       })
     }
-
-    return {
-      codings,
-      isShow,
-      detail,
-      drawer,
-      sourceType,
-      serverName,
-      positionList,
-      positionChecked,
-      submit,
-      choose
-    }
-  }
-})
 </script>

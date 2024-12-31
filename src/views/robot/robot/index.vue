@@ -16,10 +16,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   ref,
   useStore,
@@ -28,13 +26,6 @@ import {
 import Detail from './components/detail.vue'
 import Robot from './components/robot.vue'
 
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail,
-    Robot
-  },
-  setup(props, context) {
     const store = useStore();
     const router: any = useRouter();
     const dataList: any = ref([])
@@ -52,12 +43,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      dataList,
-      init,
-      handleClick
-    }
-  }
-})
 </script>

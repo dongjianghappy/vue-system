@@ -7,8 +7,7 @@
     <ul class="form-wrap-box">
       <li class="li">
         <span class="label">新增类型</span>
-        <v-select :enums="appCenter" :value="detail.type" @onChange="getGrade" :defaultValue="detail.type = detail.type ? detail.type : '1'" />
-
+        <v-select :enums="APP_CENTER" :value="detail.type" @onChange="getGrade" :defaultValue="detail.type = detail.type ? detail.type : '1'" />
       </li>
       <li class="li">
         <span class="label">应用名称</span>
@@ -43,10 +42,10 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import SpaceModal from '../../space/components/modalSpace.vue'
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
   useStore
@@ -54,12 +53,7 @@ import {
 import {
   APP_CENTER,
 } from '@/assets/enum'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    SpaceModal
-  },
-  props: {
+  const props: any = defineProps({
     action: {
       type: String,
       default: "add"
@@ -80,13 +74,11 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const isShow: any = ref(false)
     const detail: any = ref({})
     const drawer: any = ref(null)
-    const appCenter: any = APP_CENTER
     const gradeList: any = ref([])
 
     // 监听
@@ -120,7 +112,6 @@ export default defineComponent({
     }
 
     function submit(params: any) {
-      debugger
       const {
         id,
         grade_id,
@@ -159,17 +150,5 @@ export default defineComponent({
         params.cancel()
       })
     }
-
-    return {
-      appCenter,
-      isShow,
-      detail,
-      drawer,
-      getGrade,
-      gradeList,
-      sssss,
-      submit
-    }
-  }
-})
+    
 </script>

@@ -111,9 +111,9 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   watch,
   useStore,
@@ -128,14 +128,7 @@ import {
 import ChooseCate from './chooseCate.vue'
 import ChooseTag from './chooseTag.vue'
 import ChooseArticle from './chooseArticle.vue'
-export default defineComponent({
-  name: 'v-Detail',
-  components: {
-    ChooseCate,
-    ChooseTag,
-    ChooseArticle
-  },
-  props: {
+  const props: any =defineProps({
     action: {
       type: String,
       default: "add"
@@ -165,8 +158,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -187,6 +179,7 @@ export default defineComponent({
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
+        debugger
         detail.value = await drawer.value.init()
         cateList.value = detail.value.cateList || []
         articleList.value = detail.value.articleList || []
@@ -278,22 +271,4 @@ export default defineComponent({
         params.message()
       })
     }
-
-    return {
-      tabsNav,
-      isShow,
-      drawer,
-      channel,
-      NAV_TYPE,
-      detail,
-      submit,
-      cateList,
-      tagList,
-      articleList,
-      getCate,
-      getTag,
-      getArticle,
-    }
-  }
-})
 </script>

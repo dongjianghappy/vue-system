@@ -38,20 +38,15 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useRoute,
   watch,
 } from '@/utils'
 import SpaceModal from '../../../space/components/modalSpace.vue'
-export default defineComponent({
-  name: 'v-Detail',
-  components: {
-    SpaceModal
-  },
-  props: {
+  const props: any =defineProps({
     data: {
       type: Object,
       default: () => {
@@ -68,8 +63,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     }
-  },
-  setup(props, context) {
+  })
     const route: any = useRoute()
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -82,12 +76,4 @@ export default defineComponent({
         detail.value.fid = route.query.fid
       }
     })
-
-    return {
-      isShow,
-      detail,
-      drawer
-    }
-  }
-})
 </script>

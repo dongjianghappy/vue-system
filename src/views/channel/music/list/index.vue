@@ -90,30 +90,20 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   defineComponent,
   getCurrentInstance,
   onMounted,
   computed,
   ref,
+  useStore,
   channels,
   durationTrans,
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Detail from './components/detail.vue'
 import ViewAlbum from './components/viewAlbum.vue'
 import ViewSinger from './components/viewSinger.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail,
-    ViewAlbum,
-    ViewSinger
-  },
-  setup(props, context) {
     const store = useStore();
     const dataList = computed(() => store.getters['channel/musicList']);
     const coding: any = channels().coding;
@@ -156,16 +146,4 @@ export default defineComponent({
        getCate()
        init()
     })
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      cateList,
-      init,
-      durationTrans,
-      handleCate
-    }
-  }
-})
 </script>

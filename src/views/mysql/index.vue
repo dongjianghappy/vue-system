@@ -18,9 +18,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   ref,
   onMounted,
@@ -29,13 +28,7 @@ import {
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
 import VueEvent from '@/utils/event'
-export default defineComponent({
-  name: 'MysqlView',
-  components: {
-    List,
-    List2
-  },
-  setup(props, context) {
+
     const {
       proxy
     }: any = getCurrentInstance();
@@ -58,11 +51,4 @@ export default defineComponent({
       VueEvent.emit("reload");
     }
     onMounted(init)
-
-    return {
-      dataList,
-      toggle
-    }
-  }
-})
 </script>

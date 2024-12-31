@@ -76,25 +76,15 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   computed,
   ref,
+  useStore,
   codings
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  setup(props, context) {
     const store = useStore();
     const dataList = computed(() => store.getters['basic/partner']);
     const coding: any = codings.module['questionBank'];
@@ -124,13 +114,4 @@ export default defineComponent({
         page: 1
       })
     })
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init
-    }
-  }
-})
 </script>

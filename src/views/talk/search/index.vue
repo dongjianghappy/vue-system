@@ -23,15 +23,11 @@
 </div>  
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   computed,
-  ref,
   useStore,
-  watch,
   codings
 } from '@/utils'
 import Card from "@/views/search/components/card.vue"
@@ -46,20 +42,6 @@ import {
   ChartLine
 } from '@/components/packages/chart/index'
 import Authority from '@/components/packages/authority/index.vue'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-    ChartLine,
-    Authority,
-    Card,
-    List,
-    Keyword,
-    Article,
-    Setting,
-    List2,
-    AddSetting
-  },
-  setup(props, context) {
     const coding: any = codings.talk
     const store = useStore();
 
@@ -71,12 +53,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-    return {
-      coding,
-      data,
-      findList,
-      init
-    }
-  }
-})
 </script>

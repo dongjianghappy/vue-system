@@ -62,6 +62,30 @@ export const MODUDLE: any = [
   },
 ]
 
+// 数据类型
+export const DATE_TYPE = [
+  {
+    value: 'text',
+    name: '文本保存HTML数据(TEXT)',
+  },
+  {
+    value: 'varchar',
+    name: '字符串类型(VARCHAR)',
+  },
+  {
+    value: 'int',
+    name: '整数类型(INT)',
+  },
+  {
+    value: 'float',
+    name: '小数类型(Float)',
+  },
+  {
+    value: 'datetime',
+    name: '时间类型(DATETIME)',
+  },
+]
+
 // 自定义表单
 export const TEXT_TYPE = [
   {
@@ -120,6 +144,18 @@ export const LINK_TYPE = [
     value: '6',
     name: '买链接',
   },
+]
+
+// 伙伴类型
+export const PARTNER_TYPE = [
+  {
+    value: '0',
+    name: '链接伙伴',
+  },
+  {
+    value: '1',
+    name: '广告伙伴',
+  }
 ]
 
 // 友链方式

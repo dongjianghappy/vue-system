@@ -39,27 +39,17 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
-  useStore,
-  useRoute
+  defineProps
 } from '@/utils'
 
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
         return {}
       }
     }
-  },
-})
+  })
 </script>

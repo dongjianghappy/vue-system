@@ -1,0 +1,73 @@
+<template>
+<v-button v-model:show="isShow" :disabled="auth">
+  退回
+</v-button>
+<v-dialog v-model:show="isShow" ref="form" title="审核退回" width="520px" height="300px" :confirm="true" :cancel="true" @submit="submit">
+  <template v-slot:content v-if="isShow">
+    <ul class="form-wrap-box">
+      <li class="li">
+        <span class="label">退回类型</span>
+        <v-select :enums="sourceType" v-model:value="detail.reason_type" :defaultValue="detail.reason_type = detail.reason_type ? detail.reason_type : '0'" />
+      </li>
+      <li class="li">
+        <span class="label">退回原因</span>
+        <textarea placeholder="请输入站点介绍" v-model="detail.return_reason" class="w-full"></textarea>
+      </li>
+    </ul>
+  </template>
+</v-dialog>
+</template>
+
+<script setup lang="ts">
+import {
+  defineProps,
+  ref,
+  useStore,
+  watch,
+} from '@/utils'
+
+import {
+  REASON_TYPES,
+} from '@/assets/enum'
+const props: any = defineProps({
+  data: {
+    type: Object,
+    default: () => {
+      return {}
+    }
+  },
+  render: {
+    type: Function,
+    default: () => {
+      return 'Default function'
+    }
+  },
+  auth: {
+    type: Boolean,
+    default: false
+  },
+})
+const store = useStore()
+const isShow: any = ref(false)
+const detail: any = ref({})
+const sourceType: any = REASON_TYPES
+
+function submit(cancel: any) {
+  const {
+    reason_type,
+    return_reason
+  } = detail.value
+  
+  store.dispatch('common/Fetch', {
+    api: "managementReturn",
+    data: {
+      reason_type,
+      return_reason,
+      ...props.data
+    }
+  }).then(res => {
+    props.render()
+    cancel()
+  })
+}
+</script>

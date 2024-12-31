@@ -7,14 +7,14 @@
           <Detail action="add" :data="{coding: 'U0700037'}" :render="init" />
         </span>
       </div>
-
       <div class="col-md-2 p10" v-for="(item, index) in dataList" :key="index">
         <div class="p15 align_center h80" @click="handleClick(item)" style=" background: var(--card-background); border-radius: 8px;">
         </div>
         <div class="ptb10 font6">
           {{item.name}}
-          <span class="right" v-if="item.id">
-            <Detail action="edit" :data="{id: item.id, coding: 'U0700037'}" :render="init" /></span>
+          <span class="right" v-if="item.id && item.id != 'custom'">
+            <Detail action="edit" :data="{id: item.id, coding: 'U0700037'}" :render="init" />
+          </span>
         </div>
       </div>
     </div>
@@ -22,21 +22,16 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   onMounted,
   ref,
   useStore
 } from '@/utils'
-import Detail from './detail_cate.vue'
+import Detail from './detail.vue'
 
-export default defineComponent({
-  name: 'v-Button',
-  components: {
-    Detail
-  },
-  props: {
+  const props: any = defineProps({
     title: {
       type: String,
       default: ""
@@ -51,10 +46,7 @@ export default defineComponent({
         return
       }
     }
-  },
-  emits: ['onClick'],
-  setup(props, context) {
-
+  })
     const store = useStore()
     const dataList: any = ref([])
 
@@ -71,6 +63,10 @@ export default defineComponent({
         dataList.value.unshift({
           name: '未分类'
         })
+        dataList.value.unshift({
+          name: '自定义',
+          id: 'custom'
+        })
       })
     }
 
@@ -82,12 +78,4 @@ export default defineComponent({
     onMounted(() => {
       init()
     })
-
-    return {
-      dataList,
-      init,
-      handleClick
-    }
-  }
-})
 </script>

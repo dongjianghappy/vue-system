@@ -1,6 +1,6 @@
 <template>
-<div :class="{screen: isScreen}" style="background: #fff; border: 1px solid #eee; width: 100%; height: 100%;">
-  <div class="editor-wrap" style="border-bottom: 1px solid #eee; min-height: 40px;">
+<div :class="{screen: isScreen}" style="background: var(--module-background); border: 1px solid var(--default-border); width: 100%; height: 100%;">
+  <div class="editor-wrap" style="border-bottom: 1px solid var(--default-border); min-height: 40px;">
     <ul class="editor-button">
       <li class="left pl10">
         <v-popover :isShowss="popoverStatus" content='H<i class="iconfont icon-triangle" title="标题">' arrow="tb" offset="right" :move="-10" :keys="`static_${index}`">
@@ -41,7 +41,7 @@
               插入
             </li>
             <li>
-              <v-spaces @selectImage="selectImage">空间</v-spaces>
+              <v-spaces @selectImage="selectImage" :data="{id: data.id, coding: coding}">空间</v-spaces>
             </li>
           </ul>
         </v-popover>
@@ -63,7 +63,7 @@
             </li>
             <li @click="handelClick({type: 'code', value: 4})">
               Mysql
-            </li>            
+            </li>
           </ul>
         </v-popover>
 
@@ -76,10 +76,9 @@
     </ul>
   </div>
   <div :class="{height: isScreen, minHeight: !isScreen}" style="display: flex; flex-direction: row;">
-    <div class="relative" style="width: 50%; border-right: 1px solid #eee;">
-      <perfect-scrollbar>
-
-        <textarea id="editor" v-model="contentsss" @input="handleInput" style="
+    <div class="relative" style="width: 50%; border-right: 1px solid var(--default-border);">
+      <div class="scrollbar">
+        <textarea id="editor" v-model="content" @input="handleInput" style="
     left: 0;
     width: 100%;
     height: 100p%;
@@ -87,24 +86,25 @@
     outline: none;
     overflow: hidden;
     resize: none;"></textarea>
-      </perfect-scrollbar>
+      </div>
     </div>
     <div class="markdown" style="width: 50%; " v-show="isview">
-      <perfect-scrollbar>
+      <div class="scrollbar">
         <div class="p10" v-html="marked.parse(contentsss)" @mouseup="handleMouseup"></div>
-      </perfect-scrollbar>
+      </div>
     </div>
   </div>
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
+  defineProps,
+  defineEmits,
   ref,
   watch,
-  selection
+  selection,
+  computed
 } from '@/utils'
 import {
   marked
@@ -127,53 +127,54 @@ marked.setOptions({
   smartypants: false,
   xhtml: false
 });
-export default defineComponent({
-      name: 'v-Search',
-      props: {
-        style: {
-          type: Object,
-          default: () => {
-            return {}
-          }
-        },
-        contentsss: {
-          type: String,
-          default: ""
-        },
-        data: {
-          type: Object,
-          default: () => {
-            return {}
-          }
-        }
-      },
-      emits: ['update:contentsss'],
-      setup(props, context) {
-        const {
-          ctx
-        }: any = getCurrentInstance();
-        const isview: any = ref(true)
-        const isScreen: any = ref(false)
-        // 预览状态
-        const popoverStatus: any = ref(false)
-        const content: any = ref(props.contentsss)
-        const preview: any = ref(marked.parse(props.contentsss))
+const props: any = defineProps({
+  style: {
+    type: Object,
+    default: () => {
+      return {}
+    }
+  },
+  contentsss: {
+    type: String,
+    default: ""
+  },
+  data: {
+    type: Object,
+    default: () => {
+      return {}
+    }
+  },
+  coding: {
+    type: String,
+    default: ""
+  }
+})
+const emit: any = defineEmits(['update:contentsss'])
+const isview: any = ref(true)
+const isScreen: any = ref(false)
+// 预览状态
+const popoverStatus: any = ref(false)
+const content: any = computed({
+  get: () => props.contentsss,
+  set: (val) => emit('update:contentsss', val)
+});
+const preview: any = ref(marked.parse(props.contentsss))
 
-        const Doc: any = document
+const Doc: any = document
 
-        const data: any = {
-          link: '[链接](http://www.dongblog.com)',
-          img: '![Description](http://www.07sucai.com/images/album/16875.jpg)',
-          line: '------',
-          orderly: '1 列表内容',
-          disorder: '- 列表内容'
-        }
+const data: any = {
+  link: '[链接](http://www.dongblog.com)',
+  img: '![Description](http://www.07sucai.com/images/album/16875.jpg)',
+  line: '------',
+  orderly: '1 列表内容',
+  disorder: '- 列表内容'
+}
 
-        const array = ['link', 'img', 'line', 'orderly', 'disorder']
+const array = ['link', 'img', 'line', 'orderly', 'disorder']
 
-        const code = [{
-              name: 'html',
-              value: `${'```html'}
+const code = [{
+      name: 'html',
+      value: `${'```html'}
 
 ${'```'}`
       },
@@ -261,7 +262,6 @@ ${'```'}`
 
       // 标题设置
       if (type === 'object') {
-        debugger
         if(param.type === 'title'){
           str = title[param.value].value + title[param.value].name
         }else if(param.type === 'code'){
@@ -303,7 +303,7 @@ ${'```'}`
       content.value = editor.value;
       preview.value = marked.parse(editor.value);
 
-      context.emit('update:contentsss', content.value)
+      // emit('update:contentsss', content.value)
       setTimeout(() => {
         popoverStatus.value = false
       }, 1000)
@@ -313,7 +313,7 @@ ${'```'}`
       if (param === 'clear') {
         content.value = ""
         preview.value = ""
-        context.emit('update:contentsss', content.value)
+        emit('update:contentsss', content.value)
         autoTextarea()
         return
       } else if (param === 'Screen') {
@@ -334,21 +334,6 @@ ${'```'}`
     function handleMouseup(e: any) {
       selection.mouseup(e, props.data.tag)
     }
-
-    return {
-      isview,
-      isScreen,
-      content,
-      popoverStatus,
-      marked,
-      preview,
-      handelClick,
-      handleInput,
-      selectImage,
-      handleMouseup
-    }
-  }
-})
 </script>
 
 <style scoped>
@@ -362,7 +347,7 @@ ${'```'}`
 }
 
 .minHeight {
-  height: 500px;
+  height: 450px;
 }
 
 .height {
@@ -372,15 +357,15 @@ ${'```'}`
 textarea {
   box-sizing: border-box;
   padding: 20px 20px 30px;
-  color: #2c3e50;
+  color: var(--default-font);
   font-size: 14px;
   font-family: menlo, Ubuntu Mono, consolas, Courier New, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
   line-height: 1.5;
   word-break: break-all;
   min-height: 490px;
 }
-
-.ps {
-  height: 500px;
+.scrollbar{
+  height: 450px;
+  overflow-y: auto;
 }
 </style>

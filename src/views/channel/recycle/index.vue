@@ -51,22 +51,14 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
-  computed,
   ref,
   useStore,
   channels
 } from '@/utils'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-
-  },
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -75,6 +67,7 @@ export default defineComponent({
     const dataList: any = ref([]);
     const coding: any = channels().coding.art;
     const checkedList: any = ref([])
+    const auth: any = proxy.$auth.init(`channel/${channel.module}/recycle`)
 
     function init(param: any = {}) {
       const params: any = {
@@ -96,14 +89,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init,
-      auth: proxy.$auth.init(`channel/${channel.module}/recycle`)
-    }
-  }
-})
 </script>

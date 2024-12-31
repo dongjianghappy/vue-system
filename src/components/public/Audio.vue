@@ -1,40 +1,44 @@
 <template>
-<div>
-  <i class="iconfont icon-music absolute cl-white" @click="handlePlay" style=" background: rgba(0, 0, 0, 0.3); border-radius: 2px; right: 0px; bottom: 0px; padding: 2px; z-index: 1;" v-if="hasMusic"></i>
-  <i class="iconfont listen" :class="`icon-${isplay ? 'audio' : 'listen'}`" @click="handlePlay" v-else></i>
-</div>
+<i class="iconfont listen m0" :class="`icon-${data.music_id === musicLists.currentMusic.id ? 'audio cl-primary' : 'listen'}`" @click="handlePlay"></i>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  onMounted
+  defineProps,
+  computed,
+  useStore
 } from '@/utils'
 import VueEvent from '@/utils/event'
-export default defineComponent({
-  name: 'v-Audio',
-  props: {
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    hasMusic: {
-      type: Boolean,
-      default: false
-    }
-  },
-  setup(props, context) {
-    function handlePlay(e: any, index: any, status: any) {
-      VueEvent.emit("musicPley", props.data);
-    }
-    onMounted(() => {
-      VueEvent.emit("pley", props.data);
-    })
-    return {
-      handlePlay
+import {
+  musicPush,
+  currentMusic
+} from '../packages/music/fn'
+
+const props: any = defineProps({
+  data: {
+    type: Object,
+    default: () => {
+      return {}
     }
   }
 })
+
+const store = useStore()
+const musicLists: any = computed(() => store.getters['user/music']);
+
+function handlePlay() {
+  const {
+    data
+  }: any = props
+  let music = [{
+    ...data
+  }]
+
+  const { list, setting } = musicLists.value
+
+  musicPush(music, list)
+  store.commit('user/setMusicList', list)
+  let index = list.findIndex((list: any) => list.id === music[0].music_id)
+  currentMusic(list[index], setting, store)
+}
 </script>

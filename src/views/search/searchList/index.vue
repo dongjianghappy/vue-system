@@ -14,48 +14,16 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
-  computed,
   ref,
-  watch,
-  useRoute,
   codings
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
-import {
-  visitPage
-} from '@/assets/const'
 import List from "./components/list.vue"
 import List2 from "./components/list2.vue"
 import Calendar from "./components/calendar.vue"
 
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    List,
-    List2,
-    Calendar
-  },
-  props: {
-    type: {
-      type: String,
-      defult: "index"
-    }
-  },
-  setup(props, context) {
-    const {
-      ctx,
-      proxy
-    }: any = getCurrentInstance();
     const coding: any = codings
-    const store = useStore();
-    const route = useRoute();
     
     let menu: any = ref([{
         name: "搜索明细",
@@ -70,12 +38,4 @@ export default defineComponent({
         value: "advertisement3"
       }
     ])
-    
-
-
-    return {
-      menu
-    }
-  }
-})
 </script>

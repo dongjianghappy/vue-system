@@ -40,21 +40,17 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   onMounted,
   ref,
   computed,
   useStore
 } from '@/utils'
 import Detail from './detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  props: {
+
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -67,8 +63,7 @@ export default defineComponent({
         return
       }
     }
-  },
-  setup(props, context) {
+  })
     const checkedList: any = ref([])
     const store = useStore()
     const dataList = computed(() => {
@@ -77,18 +72,7 @@ export default defineComponent({
     const gradeList = computed(() => {
       return store.getters['user/role']
     });
-
-    // function init() {
-    //   store.dispatch('user/roleAction', {
-    //     data: {
-    //       coding: props.data.coding.role,
-    //       page: 1,
-    //       pagesize: 10
-    //     }
-    //   })
-    // }
-
-    // 初始化
+    
     function init(param: any = {}) {
       const params: any = {
         page: 1,
@@ -105,12 +89,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      checkedList,
-      dataList,
-      gradeList
-    }
-  }
-})
 </script>

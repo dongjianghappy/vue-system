@@ -22,7 +22,7 @@
       </template>
       <div style="display: flex">
         <div class="mr15" style="width: 150px; height: 100px">
-          <img :src="item.image" style="border-radius: 4px; width: 100%; height: 100px;">
+          <img :src="item.image" onerror="this.src='/images/slideshow.png'" style="border-radius: 4px; width: 100%; height: 100px;">
         </div>
         <div style="flex: 1">
           <div>
@@ -41,22 +41,15 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  ref,
+  defineProps,
   computed,
   useStore
 } from '@/utils'
 import Detail from './detail.vue'
 import Grade from './grade.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail,
-    Grade
-  },
-  props: {
+  const props: any = defineProps({
     data: {
       type: Object,
       default: () => {
@@ -85,18 +78,11 @@ export default defineComponent({
         return {}
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore();
     const dataList = computed(() => {
       return store.getters['setting/appstore'][`appstore${parseInt(props.tabsIndex)+1}`]
     });
-    
-    return {
-      dataList
-    }
-  }
-})
 </script>
 
 <style lang="less">

@@ -3,7 +3,7 @@
   <div class="module-head">
     <v-optionsbar title="鼠标特效">
       <template v-slot:extraright>
-        <Detail action='add' :data="data" :render="render" />
+        <Detail action='add' :data="data" :render="init" />
       </template>
     </v-optionsbar>
   </div>
@@ -15,7 +15,7 @@
           <i class="iconfont icon-checkbox m0" :class="{'cl-red': item.system == '1'}" style="right: 0; top: 0; padding: 2px; z-index:1" />
         </div>
         <div class="ptb15">{{item.name}}
-          <Detail action="edit" :data="{id: item.id, ...data}" :param="param" :render="render" />
+          <Detail action="edit" :data="{id: item.id, ...data}" :param="param" :render="init" />
           <span class="right" style="width: 20px; height: 20px;" :style="{background: item.background_color}"></span>
         </div>
       </div>
@@ -25,61 +25,47 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  useStore
+  defineProps,
+  ref,
+  onMounted,
+  useStore,
+  codings
 } from '@/utils'
 import Detail from './detail.vue'
 import Album from '../components/album.vue'
-export default defineComponent({
-  name: 'ListView',
-  components: {
-    Detail,
-    Album
-  },
-  props: {
-    dataList: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return
-      }
-    }
-  },
-  setup(props, context) {
-    const store = useStore()
 
+    const store = useStore()
+    const coding: any = codings.user.mouse_effects
     const defaultTheme = "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+    const dataList: any = ref([])
 
     function handleChoose(param: any) {
       store.dispatch('common/Fetch', {
         api: 'updateStatus',
         data: {
-          coding: props.data.coding,
+          coding,
           id: param.id,
           status: 'system'
         }
       }).then(res => {
-        props.render()
+        init()
       })
     }
 
-    return {
-      handleChoose,
-      defaultTheme
+    // 初始化
+    function init(param: any = {}) {
+      store.dispatch('common/Fetch', {
+        api: 'theme',
+        data: {
+          coding,
+          ...param
+        }
+      }).then(res => {
+        dataList.value = res.result
+      })
     }
-  }
-})
+
+    onMounted(init)
 </script>

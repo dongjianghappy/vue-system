@@ -71,7 +71,7 @@ const actions = {
     })
 
     
-    result.result.list.map((item: any) => {
+    result.result.list && result.result.list.map((item: any) => {
       if(item.website){
         const arr = item.website.split(',')
         let bbb = ""
@@ -88,9 +88,31 @@ const actions = {
         item.website = bbb
       }
     })
-    debugger
+    
     const number = 1+parseInt(params.tabsIndex)
     context.commit("setLink", {state: 'link'+number, data: result.result});
+    return result
+  },
+  // 网站
+  getWebsite: async (context: { commit: Commit; state: any}, params: any = {}) => {
+    const data = params.data || {}
+    const { result }:any = await api["select"]({
+      ...data
+    })
+
+    context.commit("setWebsite" , result.result);
+    return result
+  },
+  // 留言板
+  messageBoard: async (context: { commit: Commit; state: any}, params: any = {}) => {
+    const data = params.data || {}
+    const { result }:any = await api["messageBoard"]({
+      ...data
+    })
+
+    debugger
+    const list = params.tabsIndex == '0' ? 'articleList' : 'auditList'
+    context.commit("setMessageBoard", {state: list, data: result.result});
     return result
   },
 }

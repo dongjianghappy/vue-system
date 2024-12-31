@@ -14,10 +14,8 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
   onMounted,
   ref,
   watch,
@@ -31,18 +29,6 @@ import {
 import List from './components/list.vue'
 import List2 from './components/list2.vue'
 import Detail from './components/detail.vue'
-
-export default defineComponent({
-  name: 'IndexView',
-  components: {
-    List,
-    List2,
-    Detail
-  },
-  setup(props, context) {
-    const {
-      proxy
-    }: any = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
     const coding: any = codings.user.schedule.cate
@@ -71,14 +57,4 @@ export default defineComponent({
     }
 
     onMounted(init)
-
-    return {
-      tabsSchedule,
-      coding,
-      tabsIndex,
-      init,
-      dataList
-    }
-  }
-})
 </script>

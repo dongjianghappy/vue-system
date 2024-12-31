@@ -16,8 +16,7 @@
       <tr class="th">
         <td class="col-md-2 pl25">注释</td>
         <td class="col-md-1">字段名</td>
-        <td class="col-md-1">数据类型</td>
-        <td class="col-md-1">长度</td>
+        <td class="col-md-2">数据类型</td>
         <td class="col-md-1">显示类型</td>
         <td class="col-md-3">说明</td>
         <td class="col-md-2">操作</td>
@@ -28,9 +27,8 @@
           {{item.field}}
         </td>
         <td>
-          {{item.dtype}}
+          {{item.dtype}}({{item.length}})
         </td>
-        <td>{{item.length}}</td>
         <td>{{item.text_type}}</td>
         <td>{{item.explanation}}</td>
         <td>
@@ -46,26 +44,17 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   getCurrentInstance,
   onMounted,
   ref,
   useRoute,
   codings,
+  useStore,
   useRouter
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'ListView',
-  components: {
-    Detail
-  },
-  setup(props, context) {
     const {
       proxy
     }: any = getCurrentInstance();
@@ -75,6 +64,7 @@ export default defineComponent({
     const coding: any = codings['custom'];
     const dataList: any = ref([])
     const channel_id: any = route.query.id
+    const auth: any = proxy.$auth.init('customize')
 
     function init() {
       const {
@@ -84,6 +74,7 @@ export default defineComponent({
       store.dispatch('common/Fetch', {
         api: "anpassen_field",
         data: {
+          coding,
           id
         }
       }).then(res => {
@@ -95,15 +86,4 @@ export default defineComponent({
       router.push(`/admin/customize`)
     }
     onMounted(init)
-
-    return {
-      coding,
-      channel_id,
-      dataList,
-      init,
-      handleClick,
-      auth: proxy.$auth.init('customize')
-    }
-  }
-})
 </script>

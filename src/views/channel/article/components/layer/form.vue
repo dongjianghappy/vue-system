@@ -5,15 +5,13 @@
 </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
+  defineProps,
+  defineEmits,
 } from 'vue'
 
-export default defineComponent({
-  name: 'HomeViewe',
-  props: {
+  const props: any = defineProps({
     dataList: {
       type: Array,
       default: () => {
@@ -39,12 +37,8 @@ export default defineComponent({
     return {
       summary: "",
     }
-  },
-  emits: ['prevOrNext'],
-  setup(props, context) {
-    const {
-      ctx
-    }: any = getCurrentInstance();
+  })
+  const emit: any = defineEmits(['prevOrNext'])
 
     // 切换按钮
     function handletoggle(param: any) {
@@ -56,10 +50,4 @@ export default defineComponent({
       }
       context.emit('prevOrNext', param)
     }
-
-    return {
-      handletoggle
-    }
-  }
-})
 </script>

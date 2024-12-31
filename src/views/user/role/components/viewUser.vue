@@ -28,16 +28,15 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
+  defineProps,
   ref,
   useStore,
   watch,
 } from '@/utils'
-export default defineComponent({
-  name: 'v-Search',
-  props: {
+
+  const props: any = defineProps({
     name: {
       type: String,
       default: ""
@@ -59,8 +58,7 @@ export default defineComponent({
         return 'Default function'
       }
     }
-  },
-  setup(props, context) {
+  })
     const store = useStore()
     const isShow: any = ref(false)
     const dataList: any = ref([])
@@ -86,13 +84,4 @@ export default defineComponent({
         dataList.value = res.result.list
       })
     }
-
-    return {
-      isShow,
-      init,
-      dataList,
-      drawer
-    }
-  }
-})
 </script>
