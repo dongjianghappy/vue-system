@@ -42,7 +42,7 @@
           <div class="layer-thumbnail" v-if="data.image.length > 1" @click.stop>
             <ul>
               <li :class="{'picture-viewer-current': currentindex === i}" v-for="(img, i) in data.image" :key="i" @click="showImg(img, i)">
-                <v-img :src="img" />
+                <v-img :src="img" onerror="this.src='/images/slideshow.png'" />
               </li>
             </ul>
           </div>

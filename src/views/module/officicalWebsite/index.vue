@@ -3,7 +3,7 @@
   <div class="module-head">
     <v-optionsbar title="官网管理">
       <template v-slot:extraright>
-        <Detail :coding="coding" :render="init" />
+        <Detail :data="{coding}" :render="init" />
       </template>
     </v-optionsbar>
   </div>
@@ -45,7 +45,7 @@
           <v-space>
             <span>
 
-              <Detail action="edit" :data="{id: item.id}" :coding="coding" :param="param" :render="init" />
+              <Detail action="edit" :data="{id: item.id, coding}" :param="param" :render="init" />
             </span>
             <span>
               <v-confirm name="删除" :data="{id: item.id, coding}" api="delete" :render="init" operating="delete"></v-confirm>

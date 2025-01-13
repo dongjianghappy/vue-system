@@ -1,12 +1,15 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont icon-anonymous-iconfont" v-if="action === 'add'" />{{action === 'edit'? "编辑": "新增内容"}}
+  <template v-if="name">{{name}}</template>
+  <template v-else>
+    <i class="iconfont icon-anonymous-iconfont" v-if="action === 'add'" />{{action === 'edit'? "编辑": "新增内容"}}
+  </template>
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑内容' : '新增内容' " api="articleDetail" :data="{...data, coding: data.coding.art}" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑内容' : '新增内容' " drafts="true" api="articleDetail" :data="{...data, coding: data.coding.art}" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <v-tabs :tabs="tabsDetail" method="click">
       <template v-slot:extra>
-        <Extra :data="detail" />
+        <Extra :data="detail" :channel="data.channel" :action="action" />
       </template>
       <template v-slot:content1>
         <ul class="form-wrap-box">
@@ -35,7 +38,7 @@
           <li class="li">
             <span class="label">描述</span>
             <div>
-              <textarea placeholder="请输入单页描述" v-model="detail.description" class="w-full"></textarea>
+              <textarea placeholder="请输入描述" v-model="detail.description" class="w-full"></textarea>
             </div>
           </li>
           <li class="li">
@@ -60,15 +63,17 @@
 
 <script setup lang="ts">
 import {
+  marked
+} from 'marked';
+import {
   defineProps,
   ref,
   useStore,
   watch,
   computed,
-  channels,
   useProps
 } from '@/utils'
-import { customize11, checkbox, channleSubmit } from '@/utils/fn'
+import { customize11, checkbox, channleSubmit, articleTempList } from '@/utils/fn'
 import {
   tabsDetail
 } from '@/assets/const/index'
@@ -84,30 +89,25 @@ import Extra from '../components/extra.vue'
     const flagList: any = ref([])
     const customizeDetail: any = ref({})
     const columnsList: any = ref([])
-    const channelData: any = channels();
     const page = computed(() => store.getters['common/page']);
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
+        // 初始化数据
         detail.value = await drawer.value.init()
-        flagList.value = await checkbox({store}) // 获取聚合标签
+        // 获取聚合标签
+        flagList.value = await checkbox({store})
         // 自定义字段数据获取
         const columns: any = await customize11({
           store,
-          channel_id: channelData.id
+          channel_id: props.data.channel.id
         })
         customizeDetail.value = columns.customizeDetail
         columnsList.value = columns.list
-
-        if (props.action === 'edit') {
-          let style = JSON.parse(detail.value.style || '{}')
-          detail.value.style = style instanceof Object ? style : {}
-        } else {
-          detail.value.style = {}
-          detail.value.cateList = []
-          detail.value.color = []
-        }
+        
+        let style = JSON.parse(detail.value.style || '{}')
+        detail.value.style = style instanceof Object ? style : {}
       }
     })
 
@@ -117,12 +117,22 @@ import Extra from '../components/extra.vue'
     }
 
     function submit(params: any) {
+      const {
+        summary,
+        markdown
+      } = detail.value
+
       channleSubmit({
         store,
         props,
         detail: detail.value,
-        img: img.value,
         customizeDetail: customizeDetail.value,
+        data: {
+          summary,
+          content: markdown ? marked.parse(markdown) : "",
+          markdown,
+          img: img.value,
+        },
         callback: () => {
           props.render({
             page: page.value

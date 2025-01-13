@@ -1,3 +1,5 @@
+import { channel } from "@/assets/authorized"
+
 export const useProps = {
   name: {
     type: String,
@@ -30,5 +32,11 @@ export const useProps = {
   disabled: {
     type: Boolean,
     default: false
+  },
+  channel: {
+    type: Object,
+    default: () => {
+      return {}
+    }
   },
 }

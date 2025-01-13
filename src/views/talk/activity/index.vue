@@ -12,26 +12,37 @@
 
     <table class="table-striped table-hover col-left-12">
       <tr class="th">
-        <td class="col-md-3">话题</td>
-        <td class="col-md-3">说明</td>
-        <td class="col-md-1">参与人次</td>
-        <td class="col-md-1">投票开启</td>
+        <td class="col-md-4">话题</td>
+        <td class="col-md-2">说明</td>
+        <!-- <td class="col-md-1">参与人次</td> -->
+        <!-- <td class="col-md-1">投票开启</td> -->
         <td class="col-md-2">创建时间</td>
         <td class="col-md-1">状态</td>
         <td class="col-md-1">操作</td>
       </tr>
       <tr v-for="(item, index) in dataList.list" :key="index">
-        <td>
-          <img :src="item.image" onerror="this.src='/images/slideshow.png'" class="radius-4" width="120" height="80">
-          <i class="iconfont icon-topic" />{{item.name}}
+        <td class="flex">
+          <div class="mr10 w150">
+            <img :src="item.image" onerror="this.src='/images/slideshow.png'" class="radius-4" width="150" height="120">
+          </div>
+          <div>
+            <div class="mb10 font16 bold">#{{item.name}}#</div>
+            <div class="mb5">参与人次：{{item.num}}</div>
+            <div>
+              <span class="mr10">收藏：{{item.collect}}</span>
+              <!-- <span class="mr10">分享：131</span> -->
+              <span class="mr10">浏览：{{item.visit}}</span>
+            </div>
+          </div>
+          
         </td>
         <td>
           {{item.summary}}
         </td>
-        <td>{{item.num}}</td>
-        <td @click="handleClick(item)" :class="item.vote === '0' || 'red'">
+        <!-- <td>{{item.num}}</td> -->
+        <!-- <td @click="handleClick(item)" :class="item.vote === '0' || 'red'">
           <i class="iconfont icon-dot" :class="item.vote === '1' ? 'cl-green' : ''" />
-          {{item.vote === '0' ? '未开启' : '已开启'}}</td>
+          {{item.vote === '0' ? '未开启' : '已开启'}}</td> -->
         <td>
           {{item.times}}
         </td>

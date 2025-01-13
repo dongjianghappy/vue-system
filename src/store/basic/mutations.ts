@@ -26,6 +26,9 @@ const mutations = {
   setDataStatistics: (state: any, params: any) => {
     state.dataStatistics = params
   },
+  setDataCenterStatistics: (state: any, params: any) => {
+    state.dataCenterStatistics = params
+  },
   // 友情链接
   setLink: (state: any, params: any) => {
     state.links[params.state] = params.data || {}

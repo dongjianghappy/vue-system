@@ -14,17 +14,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, getCurrentInstance, ref } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue'
 import {useRouter, useRoute, onBeforeRouteUpdate } from 'vue-router'
 import {useStore} from 'vuex'
-export default defineComponent({
-  name: 'v-Search',
-  components: {
-
-  },
-  setup(props,context) {
-    const {ctx}:any = getCurrentInstance();
     const router = useRouter();
     const route = useRoute();
     const store = useStore();
@@ -32,12 +25,6 @@ export default defineComponent({
 
     content.value = route.query.q
     function search(){
-      router.push(`/admin/search/index?q=${content.value}`)
+      router.push(`/admin/search?q=${content.value}`)
     }
-    return {
-      search,
-      content
-    }
-  }  
-})
 </script>

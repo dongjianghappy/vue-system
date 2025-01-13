@@ -1,0 +1,73 @@
+<template>
+  <table class="table-striped table-hover col-left-23">
+    <tr class="th">
+      <td class="col-md-1">选择</td>
+      <td class="col-md-2">用户</td>
+      <td class="col-md-3">问题</td>
+      <td class="col-md-3">回答内容</td>
+      <td class="col-md-2">答复时间</td>
+      <td class="col-md-1">状态</td>
+    </tr>
+    <tr v-for="(item, index) in dataList.list" :key="index">
+      <td>
+        <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
+      </td>
+      <td>
+        <v-avatar :data="item" />{{item.nickname}}
+      </td>
+      <td>
+        {{item.title}}
+        <Answer :data="{...item, coding: '145'}" name="累计回答" />
+      </td>
+      <td>
+        <span  style="color: #40a9ff"></span>{{item.content}}
+      </td>
+      <td>
+        {{item.times}}
+      </td>
+      <td><v-switch :data="{ item, field: 'checked', coding: 'T10000' }" :disabled="false" /></td>
+    </tr>
+  </table>
+  <v-nodata :data="dataList" />
+  <v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding: 'T10000' }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="init" :auth="auth" />
+</template>
+
+<script setup lang="ts">
+import {
+  getCurrentInstance,
+  onMounted,
+  computed,
+  ref,
+  useStore
+} from '@/utils'
+    const {
+      proxy
+    }: any = getCurrentInstance();
+import Answer from './answer.vue'
+    const store = useStore();
+    const dataList = computed(() => store.getters['channel/questions']['answerList']);
+    const coding: any = proxy.$coding['partner'];
+    const checkedList: any = ref([])
+    const pagesize: any = 10
+
+    function init(param: any) {
+
+      const params: any = {
+        page: 1,
+        pagesize: pagesize
+      }
+
+      Object.assign(params, param)
+      store.dispatch('channel/answerListAction', {
+        data: {
+          ...params
+        }
+      })
+    }
+
+    onMounted(() => {
+      init({
+        page: 1
+      })
+    })
+</script>

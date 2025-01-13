@@ -3,9 +3,12 @@
   <div class="module-head">
     <v-optionsbar title="单页导航">
       <template v-slot:extraright>
-        <v-button @onClick="handleClick('add')" :disabled="auth.checked('add')">
-          <i class="iconfont icon-anonymous-iconfont" />新增单页
-        </v-button>
+        <Detail
+          :data="{ channel_id: route.query.channel, coding }"
+          :render="init"
+          :checkboxList="aaa"
+          :auth="true"
+        />
       </template>
     </v-optionsbar>
   </div>
@@ -37,9 +40,13 @@
         </td>
         <td>
           <v-space>
-            <v-button @onClick="handleClick(item)" :disabled="auth.checked('edit')">
-              编辑
-            </v-button>
+            <Detail
+              action="edit"
+              :data="{ id: item.id, coding }"
+              :render="init"
+              :checkboxList="aaa"
+              :auth="true"
+            />
             <v-confirm name="删除" :data="{id: item.id, coding}" type="text" api="delete" :render="init" operating="delete" :auth="auth.checked('del')"></v-confirm>
           </v-space>
         </td>
@@ -61,6 +68,7 @@ import {
   useRoute,
   codings
 } from '@/utils'
+import Detail from './components/detail.vue'
     const {
       proxy
     }: any = getCurrentInstance();
@@ -70,6 +78,7 @@ import {
     const coding: any = codings.single;
     const dataList: any = ref([])
     const checkedList: any = ref([])
+    const aaa: any = ref([]);
     const auth: any = proxy.$auth.init('navigation/single')
 
     function init() {
@@ -88,5 +97,22 @@ import {
       router.push(url)
     }
 
-    onMounted(init)
+    function checkbox() {
+      store
+        .dispatch("common/Fetch", {
+          api: "getTagCheckbox",
+          data: {
+            channel_id: route.query.channel,
+            type: "cat",
+          },
+        })
+        .then((res) => {
+          aaa.value = res.result;
+        });
+    }
+
+    onMounted(() => {
+      init()
+      checkbox();
+    })
 </script>

@@ -3,52 +3,11 @@
   <div class="module-head">
     <v-optionsbar title="题库管理">
       <template v-slot:extraright>
-        <Detail :coding="coding" :render="init" />
+        <Detail :data="{coding}" :render="init" />
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <!-- <table class="table-striped table-hover col-left-23">
-      <tr class="th">
-        <td class="col-md-1">选择</td>
-        <td class="col-md-5">名称</td>
-        <td class="col-md-1">分类</td>
-        <td class="col-md-1">浏览</td>
-        <td class="col-md-2">时间</td>
-        <td class="col-md-1">状态</td>
-        <td class="col-md-1">操作</td>
-      </tr>
-      <tr>
-        <td>
-          <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
-        </td>
-        <td>
-          {{item.title}}
-        </td>
-        <td>
-          <div class="pointer">
-            <v-category title="选择分类" :name="item.parent ? item.parent : '选择分类'" :data="{item, coding}" :isUpdate="true" type="text"></v-category>
-          </div>
-        </td>
-        <td>{{item.visit}}</td>
-        <td>{{item.times}}</td>
-        <td>
-          <v-switch :data="{ item, field: 'checked', coding: coding.art }" :auth="true" />
-        </td>
-        <td>
-          <v-space>
-            <span>
-
-              <Detail action="edit" :data="{id: item.id}" :coding="coding" :param="param" :render="init" />
-            </span>
-            <span>
-              <v-confirm name="删除" :data="{id: item.id, coding}" api="delete" :render="init" operating="delete"></v-confirm>
-            </span>
-          </v-space>
-        </td>
-      </tr>
-    </table> -->
-
     <div v-for="(item, index) in dataList.list" :key="index">
       <div class="mb10 plr25">第 {{item.id}} 题
 
@@ -57,7 +16,7 @@
               <v-category title="选择分类" :name="item.parent ? item.parent : '选择分类'" :data="{item, coding}" :isUpdate="true" type="text"></v-category>
             </span>
             <span>
-              <Detail action="edit" :data="{id: item.id}" :coding="coding" :param="param" :render="init" />
+              <Detail action="edit" :data="{id: item.id, coding}" :param="param" :render="init" />
             </span>
             <span>
               <v-confirm name="删除" :data="{id: item.id, coding}" api="delete" :render="init" operating="delete"></v-confirm>

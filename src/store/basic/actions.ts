@@ -62,7 +62,15 @@ const actions = {
     context.commit("setDataStatistics" , result.result);
     return result
   },
+  dataCenterStatistics: async (context: { commit: Commit; state: any}, params: any = {}) => {
+    const data = params.data || {}
+    const { result }:any = await api.dataCenterStatistics({
+      ...data
+    })
 
+    context.commit("setDataCenterStatistics" , result.result);
+    return result
+  },
   // 友情链接
   linkAction: async (context: { commit: Commit; state: any}, params: any = {}) => {
     const data = params.data || {}

@@ -1,112 +1,72 @@
 <template>
-<div class="module-wrap">
-  <div class="module-head">
-    <v-optionsbar title="常识管理">
-      <template v-slot:extraright>
-        <Detail :coding="coding" :render="init" />
-      </template>
-    </v-optionsbar>
-  </div>
-  <div class="module-content plr15">
-    <table class="table-striped table-hover col-left-2">
-      <tr class="th">
-        <td class="col-md-1">选择</td>
-        <td class="col-md-5">名称</td>
-        <td class="col-md-2">分类</td>
-        <td class="col-md-1">浏览</td>
-        <td class="col-md-1">状态</td>
-        <td class="col-md-2">操作</td>
-      </tr>
-      <tr v-for="(item, index) in dataList.list" :key="index">
-        <td>
-          <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
-        </td>
-        <td>
+<v-button v-model:show="isShow" :disabled="true">
+  内容
+</v-button>
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="`${data.name}`" :style="{width: '800'}" :hasfooter="false">
+  <template v-slot:extra>
+    <Detail :data="{fid: data.id, coding: data.coding.art}" :render="init" />
+  </template>
+  <template v-slot:content v-if="isShow">
+    <div class="con-list p15 flex item-thum-wrap" style=" align-items: center;" v-for="(item, index) in dataList" :key="index">
+      <div style="width: 120px">
+        <img :src="item.image" onerror="this.src='/images/slideshow.png'" class="radius-4" width="100" height="80">
+      </div>
+      <div style="flex: 1">
+        <div class="mb15">
           {{item.title}}
-        </td>
-        <td>
-          <div class="pointer">
-            <v-category title="选择分类" :name="item.parent ? item.parent : '选择分类'" :data="{item, coding}" :isUpdate="true" :isMore="true" type="text"></v-category>
-          </div>
-        </td>
-        <td>{{item.visit}}</td>
-        <td>
-          <v-switch :data="{ item, field: 'checked', coding: coding.art }" :auth="true" />
-        </td>
-        <td>
-          <v-space>
-            <span>
-
-              <Detail action="edit" :data="{id: item.id}" :coding="coding" :param="param" :render="init" />
-            </span>
-            <span>
-              <v-confirm name="删除" :data="{id: item.id, coding}" api="delete" :render="init" operating="delete"></v-confirm>
-            </span>
-          </v-space>
-        </td>
-      </tr>
-    </table>
-    <v-nodata :data="dataList.list || []" />
-    <v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="init" :auth="auth" />
-  </div>
-</div>
+          {{item.start_date}} - {{item.end_date}}
+        </div>
+        <div>
+          <span class="mr5 font12 cl-666" v-html="item.content"></span>
+        </div>
+      </div>
+      <div class="align_center" style="width: 100px">
+        <v-switch :data="{ item, field: 'checked', coding: data.coding.art }" :auth="true" />
+      </div>
+      <div class="font14 align_center" style="width: 100px">
+        <Detail action="edit" :data="{id: item.id, coding: data.coding.art}" :render="init" />
+      </div>
+    </div>
+  </template>
+</v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
-  computed,
+  defineProps,
   ref,
-  codings
+  useStore,
+  watch,
 } from '@/utils'
-import {
-  useStore
-} from 'vuex'
 import Detail from './components/detail.vue'
-export default defineComponent({
-  name: 'HomeViewdd',
-  components: {
-    Detail
-  },
-  setup(props, context) {
-    const store = useStore();
-    const dataList = computed(() => store.getters['basic/partner']);
-    const coding: any = codings['common_sense'];
-    const checkedList: any = ref([])
-    const pagesize: any = 10
 
-    function init(param: any) {
-
-const params: any = {
-        page: 1,
-        pagesize: pagesize
+  const props: any = defineProps({
+    data: {
+      type: Object,
+      default: () => {
+        return {}
       }
-
-      Object.assign(params, param)
-
-      store.dispatch('basic/Fetch', {
-        state: 'partner',
-        data: {
-          coding: coding.art,
-          ...params
-        }
-      })
     }
+  })
+    const store = useStore()
+    const isShow: any = ref(false)
+    const dataList: any = ref([])
 
-    onMounted(() => {
-      init({
-        page: 1
-      })
+    // 监听
+    watch([isShow], async (newValues, prevValues) => {
+      if (isShow.value) {
+        init()
+      }
     })
 
-    return {
-      coding,
-      dataList,
-      checkedList,
-      init
+    function init(param: any = {}) {
+      store.dispatch('basic/Fetch', {
+        data: {
+          coding: props.data.coding.art,
+          fid: props.data.id
+        }
+      }).then(res => {
+        dataList.value = res.result
+      })
     }
-  }
-})
 </script>

@@ -1,8 +1,11 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "上传音频"}}
+  <template v-if="name">{{name}}</template>
+  <template v-else>
+    <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "上传音频"}}
+  </template>
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑音频' : '上传音频' " :data="{...data, coding: data.coding.art}" api="articleDetail" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑音频' : '上传音频'" drafts="true" :data="{...data, coding: data.coding.art}" api="articleDetail" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <audio ref="show_video" :src="fileInfo.fileUrl || detail.file" type="video/mp4">
     </audio>
@@ -12,7 +15,7 @@
     <div v-if="action === 'edit' || file">
     <v-tabs :tabs="tabsDetail" method="click">
       <template v-slot:extra>
-        <Extra :data="detail" />
+        <Extra :data="detail" :channel="data.channel" :action="action" />
       </template>
       <template v-slot:content1>
       <div class="mt25 mb25" style="border-bottom: 1px solid #eee; line-height: 25px;">
@@ -103,7 +106,6 @@ import {
   computed,
   watch,
   durationTrans,
-  channels,
   useProps
 } from '@/utils'
 import { customize11, checkbox, channleSubmit } from '@/utils/fn'
@@ -128,25 +130,29 @@ import Extra from '../../../components/extra.vue'
     const flagList: any = ref([])
     const customizeDetail: any = ref({})
     const columnsList: any = ref([])
-    const channelData: any = channels();
     const page = computed(() => store.getters['common/page']);
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
-        fileInfo.value = {}
+        // 初始化数据
         detail.value = await drawer.value.init()
-        file.value = ""
-        isplay.value = false
-
-        flagList.value = await checkbox({store}) // 获取聚合标签
+        // 获取聚合标签
+        flagList.value = await checkbox({store})
         // 自定义字段数据获取
         const columns: any = await customize11({
           store,
-          channel_id: channelData.id
+          channel_id: props.data.channel.id
         })
         customizeDetail.value = columns.customizeDetail
         columnsList.value = columns.list
+        
+        let style = JSON.parse(detail.value.style || '{}')
+        detail.value.style = style instanceof Object ? style : {}
+
+        fileInfo.value = {}
+        file.value = ""
+        isplay.value = false
       }
     })
 

@@ -3,17 +3,31 @@
   <div class="con-list relative" style="background: none;">
     <div class="con-wrap">
       <div class="photos">
-        <a href="/{$sm_talklist[l].uid}/home" target="_blank">
-          <img :src="data.photos" width="30" height="30" class="showuserinfo" data-uid="{$sm_talklist[l].account}" data-placement="automatic" data-toggle="tooltip{$sm_talklist[l].id}" data-left="150" />
-        </a>
+        <img :src="data.photos" onerror="this.src='/images/head_normal_100.png'" width="30" height="30" class="showuserinfo" data-uid="{$sm_talklist[l].account}" data-placement="automatic" data-toggle="tooltip{$sm_talklist[l].id}" data-left="150" />
       </div>
-
+      <div>
+        <span class="absolute" style="top: 15px; right: 15px;"><ArticleDetail action="edit" :data="{id: data.id, coding: data.coding}" :render="render" :auth="true" /></span>
+      </div>
       <div class="user_info pb5"><span class="username">{{data.nickname}}</span></div>
       <div class="user_from pb5">{{data.times}}</div>
       <div class="user_text">
-        <div class="bold mb10" v-html="data.title"></div>
-        <p class="mb10">分类: {{data.parent}}</p>
+        <div class="bold mb10">
+          {{data.channel}}<i class="iconfont icon-dot" /><span v-html="data.title"></span>
+        </div>
+        <div class="mb10">分类: {{data.parent}}</div>
+        <div class="mb10"> 来源: <span v-if="data.method=='1'">转</span>
+                <span v-else-if="data.method=='2'">原</span>
+                <span v-else-if="data.method=='3'">搞</span>
+                <span v-else>Ai</span>
+        </div>
         <div class="mb10"> 标签: {{data.tag}}</div>
+        <div class="mb10">
+          相册: 
+          <span v-if="data.image && data.image.length">
+            <v-thumbnail :data="data" :coding="data.coding" icon="img" :hasInfo="false" />
+          </span>
+          <span v-else>无</span>
+        </div>
         <div class="bg-white p15">
           <div class="mb5">文章词库
             <span class="pointer right" @click="saveWord">保存</span>
@@ -74,6 +88,7 @@ import {
   useRouter,
   getUid
 } from '@/utils'
+import ArticleDetail from '../../../detail/articleDetail.vue'
   const props: any = defineProps({
     data: {
       type: Object,
@@ -141,9 +156,3 @@ import {
         })
     }
 </script>
-
-<style scoped>
-.ps {
-  height: 380px;
-}
-</style>

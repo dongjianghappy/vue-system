@@ -7,7 +7,7 @@
       <div class="sidebar" :class="collapse ? 'w200' : 'w70'">
         <Sidebar :module="module" :collapse="collapse" />
       </div>
-      <div class="layout relative" style="height: auto">
+      <div class="layout relative" style="width: 1000px; height: auto;">
         <Position :setRoute="setRoute" />
         <div
           class="absolute p25 layout-main"

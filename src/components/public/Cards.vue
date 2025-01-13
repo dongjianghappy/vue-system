@@ -2,7 +2,7 @@
 <div class="p15 align_center" style="background: var(--card-background); border-radius: 8px;">
   <div>{{data.title}}</div>
   <div class="ptb5" style="color: #3f8600;">{{data.value}}</div>
-  <div>×òÈÕ {{data.value || '--'}}</div>
+  <div>æ˜¨æ—¥ {{data.value || '--'}}</div>
 </div>
 </template>
 

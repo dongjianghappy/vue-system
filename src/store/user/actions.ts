@@ -30,8 +30,8 @@ const actions = {
       ...data
     })
     debugger
-    const number = params.tabsIndex === 0 ? "userList" : "manageList"
-    context.commit("setUser", {state: number, data: result.result});
+    // const number = params.tabsIndex === 0 ? "userList" : "manageList"
+    context.commit("setUser", {state: 'userList', data: result.result});
     return result
   },
   // 角色列表

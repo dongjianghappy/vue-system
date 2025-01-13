@@ -1,12 +1,15 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont icon-anonymous-iconfont" v-if="action === 'add'" />{{action === 'edit'? "编辑": "新增网站"}}
+  <template v-if="name">{{name}}</template>
+  <template v-else>
+    <i class="iconfont icon-anonymous-iconfont" v-if="action === 'add'" />{{action === 'edit'? "编辑": "新增网站"}}
+  </template>
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑网站' : '新增网站' " api="articleDetail" :data="{...data, coding: data.coding.art}" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑网站' : '新增网站'" drafts="true" api="articleDetail" :data="{...data, coding: data.coding.art}" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <v-tabs :tabs="tabsDetail" method="click">
       <template v-slot:extra>
-        <Extra :data="detail" />
+        <Extra :data="detail" :channel="data.channel" :action="action" />
       </template>
       <template v-slot:content1>
         <ul class="form-wrap-box">
@@ -26,11 +29,6 @@
               <span class="label">网站类型</span>
               {{detail.parent}}
               <v-category name="选择分类" :data="{item: detail, coding: data.cate}" :isMore="true" type="text"></v-category>
-            </li>
-            <li class="li">
-              <span class="label">显示</span>
-              <v-radio label="是" name="checked" value="1" v-model:checked="detail.checked" />
-              <v-radio label="否" name="checked" value="0" v-model:checked="detail.checked" />
             </li>
             <li class="li">
               <span class="label">站长联系方式:</span>
@@ -65,7 +63,6 @@ import {
   useStore,
   watch,
   computed,
-  channels,
   useProps
 } from '@/utils'
 import { customize11, checkbox, channleSubmit } from '@/utils/fn'
@@ -84,30 +81,25 @@ import Extra from '../components/extra.vue'
     const flagList: any = ref([])
     const customizeDetail: any = ref({})
     const columnsList: any = ref([])
-    const channelData: any = channels();
     const page = computed(() => store.getters['common/page']);
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
+        // 初始化数据
         detail.value = await drawer.value.init()
-        flagList.value = await checkbox({store}) // 获取聚合标签
+        // 获取聚合标签
+        flagList.value = await checkbox({store})
         // 自定义字段数据获取
         const columns: any = await customize11({
           store,
-          channel_id: channelData.id
+          channel_id: props.data.channel.id
         })
         customizeDetail.value = columns.customizeDetail
         columnsList.value = columns.list
-
-        if (props.action === 'edit') {
-          let style = JSON.parse(detail.value.style || '{}')
-          detail.value.style = style instanceof Object ? style : {}
-        } else {
-          detail.value.style = {}
-          detail.value.cateList = []
-          detail.value.color = []
-        }
+        
+        let style = JSON.parse(detail.value.style || '{}')
+        detail.value.style = style instanceof Object ? style : {}
       }
     })
 

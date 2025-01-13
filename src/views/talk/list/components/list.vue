@@ -22,6 +22,7 @@
           <span v-if="item.type === 'video'">
             <v-thumbnail :data="item" :coding="coding.art" icon="video" type="Video" />
           </span>
+          <v-location name="" @onLocaltion="(e)=>detail.location = e" />
         </td>
         <!-- <td>{{item.forwarding}}</td> -->
         <td>{{item.times}}</td>

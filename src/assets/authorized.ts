@@ -377,6 +377,34 @@ export const channel = {
 			del: 'b:funny:recycle:delete'
 		}
 	},
+	// 文档
+	document: {
+		status: 'b:document:status',
+		display: 'b:document:display',
+		info: 'b:document:info',
+		tag: 'b:document:tag',
+		cate: {
+			add: 'b:document:cate:add',
+			del: 'b:document:cate:edit',
+			edit: 'b:document:cate:delete'
+		},
+		art: {
+			add: 'b:document:list:add',
+			del: 'b:document:list:delete',
+			edit: 'b:document:list:edit',
+			top: 'b:document:list:top',
+			return: 'b:document:list:return',
+			audit: 'b:document:list:audit',			
+		},
+		comment: {
+			show: 'b:document:comment:show',
+			del: 'b:document:comment:delete'
+		},
+		recycle: {
+			reduction: 'b:document:recycle:reduction',
+			del: 'b:document:recycle:delete'
+		}
+	},
 		// 搞笑
 		music: {
 			status: 'b:funny:status',

@@ -13,12 +13,17 @@
       <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
     </td>
     <td>
+      <span class="cl-5bc0de" v-if="item.method=='1'">转</span>
+      <span class="cl-eb7350" v-else-if="item.method=='2'">原</span>
+      <span class="cl-green" v-else-if="item.method=='3'">搞</span>
+      <span class="cl-red" v-else>Ai</span>
+      <i class="iconfont icon-dot" />
       <span @click="showImg(item)">{{item.title}}</span>
       <span v-if="item.summary !== ''">
         <i class="infos demoimg iconfont icon-article"></i>
       </span>
-      <span class="relative" v-if="item.image.length">
-        <i class='iconfont icon-img'></i>
+      <span v-if="item.image.length">
+        <v-thumbnail :data="item" :coding="data.coding.art" icon="img" :hasInfo="false" />
       </span>
       <span class="relative" v-if="item.flags.length > 0">
         <v-popover content="<i class='iconfont icon-tags'></i>" arrow="tb" offset="right" :move="0" :keys="`popover-img$-${index}`" type="hover">
@@ -44,7 +49,8 @@
         <WordsDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'words'" />
         <FunnyDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'funny'" />
         <NotesDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'notes'" />
-        <!-- <Preview :data="{...item, coding: data.coding}" :render="render" /> -->
+        <DocumentDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'document'" />
+        <Preview :data="{...item, coding: data.coding}" :render="render" />
         <v-confirm name="删除" :data="{id: item.id, coding: data.coding.art, operating: 'remove' }" type="text" api="removeAndRestore" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
         <v-popover content="更多" arrow="tb" offset="right" :move="-650" :keys="`static_${index}`">
           <div class="p15 font14" style="width: 700px;">
@@ -127,6 +133,7 @@ import OfficeDetail from '../../office/components/detail.vue'
 import WordsDetail from '../../words/components/detail.vue'
 import FunnyDetail from '../../detail/funnyDetail.vue'
 import NotesDetail from '../../detail/notesDetail.vue'
+import DocumentDetail from '../../detail/documentDetail.vue'
 import Praise from '../../../features/praise/list.vue'
 import Comment from '../../../features/comment/components/list111.vue'
 import Collect from '../../../features/collect/list.vue'

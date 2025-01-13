@@ -23,7 +23,7 @@
           </v-popover>
         </span>
         <v-condition name="语种" icon="web1" field="language" :enums="[{name: '华语', value: 'chinese'}, {name: '粤语', value: 'guangdong'},{name: '欧美', value: 'english'}, {name: '日语', value: 'Japanese'},{name: '韩语', value: 'korea'}, {name: '其他', value: 'other'}]" :render="init" />
-        <Detail :data="{coding}" :render="init" />
+        <Detail :data="{channel: channelData, coding}" :render="init" />
       </template>
     </v-optionsbar>
   </div>
@@ -106,6 +106,7 @@ import ViewAlbum from './components/viewAlbum.vue'
 import ViewSinger from './components/viewSinger.vue'
     const store = useStore();
     const dataList = computed(() => store.getters['channel/musicList']);
+    const channelData: any = channels();
     const coding: any = channels().coding;
     const checkedList: any = ref([])
     const cateList: any = ref([])

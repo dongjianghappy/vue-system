@@ -1,83 +1,41 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth || disabled">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增分类"}}
+  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增常识"}}
 </v-button>
-<v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑分类' : '新增分类' " :data="data" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑常识' : '新增常识' " :data="data" :param="detail" :render="render" :submit="submit">
+  <template v-slot:extra>
+    <v-space>
+      <label class="relative mr15 mt10 mb5" style="display: inline-block; line-height: 17px;">
+        <input type="checkbox" v-model="detail.issend" :checked="detail.issend" class="mr5" style="float: left;"><span>推送</span>
+      </label>
+      <label class="relative mr15 mt10 mb5" style="display: inline-block; line-height: 17px;">
+        <input type="checkbox" v-model="detail.status" :checked="detail.status" class="mr5" style="float: left;"><span>显示</span>
+      </label>
+    </v-space>
+  </template>    
   <template v-slot:content v-if="isShow">
-    <v-tabs :tabs="menu" method="click">
-      <template v-slot:content1>
-        <ul class="form-wrap-box">
-          <li class="li">
-
-            <span class="label">分类名称</span>
-            <div style="display: flex">
-              <div style="flex: 1">
-                <input v-model="detail.name" type="text" class="input-sm input-full" :style="[detail.style]" />
-              </div>
-              <div style="flex: 1">
-                <v-titleattribute :style="detail.style || {}" :setStyle="(param) => detail.style = param" />
-              </div>
-              <div>
-                <button class="btn btn-default btn-primary" @click="handleUpdate(detail)">生成静态</button>
-              </div>
-            </div>
-          </li>
-          <li class="li">
-            <span class="label">所属分类</span>
-            {{detail.parent}}
-            <v-category name="选择分类" :data="{item: detail, ...data}" :isMore="true" type="text"></v-category>
-          </li>
-          <li class="li">
-            <span class="label">顺序</span>
-            <input v-model="detail.sort" type="text" class="input-sm input-150" />
-          </li>
-          <li class="li">
-            <span class="label">显示</span>
-            <v-radio label="是" name="status" value="1" v-model:checked="detail.status" />
-            <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
-          </li>
-          <li class="li">
-            <span class="label">分类路径</span>
-            <input v-model="detail.dir_file" type="text" class="input-sm input-full" />
-          </li>
-          <li class="li" style="overflow: auto;">
-            <span class="label">预览图</span>
-            <SpaceModal v-model:image="detail.image">
-              <span class="right">选择图片</span>
-            </SpaceModal>
-            <img width="398" height="150" :src="detail.image">
-          </li>
-        </ul>
-      </template>
-      <template v-slot:content2>
-        <ul class="form-wrap-box">
-          <li class="li">
-            <span class="label">频道模板</span>
-            <v-select :enums="templates" v-model:value="detail.channel_templates" :defaultValue="detail.channel_templates = detail.channel_templates ? detail.channel_templates : 'index_article.htm'" />
-          </li>
-          <li class="li">
-            <span class="label">列表模板</span>
-            <v-select :enums="templates" v-model:value="detail.list_templates" :defaultValue="detail.list_templates = detail.list_templates ? detail.list_templates : 'list_article.htm'" />
-          </li>
-          <li class="li">
-            <span class="label">内页模板</span>
-            <v-select :enums="templates" v-model:value="detail.arcticle_templates" :defaultValue="detail.arcticle_templates = detail.arcticle_templates ? detail.arcticle_templates : 'article_article.htm'" />
-          </li>
-          <li class="li">
-            <span class="label">SEO标题</span>
-            <input v-model="detail.seotitle" type="text" class="input-sm input-full" />
-          </li>
-          <li class="li">
-            <span class="label">关键词</span>
-            <v-tag v-model:tags="detail.keyword" />
-          </li>
-          <li class="li">
-            <span class="label">描述</span>
-            <textarea v-model="detail.description"></textarea>
-          </li>
-        </ul>
-      </template>
-    </v-tabs>
+    <ul class="form-wrap-box">
+      <li class="li">
+        <span class="label">常识名称</span>
+        <div style="display: flex">
+          <div style="flex: 1">
+            <input v-model="detail.name" type="text" class="input-sm input-full" :style="[detail.style]" />
+          </div>
+          <v-titleattribute :style="detail.style || {}" :setStyle="(param) => detail.style = param" />
+        </div>
+      </li>
+      <li class="li">
+        <span class="label">顺序</span>
+        <input v-model="detail.sort" type="text" class="input-sm input-150" />
+      </li>
+      <li class="li" style="overflow: auto;">
+        <span class="label">预览图</span>
+        <SpaceModal v-model:image="detail.image">
+          <span class="right">选择图片</span>
+        </SpaceModal>
+        <img width="398" height="150" :src="detail.image">
+      </li>
+    </ul>
   </template>
 </v-drawer>
 </template>
@@ -148,7 +106,7 @@ export default defineComponent({
     const aaa: any = ref([])
 
     let menu: any = ref([{
-        name: "分类信息",
+        name: "常识信息",
         value: "appstore1"
       },
       {

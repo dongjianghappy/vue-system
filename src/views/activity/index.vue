@@ -3,35 +3,36 @@
   <div class="module-head">
     <v-optionsbar title="活动管理">
       <template v-slot:extraright>
-        <Detail :coding="coding" :render="init" />
+        <Detail :data="{coding}" :render="init" />
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table class="table-striped table-hover col-left-2">
+    <table class="table-striped table-hover col-left-1">
       <tr class="th">
-        <td class="col-md-1">选择</td>
-        <td class="col-md-7">活动名称</td>
+        <td class="col-md-6">活动名称</td>
+        <td class="col-md-2">时间</td>
         <td class="col-md-1">浏览</td>
         <td class="col-md-1">状态</td>
         <td class="col-md-2">操作</td>
       </tr>
       <tr v-for="(item, index) in dataList.list" :key="index">
         <td>
-          <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
-        </td>
-        <td>
           {{item.title}}
+          <span v-if="item.image.length">
+            <v-thumbnail :data="item" :coding="coding.activity" icon="img" :hasInfo="false" />
+          </span>
         </td>
+        <td>{{item.start_time}} - {{item.last_time}}</td>
         <td>{{item.visit}}</td>
         <td>
-          <v-switch :data="{ item, field: 'status', coding: coding }" :auth="true" />
+          <v-switch :data="{ item, field: 'status', coding: coding.activity }" :auth="true" />
         </td>
         <td>
           <v-space>
             <span>
 
-              <Detail action="edit" :data="{id: item.id}" :coding="coding" :param="param" :render="init" />
+              <Detail action="edit" :data="{id: item.id, coding}" :render="init" />
             </span>
             <span>
               <v-confirm name="删除" :data="{id: item.id, coding}" api="delete" :render="init" operating="delete"></v-confirm>
@@ -41,7 +42,9 @@
       </tr>
     </table>
     <v-nodata :data="dataList.list || []" />
-    <v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="init" :auth="auth" />
+    <div class="mt15 align_right">
+      <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="init" />
+    </div>
   </div>
 </div>
 </template>

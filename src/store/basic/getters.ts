@@ -5,6 +5,7 @@ const getters = {
   userDefault: (state: any) => state.userDefault || {},
   searchDefault: (state: any) => state.searchDefault || {},
   dataStatistics: (state: any) => state.dataStatistics || {},
+  dataCenterStatistics: (state: any) => state.dataCenterStatistics || {},
   site: (state: any) => state.site || [],
   links: (state: any) => state.links || {},
   link1: (state: any) => state.links.link1 || {},

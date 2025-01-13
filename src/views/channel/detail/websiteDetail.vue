@@ -1,12 +1,15 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont icon-anonymous-iconfont" v-if="action === 'add'" />{{action === 'edit'? "编辑": "添加好站"}}
+  <template v-if="name">{{name}}</template>
+  <template v-else>
+    <i class="iconfont icon-anonymous-iconfont" v-if="action === 'add'" />{{action === 'edit'? "编辑": "添加好站"}}
+  </template>
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑好站' : '添加好站' " api="articleDetail" :data="{...data, coding: data.coding.art}" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑好站' : '添加好站' " drafts="true" api="articleDetail" :data="{...data, coding: data.coding.art}" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <v-tabs :tabs="tabsDetail" method="click">
       <template v-slot:extra>
-        <Extra :data="detail" />
+        <Extra :data="detail" :channel="data.channel" :action="action" />
       </template>
       <template v-slot:content1>
         <ul class="form-wrap-box">
@@ -43,8 +46,8 @@
             <v-category name="选择分类" :data="{item: detail, coding: data.coding.cate}" :isMore="true" type="text"></v-category>
           </li>
           <li class="li">
-            <span class="label">摘要</span>
-            <textarea placeholder="请输入单页摘要" v-model="detail.summary" class="w-full"></textarea>
+            <span class="label">网站介绍</span>
+            <textarea placeholder="请输入网站介绍" v-model="detail.summary" class="w-full"></textarea>
             {{websiteInfo.description}}
           </li>
           <li class="li" style="overflow: auto;">
@@ -74,7 +77,6 @@ import {
   useStore,
   watch,
   computed,
-  channels,
   useProps
 } from '@/utils'
 import { customize11, checkbox, channleSubmit } from '@/utils/fn'
@@ -92,7 +94,6 @@ import Extra from '../components/extra.vue'
     const flagList: any = ref([])
     const customizeDetail: any = ref({})
     const columnsList: any = ref([])
-    const channelData: any = channels();
     const websiteInfo: any = ref({})
 
     const page = computed(() => store.getters['common/page']);
@@ -100,24 +101,20 @@ import Extra from '../components/extra.vue'
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
+        // 初始化数据
         detail.value = await drawer.value.init()
-        flagList.value = await checkbox({store}) // 获取聚合标签
+        // 获取聚合标签
+        flagList.value = await checkbox({store})
         // 自定义字段数据获取
         const columns: any = await customize11({
           store,
-          channel_id: channelData.id
+          channel_id: props.data.channel.id
         })
         customizeDetail.value = columns.customizeDetail
         columnsList.value = columns.list
-
-        if (props.action === 'edit') {
-          let style = JSON.parse(detail.value.style || '{}')
-          detail.value.style = style instanceof Object ? style : {}
-        } else {
-          detail.value.style = {}
-          detail.value.cateList = []
-          detail.value.color = []
-        }
+        
+        let style = JSON.parse(detail.value.style || '{}')
+        detail.value.style = style instanceof Object ? style : {}
       }
     })
 

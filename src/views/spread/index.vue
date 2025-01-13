@@ -4,6 +4,7 @@
   <div class="module-head">
     <v-optionsbar title="推广管理">
       <template v-slot:extraright>
+        <Order :data="{coding: coding.list, type: 'ad'}" title="广告订单列表" :render="render" />
         <v-buttonmoves v-model:move="isMove" />
         <Detail :data="{ coding }" :disabled="isMove" :render="init" />
       </template>
@@ -57,6 +58,7 @@ import {
   codings,
 } from '@/utils'
 import Detail from './components/detail.vue'
+
     const {
       proxy
     }: any = getCurrentInstance();

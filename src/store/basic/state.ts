@@ -5,6 +5,7 @@ export interface State {
   userDefault: any;
   searchDefault: any;
   dataStatistics: any;
+  dataCenterStatistics: any;  
   site: any;
   links: any;
   partner: any;
@@ -25,6 +26,7 @@ const initState: State = {
   userDefault: {},
   searchDefault: {},
   dataStatistics: {},
+  dataCenterStatistics: {},
   site: {
     list: [],
     tabs: [],

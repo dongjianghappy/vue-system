@@ -37,7 +37,7 @@ export const checkbox = async (param: any) => {
 }
 
 export const channleSubmit = (param: any) => {
-  const { store, props, detail, img, cover, customizeDetail, data, callback } = param
+  const { store, props, detail, cover, customizeDetail, data, callback } = param
 
   for (let key in customizeDetail) {
     customizeDetail[key] = detail[key]
@@ -61,7 +61,6 @@ export const channleSubmit = (param: any) => {
   const params: any = {
     fid,
     title,
-    img,
     cover,
     background_music,
     summary,
@@ -78,15 +77,29 @@ export const channleSubmit = (param: any) => {
   if (props.action === 'edit') {
     params.id = id
   }
-
+debugger
   store.dispatch('common/Fetch', {
     api: props.action !== 'add' ? 'updateArticle' : 'insertArticle',
     data: {
-      coding: props.data.coding.art,
+      coding: props.data.coding.art || props.data.coding,
       ...params,
       ...customizeDetail
     }
   }).then(() => {
     callback()
   })
+}
+
+// 聚合标签
+export const articleTempList = async (param: any) => {
+  const { store, type } = param
+  
+  const res = await store.dispatch('common/Fetch', {
+      api: 'articleTempList',
+      data: {
+        type: type,
+      }
+    })
+  
+  return res.result
 }

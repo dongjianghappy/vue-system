@@ -276,13 +276,14 @@ export const tabs = [
 
 // 模块
 export const MODUDLE = [
-  {
-    module: 'order',
-    value: 'order',
-    name: '订单',
-    type: 'plate',
-    icon: 'order',
-  },
+
+{
+	module: 'talk',
+	value: 'talk',
+	name: '微博',
+	type: 'plate',
+	icon: 'blog-1',
+	},
   {
     module: 'user',
     value: 'user',
@@ -305,25 +306,18 @@ export const MODUDLE = [
     icon: 'operation',
   },
   {
+    module: 'order',
+    value: 'order',
+    name: '订单',
+    type: 'plate',
+    icon: 'order',
+  },
+  {
 		module: 'space',
     value: 'space',
     name: '空间',
     type: 'plate',
     icon: '62gongzuokongjian',
-  },
-  {
-		module: 'talk',
-    value: 'talk',
-    name: '微博',
-    type: 'plate',
-    icon: 'star',
-  },
-	{
-		module: 'blog',
-    value: 'blog',
-    name: '博客',
-    type: 'plate',
-    icon: 'star',
   },
   {
     module: 'tag',
@@ -332,38 +326,10 @@ export const MODUDLE = [
     type: 'plate',
     icon: 'tags',
   },
-  {
-    module: 'vote',
-    value: 'vote/item',
-    name: '投票',
-    type: 'plate',
-    icon: 'vote',
-  },
-  {
-    module: 'favorites',
-    value: 'favorites',
-    name: '收藏',
-    type: 'plate',
-    icon: 'industry',
-  },
 	{
     module: 'robot',
     value: 'robot',
     name: '机器人',
-    type: 'plate',
-    icon: 'robot',
-  },
-	{
-    module: 'commonSense',
-    value: 'commonSense',
-    name: '常识',
-    type: 'plate',
-    icon: 'robot',
-  },
-	{
-    module: 'activity',
-    value: 'activity',
-    name: '活动',
     type: 'plate',
     icon: 'robot',
   },
@@ -374,6 +340,13 @@ export const MODUDLE = [
     type: 'plate',
     icon: 'robot',
   },
+  {
+    module: 'more',
+    value: 'more',
+    name: '更多',
+    type: 'plate',
+    icon: 'more1',
+  }
 ]
 
 // 模块
@@ -446,7 +419,7 @@ export const MODUDLE2 = [
 // 导航编辑
 export const tabsNav = [
 	{
-		name: "导航信息"
+		name: "基本信息"
 	},
 	{
 		name: "页面信息"
@@ -709,6 +682,19 @@ export const tabsTalkAlbum = [
 export const tabsMood = [
 	{name: '系统心情',value: 'photos'},
 	{name: '用户心情',value: 'background'}
+]
+
+// 问题管理
+export const tabsQuestions = [
+	{name: '问题管理'},
+	{name: '用户回答'},
+	{name: '新问题'}
+]
+
+// 教程管理
+export const tabsLearn = [
+	{name: '教程管理'},
+	{name: '新教程'}
 ]
 
 // 微博主题

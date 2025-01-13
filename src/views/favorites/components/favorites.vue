@@ -28,10 +28,6 @@ import {
 import Created from './created.vue'
 
   const props: any = defineProps({
-    action: {
-      type: String,
-      default: "add"
-    },
     data: {
       type: Object,
       default: () => {

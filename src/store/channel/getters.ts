@@ -11,6 +11,7 @@ const getters = {
   course: (state: any) => state.course || {},
   questions: (state: any) => state.questions || {},
   haosite: (state: any) => state.haosite || {},
+  document: (state: any) => state.document || {},
   blog: (state: any) => state.blog || {},
   digital: (state: any) => state.digital || {},
   cateList: (state: any) => state.cateList || [],

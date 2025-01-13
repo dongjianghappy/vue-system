@@ -6,13 +6,12 @@
         <span class="pt10">
           <v-search :render="init" />
         </span>
-        {{channelData.module}}
         <v-timepicker :data="detail" attr="start_time" @changeDay="changeDay" />
         <v-catepicker :data="{coding, module: channelData.module}" @choose="chooseCate" />
         <v-condition name="排序" icon="sort-desc" field="sorter" :enums="[{value: 'id desc', name: '递减'}, {value: 'id asc', name: '递增'}]" :render="init" />
         <v-colorpicker2 @choose="chooseColor" />
         <v-toggledisplay v-model:toggle="toggleDisplay" />
-        <Detail :data="{coding: channelData.coding}" :render="init" :auth="true" />
+        <Detail :data="{channel: channelData, coding: channelData.coding}" :render="init" :auth="true" />
       </v-space>
     </template>
     <template v-slot:content1>

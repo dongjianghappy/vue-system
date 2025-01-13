@@ -14,8 +14,8 @@
       <div class="module-foot absolute align_right" style="bottom: 0" v-if="hasfooter">
         <v-space>
           <slot name="foot">
-            <buttom class="btn btn-default" @click="cancel">取消</buttom>
-            <buttom class="btn btn-default" @click="submit">确定</buttom>
+            <buttom class="btn btn-default" @click="cancel">{{cancelName}}</buttom>
+            <buttom class="btn btn-default" @click="submit">{{confirmName}}</buttom>
           </slot>
         </v-space>
       </div>
@@ -57,6 +57,10 @@ const props: any = defineProps({
     type: String,
     default: "add"
   },
+  drafts: {
+    type: Boolean,
+    default: false
+  },
   show: {
     type: Boolean,
     default: false
@@ -88,6 +92,14 @@ const props: any = defineProps({
   submitApi: {
     type: Object,
     default: ""
+  },
+  confirmName: {
+    type: String,
+    default: "确定"
+  },
+  cancelName: {
+    type: String,
+    default: "取消"
   },
   submit: {
     type: Function,
@@ -123,6 +135,21 @@ async function init(param: any) {
     }).then(res => {
       data = res.result
     })
+  }else{
+    // 草稿箱初始化数据
+    if(props.drafts){
+      const { channel } = props.data
+      await store.dispatch('common/Fetch', {
+        api: 'articleTempList',
+        data: {
+          type: channel.module,
+        }
+      }).then(res => {
+        if (res.result !== "" && res.result !== null) {
+          data = JSON.parse(res.result)
+        }
+      })
+    }
   }
   return data
 }

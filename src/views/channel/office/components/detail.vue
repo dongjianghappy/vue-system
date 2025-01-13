@@ -1,7 +1,9 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
- 
-  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增内容"}}
+  <template v-if="name">{{name}}</template>
+  <template v-else>
+    <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增内容"}}
+  </template>
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑内容' : '新增内容' " api="articleDetail" :data="{...data, coding: coding.art}" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
@@ -55,35 +57,9 @@ import {
   ref,
   useStore,
   watch,
+  useProps
 } from '@/utils'
-  const props: any = defineProps({
-    action: {
-      type: String,
-      default: "add"
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    coding: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    },
-    auth: {
-      type: Boolean,
-      default: false
-    }
-  })
+  const props: any = defineProps(useProps)
     const store = useStore()
     const isShow: any = ref(false)
     const drawer: any = ref(null)

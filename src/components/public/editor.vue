@@ -73,6 +73,7 @@
       <li class="left" @click="handelClick('clear')"><i class="iconfont icon-amy-Clearcache" title="清空"></i></li>
       <li :class="{current: isview}" @click="isview=!isview" title="展示"><i class="iconfont icon-view"></i></li>
       <li @click="handelClick('Screen')" title="全屏"><i class="iconfont icon-screen-full"></i></li>
+      <li title="Ai助手"><v-editorai :data="detail" @editorAi="editorAi" /></li>
     </ul>
   </div>
   <div :class="{height: isScreen, minHeight: !isScreen}" style="display: flex; flex-direction: row;">
@@ -138,7 +139,7 @@ const props: any = defineProps({
     type: String,
     default: ""
   },
-  data: {
+  detail: {
     type: Object,
     default: () => {
       return {}
@@ -333,6 +334,11 @@ ${'```'}`
 
     function handleMouseup(e: any) {
       selection.mouseup(e, props.data.tag)
+    }
+
+    function editorAi(param: any){
+      content.value = param;
+      props.data.method = 0
     }
 </script>
 

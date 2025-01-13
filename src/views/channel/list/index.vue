@@ -11,17 +11,18 @@
         <v-condition name="排序" icon="sort-desc" field="sorter" :enums="[{value: 'id desc', name: '递减'}, {value: 'id asc', name: '递增'}]" :render="init" />
         <v-colorpicker2 @choose="chooseColor" />
         <v-toggledisplay v-model:toggle="toggleDisplay" />
-        <ArticleDetail :data="{coding}" :render="init" v-if="channelData.module ==='article' || channelData.module ==='tech' || channelData.module ==='topic'" />
-        <PictureDetail :data="{coding}" :render="init" v-else-if="channelData.module ==='picture'" />
-        <SourceDetail :data="{coding}" :render="init" v-else-if="channelData.module ==='source'" />
-        <DesignDetail :coding="coding" :render="init" v-else-if="channelData.module ==='design'" />
-        <OfficeDetail :coding="coding" :render="init" v-else-if="channelData.module ==='office'" />
-        <WebsiteDetail :data="{coding}" :render="init" v-else-if="channelData.module ==='website'" />
-        <WordsDetail :coding="coding" :render="init" v-else-if="channelData.module ==='words'" />
-        <DigitalDetail :coding="coding" :render="init" v-else-if="channelData.module ==='digital'" />
-        <FunnyDetail :data="{coding}" :render="init" v-else-if="channelData.module ==='funny'" />
-        <NotesDetail :data="{coding}" :render="init" v-else-if="channelData.module ==='notes'" />
-        <VideoDetail :data="{coding}" v-else />
+        <ArticleDetail :data="{channel: channelData, coding}" :render="init" v-if="channelData.module ==='article' || channelData.module ==='tech' || channelData.module ==='topic'" />
+        <PictureDetail :data="{channel: channelData, coding}" :render="init" v-else-if="channelData.module ==='picture'" />
+        <SourceDetail :data="{channel: channelData,coding}" :render="init" v-else-if="channelData.module ==='source'" />
+        <DesignDetail :data="{channel: channelData,coding}" :render="init" v-else-if="channelData.module ==='design'" />
+        <OfficeDetail :data="{channel: channelData,coding}" :render="init" v-else-if="channelData.module ==='office'" />
+        <WebsiteDetail :data="{channel: channelData,coding}" :render="init" v-else-if="channelData.module ==='website'" />
+        <WordsDetail :data="{channel: channelData,coding}" :render="init" v-else-if="channelData.module ==='words'" />
+        <DigitalDetail :data="{channel: channelData,coding}" :render="init" v-else-if="channelData.module ==='digital'" />
+        <FunnyDetail :data="{channel: channelData,coding}" :render="init" v-else-if="channelData.module ==='funny'" />
+        <NotesDetail :data="{channel: channelData,coding}" :render="init" v-else-if="channelData.module ==='notes'" />
+        <DocumentDetail :data="{channel: channelData,coding}" :render="init" v-else-if="channelData.module ==='document'" />
+        <VideoDetail :data="{channel: channelData,coding}" v-else />
       </v-space>
     </template>
     <template v-slot:content1 v-if="channelData.module !== 'digital'">
@@ -68,11 +69,12 @@ import FunnyDetail from '../detail/funnyDetail.vue'
 import NotesDetail from '../detail/notesDetail.vue'
 import SourceDetail from '../detail/sourceDetail.vue'
 import WebsiteDetail from '../detail/websiteDetail.vue'
-import DesignDetail from '../design/components/detail.vue'
-import OfficeDetail from '../office/components/detail.vue'
+import DesignDetail from '../detail/designDetail.vue'
+import OfficeDetail from '../detail/officeDetail.vue'
 import WordsDetail from '../words/components/detail.vue'
 import DigitalList from '../digital/index.vue'
 import DigitalDetail from '../digital/components/detail.vue'
+import DocumentDetail from '../detail/documentDetail.vue'
 
 const {
   proxy

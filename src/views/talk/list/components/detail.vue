@@ -5,6 +5,9 @@
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑文档' : '新增文档' " :data="{...data, coding: data.coding}" :render="render" :submit="submit">
   <template v-slot:extra>
     <v-space>
+      <span class="mt5">
+        <VoteSetting :data="detail" />
+      </span>
       <label class="relative mr15 mt10 mb5" style="display: inline-block; line-height: 17px;">
         <input type="checkbox" v-model="detail.checked" :checked="detail.checked" class="mr5" style="float: left;"><span>显示</span>
       </label>
@@ -48,6 +51,7 @@ import {
   useProps,
   codings
 } from '@/utils'
+import VoteSetting from '@/views/module/vote/components/setting.vue'
 import { customize11, checkbox, channleSubmit } from '@/utils/fn'
 import {
   tabsDetail

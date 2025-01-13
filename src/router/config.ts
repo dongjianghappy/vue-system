@@ -32,7 +32,9 @@ import MusicEffects from '../views/channel/music/list/effects.vue'
 import VideoList from '../views/channel/video/index.vue'
 import HaoSiteArticle from '../views/channel/haosite/index.vue'
 import EffectList from '../views/channel/video/effect.vue'
+import QuestionsList from '../views/channel/question/index.vue'
 import AnswerList from '../views/channel/question/index.vue'
+import LearnList from '../views/channel/learn/index.vue'
 import SourcePsdList from '../views/channel/source/image.vue'
 import DesignList from '../views/channel/design/index.vue'
 import Album from '../views/channel/picture/album.vue'
@@ -52,7 +54,7 @@ import Navigation from '../views/navigation/index.vue'
 import NavigationMain from '../views/navigation/main/index.vue'
 import Single from '../views/navigation/single/index.vue'
 import Static from '../views/static/index.vue'
-import SingleArticle from '../views/navigation/single/detail.vue'
+import SingleArticle from '../views/navigation/single/detail11.vue'
 import MenuRouter from '../views/menuRouter/index.vue'
 import Slideshow from '../views/slideshow/index.vue'
 import SlideshowList from '../views/slideshow/list/index.vue'
@@ -157,7 +159,8 @@ import trackMapList from '../views/module/trackMap/index.vue'
 
 import KnowledgeDefault from '../views/knowledge/index.vue'
 import CommonSenseCate from '../views/commonSense/cate/index.vue'
-import CommonSenseList from '../views/commonSense/list/index.vue'
+import CommonSenseList from '../views/commonSense/list/index1.vue'
+import Location from '../views/location/index.vue'
 
 import Huodong from '../views/activity/index.vue'
 
@@ -180,6 +183,7 @@ import ChatList from '../views/robot/chat/list/index.vue'
 import Favorites from '../views/favorites/index.vue'
 
 import Search from '../views/search/index.vue'
+import SearchContent from '../views/search/search/index.vue'
 import SearchView from '../views/search/index.vue'
 import SearchKeyword from '../views/search/keyword/index.vue'
 import searchList from '../views/search/searchList/index.vue'
@@ -209,7 +213,6 @@ import Mood from '../views/talk/mood/index.vue'
 import TalkSign from '../views/talk/sign/index.vue'
 import TalkSchedule from '../views/talk/schedule/index.vue'
 import TalkFishList from '../views/talk/fish/index.vue'
-import TalkContribution from '../views/talk/contribution/index.vue'
 import Group from '../views/talk/group/index.vue'
 import Bookmark from '../views/talk/bookmark/index.vue'
 import Blog from '../views/talk/blog/index.vue'
@@ -218,6 +221,9 @@ import TalkStatistics from '../views/talk/statistics/index.vue'
 // import TalkIp from '../views/talk/statistics/ip/index.vue'
 import TalkSearch from '../views/talk/search/index.vue'
 import Expression from '../views/talk/expression/index.vue'
+
+import DataDefault from '../views/data/default.vue'
+import DataContribution from '../views/data/contribution/index.vue'
 
 import Three from '../views/three/index.vue'
 import ThreeScene from '../views/three/scene/index.vue'
@@ -265,7 +271,9 @@ const arrss: any = {
   MusicEffects,
   HaoSiteArticle,
   EffectList,
+  QuestionsList,
   AnswerList,
+  LearnList,
   SourcePsdList,
   DesignList,
   Album,
@@ -315,7 +323,6 @@ const arrss: any = {
   Mood,
   TalkSign,
   TalkSchedule,
-  TalkContribution,
   TalkFishList,
   Group,
   Bookmark,
@@ -381,6 +388,7 @@ const arrss: any = {
   CommonSenseCate,
   Huodong,
   CommonSenseList,
+  Location,
 //   SettingChannel,
   Vote,
   VoteList,
@@ -393,6 +401,7 @@ const arrss: any = {
   ChatList,
   Favorites,
   Search,
+  SearchContent,
   SearchView,
   SearchKeyword,
   searchList,
@@ -404,6 +413,8 @@ const arrss: any = {
   TalkAlbum,
   PhotosAlbum,
   CustomAlbum,
+  DataDefault,
+  DataContribution,
   Three,
   ThreeScene,
   ThreeCate,

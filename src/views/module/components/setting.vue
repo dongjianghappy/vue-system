@@ -1,6 +1,6 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'write'}`" />
+  设置
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" title="模块设置" :style="{width: 550}" :data="data" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">

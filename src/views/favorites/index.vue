@@ -23,10 +23,10 @@
       </tr>
       <tr v-for="(item, index) in dataList" :key="index">
         <td>
-          <v-quick :value="item.name" :data="{ id: item.id, field: 'name', coding: coding.art }" :auth="true" />
+          {{item.name}}
         </td>
         <td>
-          <v-quick :value="item.url" :data="{ id: item.id, field: 'url', coding: coding.art }" :auth="true" />
+          {{item.url}}
         </td>
         <td>{{item.parent}}</td>
         <td>
@@ -55,7 +55,6 @@ import {
   onMounted,
   ref,
   useStore,
-  useRouter,
   codings
 } from '@/utils'
 import Favorites from './components/favorites.vue'
@@ -63,7 +62,6 @@ import Detail from './components/detail.vue'
 
     const coding: any = codings['favorites'];
     const store = useStore();
-    const router: any = useRouter();
     const dataList: any = ref([])
     const favorites: any = ref([])
 

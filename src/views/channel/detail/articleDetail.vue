@@ -1,12 +1,15 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
+  <template v-if="name">{{name}}</template>
+  <template v-else>
   <i class="iconfont icon-anonymous-iconfont" v-if="action === 'add'" />{{action === 'edit'? "编辑": "新增文档"}}
+  </template>
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑文档' : '新增文档' " api="articleDetail" :data="{...data, coding: data.coding.art}" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑文档' : '新增文档' " drafts="true" api="articleDetail" :data="{...data, coding: data.coding.art || data.coding}" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <v-tabs :tabs="tabsDetail" method="click">
       <template v-slot:extra>
-        <Extra :data="detail" :action="action" />
+        <Extra :data="detail" :channel="data.channel" :action="action" />
       </template>
       <template v-slot:content1>
         <ul class="form-wrap-box">
@@ -27,13 +30,12 @@
             <span class="label">来源方式</span>
             <v-radiobutton name="method" v-model:checked="detail.method" :enums="[{label: 'AI生成', value: '0'}, {label: '网络分享', value: '1'}, {label: '原创', value: '2'}, {label: '投稿', value: '3'}]" />
           </li>
-          <li class="li">
+          <li class="li" v-if="detail.method === '1'">
             <span class="label">内容来源</span>
             <div class="flex">
               <input type="text" v-model="detail.source" placeholder="请输入来源名称" class="input-sm mr10">
               <input type="text" v-model="detail.source_url" placeholder="请输入来源地址" class="input-sm input-full">
             </div>
-
           </li>
           <li class="li">
             <span class="label">所属分类</span>
@@ -46,19 +48,15 @@
           </li>
           <li class="li">
             <span class="label">描述</span>
-            <div>
-              <textarea placeholder="请输入单页描述" v-model="detail.description" class="w-full"></textarea>
-            </div>
+            <textarea placeholder="请输入描述" v-model="detail.description" class="w-full"></textarea>
           </li>
           <li class="li">
             <span class="label">内容</span>
-            <v-editor v-model:contentsss="detail.markdown" :data="detail" />
+            <v-editor v-model:contentsss="detail.markdown" :detail="detail" />
           </li>
           <li class="li">
             <span class="label">聚合标签</span>
-            <div>
-              <v-checkboxgroup :tagList="flagList" :checked="detail.flags" />
-            </div>
+            <v-checkboxgroup :tagList="flagList" :checked="detail.flags" />
           </li>
         </ul>
       </template>
@@ -72,15 +70,17 @@
 
 <script setup lang="ts">
 import {
+  marked
+} from 'marked';
+import {
   defineProps,
   ref,
   useStore,
   watch,
   computed,
-  channels,
   useProps
 } from '@/utils'
-import { customize11, checkbox, channleSubmit } from '@/utils/fn'
+import { customize11, checkbox, channleSubmit, articleTempList } from '@/utils/fn'
 import {
   tabsDetail
 } from '@/assets/const/index'
@@ -96,30 +96,25 @@ import Extra from '../components/extra.vue'
     const flagList: any = ref([])
     const customizeDetail: any = ref({})
     const columnsList: any = ref([])
-    const channelData: any = channels();
     const page = computed(() => store.getters['common/page']);
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
+        // 初始化数据
         detail.value = await drawer.value.init()
-        flagList.value = await checkbox({store}) // 获取聚合标签
+        // 获取聚合标签
+        flagList.value = await checkbox({store})
         // 自定义字段数据获取
         const columns: any = await customize11({
           store,
-          channel_id: channelData.id
+          channel_id: props.data.channel.id
         })
         customizeDetail.value = columns.customizeDetail
         columnsList.value = columns.list
-
-        if (props.action === 'edit') {
-          let style = JSON.parse(detail.value.style || '{}')
-          detail.value.style = style instanceof Object ? style : {}
-        } else {
-          detail.value.style = {}
-          detail.value.cateList = []
-          detail.value.color = []
-        }
+        
+        let style = JSON.parse(detail.value.style || '{}')
+        detail.value.style = style instanceof Object ? style : {}
       }
     })
 
@@ -129,12 +124,23 @@ import Extra from '../components/extra.vue'
     }
 
     function submit(params: any) {
+      const {
+        summary_markdown,
+        markdown
+      } = detail.value
+
       channleSubmit({
         store,
         props,
         detail: detail.value,
-        img: img.value,
         customizeDetail: customizeDetail.value,
+        data: {
+          summary: summary_markdown ? marked.parse(summary_markdown) : "",
+          summary_markdown,
+          content: markdown ? marked.parse(markdown) : "",
+          markdown,
+          img: img.value,
+        },
         callback: () => {
           props.render({
             page: page.value

@@ -11,6 +11,7 @@ export interface State {
   course: any;
   questions: any;
   haosite: any;
+  document: any;
   blog: any;
   digital: any;
   cateList: any;
@@ -96,6 +97,12 @@ const initState: State = {
     returnList: {},
   },
   haosite: {
+    cateList: [],
+    articleList: {},
+    auditList: {},
+    returnList: {},
+  },
+  document: {
     cateList: [],
     articleList: {},
     auditList: {},

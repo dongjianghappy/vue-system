@@ -3,7 +3,7 @@
   <div class="module-head">
     <v-optionsbar title="内容管理">
       <template v-slot:extraright>
-        <Detail :data="{coding}" :render="init" :auth="auth.checked('add')" />
+        <Detail :data="{channel: channelData, coding}" :render="init" :auth="auth.checked('add')" />
       </template>
     </v-optionsbar>
   </div>
@@ -57,14 +57,15 @@ import {
   onMounted,
   ref,
   useStore,
-  codings
+  channels
 } from '@/utils'
-import Detail from './components/detail.vue'
+import Detail from '../detail/WordsDetail.vue'
     const {
       proxy
     }: any = getCurrentInstance();
     const store = useStore();
-    const coding: any = codings.words;
+    const channelData: any = channels();
+    const coding: any = channels().coding;
     const checkedList: any = ref([])
     const dataList: any = ref({})
     const auth: any = proxy.$auth.init('partner')

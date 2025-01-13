@@ -10,6 +10,12 @@
           @click="handleRouter('appstore', 'setting')"
         ></i>
       </li>
+      <li title="数据中心">
+        <i
+          class="iconfont icon-vote font18"
+          @click="handleRouter('data', 'data')"
+        ></i>
+      </li>
       <li title="设置">
         <SystemSetting :auth="true" :data="{ coding }" />
       </li>

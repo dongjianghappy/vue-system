@@ -14,6 +14,7 @@
     <td>{{item.times}}</td>
     <td>
       <v-space>
+        <Detail :data="{id: item.id, coding: data.coding.art }" name="详情" :render="render" />
         <v-confirm name="审核" :data="{id: item.id, management_checked: 1, coding: data.coding.art }" type="text" api="checkContent" :render="render" operating="check" :auth="auth.checked('audit')"></v-confirm>
         <ReturnDialog :data="{id: item.id, management_checked: -1,  coding: data.coding.art }" :render="render" :auth="auth.checked('return')" />
       </v-space>
@@ -32,6 +33,7 @@ import {
   computed
 } from '@/utils'
 import ReturnDialog from "./returnDialog.vue"
+import Detail from "../../../data/components/detail.vue"
 const props: any = defineProps({
   data: {
     type: Object,

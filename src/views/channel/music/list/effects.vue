@@ -12,7 +12,7 @@
             </a>
           </div>
         </v-popover>
-        <Detail :data="{coding}" :render="init" kind="effects" />
+        <Detail :data="{channel: channelData, coding}" :render="init" kind="effects" />
       </template>
     </v-optionsbar>
   </div>
@@ -113,6 +113,7 @@ import { durationList } from '@/assets/const/enum'
 import Detail from './components/detail.vue'
     const store = useStore();
     const dataList = computed(() => store.getters['channel/musicList']);
+    const channelData: any = channels();
     const coding: any = channels().coding;
     const checkedList: any = ref([])
 

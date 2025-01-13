@@ -19,9 +19,23 @@
             </span>
           </div>
           <div style="flex: 1">
-            <div class="mb10">{{item.name}}</div>
-            <div>
-              <Setting action="edit" :data="{id: item.id, coding}" :render="init" />
+            <div class="mb10 bold pl15">{{item.name}}</div>
+            <div class="bg-white p5 font12 align_center" style="border-radius: 50px;">
+              <span class="mr10">
+                <CodeDetail :data="{coding: item.coding}" name="新增" :render="init" v-if="item.value==='code'" />
+                <BlogDetail :data="{coding: item.coding}" name="新增" :render="init" v-else-if="item.value==='thirdBlog'" />
+                <OfficicalWebsiteDetail :data="{coding: item.coding}" name="新增" :render="init" v-else-if="item.value==='officicalWebsite'" />
+                <ToolDetail :data="{coding: item.coding}" name="新增" :render="init" v-else-if="item.value==='tool'" />
+                <FileDetail :data="{coding: item.coding}" name="新增" :render="init" v-else-if="item.value==='file'" />
+                <QuestionBankDetail :data="{coding: item.coding}" name="新增" :render="init" v-else-if="item.value==='questionBank'" />
+                <VoteDetail :data="{coding: item.coding}" name="新增" :render="init" v-else-if="item.value==='vote'" />
+                <ModelDetail :data="{coding: item.coding}" name="新增" :render="init" v-else-if="item.value==='model'" />
+                <TrackMapDetail :data="{coding: item.coding}" name="新增" :render="init" v-else-if="item.value==='trackMap'" />
+                <!-- <template v-else>新增</template> -->
+              </span>
+              <span>
+                <Setting action="edit" :data="{id: item.id, coding}" :render="init" />
+              </span>
             </div>
           </div>
         </div>
@@ -60,6 +74,15 @@ import {
   useStore
 } from '@/utils'
 import Setting from './setting.vue'
+import CodeDetail from '../code/components/detail.vue'
+import BlogDetail from '../thirdBlog/components/detail.vue'
+import OfficicalWebsiteDetail from '../officicalWebsite/components/detail.vue'
+import ToolDetail from '../tool/components/detail.vue'
+import FileDetail from '../file/components/detail.vue'
+import QuestionBankDetail from '../questionBank/components/detail.vue'
+import VoteDetail from '../vote/components/detail.vue'
+import ModelDetail from '../model/components/detail.vue'
+import TrackMapDetail from '../trackMap/components/detail.vue'
 
   const props: any = defineProps({
       router: {
@@ -87,9 +110,7 @@ import Setting from './setting.vue'
 
     function init() {
       store.dispatch('common/Fetch', {
-        data: {
-          coding
-        }
+        api: 'moduleList'
       }).then(res => {
         dataList.value = res.result
       })

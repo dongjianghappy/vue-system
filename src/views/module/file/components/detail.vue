@@ -1,8 +1,11 @@
 <template>
 <v-button v-model:show="isShow" :disabled="auth">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增内容"}}
+  <template v-if="name">{{name}}</template>
+  <template v-else>
+    <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增文件"}}
+  </template>
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑内容' : '新增内容' " :data="{...data, coding: coding.art}" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑内容' : '新增文件' " :data="{...data, coding: data.coding.art}" :param="detail" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <div class="pt50 hide" style="text-align: center;">
       <v-upload ref="upload" @imgList="image" v-model:haschoose="file" :show="false" file="file" v-model:file="fileInfo" uploadtype="file" format=".js" />
@@ -24,7 +27,7 @@
       <li class="li">
         <span class="label">所属分类</span>
         {{detail.parent}}
-        <v-category name="选择分类" :data="{item: detail, coding: coding.cate}" :isMore="true" type="text"></v-category>
+        <v-category name="选择分类" :data="{item: detail, coding: data.coding.cate}" :isMore="true" type="text"></v-category>
       </li>
       <li class="li">
         <span class="label">描述</span>
@@ -50,37 +53,11 @@
 import {
   defineProps,
   ref,
+  useProps,
   useStore,
   watch,
 } from '@/utils'
-  const props: any = defineProps({
-    action: {
-      type: String,
-      default: "add"
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    coding: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    },
-    auth: {
-      type: Boolean,
-      default: false
-    }
-  })
+  const props: any = defineProps(useProps)
     const store = useStore()
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -142,7 +119,7 @@ import {
       store.dispatch('common/Fetch', {
         api: props.action !== 'add' ? 'update' : 'insert',
         data: {
-          coding: props.coding.art,
+          coding: props.data.coding.art || props.data.coding,
           ...param
         }
       }).then(() => {

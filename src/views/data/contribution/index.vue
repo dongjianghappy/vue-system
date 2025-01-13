@@ -5,7 +5,7 @@
       <template v-slot:extraright>
         <v-space>
           <v-search field="uid" placeholder="用户账号查找" :render="init" />
-          <v-condition name="年份" :defaultValue="{value: '2024', name: '2024'}" icon="sort" field="year" :enums="yaerList" :render="init" />
+          <v-condition name="年份" :defaultValue="{value: '2025', name: '2025'}" icon="sort" field="year" :enums="yaerList" :render="init" />
         </v-space>
       </template>
     </v-optionsbar>

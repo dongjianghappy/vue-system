@@ -1,8 +1,11 @@
 <template>
 <v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "上传视频"}}
+  <template v-if="name">{{name}}</template>
+  <template v-else>
+    <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "上传视频"}}
+  </template>
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑视频' : '上传视频' " :data="{...data, coding: data.coding.art}" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑视频' : '上传视频'" drafts="true" :data="{...data, coding: data.coding.art}" :render="render" :submit="submit">
   <template v-slot:content v-if="isShow">
     <div class="pt50" style="text-align: center;" v-show="action === 'add' && !file">
       <v-upload ref="upload" @imgList="image" v-model:haschoose="file" :show="false" file="vidoe" v-model:file="fileInfo" uploadtype="music" format=".mp4" />
@@ -10,11 +13,7 @@
     <div v-if="action === 'edit' || file">
     <v-tabs :tabs="tabsDetail" method="click">
           <template v-slot:extra>
-            <label class="relative mr15 mt10 mb5" style="display: inline-block; line-height: 17px;">
-              <input type="checkbox" v-model="detail.checked" :checked="detail.checked" class="mr5" style="float: left;"><span>显示</span>
-            </label>
-            <!-- <span class="mr10"><button class="btn btn-default btn-primary" @click="handleUpdate(detail)">生成静态</button></span>
-            <span><a class="btn btn-default btn-primary" :href="`http://www.${channelData.server}/${channelData.module}/${detail.id}.html`" target="_blank">预览</a></span> -->
+            <Extra :data="detail" :channel="data.channel" :action="action" />
           </template>
           <template v-slot:content1>
           <div class="mt25" style="border-bottom: 1px solid #eee; line-height: 25px;">
@@ -52,7 +51,7 @@
             </li>
             <li class="li">
               <span class="label">视频描述</span>
-              <textarea placeholder="请输入单页摘要" v-model="detail.summary" class="w-full"></textarea>
+              <textarea placeholder="请输入视频描述" v-model="detail.summary" class="w-full"></textarea>
             </li>
           </ul>
           </template>
@@ -72,7 +71,6 @@ import {
   useStore,
   watch,
   computed,
-  channels,
   useProps
 } from '@/utils'
 import { customize11, checkbox, channleSubmit } from '@/utils/fn'
@@ -80,6 +78,7 @@ import {
   tabsDetail
 } from '@/assets/const/index'
 import Customize from '../components/customize.vue'
+import Extra from '../components/extra.vue'
   const props: any = defineProps(useProps)
     const store = useStore()
     const isShow: any = ref(false)
@@ -92,21 +91,25 @@ import Customize from '../components/customize.vue'
     const flagList: any = ref([])
     const customizeDetail: any = ref({})
     const columnsList: any = ref([])
-    const channelData: any = channels();
     const page = computed(() => store.getters['common/page']);
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
+        // 初始化数据
         detail.value = await drawer.value.init()
-        flagList.value = await checkbox({store}) // 获取聚合标签
+        // 获取聚合标签
+        flagList.value = await checkbox({store})
         // 自定义字段数据获取
         const columns: any = await customize11({
           store,
-          channel_id: channelData.id
+          channel_id: props.data.channel.id
         })
         customizeDetail.value = columns.customizeDetail
         columnsList.value = columns.list
+        
+        let style = JSON.parse(detail.value.style || '{}')
+        detail.value.style = style instanceof Object ? style : {}
         file.value = ""
       }
     })

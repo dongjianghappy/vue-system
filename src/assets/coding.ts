@@ -479,6 +479,7 @@ const codings: any = {
     search: 'U0680025'
   },
   label: 'U0610000',
+  location: 'U0610002',
   tag: 'U0690000',
   theme: 'U0690001',
   three: {

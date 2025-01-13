@@ -94,9 +94,8 @@
 </v-drawer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   ref,
   useStore,
   watch,
@@ -106,38 +105,6 @@ import {
 import {
   COLOR
 } from '@/assets/common_const'
-export default defineComponent({
-  name: 'v-Search',
-  components: {},
-  props: {
-    action: {
-      type: String,
-      default: "add"
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    coding: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    },
-    auth: {
-      type: Boolean,
-      default: false
-    }
-  },
-  setup(props, context) {
     const store = useStore()
     const isShow: any = ref(false)
     const drawer: any = ref(null)
@@ -262,21 +229,4 @@ export default defineComponent({
         isShow.value = false
       })
     }
-
-    return {
-      isShow,
-      detail,
-      drawer,
-      uploadImg,
-      upload,
-      submit,
-      aaa,
-      image,
-      colorList,
-      page,
-      choose,
-      columns
-    }
-  }
-})
 </script>

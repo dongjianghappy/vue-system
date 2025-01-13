@@ -16,6 +16,14 @@ const api:any =  {
   Default(params: any) {
     return http.request('vue', 'defaultPage', 'post', params)
   },
+  // 频道
+  channelList(params: any) {
+    return http.request('channel', 'channelList', 'post', params)
+  },
+  // 模块
+  moduleList(params: any) {
+    return http.request('channel', 'moduleList', 'post', params)
+  },
   // 默认数据
   channelDefault(params: any) {
     return http.request('vue', 'channelDefault', 'post', params)
@@ -463,7 +471,11 @@ const api:any =  {
   },
   // 站内搜索
   siteSearch(params: any) {
-    return http.request('vue', 'siteSearch', 'get', params)
+    return http.request('vue', 'siteSearch', 'post', params)
+  },
+  // 搜索详情
+  searchDetail(params: any) {
+    return http.request('vue', 'searchDetail', 'post', params)
   },
   // 站内搜索
   template(params: any) {
@@ -878,6 +890,27 @@ close (params: any) {
   contribution(params: any) {
     return http.request('common', 'contribution','post', params)
   },
+  // 数据中心
+  dataCenterStatistics(params: any) {
+    return http.request('vue', 'dataCenterStatistics','post', params)
+  },
+  // 审核列表
+  checkedList(params: any) {
+    return http.request('vue', 'checkedList','post', params)
+  },
+  // 获取地址
+  getLocation (params: any) {
+    return http.request('common', 'getLocation', 'post', params)
+  },
+  // 保存到草稿箱
+  articleTempSave (params: any) {
+    return http.request('channel', 'articleTempSave', 'post', params)
+  },    
+
+  // 草稿箱查询
+  articleTempList (params: any) {
+    return http.request('channel', 'articleTempList', 'post', params)
+  },    
 }
 
 const features_api:any =  {
