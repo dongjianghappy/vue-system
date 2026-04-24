@@ -214,3 +214,18 @@ export const COLOR = [
 	{value: 'white',name: '白色'},
 	{value: 'black',name: '黑色'}   
 ]
+
+export const DRAWCOLOR = [
+	{value: '#e44d26',name: 'HTML'},
+	{value: '#264de4',name: 'CSS'},
+	{value: '#d1b514',name: 'JS'},
+	{value: '#42b883',name: 'Vue'},
+	{value: '#087ea4',name: 'React '},
+	{value: '#dd1b16',name: 'Angular'},
+	{value: '#3178c6',name: 'TS'},
+	{value: '#417e38',name: 'NodeJs'},
+	{value: '#75afcc',name: 'webpack'},
+	{value: '#1d365d',name: 'Less'},
+	{value: '#777bb3',name: 'PHP'},
+	{value: '#00768f',name: 'Mysql'},   
+]

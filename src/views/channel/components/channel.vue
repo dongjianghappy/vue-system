@@ -5,6 +5,7 @@
 <v-drawer v-model:show="isShow" title="频道管理" :style="{width: '700'}" :hasfooter="false">
   <template v-slot:extra>
     <v-space>
+      <Drafts />
       <Instructions module="channel" />
       <Setting :data="{coding}" :render="init" />
     </v-space>
@@ -13,7 +14,7 @@
     <div class="clearfix">
       <div class="col-md-4 p10" v-for="(item, index) in dataList" :key="index">
         <div class="blog-wrap flex p10 radius-4" style="background: rgb(247, 248, 250); align-items: center;">
-          <div class="photos" style="width: 80px;">
+          <div class="photos" style="width: 70px;">
             <span style="display: inline-block;">
             <div class="relative">
               <i class="iconfont font36" :class="`icon-${item.icon}`" @click="handleRouter(item)" />
@@ -21,10 +22,12 @@
             </span>
           </div>
           <div style="flex: 1">
-            <div class="mb10 bold pl15 relative">{{item.name}}
-              <Checked :data="{coding: item.coding}" :render="init" v-if="item.checked_num" />
+            <div class="mb10 bold pl15 relative">
+              <span @click="handleRouter(item, '/cate')">{{item.name}}</span>
+              <Checked :data="{channel: item, coding: item.coding}" :render="init" v-if="item.checked_num" />
             </div>
             <div class="bg-white p5 font12 align_center" style="border-radius: 50px;">
+              <span class="mr10" @click="handleRouter(item, '/list')">内容</span>
               <span class="mr10">
                 <ArticleDetail :data="{channel: item, coding: item.coding}" name="新增" v-if="item.module ==='article' || item.module ==='tech' || item.module ==='topic'" />
                 <PictureDetail :data="{channel: item, coding: item.coding}" name="上传" v-else-if="item.module ==='picture'" />
@@ -62,10 +65,12 @@ import {
   ref,
   watch,
   codings,
-  useStore
+  useStore,
+  channels
 } from '@/utils'
 import Instructions from '../../links/components/instructions.vue'
 import Setting from './setting.vue'
+import Drafts from './drafts.vue'
 import Checked from '../../data/components/checked.vue'
 import ArticleDetail from '../detail/articleDetail.vue'
 import PictureDetail from '../detail/pictureDetail.vue'
@@ -116,11 +121,15 @@ import DocumentDetail from '../detail/documentDetail.vue'
           management_checked: 0
         }
       }).then(res => {
+        res.result.map((item: any) => {
+          item.coding = codings[item.module]
+        })
+        
         dataList.value = res.result
       })
     }
 
-    function handleRouter(param: any) {
-      props.router(param.module)
+    function handleRouter(param: any, page: any="") {
+      props.router(param.module+page)
     }
 </script>

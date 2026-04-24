@@ -33,7 +33,7 @@
           </li>
           <li class="li" style="overflow: auto;">
             <span class="label">图片</span>
-            <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: data.coding.art}" :dataList="detail.img || []" uploadtype="picture" @imgList="image" :style="'width: 135px'" />
+            <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: data.coding.art}" :dataList="detail.img || []" uploadtype="funny" @imgList="image" :style="'width: 135px'" />
           </li>
           <li class="li">
             <span class="label">描述</span>

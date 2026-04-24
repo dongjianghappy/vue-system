@@ -3,7 +3,8 @@ import {
 	colorList,
 	confirMenum,
 	week,
-	PRIOVINCE
+	PRIOVINCE,
+	syncPlatfrom
  } from './common';
 
  import { 
@@ -44,6 +45,7 @@ export {
 	confirMenum,
 	week,
 	PRIOVINCE,
+	syncPlatfrom,
 
 	tabsNav,
 	tabsLink,

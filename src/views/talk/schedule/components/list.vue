@@ -11,6 +11,7 @@
     </tr>
     <tr v-for="(item, index) in dataList" :key="index" :index="index">
       <td>
+        {{item.emoji}}
         {{item.name}}
       </td>
       <td>
@@ -26,7 +27,8 @@
         <v-switch :data="{ item, field: 'status', coding: data.coding }" :auth="true" />
       </td>
       <td>
-        <Detail action="edit" :data="{ id: item.id, coding: data.coding }" :render="init" />
+        <Kind :data="{ fid: item.id, coding: data.coding }" />
+        <Detail action="edit" :data="{ id: item.id, coding: data.coding }" :render="render" />
       </td>
 
     </tr>
@@ -39,6 +41,7 @@ import {
   defineProps,
 } from '@/utils'
 import Detail from './detail.vue'
+import Kind from './kind.vue'
   const props: any = defineProps({
     dataList: {
       type: Object,

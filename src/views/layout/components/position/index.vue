@@ -10,6 +10,9 @@
           @click="handleRouter('appstore', 'setting')"
         ></i>
       </li>
+      <li title="路由">
+        <Link :router="handleRouter" />
+      </li>
       <li title="数据中心">
         <i
           class="iconfont icon-vote font18"
@@ -38,6 +41,7 @@ import SystemSetting from "@/components/packages/setting/systemSetting.vue";
 import Channel from "../../../channel/components/channel.vue";
 import Module from "../../../module/components/module.vue";
 import More from "./components/more.vue";
+import Link from "./components/link.vue";
 
 import { MODUDLE } from "@/assets/const";
 const props: any = defineProps({

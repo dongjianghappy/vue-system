@@ -18,13 +18,20 @@
         <div class="p25 mb15">摘要: 
           <span v-html="detail.summary" style="line-height: 30px;"></span>
         </div>
-        <div class="p25" v-html="detail.content" style="line-height: 30px;"></div>
+        <div class="plr25" v-if="detail.draw_image">
+          <img :src="detail.draw_image" width="550" />
+        </div>
+        <div class="p25" style="line-height: 30px;">
+          正文：
+          <v-broadcast :content="detail.content" />
+          <span id="broadcast_content" v-html="detail.content"></span>
+        </div>
       </div>
 
     </div>
   </div>
   <div class="relative" style=" background: #f3efef; width: 350px" @click.stop>
-    <Article :data="detail" :render="init" />
+    <Article :data="{...detail, channel: data.channel, coding: data.coding}" :render="init" />
   </div>
     </div>
   </template>
@@ -68,7 +75,7 @@ import Article from '@/views/channel/article/components/layer/article.vue'
       store.dispatch('common/Fetch', {
         api: 'searchDetail',
         data: {
-          coding: props.data.coding,
+          coding: props.data.coding.art,
           id: props.data.artid || props.data.id
         }
       }).then(res => {

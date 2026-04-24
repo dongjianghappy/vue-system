@@ -15,12 +15,7 @@
         <ul class="form-wrap-box">
           <li class="li">
             <span class="label">标题</span>
-            <div style="display: flex">
-              <div style="flex: 1">
-                <input v-model="detail.title" type="text" placeholder="请输入标题" class="input-sm input-full" :style="[detail.style]" />
-              </div>
-              <v-titleattribute :style="detail.style || {}" :setStyle="(param) => detail.style = param" />
-            </div>
+            <textarea placeholder="请输入标题" v-model="detail.title" class="w-full"></textarea>
           </li>
           <li class="li">
             <span class="label">标签</span>
@@ -31,9 +26,13 @@
             <span class="mr10">{{detail.parent}}</span>
             <v-category name="选择分类" :data="{item: detail, coding: data.coding.cate}" :isMore="true" type="text"></v-category>
           </li>
+          <li class="li" style="overflow: auto;">
+            <span class="label">图片</span>
+            <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: data.coding.art}" :dataList="detail.img || []" :uploadtype="data.channel.module" @imgList="image" :style="'width: 135px'" />
+          </li>
           <li class="li">
-            <span class="label">描述</span>
-            <textarea placeholder="请输入描述" v-model="detail.description" class="w-full"></textarea>
+            <span class="label">标题与内容是否相同</span>
+            <v-radiobutton name="method" v-model:checked="detail.is_same" :enums="[{label: '相同', value: '1'}, {label: '不同', value: '0'}]" />
           </li>
           <li class="li">
             <span class="label">内容</span>
@@ -110,8 +109,8 @@ import Extra from '../components/extra.vue'
 
     function submit(params: any) {
       const {
-        summary_markdown,
-        markdown
+        markdown,
+        is_same
       } = detail.value
 
       channleSubmit({
@@ -120,10 +119,9 @@ import Extra from '../components/extra.vue'
         detail: detail.value,
         customizeDetail: customizeDetail.value,
         data: {
-          summary: summary_markdown ? marked.parse(summary_markdown) : "",
-          summary_markdown,
           content: markdown ? marked.parse(markdown) : "",
           markdown,
+          is_same: is_same,
           img: img.value,
         },
         callback: () => {

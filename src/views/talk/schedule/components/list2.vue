@@ -3,9 +3,10 @@
   <table class="table-striped table-hover col-left-2">
     <tr class="th">
       <td class="col-md-1">名称</td>
-      <td class="col-md-8">描述</td>
+      <td class="col-md-6">描述</td>
       <td class="col-md-1">状态</td>
       <td class="col-md-2">完成状况</td>
+      <td class="col-md-2">操作</td>
     </tr>
     <tr v-for="(item, index) in dataList" :key="index" :index="index">
       <td>
@@ -20,6 +21,9 @@
       <td>
         {{item.complete === '0' ? '已完成' : '进行中' }}        
       </td>
+      <td>
+        <Detail action="edit" :data="{ id: item.id, coding: data.coding }" :render="render" />
+      </td>
     </tr>
   </table>
 </div>
@@ -29,6 +33,7 @@
 import {
   defineProps,
 } from '@/utils'
+import Detail from './detail.vue'
   const props: any = defineProps({
     dataList: {
       type: Object,

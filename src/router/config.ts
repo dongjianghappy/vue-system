@@ -135,9 +135,6 @@ import History from '../views/service/history/index.vue'
 // import Email from '../views/email'
 import Job from '../views/service/job/index.vue'
 import Resume from '../views/service/job/resum/index.vue'
-import ServiceKnowledgeCate from '../views/service/knowledge/cate/index.vue'
-import ServiceKnowledgeList from '../views/service/knowledge/list/index.vue'
-import KnowledgeArticle from '../views/service/knowledge/list/article.vue'
 import Spread from '../views/spread/index.vue'
 import Space from '../views/space/index.vue'
 
@@ -159,8 +156,13 @@ import trackMapList from '../views/module/trackMap/index.vue'
 
 import KnowledgeDefault from '../views/knowledge/index.vue'
 import CommonSenseCate from '../views/commonSense/cate/index.vue'
-import CommonSenseList from '../views/commonSense/list/index1.vue'
+import CommonSense from '../views/commonSense/list/index1.vue'
 import Location from '../views/location/index.vue'
+import Pattern from '../views/pattern/index.vue'
+
+
+import KnowledgeList from '../views/module/knowledge/index.vue'
+
 
 import Huodong from '../views/activity/index.vue'
 
@@ -366,9 +368,7 @@ const arrss: any = {
   Message,
   MessageSystem,
   MessageList,
-  ServiceKnowledgeCate,
-  ServiceKnowledgeList,
-  KnowledgeArticle,
+  KnowledgeList,
   Customize,
   CustomizeList,
   ManagerLoginLog,
@@ -387,8 +387,9 @@ const arrss: any = {
   trackMapList,
   CommonSenseCate,
   Huodong,
-  CommonSenseList,
+  CommonSense,
   Location,
+  Pattern,
 //   SettingChannel,
   Vote,
   VoteList,

@@ -6,9 +6,10 @@
         <span class="pt10">
           <v-search :render="init" />
         </span>
+        <Tag :data="{ channel: channelData }" />
         <v-timepicker :data="detail" attr="start_time" @changeDay="changeDay" />
         <v-catepicker :data="{coding, module: channelData.module}" @choose="chooseCate" />
-        <v-condition name="排序" icon="sort-desc" field="sorter" :enums="[{value: 'id desc', name: '递减'}, {value: 'id asc', name: '递增'}]" :render="init" />
+        <v-condition name="排序" icon="sort-desc" field="sorter" :enums="[{value: 'id desc', name: '递减'}, {value: 'id asc', name: '递增'}, {value: 'checked desc', name: '开启'}, {value: 'checked asc', name: '关闭'}]" :render="init" />
         <v-colorpicker2 @choose="chooseColor" />
         <v-toggledisplay v-model:toggle="toggleDisplay" />
         <ArticleDetail :data="{channel: channelData, coding}" :render="init" v-if="channelData.module ==='article' || channelData.module ==='tech' || channelData.module ==='topic'" />
@@ -26,17 +27,17 @@
       </v-space>
     </template>
     <template v-slot:content1 v-if="channelData.module !== 'digital'">
-      <List :type='page.value' :data="{...channelData, coding, aaa}" :render="init" v-if="toggleDisplay === 'list'" :loading="loading" :auth="auth" />
-      <Album :data="{...channelData, coding, aaa}" :render="init" :loading="loading" :auth="auth" v-else  />
+      <List :type='page.value' :data="{channel: channelData, coding, aaa}" :render="init" v-if="toggleDisplay === 'list'" :loading="loading" :auth="auth" />
+      <Album :data="{channel: channelData, coding, aaa}" :render="init" :loading="loading" :auth="auth" v-else  />
     </template>
     <template v-slot:content1 v-else>
-      <DigitalList :data="{...channelData, coding, aaa}" :render="init" :loading="loading" :auth="auth" :type="channelData.module" />
+      <DigitalList :data="{channel: channelData, coding, aaa}" :render="init" :loading="loading" :auth="auth" :type="channelData.module" />
     </template>
     <template v-slot:content2>
-      <List2 :type='page.value' :data="{...channelData}" :render="init" :loading="loading" :auth="auth" />
+      <List2 :type='page.value' :data="{channel: channelData, coding}" :render="init" :loading="loading" :auth="auth" />
     </template>
     <template v-slot:content3>
-      <List3 :type='page.value' :data="{...channelData}" :loading="loading" :auth="auth" />
+      <List3 :type='page.value' :data="{channel: channelData, coding}" :loading="loading" :auth="auth" />
     </template>
   </v-tabs>
 </div>
@@ -75,6 +76,7 @@ import WordsDetail from '../words/components/detail.vue'
 import DigitalList from '../digital/index.vue'
 import DigitalDetail from '../digital/components/detail.vue'
 import DocumentDetail from '../detail/documentDetail.vue'
+import Tag from "../components/tag.vue"
 
 const {
   proxy
@@ -88,6 +90,7 @@ const aaa: any = ref([])
 const toggleDisplay: any = ref("list")
 const loading: any = ref(false)
 const currentComponent: any = ref("")
+const fid: any = ref("")
 
 const albumArray = ['picture', 'video', 'website']
 const auth: any = proxy.$auth.init(`channel/${channelData.module}/art`)
@@ -110,10 +113,16 @@ watch(router.currentRoute, (newValues, prevValues) => {
 function init(param: any = {}) {
   const params: any = {
     page: 1,
-    pagesize: 10
+    pagesize: 50
   }
 
   Object.assign(params, param)
+  
+  if(fid.value !== ''){
+    params.fid = `|${fid.value}|`
+  }else{
+    delete params.fid
+  }
   const {
     type
   }: any = route.query
@@ -156,6 +165,7 @@ function changeDay(data: any) {
 }
 
 function chooseCate(param: any) {
+  fid.value = param
   init({
     fid: `|${param}|`,
   })

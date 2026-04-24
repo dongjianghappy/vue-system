@@ -1,8 +1,8 @@
 <template>
-<v-button v-model:show="isShow">
-  <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增选项"}}
+<v-button v-model:show="isShow" :disabled="auth">
+  <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'edit'? '编辑': '新增勋章'}}
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑选项' : '新增选项'" :data="data" :style="{width: '520', height: '520'}" @submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑勋章' : '新增勋章'" :data="data" :style="{width: '450'}" :submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -25,7 +25,7 @@
       </li>
     </ul>
   </template>
-</v-dialog>
+</v-drawer>
 </template>
 
 <script setup lang="ts">
@@ -34,36 +34,20 @@ import {
   ref,
   useStore,
   watch,
+  useProps
 } from '@/utils'
 
-  const props: any = defineProps({
-    action: {
-      type: String,
-      default: "add"
-    },
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    render: {
-      type: Function,
-      default: () => {
-        return 'Default function'
-      }
-    }
-  })
+  const props: any = defineProps(useProps)
     const store: any = useStore()
     const isShow: any = ref(false)
-    const dialog: any = ref(null)
     const detail: any = ref({})
+    const drawer: any = ref(null)
     const img: any = ref("")
 
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
-        detail.value = await dialog.value.init()
+        detail.value = await drawer.value.init()
       }
     })
 
@@ -76,12 +60,14 @@ import {
 
       const {
         id,
+        fid,
         name,
         award_condition,
         description
       } = detail.value
 
       const param: any = {
+        fid: fid || props.data.fid,
         name,
         img: img.value,
         award_condition,

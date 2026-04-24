@@ -9,7 +9,20 @@
     </div>
   </div>
   <div class="card h100" v-else>
-    <div class="col-md-12 pb10">{{ title }}</div>
+    <div class="col-md-12 pb10">{{ title }}
+      <span class="right" v-if="title=='标签'">
+        {{channel.name}}
+        <v-choose
+          title="选择频道"
+          :data="{
+            coding
+          }"
+          type="radio"
+          @choose="choose"
+          class="right"
+        />
+      </span>
+    </div>
     <div>
       <div class="col-md-2 limit relative" :class="`col-md-2`">
         <v-popover
@@ -65,9 +78,10 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from "@/utils";
+import { codings, defineProps, ref } from "@/utils";
 import Progress from "./progress.vue";
 import { enumSort } from "@/assets/enum";
+
 const props: any = defineProps({
   title: {
     type: String,
@@ -90,4 +104,17 @@ const props: any = defineProps({
     },
   },
 });
+
+const coding: any = codings.channel
+const channel: any = ref({
+  name: '',
+  module: ''
+})
+
+function choose(param: any) {
+  const { data } = param;
+  channel.value.name = data.name
+  props.item.module = data.module
+  props.item.channel_id = data.id
+}
 </script>

@@ -15,13 +15,13 @@
       </v-space>
     </template>
     <template v-slot:content1>
-      <List :type='page.value' :data="{...channelData, coding: channelData.coding, aaa}" :render="init" v-if="toggleDisplay === 'list'" :auth="auth" />
+      <List :type='page.value' :data="{...channelData, channel: channelData, coding: channelData.coding, aaa}" :render="init" v-if="toggleDisplay === 'list'" :auth="auth" />
     </template>
     <template v-slot:content2>
-      <Answer :type='page.value' :data="{...channelData, coding: channelData.coding}" :render="init" :auth="auth" />
+      <List2 :type='page.value' :data="{channel: channelData, coding: channelData.coding}" :render="init" :auth="auth" />
     </template>
     <template v-slot:content3>
-      <List2 :type='page.value' :data="{...channelData, coding: channelData.coding}" :render="init" :auth="auth" />
+      <Answer :type='page.value' :data="{...channelData, coding: channelData.coding}" :render="init" :auth="auth" />
     </template>
   </v-tabs>
 </div>
@@ -84,13 +84,16 @@ import Detail from '../detail/qustionsDetail.vue'
       const {
         type
       }: any = route.query
+      if(type == '2'){
+        return
+      }
       store.dispatch('channel/articleListAction', {
         api: "articleList",
         tabsIndex: route.query.type === undefined ? 0 : route.query.type ,
         module: channelData.module,
         data: {
           coding: coding.art,
-          management_checked: type === '2' ? -1 : type === '1' ? 0 : 1, // 是否审核,
+          management_checked: type === '0' ? 1 : 0, // 是否审核,
           ...params
         }
       })

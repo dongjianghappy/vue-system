@@ -11,7 +11,7 @@
     <table class="table-striped table-hover col-left-2">
       <tr class="th">
         <td class="col-md-1">选择</td>
-        <td class="col-md-5">名称</td>
+        <td class="col-md-5">模型</td>
         <td class="col-md-2">分类</td>
         <td class="col-md-1">浏览</td>
         <td class="col-md-1">状态</td>

@@ -98,14 +98,14 @@ import Detail from './detail.vue'
 
       const params: any = {
         page: 1,
-        pagesize: 10
+        pagesize: 25
       }
 
       Object.assign(params, param)
       store.dispatch('common/Fetch', {
         api: 'checkedList',
         data: {
-          coding: props.data.coding,
+          coding: props.data.coding.art,
           management_checked: 0,
           ...params
         }

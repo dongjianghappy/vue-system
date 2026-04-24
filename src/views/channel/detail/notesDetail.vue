@@ -42,6 +42,10 @@
             </div>
           </li>
           <li class="li">
+            <span class="label">摘要说明</span>
+            <v-editordesc v-model:contentsss="detail.summary_markdown" :data="detail" />
+          </li>
+          <li class="li">
             <span class="label">内容</span>
             <v-editor v-model:contentsss="detail.markdown" :data="detail" />
           </li>
@@ -62,6 +66,9 @@
 </template>
 
 <script setup lang="ts">
+import {
+  marked
+} from 'marked';
 import {
   defineProps,
   ref,
@@ -114,12 +121,22 @@ import Extra from '../components/extra.vue'
     }
 
     function submit(params: any) {
+      const {
+        summary_markdown,
+        markdown
+      } = detail.value
       channleSubmit({
         store,
         props,
         detail: detail.value,
-        img: img.value,
         customizeDetail: customizeDetail.value,
+        data: {
+          summary: summary_markdown ? marked.parse(summary_markdown) : "",
+          summary_markdown,
+          content: markdown ? marked.parse(markdown) : "",
+          markdown,
+          img: img.value,
+        },
         callback: () => {
           props.render({
             page: page.value

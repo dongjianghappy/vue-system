@@ -1,8 +1,8 @@
 <template>
 <v-popover content="<i class='iconfont icon-list' />" arrow="tb" offset="right" :move="-650" keys="cateList">
-  <div class="p15" style="width: 750px; height: 300px;">
-    <perfect-scrollbar>
+  <div class="p15" style="width: 750px; height: 300px; overflow: scroll;">
       <div class="item_t" style="min-height: 120px">
+        <span @click="handleCate('')">所有</span>
         <div v-for="(item, index) in cateList" :key="index">
           <div @click="handleCate(item.id)">{{item.name}}</div>
           <div id="goods-type-list" v-for="(list, i) in item.list" :key="i">
@@ -13,7 +13,6 @@
           </div>
         </div>
       </div>
-    </perfect-scrollbar>
   </div>
 </v-popover>
 </template>

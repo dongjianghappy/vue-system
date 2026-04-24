@@ -6,7 +6,6 @@ const mutations = {
     state[params.module][params.state] = params.data
   },  
   setAnswerList: (state: any, params: any) => {
-    debugger
     state.questions.answerList = params
   },  
   setMusicList: (state: any, params: any) => {

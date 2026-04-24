@@ -98,7 +98,7 @@ export const channels = () => {
  // 将urlquery参数转换成对象形式
 export const module = () => {
 
-  const module: any = ['vote', 'thirdBlog', 'officicalWebsite', 'code', 'tool', 'file', 'tougao', 'model', 'questionBank']
+  const module: any = ['vote', 'thirdBlog', 'officicalWebsite', 'code', 'tool', 'file', 'tougao', 'model', 'questionBank', 'knowledge']
   debugger
   const path_arr = window.location.pathname.split("/");
   debugger

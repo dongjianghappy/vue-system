@@ -55,7 +55,7 @@
               <v-quick :value="data.name" :data="{ id: data.id, field: 'name', coding: 'P0003' }" :style="{width: '40%', ...jsonParse(data.style)}" :auth="auth.checked('edit')" />
             </td>
             <td>
-              <v-switch :data="{ item: data, field: 'status', coding }" />
+              <v-switch :data="{ item: data, field: 'status', coding }" :auth="auth.checked('edit')" />
             </td>
             <td>
               <v-space>
@@ -77,7 +77,7 @@
               <v-quick :value="datass.name" :data="{ id: datass.id, field: 'name', coding: 'P0003' }" :style="{width: '40%', ...jsonParse(datass.style)}" :auth="auth.checked('edit')" />
             </td>
             <td>
-              <v-switch :data="{ item: datass, field: 'status', coding }" />
+              <v-switch :data="{ item: datass, field: 'status', coding }" :auth="auth.checked('edit')" />
             </td>
             <td>
               <v-space>

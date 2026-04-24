@@ -18,7 +18,7 @@
             </label>
           </td>
           <td>
-            {{item.name || item.title || item.content}}
+            {{item.remark || item.name || item.title || item.content}}
           </td>
         </tr>
       </template>
@@ -134,6 +134,7 @@ function getChecked(item: any) {
 function handleclick(data: any) {
   let arr = dataList.value.list.filter((item: any) => item.id === data.id)
   if (arr) {
+    debugger
     emit('choose', {
       field: props.data.field,
       data: arr[0]

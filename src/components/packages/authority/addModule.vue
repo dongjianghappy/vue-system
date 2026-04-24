@@ -11,7 +11,7 @@
       </li>
       <li class="li">
         <span class="label">类型</span>
-        <v-radiobutton name="type" v-model:checked="detail.type" :enums="[{label: '路由', value: '0'}, {label: '链接', value: '1'}]"  />
+        <v-radiobutton name="type" v-model:checked="detail.type" :enums="[{label: '路由', value: '0'}, {label: '链接', value: '1'}, {label: '按钮', value: '2'}]"  />
       </li>
       <li class="li">
         <span class="label">{{detail.type === '0' ? '字段' : 'URL地址'}}</span>

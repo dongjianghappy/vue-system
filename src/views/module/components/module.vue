@@ -11,7 +11,7 @@
     <div class="mb25 clearfix">
       <div class="col-md-4 p10" v-for="(item, index) in dataList.filter(item => item.type == '0')" :key="index">
         <div class="blog-wrap flex p10 radius-4" style="background: rgb(247, 248, 250); align-items: center;">
-          <div class="photos" style="width: 80px;">
+          <div class="photos" style="width: 70px;">
             <span style="display: inline-block;">
             <div class="relative">
               <i class="iconfont font36" :class="`icon-${item.icon}`" @click="handleRouter(item)" />
@@ -19,8 +19,10 @@
             </span>
           </div>
           <div style="flex: 1">
-            <div class="mb10 bold pl15">{{item.name}}</div>
+            <div class="mb10 bold pl15">
+              <span @click="handleRouter(item)">{{item.name}}</span></div>
             <div class="bg-white p5 font12 align_center" style="border-radius: 50px;">
+              <span class="mr10" @click="handleRouter(item, '/list')">内容</span>
               <span class="mr10">
                 <CodeDetail :data="{coding: item.coding}" name="新增" :render="init" v-if="item.value==='code'" />
                 <BlogDetail :data="{coding: item.coding}" name="新增" :render="init" v-else-if="item.value==='thirdBlog'" />
@@ -31,6 +33,7 @@
                 <VoteDetail :data="{coding: item.coding}" name="新增" :render="init" v-else-if="item.value==='vote'" />
                 <ModelDetail :data="{coding: item.coding}" name="新增" :render="init" v-else-if="item.value==='model'" />
                 <TrackMapDetail :data="{coding: item.coding}" name="新增" :render="init" v-else-if="item.value==='trackMap'" />
+                <KnowledgeDetail :data="{coding: item.coding}" name="新增" :render="init" v-else-if="item.value==='knowledge'" />
                 <!-- <template v-else>新增</template> -->
               </span>
               <span>
@@ -83,6 +86,7 @@ import QuestionBankDetail from '../questionBank/components/detail.vue'
 import VoteDetail from '../vote/components/detail.vue'
 import ModelDetail from '../model/components/detail.vue'
 import TrackMapDetail from '../trackMap/components/detail.vue'
+import KnowledgeDetail from '../knowledge/components/detail.vue'
 
   const props: any = defineProps({
       router: {
@@ -116,7 +120,7 @@ import TrackMapDetail from '../trackMap/components/detail.vue'
       })
     }
 
-    function handleRouter(param: any) {
-      props.router(param.value)
+    function handleRouter(param: any, page: any="") {
+      props.router(param.value+page)
     }
 </script>

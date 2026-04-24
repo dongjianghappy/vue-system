@@ -2,29 +2,35 @@
 <v-button v-model:show="isShow" :disabled="auth">
   <template v-if="name">{{name}}</template>
   <template v-else>  
-    <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增内容"}}
+    <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增模型"}}
   </template>
 </v-button>
-<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑内容' : '新增内容' " :data="{...data, coding: data.coding.art}" :param="detail" :render="render" :submit="submit">
+<v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑模型' : '新增模型' " :data="{...data, coding: data.coding.art}" :param="detail" :render="render" :submit="submit">
+  <template v-slot:extra>
+    <v-space>
+      <label class="relative mr15 mt10 mb5" style="display: inline-block; line-height: 17px;">
+        <input type="checkbox" v-model="detail.checked" :checked="detail.checked" class="mr5" style="float: left;"><span>显示</span>
+      </label>
+    </v-space>
+  </template>     
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
-        <span class="label">标题</span>
+        <span class="label">模型</span>
         <div style="display: flex">
           <div style="flex: 1">
-            <input v-model="detail.title" type="text" placeholder="请输入标题" class="input-sm input-full" :style="[detail.style]" />
+            <input v-model="detail.title" type="text" placeholder="请输入模型" class="input-sm input-full" :style="[detail.style]" />
           </div>
           <v-titleattribute :style="detail.style || {}" :setStyle="(param) => detail.style = param" />
         </div>
       </li>
       <li class="li">
-        <span class="label">文件名称</span>
-        <input v-model="detail.html" type="text" class="input-sm input-full" />
+        <span class="label">地址</span>
+        <input v-model="detail.url" type="text" placeholder="请输入模型地址" class="input-sm input-full" />
       </li>
-      <li class="li">
-        <span class="label">显示</span>
-        <v-radio label="是" name="checked" value="1" v-model:checked="detail.checked" />
-        <v-radio label="否" name="checked" value="0" v-model:checked="detail.checked" />
+      <li class="li" style="overflow: auto;">
+        <span class="label">预览图</span>
+        <v-chooseimage v-model:image="detail.image" />
       </li>
       <li class="li">
         <span class="label">tag标签</span>
@@ -38,14 +44,6 @@
       <li class="li">
         <span class="label">描述</span>
         <textarea placeholder="请输入单页摘要" v-model="detail.summary" class="w-full"></textarea>
-      </li>
-      <li class="li">
-        <span class="label">引入文件</span>
-        <textarea placeholder="请输入引入文件" v-model="detail.import_files" class="w-full"></textarea>
-      </li>
-      <li class="li">
-        <span class="label">内容</span>
-        <textarea placeholder="请输入内容" v-model="detail.content" class="w-full h350"></textarea>
       </li>
     </ul>
   </template>
@@ -83,25 +81,23 @@ import {
         id,
         fid,
         title,
+        url,
+        image,
         html,
         summary,
-        import_files,
         content,
         tag,
-        flags,
-        style,
         checked
       } = detail.value
       const param: any = {
         fid,
         title,
+        url,
+        image,
         html,
         summary,
-        import_files,
         content,
         tag: tag ? tag.join(',') : "",
-        flags: flags ? `|${flags.join("|")}|` : "",
-        style: JSON.stringify(style),
         checked
       }
       if (props.action === 'edit') {

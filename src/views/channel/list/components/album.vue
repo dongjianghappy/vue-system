@@ -2,7 +2,7 @@
 <div style="overflow: auto;">
   <div class="col-sm-6 col-md-2 p10" v-for="(item, index) in dataList.list" :key="index">
     <div class="thumbnail p10 relative" style="background: rgb(255, 255, 255); overflow: hidden;">
-      <v-thumbnail :data="item" :coding="data.coding.art" :type="data.module" :getNeighbor="getNeighbor" />
+      <v-thumbnail :data="item" :coding="data.coding.art" :type="data.channel.module" :getNeighbor="getNeighbor" />
       <div class="caption relative" style="padding: 10px 0px; height: 40px;">
         <span class="inputline updata nowrap" style="border: 0px dashed rgb(204, 204, 204); width: 100%; background: none; display: block !important;">{{item.title}}{{item.image.length}}张{{item.parent ? `【${item.parent}】` : ""}} <i class="iconfont icon-top cl-red" v-if="item.istop === '1'" /></span>
       </div>
@@ -12,9 +12,9 @@
           <v-popover content="操作" arrow="tb" offset="right" :move="-30" :keys="`static_${index}`">
             <ul class="font14 p15" style="display: block">
               <li>
-                <VideoDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" v-if="data.module === 'video'" />
-                <PictureDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" v-else-if="data.module === 'picture'" />
-                <WebsiteDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" v-else-if="data.module === 'website'" />
+                <VideoDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" v-if="data.channel.module === 'video'" />
+                <PictureDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" v-else-if="data.channel.module === 'picture'" />
+                <WebsiteDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" v-else-if="data.channel.module === 'website'" />
                 <v-button @onClick="handleClick(item)" :disabled="true" v-else>
                   编辑
                 </v-button>
@@ -77,7 +77,7 @@ import WebsiteDetail from '../../detail/websiteDetail.vue'
     const currentImg: any = ref()
 
     const dataList: any = computed(() => {
-      return store.getters[`channel/${props.data.module}`]['articleList']
+      return store.getters[`channel/${props.data.channel.module}`]['articleList']
     });
 
     function showImg(param: any, i: any) {
@@ -101,7 +101,7 @@ import WebsiteDetail from '../../detail/websiteDetail.vue'
     }
 
     function handleClick(params: any) {
-      let url = `/admin/${props.data.module}/list/edit`
+      let url = `/admin/${props.data.channel.module}/list/edit`
       if (params !== 'add') {
         url = url + `?id=${params.id}`
       }

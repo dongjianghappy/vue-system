@@ -341,6 +341,20 @@ export const MODUDLE = [
     icon: 'robot',
   },
   {
+    module: 'menuRouter',
+    value: 'menuRouter',
+    name: '路由',
+    type: 'plate',
+    icon: 'route',
+  },
+  {
+    module: 'static',
+    value: 'static',
+    name: '静态',
+    type: 'plate',
+    icon: 'refresh1',
+  },
+  {
     module: 'more',
     value: 'more',
     name: '更多',
@@ -687,8 +701,8 @@ export const tabsMood = [
 // 问题管理
 export const tabsQuestions = [
 	{name: '问题管理'},
-	{name: '用户回答'},
-	{name: '新问题'}
+	{name: '新问题'},
+	{name: '用户回答'}
 ]
 
 // 教程管理
@@ -892,6 +906,18 @@ export const tabsThreeItem = [
 	},
 	{
 		name: "几何",
+		value: ""
+	}
+]
+
+// 微博内容
+export const tabsPattern = [
+	{
+		name: "背景图案",
+		value: ""
+	},
+	{
+		name: "前景图案",
 		value: ""
 	}
 ]

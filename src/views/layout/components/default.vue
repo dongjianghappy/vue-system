@@ -55,11 +55,16 @@
       </div>
     </div>
   </div>
+  <div class="mtb15">
+    <span @click="handleClick" class="mr25">点击获取最新数据</span>
+    <span class="mr25"><Website name="素材网站统计详情" :data="{website: 'yunxi10.com'}" /></span>
+    <span class="mr25"><Website name="博客网站统计详情" :data="{website: 'dongblog.com'}" /></span>
+  </div>
   <div class="mb10" style="overflow: auto">
     <div class="col-md-9" style="padding-right: 8px">
       <div class="module-wrap">
         <div class="module-head">今日与昨日访问量</div>
-        <div class="module-content plr15" style="height: 545px">
+        <div class="module-content plr15" style="height: 645px">
           <ChartLine :chartData="hours.data" :chartOptions="hours.options" />
         </div>
       </div>
@@ -68,6 +73,9 @@
       <div class="module-wrap">
         <div class="module-content plr15" style="height: 320px">
           <ChartPie :chartData="engine.data" :chartOptions="engine.options" />
+        </div>
+        <div class="p10 h100">
+          <div v-for="(item, index) in engine.data.labels" :key="index" class="col-md-4 mb10 plr5">{{item}}</div>
         </div>
       </div>
       <div class="module-wrap">
@@ -142,10 +150,13 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed, useStore } from "@/utils";
+import Website from './website.vue'
+import { getCurrentInstance, onMounted, computed, useStore } from "@/utils";
 import { ChartLine, ChartPie } from "@/components/packages/chart/index";
 const store = useStore();
-
+const {
+  proxy
+}: any = getCurrentInstance();
 const user: any = computed(() => store.getters["basic/default"].user || {});
 const statistics: any = computed(
   () => store.getters["basic/default"].statistics || {}
@@ -226,9 +237,20 @@ const article: any = computed(
 const wordList: any = computed(
   () => store.getters["basic/default"].wordList || []
 );
-// 初始化
-function init() {
-  store.dispatch("basic/Default");
+
+function handleClick(){
+  init()
 }
-onMounted(init);
+// 初始化
+async function init() {
+  setTimeout(() => {
+    proxy.$hlj.message({
+      msg: "正在获取数据"
+    })
+  }, 1000)
+  await store.dispatch("basic/Default");
+}
+onMounted(() => {
+  // init()
+});
 </script>

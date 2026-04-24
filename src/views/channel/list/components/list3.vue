@@ -49,6 +49,6 @@ auth: {
 })
 const store = useStore();
 const dataList = computed(() => {
-  return store.getters[`channel/${props.data.module}`]['returnList']
+  return store.getters[`channel/${props.data.channel.module}`]['returnList']
 });
 </script>

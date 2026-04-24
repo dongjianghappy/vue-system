@@ -5,7 +5,7 @@
     <div class="mb15 font14">
       <span class="right">
         <v-search field="uid" placeholder="用户账号查找" :render="init" v-if="currentCate.fid === 'custom'" />
-        <Detail action='add' :data="data" :render="init" v-else />
+        <Detail action='add' :data="{coding}" :render="init" v-else />
       </span>
     </div>
     <div class="col-md-3 p10" v-for="(item, index) in dataList" :key="index">
@@ -16,7 +16,7 @@
         </div>
         <div class="ptb15">{{item.name}}
           <span>【{{item.image && item.image.length || 0}}张】</span>
-          <Detail action="edit" :data="{id: item.id, ...data}" :param="param" :render="init" />
+          <Detail action="edit" :data="{id: item.id, coding}" :param="param" :render="init" />
           <span class="right" style="width: 20px; height: 20px;" :style="{background: item.background_color}"></span>
           <span class="right mr10" @click="handleDefault(item)">
             <i class="iconfont icon-dot bold" :class="{'cl-red': item.isdefault == '1'}" />

@@ -9,7 +9,7 @@
     </ul>
   </div> -->
   <div class="module-content plr15">
-    <div class="mtb15">搜索关键词<span class="cl-red">{{route.query.q}}</span>，以为你找到以下结果</div>
+    <div class="mtb15">搜索关键词<span class="cl-red">{{route.query.q}}</span>，已为你找到以下结果，共{{dataList.total}}条数据</div>
     <div>
       <template v-for="(item, index) in dataList.list" :key="index">
         <div
@@ -17,7 +17,7 @@
           style="display: block; border-bottom: 1px dashed #ebeef3"
           v-if="item.img && item.img.length >= 2">
           <div class="multiple-wrap mb10">
-            <Detail :data="item" />
+            <Detail :data="{...item, channel: {name: item.channel, id: item.channel_id, module: item.model}, coding: coding[item.model]}" />
           </div>
           <div style="display: flex">
             <div class="thum" v-for="(img, i) in item.img" :key="i">
@@ -58,7 +58,7 @@
             </a>
           </div>
           <div class="content">
-            <div class="multiple-wrap mb10"><Detail :data="item" /></div>
+            <div class="multiple-wrap mb10"><Detail :data="{...item, channel: {name: item.channel, id: item.channel_id, module: item.model}, coding: coding[item.model]}" /></div>
             <p class="multiple-wrap-2 mb5" style="line-height: 32px" v-html="item.summary"></p>
             <p class="footer label font12">
               <span class="mr15">{{item.channel}}</span>
@@ -79,6 +79,9 @@
       </template>
     </div>
     <v-nodata :data="dataList.list" />
+    <div class="mt15 align_right">
+      <v-pagination :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :render="init" />
+    </div>
   </div>
 </div>
 </template>
@@ -100,20 +103,24 @@ import Detail from '../../data/components/detail.vue'
     const store = useStore();
     const route = useRoute()
     const dataList: any = ref({});
-    const coding: any = codings.partner;
+    const coding: any = codings;
     const checkedList: any = ref([])
     const auth: any = proxy.$auth.init('partner')
 
-    function init() {
+    function init(param: any = {}) {
+      const params: any = {
+        page: 1,
+        pagesize: 25
+      }
+
+      Object.assign(params, param)
       store.dispatch('basic/Fetch', {
         api: 'siteSearch',
         data: {
           search: route.query.q,
-          page: 1,
-          pagesize: 10
+          ...params
         }
       }).then((res: any) => {
-        debugger
         dataList.value = res.result
       })
     }

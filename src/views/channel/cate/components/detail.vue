@@ -3,6 +3,14 @@
   <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增分类"}}
 </v-button>
 <v-drawer ref="drawer" v-if="!disabled" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑分类' : '新增分类' " :data="data" :param="detail" :render="render" :submit="submit">
+  <template v-slot:extra>
+    <v-space>
+      <label class="relative mr15 mt10 mb5" style="display: inline-block; line-height: 17px;">
+        <input type="checkbox" v-model="detail.status" :checked="detail.status" class="mr5" style="float: left;"><span>显示</span>
+      </label>
+      <span class="mr10" v-if="action === 'edit'"><button class="btn btn-default btn-primary" @click="handleUpdate(data)">生成静态</button></span>
+    </v-space>
+  </template>    
   <template v-slot:content v-if="isShow">
     <v-tabs :tabs="menu" method="click">
       <template v-slot:content1>
@@ -28,9 +36,8 @@
             <input v-model="detail.sort" type="text" class="input-sm input-150" />
           </li>
           <li class="li">
-            <span class="label">显示</span>
-            <v-radio label="是" name="status" value="1" v-model:checked="detail.status" />
-            <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
+            <span class="label">系列</span>
+            <v-radiobutton name="series" v-model:checked="detail.series" :enums="[{label: '否', value: '0'}, {label: '是', value: '1'}]" />
           </li>
           <li class="li">
             <span class="label">分类路径</span>
@@ -46,10 +53,7 @@
           </li>
           <li class="li" style="overflow: auto;">
             <span class="label">预览图</span>
-            <SpaceModal v-model:image="detail.image">
-              <span class="right">选择图片</span>
-            </SpaceModal>
-            <img width="398" height="150" :src="detail.image">
+            <v-chooseimage v-model:image="detail.image" />
           </li>
           <li class="li">
             <span class="label">聚合标签</span>
@@ -103,7 +107,6 @@ import {
 import {
   TEMPLATES,
 } from '@/assets/enum'
-import SpaceModal from '../../../space/components/modalSpace.vue'
 
   const props: any = defineProps({
     attrs: {
@@ -175,6 +178,23 @@ import SpaceModal from '../../../space/components/modalSpace.vue'
         }
       }
     })
+
+    // 静态更新
+    function handleUpdate(param: any) {
+      store.dispatch('common/Fetch', {
+        api: "updateStatic",
+        data: {
+          serve: channelData.server,
+          id: param.id,
+          action: 'singleCate',
+          model: channelData.module
+        }
+      }).then(res => {
+        proxy.$hlj.message({
+          msg: "更新成功"
+        })
+      })
+    }
 
     // 聚合标签
     function checkbox() {

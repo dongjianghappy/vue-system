@@ -2,7 +2,7 @@
 <v-button v-model:show="isShow" :disabled="true">
   <i class="iconfont" :class="`icon-${action === 'add' ? 'anonymous-iconfont' : 'edit'}`" />{{action === 'add' ? '新增页面' : ''}}
 </v-button>
-<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增页面" :style="{width: 520, height: 350}" :confirm="true" :cancel="true" @submit="submit">
+<v-dialog ref="dialog" v-model:show="isShow" :action="action" :data="data" title="新增页面" :style="{width: 520, height: 450}" :confirm="true" :cancel="true" @submit="submit">
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -20,6 +20,10 @@
       <li class="li">
         <span class="label">字段</span>
         <input type="text" v-model="detail.value" placeholder="请输入页面值" class="input-sm input-full" />
+      </li>
+      <li class="li">
+        <span class="label">小程序</span>
+        <v-radiobutton name="type" v-model:checked="detail.uniapp" :enums="[{label: '是', value: '1'}, {label: '否', value: '0'}]"  />
       </li>
     </ul>
   </template>
@@ -78,6 +82,7 @@ export default defineComponent({
         value,
         sort,
         type,
+        uniapp,
         remark
       } = detail.value
 
@@ -87,6 +92,7 @@ export default defineComponent({
         value,
         type,
         sort,
+        uniapp,
         remark
       }
 

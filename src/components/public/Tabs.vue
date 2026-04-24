@@ -134,6 +134,8 @@ const router = useRouter();
 let currentIndex = ref(0)
 
 function handleClick(index: any) {
+  console.log("vvvvvvvv");
+  
   if (props.isEmit === true) {
     currentIndex.value = index
     emit('update:index', index)

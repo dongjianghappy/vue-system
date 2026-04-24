@@ -344,10 +344,6 @@ const codings: any = {
     record: 'U0680032'
   },
   instructions: 'U0580004',
-  knowledge: {
-    art: 'U0600000',
-    cate: 'U0600001'
-  }, 
   message: {
     system: 'U0620051',
     list: 'U0620049',
@@ -412,16 +408,24 @@ const codings: any = {
     questionBank: {
       art: 'U0660002',
       cate: 'U0660003'
-    } 
+    },
+    knowledge: {
+      art: 'U0600000',
+      cate: 'U0600001'
+    },  
   },
   modules: 'U0620057',
-  medal: 'U0620045',
+  medal: {
+    cate: 'U0620059',
+    list: 'U0620045'
+  },
   collection: {
     cate: 'U0630000',
     art: 'U0630001',
     artTem: 'U0630002'
   },
   partner: 'U0650000',
+  pattern: 'U0650001',
   robot: {
     list: 'U0670000',
     chat: 'U0670001',
@@ -445,10 +449,6 @@ const codings: any = {
       list: 'U0680008',
       comment: "U0680028",
       praise: 'U0680029'
-    },
-    knowledge: {
-      cate: 'U0680010',
-      art: 'U0680009'
     },
     message_board: {
       list: 'U0680011',
@@ -480,6 +480,7 @@ const codings: any = {
   },
   label: 'U0610000',
   location: 'U0610002',
+  temporary_storage: 'U0690021',
   tag: 'U0690000',
   theme: 'U0690001',
   three: {
@@ -543,7 +544,8 @@ const codings: any = {
     verified: 'U0700031',
     schedule: {
       cate: 'U0700032',
-      list: 'U0700033'
+      list: 'U0700033',
+      config: 'U0700051'
     },
     privilege: 'U0700043',
     energy: 'U0700045'

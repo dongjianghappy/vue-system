@@ -8,15 +8,15 @@
 @import "./components/public/less/common.less";
 @import "./components/public/less/index.less";
 
-// @import "http://www.yunxi10.com/source/public/vue/css/admincms.css";
-// @import "http://yunxi10.com/source/public/vue/css/login.css";
-// @import "http://www.yunxi10.com/source/plugin/feedback/css/member_feedback.css";
-// @import "http://www.yunxi10.com/source/public/css/member_play.css";
+@import "http://www.yunxi10.com/source/public/vue/css/admincms.css";
+@import "http://yunxi10.com/source/public/vue/css/login.css";
+@import "http://www.yunxi10.com/source/plugin/feedback/css/member_feedback.css";
+@import "http://www.yunxi10.com/source/public/css/member_play.css";
 
-@import "http://localhost/source/public/vue/css/admincms.css";
-@import "http://localhost/admincms/public/css/login.css";
-@import "http://localhost/source/plugin/feedback/css/member_feedback.css";
-@import "http://localhost/source/public/css/member_play.css";
+// @import "http://localhost/source/public/vue/css/admincms.css";
+// @import "http://localhost/admincms/public/css/login.css";
+// @import "http://localhost/source/plugin/feedback/css/member_feedback.css";
+// @import "http://localhost/source/public/css/member_play.css";
 
 
 

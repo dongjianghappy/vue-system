@@ -18,19 +18,33 @@
       <span class="cl-green" v-else-if="item.method=='3'">搞</span>
       <span class="cl-red" v-else>Ai</span>
       <i class="iconfont icon-dot" />
-      <span @click="showImg(item)">{{item.title}}</span>
-      <span v-if="item.summary !== ''">
-        <i class="infos demoimg iconfont icon-article"></i>
+      <span >{{item.title}}</span>
+      <span>
+        <i class="infos demoimg iconfont icon-write" :class="{'cl-red': item.summary == ''}"></i>
+      </span>
+      <span>
+        <i class="infos demoimg iconfont icon-content" :class="{'cl-red': item.content == ''}"></i>
       </span>
       <span v-if="item.image.length">
-        <v-thumbnail :data="item" :coding="data.coding.art" icon="img" :hasInfo="false" />
+        <v-thumbnail :data="item" :coding="data.coding.art" icon="pic" :hasInfo="false" />
       </span>
-      <span class="relative" v-if="item.flags.length > 0">
+      <span class="relative" v-if="item.draw_image">
+        <v-popover content="<i class='iconfont icon-img'></i>" arrow="tb" offset="right" :move="0" :keys="`popover-img$-${index}`" type="hover">
+          <div class="w250">
+            <img :src="item.draw_image" width="320" />
+          </div>
+        </v-popover>
+      </span>
+      <!-- <span class="relative" v-if="item.flags.length > 0">
         <v-popover content="<i class='iconfont icon-tags'></i>" arrow="tb" offset="right" :move="0" :keys="`popover-img$-${index}`" type="hover">
           <div class="w250">
             <span class="mr10" v-for="(data, i) in data.aaa" :key="i"><i class="iconfont" :class="`icon-${data.icon}`" v-if="item.flags.indexOf(data.tag) > -1" />{{item.flags.indexOf(data.tag) > -1 ? data.value : "" }}</span>
           </div>
         </v-popover>
+      </span> -->
+      <span class="cl-5bc0de" v-if="item.sync.indexOf('weixin') > -1">
+        <i class="iconfont icon-qr cl-green" />
+        U:{{item.login_view}} - C:{{item.code_view}}
       </span>
     </td>
     <td>
@@ -38,20 +52,20 @@
     </td>
     <td>{{item.times}}</td>
     <td>
-      <v-switch :data="{ item, field: 'checked', coding: data.coding.art }" :disabled="auth.checked('edit')" />
+      <v-switch :data="{ item, field: 'checked', coding: data.coding.art }" :disabled="false" />
     </td>
     <td>
       <v-space class="relative">
-        <ArticleDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-if="data.module === 'article' || data.module === 'tech' || data.module === 'topic'" />
-        <SourceDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'source'" />
-        <DesignDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'design'" />
-        <OfficeDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'office'" />
-        <WordsDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'words'" />
-        <FunnyDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'funny'" />
-        <NotesDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'notes'" />
-        <DocumentDetail action="edit" :data="{id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.module === 'document'" />
-        <Preview :data="{...item, coding: data.coding}" :render="render" />
+        <ArticleDetail action="edit" :data="{channel: data.channel, id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-if="data.channel.module === 'article' || data.channel.module === 'tech' || data.channel.module === 'topic'" />
+        <SourceDetail action="edit" :data="{channel: data.channel, id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.channel.module === 'source'" />
+        <DesignDetail action="edit" :data="{channel: data.channel, id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.channel.module === 'design'" />
+        <OfficeDetail action="edit" :data="{channel: data.channel, id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.channel.module === 'office'" />
+        <WordsDetail action="edit" :data="{channel: data.channel, id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.channel.module === 'words'" />
+        <FunnyDetail action="edit" :data="{channel: data.channel, id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.channel.module === 'funny'" />
+        <NotesDetail action="edit" :data="{channel: data.channel, id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.channel.module === 'notes'" />
+        <DocumentDetail action="edit" :data="{channel: data.channel, id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" v-else-if="data.channel.module === 'document'" />
         <v-confirm name="删除" :data="{id: item.id, coding: data.coding.art, operating: 'remove' }" type="text" api="removeAndRestore" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>
+        <Preview :data="{id: item.id, ...data }" name="详情" :render="render" />
         <v-popover content="更多" arrow="tb" offset="right" :move="-650" :keys="`static_${index}`">
           <div class="p15 font14" style="width: 700px;">
             <table class="table-striped table-hover">
@@ -81,7 +95,7 @@
                     <Praise :data="{...item, coding: data.coding.praise}" />
                     <Collect :data="{...item, coding: data.coding.collect}" />
                     <Download :data="{...item, coding: data.coding.collect}" />
-                    <!-- <a :href="`http://www.${data.server}/${data.module}/${item.id}.html`" target="_blank">预览</a>
+                    <!-- <a :href="`http://www.${data.server}/${data.channel.module}/${item.id}.html`" target="_blank">预览</a>
                     <span @click="handleUpdate(item)">生成静态</span> -->
                   </v-space>
                 </td>
@@ -110,7 +124,6 @@
   </tr>
 </table>
 <v-buttongroup :checkedList="checkedList" :disabled="false" :data="{id: checkedList, coding: data.coding.art }" :pagination="{total: dataList.total, pages: dataList.pages, page: dataList.page ||  1, pagesize: dataList.pagesize}" :sorceData="dataList" :render="render" :auth="auth" />
-<v-articlepreview v-model:isShow="showFlag" :data="{...currentData, coding: data.coding.art}" :render="render" :img="currentImg" v-if="showFlag" type="album" />
 <Graph v-model:show="showGraph" :data="{coding: data.coding.art, detailApi: 'detail', updateApi: 'updateRobot', ...showGraph.data}" v-if="showGraph.view" />
 </template>
 
@@ -125,7 +138,7 @@ import {
   computed
 } from '@/utils'
 import Graph from '../../../robot/graph/index.vue'
-import Preview from './view.vue'
+import Preview from '../../../data/components/detail.vue'
 import ArticleDetail from '../../detail/articleDetail.vue'
 import SourceDetail from '../../detail/sourceDetail.vue'
 import DesignDetail from '../../design/components/detail.vue'
@@ -166,21 +179,20 @@ import Download from '../../../features/download/list.vue'
     const route = useRoute();
     const router: any = useRouter();
     const checkedList: any = ref([])
-    const showFlag: any = ref(false)
     const currentData: any = ref({})
     const showGraph: any = ref({
       view: false,
       data: {}
     })
     const dataList = computed(() => {
-      return store.getters[`channel/${props.data.module}`]['articleList']
+      return store.getters[`channel/${props.data.channel.module}`]['articleList']
     });
 
     function handleClick(params: any) {
       if (!props.auth.checked('edit')) {
         return
       }
-      router.push(`/admin/${props.data.module}/list/edit?id=${params.id}`)
+      router.push(`/admin/${props.data.channel.module}/list/edit?id=${params.id}`)
     }
 
     function handleUpdate(param: any) {
@@ -190,18 +202,13 @@ import Download from '../../../features/download/list.vue'
           serve: props.data.server,
           id: param.id,
           action: 'singleArticle',
-          model: props.data.module
+          model: props.data.channel.module
         }
       }).then(res => {
         proxy.$hlj.message({
           msg: "更新成功"
         })
       })
-    }
-
-    function showImg(param: any) {
-      currentData.value = param
-      showFlag.value = !showFlag.value
     }
 
     function handleView(param: any) {

@@ -29,7 +29,7 @@
       <v-space class="relative">
         <Answer :data="item" />
         <span>
-          <Detail action="edit" :data="{id: item.id, coding: data.coding }" :render="render" :auth="auth.checked('edit')" />
+          <Detail action="edit" :data="{channel: data.channel, id: item.id, coding: data.coding}" :render="render" :auth="auth.checked('edit')" />
         </span>
         <span>
           <v-confirm name="删除" :data="{id: item.id, coding: data.coding.art, operating: 'remove' }" type="text" api="removeAndRestore" :render="render" operating="delete" :auth="auth.checked('del')"></v-confirm>

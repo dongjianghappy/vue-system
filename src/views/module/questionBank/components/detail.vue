@@ -6,16 +6,18 @@
   </template>
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑内容' : '新增题型' " :data="{...data, coding: data.coding.art}" :param="detail" :render="render" :submit="submit">
+  <template v-slot:extra>
+    <v-space>
+      <label class="relative mr15 mt10 mb5" style="display: inline-block; line-height: 17px;">
+        <input type="checkbox" v-model="detail.checked" :checked="detail.checked" class="mr5" style="float: left;"><span>显示</span>
+      </label>
+    </v-space>
+  </template>  
   <template v-slot:content v-if="isShow">
     <div class="pt50 hide" style="text-align: center;">
       <v-upload ref="upload" @imgList="image" v-model:haschoose="file" :show="false" file="file" v-model:file="fileInfo" uploadtype="file" format=".js" />
     </div>
     <ul class="form-wrap-box">
-      <li class="li">
-        <span class="label">显示</span>
-        <v-radio label="是" name="checked" value="1" v-model:checked="detail.checked" />
-        <v-radio label="否" name="checked" value="0" v-model:checked="detail.checked" />
-      </li>
       <li class="li">
         <span class="label">tag标签</span>
         <v-tag v-model:tags="detail.tag" />

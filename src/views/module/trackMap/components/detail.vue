@@ -6,6 +6,13 @@
   </template>
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑内容' : '新增轨道图' " :data="{...data, coding: data.coding.art}" :param="detail" :render="render" :submit="submit">
+  <template v-slot:extra>
+    <v-space>
+      <label class="relative mr15 mt10 mb5" style="display: inline-block; line-height: 17px;">
+        <input type="checkbox" v-model="detail.checked" :checked="detail.checked" class="mr5" style="float: left;"><span>显示</span>
+      </label>
+    </v-space>
+  </template>  
   <template v-slot:content v-if="isShow">
     <div class="pt50 hide" style="text-align: center;">
       <v-upload ref="upload" @imgList="image" v-model:haschoose="file" :show="false" file="file" v-model:file="fileInfo" uploadtype="file" format=".js" />
@@ -14,11 +21,6 @@
       <li class="li">
         <span class="label">名称</span>
         <input v-model="detail.name" type="text" placeholder="请输入标题" class="input-sm input-full" />
-      </li>
-      <li class="li">
-        <span class="label">显示</span>
-        <v-radio label="是" name="status" value="1" v-model:checked="detail.status" />
-        <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
       </li>
       <li class="li">
         <span class="label">描述</span>

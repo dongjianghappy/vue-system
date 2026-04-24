@@ -19,23 +19,27 @@
       </li>
       <li class="li">
         <span class="label">DOM元素</span>
-        <input v-model="detail.dom" type="text" placeholder="请输入标题" class="input-sm input-full" />
+        <input v-model="detail.dom" type="text" placeholder="例如div、canvas" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">属性类型</span>
-        <input v-model="detail.attr" type="text" placeholder="请输入标题" class="input-sm input-full" />
+        <input v-model="detail.attr" type="text" placeholder="例如id、class" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">属性名称</span>
-        <input v-model="detail.attrName" type="text" placeholder="请输入标题" class="input-sm input-full" />
+        <input v-model="detail.attrName" type="text" placeholder="例如类名称" class="input-sm input-full" />
+      </li>
+      <li class="li">
+        <span class="label">服务器地址</span>
+        <input v-model="detail.serve" type="text" placeholder="例如http://www.dongblog.com" class="input-sm input-full" />
       </li>
       <li class="li">
         <span class="label">JS文件</span>
-        <textarea v-model="detail.js" class="w-full"></textarea>
+        <textarea v-model="detail.js" placeholder="请输入相对路径文件，多个文件用逗号分开" class="w-full"></textarea>
       </li>
       <li class="li">
         <span class="label">CSS文件</span>
-        <textarea v-model="detail.css" class="w-full"></textarea>
+        <textarea v-model="detail.css" placeholder="请输入相对路径文件，多个文件用逗号分开" class="w-full"></textarea>
       </li>
       <li class="li">
         <span class="label">Style属性</span>

@@ -8,7 +8,12 @@
       <div style="flex: 1">
         <textarea placeholder="请输入指令" v-model="title" class="w-full"></textarea>
       </div>
-      <iframe src="https://yiyan.baidu.com/chat/ODgwNzIzMjQ4OjQ4MjY0ODI5MDE=" style=" width: 100%; height: 500px"></iframe>
+      <v-tabs :tabs="[{name: '文心一言'}]">
+        <template v-slot:content1>
+          <iframe src="https://yiyan.baidu.com/chat/ODgwNzIzMjQ4OjQ4MjY0ODI5MDE=" style=" width: 100%; height: 500px"></iframe>
+        </template>
+      </v-tabs>
+      
       <!-- <div class="mb15" style="display: flex">
         <div style="flex: 1">
           <input v-model="detail.name" type="text" placeholder="请输入指令" class="input-sm input-full" :style="[detail.style]" />
@@ -51,7 +56,7 @@ import {
     // 监听
     watch([isShow], async (newValues, prevValues) => {
       if (isShow.value) {
-        title.value = `写一篇关于标题为《${props.data.title ? props.data.title : '文章标题'}》文章，内容600字以上，摘要200子以下，内容提到${props.data.tag ? props.data.tag : '文章提到词语'}`
+        title.value = `写一篇关于标题为《${props.data.title ? props.data.title : '文章标题'}》文章，内容800字以上，摘要200子以下，内容提到${props.data.tag ? props.data.tag : 'XXX'}等相关词语`
       }
     })
 

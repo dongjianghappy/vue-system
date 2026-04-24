@@ -75,7 +75,7 @@ export default defineComponent({
         api: "space"
       }).then(res => {
         debugger
-        dataList.value = res.result.fileList
+        dataList.value = res.result.fileList || []
       })
     }
 
@@ -113,7 +113,7 @@ export default defineComponent({
           file,
         },
       }).then(res => {
-        dataList.value = res.result.fileList
+        dataList.value = res.result.fileList || []
         prev.value = res.result.prev_dir
       })
 

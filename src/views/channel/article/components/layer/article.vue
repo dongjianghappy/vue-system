@@ -6,50 +6,50 @@
         <img :src="data.photos" onerror="this.src='/images/head_normal_100.png'" width="30" height="30" class="showuserinfo" data-uid="{$sm_talklist[l].account}" data-placement="automatic" data-toggle="tooltip{$sm_talklist[l].id}" data-left="150" />
       </div>
       <div>
-        <span class="absolute" style="top: 15px; right: 15px;"><ArticleDetail action="edit" :data="{id: data.id, coding: data.coding}" :render="render" :auth="true" /></span>
+        <span class="absolute" style="top: 15px; right: 15px;">
+          <!-- <ArticleDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" :auth="true" /> -->
+          <ArticleDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-if="data.channel.module ==='article' || data.channel.module ==='tech' || data.channel.module ==='topic'" />
+          <PictureDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='picture'" />
+          <SourceDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='source'" />
+          <DesignDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='design'" />
+          <OfficeDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='office'" />
+          <WebsiteDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='website'" />
+          <HaositeDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='haosite'" />
+          <WordsDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='words'" />
+          <DigitalDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='digital'" />
+          <FunnyDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='funny'" />
+          <NotesDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='notes'" />
+          <QustionsDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='questions'" />
+          <VideoDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='video'" />
+          <MusicDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='music' || data.channel.module ==='sound'" />
+          <LearnDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='learn'" />
+          <DocumentDetail action="edit" :data="{channel: data.channel, id: data.id, coding: data.coding}" :render="render" v-else-if="data.channel.module ==='document'" />
+          <Synchronous :data="data"/>
+          <span class="mr10" @click="handleUpdate(data)">生成静态</span>
+        </span>
       </div>
       <div class="user_info pb5"><span class="username">{{data.nickname}}</span></div>
       <div class="user_from pb5">{{data.times}}</div>
       <div class="user_text">
         <div class="bold mb10">
-          {{data.channel}}<i class="iconfont icon-dot" /><span v-html="data.title"></span>
+          {{data.channel.name}}<i class="iconfont icon-dot" /><span v-html="data.title"></span>
         </div>
+        <div class="mb10">ID: {{data.id}}</div>
         <div class="mb10">分类: {{data.parent}}</div>
-        <div class="mb10"> 来源: <span v-if="data.method=='1'">转</span>
+        <div class="mb10"> 来源: <span v-if="data.method=='1'">{{data.source}}</span>
                 <span v-else-if="data.method=='2'">原</span>
                 <span v-else-if="data.method=='3'">搞</span>
                 <span v-else>Ai</span>
         </div>
+        <div class="mb10"> 描述: {{data.description}}</div>
         <div class="mb10"> 标签: {{data.tag}}</div>
+        <div class="mb10"> 浏览: {{data.visit}}</div>
         <div class="mb10">
           相册: 
           <span v-if="data.image && data.image.length">
-            <v-thumbnail :data="data" :coding="data.coding" icon="img" :hasInfo="false" />
+            <v-thumbnail :data="data" :coding="data.coding.art" icon="img" :hasInfo="false" />
           </span>
           <span v-else>无</span>
-        </div>
-        <div class="bg-white p15">
-          <div class="mb5">文章词库
-            <span class="pointer right" @click="saveWord">保存</span>
-          </div>
-          <perfect-scrollbar v-if="wordsList.length > 0">
-          <ul class="form-wrap-box" >
-            <li class="p10 vertical mb5" style="background: #f8f8f8;" v-for="(item, index) in wordsList" :key="index">
-              <div class="label relative plr25">
-                <span class="absolute" style="left: 0">
-                  {{index+1}}、
-                </span>
-                <div contenteditable="true" class="content-editable" @blur="textBlur($event, index)">
-                  {{item}}
-                </div>
-                <span class="absolute" style="right: 0;
-    top: 0;"><i class="iconfont icon-close font12 pointer" @click="handleDelete(item)" /></span>
-              </div>
-
-            </li>
-          </ul>
-          </perfect-scrollbar>
-          <div class="p15" style="background: #f8f8f8;" v-else>暂时无词库</div>
         </div>
         <!--转载渲染-->
         <template v-if="data.list">
@@ -73,7 +73,7 @@
         <!--原文渲染-->
       </div>
     </div>
-    <TalkItembar :data="data" />
+    <Talkdatabar :data="data" />
   </div>
 
 </div>
@@ -89,6 +89,22 @@ import {
   getUid
 } from '@/utils'
 import ArticleDetail from '../../../detail/articleDetail.vue'
+import PictureDetail from '../../../detail/pictureDetail.vue'
+import VideoDetail from '../../../detail/videoDetail.vue'
+import MusicDetail from '../../../music/list/components/detail.vue'
+import FunnyDetail from '../../../detail/funnyDetail.vue'
+import NotesDetail from '../../../detail/notesDetail.vue'
+import QustionsDetail from '../../../detail/qustionsDetail.vue'
+import SourceDetail from '../../../detail/sourceDetail.vue'
+import WebsiteDetail from '../../../detail/websiteDetail.vue'
+import HaositeDetail from '../../../detail/haositeDetail.vue'
+import DesignDetail from '../../../detail/designDetail.vue'
+import OfficeDetail from '../../../detail/officeDetail.vue'
+import WordsDetail from '../../../detail/WordsDetail.vue'
+import DigitalDetail from '../../../detail/DigitalDetail.vue'
+import LearnDetail from '../../../detail/learnDetail.vue'
+import DocumentDetail from '../../../detail/documentDetail.vue'
+import Synchronous from '@/views/channel/components/synchronous.vue'
   const props: any = defineProps({
     data: {
       type: Object,
@@ -135,15 +151,33 @@ import ArticleDetail from '../../../detail/articleDetail.vue'
     }
 
     function handleDelete(word: any) {
-      let index = props.wordsList.findIndex((item: any) => item === word)
+      let index = props.wordsList.findIndex((data: any) => data === word)
       props.wordsList.splice(index, 1)
     }
+
+    // 静态更新
+    function handleUpdate(param: any) {
+      debugger
+      store.dispatch('common/Fetch', {
+        api: "updateStatic",
+        data: {
+          serve: props.data.channel.server,
+          id: param.id,
+          action: 'singleArticle',
+          model: props.data.channel.module
+        }
+      }).then(res => {
+        proxy.$hlj.message({
+          msg: "更新成功"
+        })
+      })
+    }    
 
     function saveWord(e: any) {
         store.dispatch('common/Fetch', {
           api: "changeData",
           data: {
-            coding: props.data.coding,
+            coding: props.data.coding.art,
             id: props.data.id,
             field: "words",
             value: props.wordsList.join(",")

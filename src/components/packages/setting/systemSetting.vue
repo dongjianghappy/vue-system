@@ -7,12 +7,11 @@
     <SettingType action="add" :data="{coding: data.coding.setting_type}" />
   </template>
   <template v-slot:content>
-    <v-tabs :tabs="tabsSetting" v-model:value="currentValue" :isEmit="true">
+    <v-tabs :tabs="tabsSetting" v-model:index="currentValue" :isEmit="true">
       <template v-slot:extra>
-
       </template>
       <template v-slot:content1>
-        <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == currentValue)" :key="index">
+        <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == tabsSetting[currentValue].value)" :key="index">
           <template v-slot:extra_left>
             <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" />
           </template>
@@ -31,7 +30,7 @@
         </v-collapse>
       </template>
       <template v-slot:content2>
-        <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == currentValue)" :key="index">
+        <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == tabsSetting[currentValue].value)" :key="index">
           <template v-slot:extra_left>
             <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" />
           </template>
@@ -61,7 +60,7 @@
         </v-collapse>
       </template>
       <template v-slot:content3>
-        <UserSetting :data="{coding: data.coding}" :dataList="dataList.filter(item => item.type == currentValue)" />
+        <UserSetting :data="{coding: data.coding}" :dataList="dataList.filter(item => item.type == tabsSetting[currentValue].value)" />
         <!-- <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == currentValue)" :key="index">
           <template v-slot:extra_left>
             <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" />
@@ -81,7 +80,7 @@
         </v-collapse> -->
       </template>
       <template v-slot:content4>
-        <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == currentValue)" :key="index">
+        <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == tabsSetting[currentValue].value)" :key="index">
           <template v-slot:extra_left>
             <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" />
           </template>
@@ -110,7 +109,7 @@
       </template>
 
       <template v-slot:content5>
-        <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == currentValue)" :key="index">
+        <v-collapse :title="item.name" v-for="(item, index) in dataList.filter(item => item.type == tabsSetting[currentValue].value)" :key="index">
           <template v-slot:extra_left>
             <SettingType action="edit" :data="{id: item.id, coding: data.coding.setting_type}" />
           </template>
@@ -178,7 +177,7 @@ export default defineComponent({
     const store = useStore()
 
     const isShow: any = ref(false)
-    const currentValue: any = ref("manage")
+    const currentValue: any = ref(0)
     const dataList: any = ref([])
     const setting = computed(() => store.getters['user/setting']);
     const form: any = ref({

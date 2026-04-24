@@ -7,6 +7,7 @@
           <i class="iconfont icon-arrow arrow"></i>
         </span>
         {{item.name}}
+        <span class="ml5 cl-green font18" v-if="item.uniapp === '1'">uniapp</span>
       </div>
     </div>
     <div v-if="type==='manage'" style="display: flex; justify-content: space-between;">

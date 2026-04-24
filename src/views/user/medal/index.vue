@@ -3,40 +3,29 @@
   <div class="module-head">
     <v-optionsbar title="勋章管理">
       <template v-slot:extraright>
-        <Detail action='add' :data="{ coding }" :render="init" />
+        <Detail action='add' :data="{ coding: coding.cate }" :render="init" />
       </template>
     </v-optionsbar>
   </div>
   <div class="module-content plr15">
-    <table class="table-striped table-hover col-left-14">
+    <table class="table-striped table-hover col-left-1">
       <tr class="th">
-        <td class="col-md-1">勋章名称</td>
-        <td class="col-md-1">图标</td>
-        <td class="col-md-3">条件</td>
-        <td class="col-md-4">描述</td>
-        <td class="col-md-2">时间</td>
-        <td class="col-md-1">操作</td>
+        <td class="col-md-9">勋章名称</td>
+        <td class="col-md-1">状态</td>
+        <td class="col-md-2">操作</td>
       </tr>
       <tr v-for="(item, index) in dataList" :key="index">
         <td>
           {{item.name}}
         </td>
         <td>
-          <img :src="item.image[0]" class="radius-8" style="width: 50px; height: 50px;" />
-        </td>
-        <td>
-          {{item.award_condition}}
-        </td>
-        <td>
-          {{item.description}}
-        </td>
-        <td>
-          {{item.times}}
+          <v-switch :data="{ item, field: 'status', coding: coding.cate }" :auth="true" />
         </td>
         <td>
           <v-space>
+            <List :data="{ fid: item.id, coding: coding.list }" />
             <span>
-              <Detail action="edit" :data="{id: item.id, coding}" :param="param" :render="init" />
+              <Detail action="edit" :data="{id: item.id, coding: coding.cate}" :param="param" :render="init" />
             </span>
             <span>
               <v-confirm name="删除" :data="{id: item.id, coding}" type="text" api="delete" :render="init" operating="delete"></v-confirm>
@@ -57,7 +46,8 @@ import {
   ref,
   codings
 } from '@/utils'
-import Detail from './components/detail.vue'
+import List from './components/list.vue'
+import Detail from './components/detailCate.vue'
     const store = useStore();
     const dataList: any = ref([])
     const coding: any = codings.medal;
@@ -65,7 +55,7 @@ import Detail from './components/detail.vue'
     function init() {
       store.dispatch('basic/Fetch', {
         data: {
-          coding: coding
+          coding: coding.cate
         }
       }).then((res: any) => {
         debugger

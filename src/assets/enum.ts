@@ -655,6 +655,14 @@ export const TEMPLATES = [
     name: '详情模板',
   },
   {
+    value: 'list_article_weixin.htm',
+    name: '微信系列栏目模板',
+  },
+  {
+    value: 'article_article_weixin.htm',
+    name: '微信系列详情模板',
+  },
+  {
     value: 'design_list_article.htm',
     name: '资源设计图栏目模板',
   },    

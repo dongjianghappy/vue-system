@@ -40,15 +40,35 @@
           <li class="li">
             <span class="label">所属分类</span>
             <span class="mr10">{{detail.parent}}</span>
-            <v-category name="选择分类" :data="{item: detail, coding: data.coding.cate}" :isMore="true" type="text"></v-category>
+            <v-category name="选择分类" :data="{item: detail, coding: data.coding}" :isMore="true" type="text"></v-category>
           </li>
+          <li class="li">
+            <span class="label">同步到平台</span>
+            <v-checkboxgroup :tagList="syncPlatfrom" :checked="detail.sync" />
+          </li> 
+          <li style="padding-left: 100px;">
+              <ul style="background: rgb(248, 248, 250);">
+                  <li class="vertical">
+                      <textarea placeholder="公众号文章链接" v-model="detail.sync_article_url" class="w-full"></textarea>
+                  </li>
+              </ul>
+          </li>
+          <li class="li">
+            <span class="label">图片方式</span>
+            <v-radiobutton name="image_type" v-model:checked="detail.image_type" :enums="[{label: '上传', value: '0'}, {label: '生成', value: '1'}]" />
+          </li>          
           <li class="li" style="overflow: auto;">
             <span class="label">图片</span>
-            <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: data.coding.art}" :dataList="detail.img || []" uploadtype="picture" @imgList="image" :style="'width: 135px'" />
+            <v-createimage :detail="detail" @image="getImage" v-if="detail.image_type === '1'" />
+            <v-upload ref="upload" :data="{id: detail.id, cover: detail.cover,  coding: data.coding.art}" :dataList="detail.img || []" :uploadtype="data.channel.module" @imgList="image" :style="'width: 135px'" v-else />
           </li>
           <li class="li">
             <span class="label">描述</span>
             <textarea placeholder="请输入描述" v-model="detail.description" class="w-full"></textarea>
+          </li>
+          <li class="li">
+            <span class="label">摘要说明</span>
+            <v-editordesc v-model:contentsss="detail.summary_markdown" :data="detail" />
           </li>
           <li class="li">
             <span class="label">内容</span>
@@ -57,6 +77,11 @@
           <li class="li">
             <span class="label">聚合标签</span>
             <v-checkboxgroup :tagList="flagList" :checked="detail.flags" />
+          </li>
+          <li class="li">
+            <span class="label">用户</span>
+            <span class="mr10">{{detail.nickname}}</span>
+            <v-chooseuser title="选择用户" :data="{ item: detail, field: 'fid', coding }" v-model:checked="detail.fid" @chooseUser="chooseUser" type="radio" />
           </li>
         </ul>
       </template>
@@ -78,21 +103,25 @@ import {
   useStore,
   watch,
   computed,
-  useProps
+  useProps,
+  codings
 } from '@/utils'
 import { customize11, checkbox, channleSubmit, articleTempList } from '@/utils/fn'
 import {
-  tabsDetail
+  tabsDetail,
+  syncPlatfrom
 } from '@/assets/const/index'
 import Customize from '../components/customize.vue'
 import Extra from '../components/extra.vue'
   const props: any = defineProps(useProps)
     const store = useStore()
+    const coding = codings.user.list
     const isShow: any = ref(false)
     const drawer: any = ref(null)
     const upload: any = ref(null);
     const detail: any = ref({})
     const img: any = ref("")
+    const draw_img: any = ref("")
     const flagList: any = ref([])
     const customizeDetail: any = ref({})
     const columnsList: any = ref([])
@@ -123,10 +152,30 @@ import Extra from '../components/extra.vue'
       img.value = a
     }
 
+    function getImage(param: any){
+      debugger
+      detail.value.img = param.src
+      detail.value.draw_image = param.src
+      draw_img.value = param.src
+      detail.value.draw_config = param.config
+    }
+
+    function chooseUser(param: any) {
+      const {
+        data
+      } = param
+      detail.value.uid = data.account
+      detail.value.nickname = data.nickname
+    }
+
     function submit(params: any) {
       const {
         summary_markdown,
-        markdown
+        markdown,
+        image_type,
+        draw_config,
+        sync,
+        sync_article_url
       } = detail.value
 
       channleSubmit({
@@ -139,7 +188,12 @@ import Extra from '../components/extra.vue'
           summary_markdown,
           content: markdown ? marked.parse(markdown) : "",
           markdown,
+          draw_img: draw_img.value,
+          image_type,
+          draw_config,
           img: img.value,
+          sync: sync ? `|${sync.join("|")}|` : "",
+          sync_article_url
         },
         callback: () => {
           props.render({

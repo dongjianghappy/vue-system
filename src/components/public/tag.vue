@@ -2,8 +2,10 @@
 <div id="tagInputContainer" class="tagInputContainer pr25" style="position:relative">
   <div class="tag-box" v-for="(item, index) in tags" :key="index" draggable="true" @dragend="handleDragEnd($event, item)" @dragstart="handleDragStart($event, item)" @dragenter="handleDragEnter($event, item)" @dragover.prevent="handleDragOver($event, item)"><span>{{item}}</span> <a class="deltag" href="javascript:;" title="删除" @click="remove(index)" v-if="isEdit">×</a></div>
   <input v-model="model" v-if="isEdit" @keyup.enter="input" @blur="input" type="text" placeholder="多个词使用'/'或','隔开" style="border:0">
-  <span><i class="iconfont icon-recycle absolute" style="top: 5px; right: -25px;" @click="handleClear" /></span>
-  <span class="absolute" style="top: 5px; right: -50px;" @click="handleaaaa">转换</span>
+  <span><i class="iconfont icon-recycle absolute" style="top: 5px; right: 30px;" @click="handleClear" /></span>
+  <span>
+    <i class="iconfont icon-concern-3 absolute" style="top: 5px; right: 5px;" @click="handleaaaa" />
+  </span>
 </div>
 <div>{{strings}}</div>
 </template>
@@ -75,6 +77,11 @@ function handleDragEnter(e: any, item: any) {
 function input() {
   if (model.value !== "") {
     model.value = model.value.replaceAll(',', '/')
+    model.value = model.value.replaceAll('，', '/')
+    model.value = model.value.replaceAll('、', '/')
+    model.value = model.value.replaceAll('-', '/')
+    model.value = model.value.replaceAll('*', '/')
+    model.value = model.value.replaceAll(' ', '/')
     let words = []
     if (model.value.indexOf("/") > -1) {
       words = model.value.split("/")

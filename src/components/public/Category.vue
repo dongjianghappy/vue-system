@@ -151,7 +151,7 @@ function splitFid() {
   } = props.data
 
   if (!item.fid) {
-    return
+    return []
   }
   let arr: any = []
   if (item.fid.indexOf("-") > -1) {
@@ -183,36 +183,39 @@ function init() {
     if (!props.isMore) {
       return
     }
-    for (let i = 0; i < res.result.length; i++) {
-      aaa.map((item: any) => {
 
-        if (item.value.indexOf(`|${res.result[i].id}|`) > -1) {
-          item.name = res.result[i].name
-        }
-        return item
-      })
+    if(res.result.length > 0){
+      // 一级分类
+      for (let i = 0; i < res.result.length; i++) {
+        aaa && aaa.map((item: any) => {
+          if (item.value.indexOf(`|${res.result[i].id}|`) > -1) {
+            item.name = res.result[i].name
+          }
+          return item
+        })
 
-      // 二级分类查询
-      let second: any = res.result[i].list
-      if (second.length > 0) {
-        for (let j = 0; j < second.length; j++) {
-          aaa.map((item: any) => {
-            if (item.value.indexOf(`|${second[j].id}|`) > -1) {
-              item.name = second[j].name
-            }
-            return item
-          })
+        // 二级分类查询
+        let second: any = res.result[i].list
+        if (second.length > 0) {
+          for (let j = 0; j < second.length; j++) {
+            aaa.map((item: any) => {
+              if (item.value.indexOf(`|${second[j].id}|`) > -1) {
+                item.name = second[j].name
+              }
+              return item
+            })
 
-          // 二级分类查询
-          let third: any = res.result[i].list[j].list
-          if (third.length > 0) {
-            for (let k = 0; k < third.length; k++) {
-              aaa.map((item: any) => {
-                if (item.value.indexOf(`|${third[k].id}|`) > -1) {
-                  item.name = third[k].name
-                }
-                return item
-              })
+            // 三级分类查询
+            let third: any = res.result[i].list[j].list
+            if (third.length > 0) {
+              for (let k = 0; k < third.length; k++) {
+                aaa.map((item: any) => {
+                  if (item.value.indexOf(`|${third[k].id}|`) > -1) {
+                    item.name = third[k].name
+                  }
+                  return item
+                })
+              }
             }
           }
         }

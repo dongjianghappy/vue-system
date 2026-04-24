@@ -3,6 +3,13 @@
   <i class="iconfont" :class="`icon-${action === 'add' && 'anonymous-iconfont'}`" />{{action === 'edit'? "编辑": "新增合作伙伴"}}
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑合作伙伴' : '新增合作伙伴' " :data="data" :param="detail" :render="render">
+  <template v-slot:extra>
+    <v-space>
+      <label class="relative mr15 mt10 mb5" style="display: inline-block; line-height: 17px;">
+        <input type="checkbox" v-model="detail.status" :checked="detail.status" class="mr5" style="float: left;"><span>显示</span>
+      </label>
+    </v-space>
+  </template>  
   <template v-slot:content v-if="isShow">
     <v-tabs :tabs="tabsPartner" method="click">
       <template v-slot:content1>
@@ -43,17 +50,9 @@
             <span class="label">顺序</span>
             <input v-model="detail.sort" type="text" placeholder="请输入顺序" class="input-sm input-150" />
           </li>
-          <li class="li">
-            <span class="label">显示</span>
-            <v-radio label="是" name="status" value="1" v-model:checked="detail.status" />
-            <v-radio label="否" name="status" value="0" v-model:checked="detail.status" />
-          </li>
           <li class="li" style="overflow: auto;">
             <span class="label">预览图</span>
-            <SpaceModal v-model:image="detail.image">
-              <span class="right">选择图片</span>
-            </SpaceModal>
-            <img width="398" height="150" :src="detail.image" onerror="this.src='/images/slideshow.png'">
+            <v-chooseimage v-model:image="detail.image" />
           </li>
         </ul>
         <div class="edit-article">

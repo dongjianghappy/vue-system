@@ -206,3 +206,15 @@ export const PRIOVINCE = [
 	{name: "香港特别行政区", value: "810000"},
 	{name: "澳门特别行政区", value: "820000"}
 ]
+
+// 同步到第三方平台
+export const syncPlatfrom = [
+	{
+		value: '公众号',
+		tag: 'weixin'
+	},
+	{
+		value: '百家号',
+		tag: 'baidu'
+	}
+]

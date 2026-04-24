@@ -10,11 +10,13 @@
 
 <script setup lang="ts">
 import {
+  getCurrentInstance,
   defineProps,
   useProps,
   useStore
 } from '@/utils'
 import GetContent from './getContent.vue'
+const {ctx, proxy}:any = getCurrentInstance();
 const store = useStore()
   const props: any = defineProps({
     ...useProps,
@@ -26,16 +28,40 @@ const store = useStore()
     }
   })
 
+  // 静态更新
+  function handleUpdate(param: any) {
+    store.dispatch('common/Fetch', {
+      api: "updateStatic",
+      data: {
+        serve: props.channel.server,
+        id: param.id,
+        action: 'singleArticle',
+        model: props.channel.module
+      }
+    }).then(res => {
+      proxy.$hlj.message({
+        msg: "更新成功"
+      })
+    })
+  }
+
   // 保存到草稿箱
   function saveTemp() {
+    let content: any = JSON.parse(JSON.stringify(props.data))
+    delete content.markdown
+    delete content.summary_markdown
     store.dispatch('common/Fetch', {
       api: "articleTempSave",
       data: {
         type: props.channel.module,
-        content: JSON.stringify(props.data)
+        content: JSON.stringify(content),
+        summary_markdown: props.data.summary_markdown,
+        markdown: props.data.markdown
       }
     }).then(res => {
-      
+        proxy.$hlj.message({
+          msg: "保存成功"
+        })
     })
   }
 </script>

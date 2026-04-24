@@ -6,6 +6,13 @@
   </template>
 </v-button>
 <v-drawer ref="drawer" v-model:show="isShow" :action="action" :title="action === 'edit' ? '编辑内容' : '新增工具' " :data="{...data, coding: data.coding.art}" :param="detail" :render="render" :submit="submit">
+  <template v-slot:extra>
+    <v-space>
+      <label class="relative mr15 mt10 mb5" style="display: inline-block; line-height: 17px;">
+        <input type="checkbox" v-model="detail.checked" :checked="detail.checked" class="mr5" style="float: left;"><span>显示</span>
+      </label>
+    </v-space>
+  </template>  
   <template v-slot:content v-if="isShow">
     <ul class="form-wrap-box">
       <li class="li">
@@ -22,11 +29,6 @@
         <input v-model="detail.html" type="text" class="input-sm input-full" />
       </li>
       <li class="li">
-        <span class="label">显示</span>
-        <v-radio label="是" name="checked" value="1" v-model:checked="detail.checked" />
-        <v-radio label="否" name="checked" value="0" v-model:checked="detail.checked" />
-      </li>
-      <li class="li">
         <span class="label">tag标签</span>
         <v-tag v-model:tags="detail.tag" />
       </li>
@@ -34,6 +36,10 @@
         <span class="label">所属分类</span>
         {{detail.parent}}
         <v-category name="选择分类" :data="{item: detail, coding: data.coding.cate}" :isMore="true" type="text"></v-category>
+      </li>
+      <li class="li" style="overflow: auto;">
+        <span class="label">预览图</span>
+        <v-chooseimage v-model:image="detail.image" />
       </li>
       <li class="li">
         <span class="label">描述</span>
@@ -83,6 +89,7 @@ import {
         id,
         fid,
         title,
+        image,
         html,
         summary,
         import_files,
@@ -95,6 +102,7 @@ import {
       const param: any = {
         fid,
         title,
+        image,
         html,
         summary,
         import_files,

@@ -117,7 +117,7 @@ import {
       } = detail.value
 
       store.dispatch('common/Fetch', {
-        api: "update",
+        api: props.action === "add" ? "insert" : "update",
         data: {
           coding: props.data.coding,
           id: props.data.id,

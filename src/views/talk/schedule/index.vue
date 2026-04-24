@@ -2,6 +2,7 @@
 <div class="bg-white">
   <v-tabs :tabs="tabsSchedule">
     <template v-slot:extra>
+      <Setting />
       <Detail :data="{ coding }" :render="init" />
     </template>
     <template v-slot:content1>
@@ -29,6 +30,7 @@ import {
 import List from './components/list.vue'
 import List2 from './components/list2.vue'
 import Detail from './components/detail.vue'
+import Setting from './setting/index.vue'
     const store = useStore();
     const route = useRoute();
     const coding: any = codings.user.schedule.cate

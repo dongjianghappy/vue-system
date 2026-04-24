@@ -16,6 +16,10 @@ const api:any =  {
   Default(params: any) {
     return http.request('vue', 'defaultPage', 'post', params)
   },
+  // 网站流量统计
+  WebsiteStatistics(params: any) {
+    return http.request('vue', 'websiteStatistics', 'post', params)
+  },
   // 频道
   channelList(params: any) {
     return http.request('channel', 'channelList', 'post', params)
@@ -910,7 +914,15 @@ close (params: any) {
   // 草稿箱查询
   articleTempList (params: any) {
     return http.request('channel', 'articleTempList', 'post', params)
-  },    
+  },   
+  // 同步 
+  synchronous (params: any) {
+    return http.request('channel', 'synchronous', 'post', params)
+  },   
+  // 选择用户
+  chooseUser (params: any) {
+    return http.request('vue_user', 'chooseUser', 'post', params)
+  },   
 }
 
 const features_api:any =  {
@@ -946,6 +958,9 @@ const features_api:any =  {
   journal (params: any) {
     return http.request('vue_features', 'journal', 'post', params)
   },
+  insertTag (params: any) {
+    return http.request('channel', 'insertTag', 'post', params)
+  }, 
 }
 
 export default {

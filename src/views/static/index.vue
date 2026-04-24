@@ -80,7 +80,8 @@
                 :data="{
                   serve,
                   action: 'tag',
-                  model: 'source',
+                  model: item.module,
+                  channel_id: item.channel_id,
                   id: `${item.limitStart}-${item.limitEnd}`,
                   method: item.sort,
                   total: item.limitEnd - item.limitStart,

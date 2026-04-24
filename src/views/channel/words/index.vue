@@ -1,53 +1,27 @@
 <template>
-<div class="module-wrap">
-  <div class="module-head">
-    <v-optionsbar title="内容管理">
-      <template v-slot:extraright>
-        <Detail :data="{channel: channelData, coding}" :render="init" :auth="auth.checked('add')" />
-      </template>
-    </v-optionsbar>
-  </div>
-  <div class="module-content plr15">
-    <table class="table-striped table-hover col-left-23">
-      <tr class="th">
-        <td class="col-md-1">选择</td>
-        <td class="col-md-4">内容</td>
-        <td class="col-md-2">分类</td>
-        <td class="col-md-2">发布时间</td>
-        <td class="col-md-1">状态</td>
-        <td class="col-md-2">操作</td>
-      </tr>
-      <tr v-for="(item, index) in dataList.list" class="dragObj" :key="index" draggable="true" :index="index">
-        <td>
-          <v-checkbox :checkedList="checkedList" :data="{ id: item.id}" />
-        </td>
-        <td>
-          {{item.content}}
-        </td>
-        <td>
-          <div class="pointer">
-            <v-category title="选择分类" :name="item.parent ? item.parent : '选择分类'" :data="{item, coding: coding.cate}" :isUpdate="true" :isMore="true" type="text"></v-category>
-          </div>
-        </td>
-        <td>{{item.times}}</td>
-        <td>
-          <v-switch :data="{ item, field: 'checked', coding: coding.art }" :auth="auth.checked('edit')" />
-        </td>
-        <td>
-          <v-space>
-            <span>
-              <Detail action="edit" :data="{id: item.id, coding}" :render="init" :auth="auth.checked('edit')" />
-            </span>
-            <span>
-              <v-confirm name="删除" :data="{id: item.id, coding: coding.art}" api="delete" :render="init" operating="delete" :auth="auth.checked('del')"></v-confirm>
-            </span>
-          </v-space>
-        </td>
-      </tr>
-    </table>
-    <v-nodata :data="dataList.list" />
-    <v-buttongroup :checkedList="checkedList" :data="{id: checkedList, coding }" :pagination="{total: 10, page: 10, pagesize: 10}" :sorceData="dataList.list" :render="init" v-if="dataList.list && dataList.list.length > 0" :auth="auth" />
-  </div>
+<div class="ptb5" style="background: #fff">
+  <v-tabs :tabs="tabsArticle">
+    <template v-slot:extra>
+      <v-space>
+        <span class="pt10">
+          <v-search :render="init" />
+        </span>
+        <v-timepicker :data="detail" attr="start_time" @changeDay="changeDay" />
+        <v-catepicker :data="{coding, module: channelData.module}" @choose="chooseCate" />
+        <v-condition name="排序" icon="sort-desc" field="sorter" :enums="[{value: 'id desc', name: '递减'}, {value: 'id asc', name: '递增'}]" :render="init" />
+        <WordsDetail :data="{channel: channelData,coding}" :render="init" />
+      </v-space>
+    </template>
+    <template v-slot:content1>
+      <List :type='page.value' :data="{channel: channelData, coding, aaa}" :render="init" :loading="loading" :auth="auth" />
+    </template>
+    <template v-slot:content2>
+      <List2 :type='page.value' :data="{channel: channelData, coding}" :render="init" :loading="loading" :auth="auth" />
+    </template>
+    <template v-slot:content3>
+      <List3 :type='page.value' :data="{channel: channelData, coding}" :loading="loading" :auth="auth" />
+    </template>
+  </v-tabs>
 </div>
 </template>
 
@@ -56,34 +30,113 @@ import {
   getCurrentInstance,
   onMounted,
   ref,
+  watch,
+  useRoute,
+  useRouter,
   useStore,
   channels
 } from '@/utils'
-import Detail from '../detail/WordsDetail.vue'
-    const {
-      proxy
-    }: any = getCurrentInstance();
-    const store = useStore();
-    const channelData: any = channels();
-    const coding: any = channels().coding;
-    const checkedList: any = ref([])
-    const dataList: any = ref({})
-    const auth: any = proxy.$auth.init('partner')
+import {
+  tabsArticle,
+  visitPage
+} from '@/assets/const'
+import List from "./components/list.vue"
+import List2 from "../../channel/list/components/list2.vue"
+import List3 from "../../channel/list/components/list3.vue"
+import WordsDetail from '../../channel/detail/WordsDetail.vue'
 
-    function init() {
-      store.dispatch('common/Fetch', {
-        api: "articleList",
-        data: {
-          coding: coding.art,
-          page: 1,
-          pagesize: 10
-        }
-      }).then((res: any) => {
-        dataList.value = res.result
-      })
+const {
+  proxy
+}: any = getCurrentInstance();
+const store = useStore();
+const route = useRoute();
+const router: any = useRouter();
+const channelData: any = channels();
+const coding: any = channels().coding;
+const aaa: any = ref([])
+const toggleDisplay: any = ref("list")
+const loading: any = ref(false)
+const currentComponent: any = ref("")
+
+const auth: any = proxy.$auth.init(`channel/${channelData.module}/art`)
+
+let page: any = ref(visitPage[0])
+let type: any = ref(1)
+
+// 监听路由
+watch(router.currentRoute, (newValues, prevValues) => {
+  if (newValues.path === prevValues.path) {
+    type.value = route.query
+    init()
+  }
+})
+
+function init(param: any = {}) {
+  const params: any = {
+    page: 1,
+    pagesize: 30
+  }
+
+  Object.assign(params, param)
+  const {
+    type
+  }: any = route.query
+
+  loading.value = false
+  store.dispatch('channel/articleListAction', {
+    api: "articleList",
+    tabsIndex: route.query.type === undefined ? 0 : route.query.type,
+    module: channelData.module,
+    data: {
+      coding: coding.art,
+      management_checked: type === '2' ? -1 : type === '1' ? 0 : 1, // 是否审核,
+      ...params
     }
+  }).then(res => {
+    loading.value = true
+  })
+}
 
-    onMounted(() => {
-      init()
-    })
+function handleClick(param: any) {
+  let url = `/admin/${channelData.module}/list/add`
+  if (param !== 'add') {
+    url = url + `&id=${param.id}`
+  }
+  router.push(url)
+}
+
+function chooseColor(param: any) {
+  init({
+    color: param
+  })
+}
+
+function changeDay(data: any) {
+  init({
+    year: data.fullYear,
+    month: data.month,
+    day: data.day
+  })
+}
+
+function chooseCate(param: any) {
+  init({
+    fid: `|${param}|`,
+  })
+}
+
+onMounted(() => {
+  // 聚合标签
+  store.dispatch('common/Fetch', {
+    api: "getTagCheckbox",
+    data: {
+      channel_id: channelData.id,
+      type: 'art'
+    }
+  }).then(res => {
+    aaa.value = res.result
+  })
+
+  init()
+})
 </script>

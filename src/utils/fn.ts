@@ -1,3 +1,19 @@
+// 播报
+export const handleBroadcast = (param: any) => {
+  const content = document.getElementById('broadcast_content')?.innerText
+  const speakMsg = new SpeechSynthesisUtterance()
+  const speech: any = content || param
+  speakMsg.text = speech; //文字内容
+  speakMsg.lang = "zh-CN"; //使用的语言:中文
+  speakMsg.volume = 1;
+  //声音音量:0-1
+  speakMsg.rate = 1.5;
+  //语速:0-10
+  speakMsg.pitch = 10;
+  //音高:0-1
+  window.speechSynthesis.speak(speakMsg)
+}
+
 // 自定义字段
 export const customize11 = async (param: any) => {
   const { store, channel_id } = param
@@ -37,7 +53,7 @@ export const checkbox = async (param: any) => {
 }
 
 export const channleSubmit = (param: any) => {
-  const { store, props, detail, cover, customizeDetail, data, callback } = param
+  const { store, props, detail, cover, customizeDetail, channel, data, callback } = param
 
   for (let key in customizeDetail) {
     customizeDetail[key] = detail[key]
@@ -46,7 +62,9 @@ export const channleSubmit = (param: any) => {
   const {
     id,
     fid,
+    uid,
     title,
+    description,
     background_music,
     summary,
     tag,
@@ -60,7 +78,9 @@ export const channleSubmit = (param: any) => {
   } = detail
   const params: any = {
     fid,
+    uid,
     title,
+    description,
     cover,
     background_music,
     summary,
@@ -86,6 +106,19 @@ debugger
       ...customizeDetail
     }
   }).then(() => {
+    if (props.action === 'edit') {
+      debugger
+      // 静态更新
+      store.dispatch('common/Fetch', {
+        api: "updateStatic",
+        data: {
+          serve: props.data.channel.server,
+          id,
+          action: 'singleArticle',
+          model: props.data.channel.module
+        }
+      })
+    }
     callback()
   })
 }

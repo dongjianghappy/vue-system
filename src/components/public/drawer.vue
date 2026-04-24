@@ -145,8 +145,12 @@ async function init(param: any) {
           type: channel.module,
         }
       }).then(res => {
+        debugger
         if (res.result !== "" && res.result !== null) {
-          data = JSON.parse(res.result)
+          let content = JSON.parse(res.result.content || '{}')
+          content.summary_markdown = res.result.summary_markdown || ""
+          content.markdown = res.result.markdown || ""
+          data = content
         }
       })
     }
